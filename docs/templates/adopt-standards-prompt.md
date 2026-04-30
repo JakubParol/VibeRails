@@ -1,13 +1,14 @@
 # Adopt Standards Prompt
 
-Use this prompt in a target repository. Replace placeholders before sending it to the agent.
+Use this prompt after opening the target repository in Codex. The active working directory is
+the target repository that should receive these standards.
 
 ```text
-Use the standards repository at <standards-repository-path-or-url>.
+Use the standards repository at https://github.com/JakubParol/VibeRails.
 
-Target repository: <target-github-repo-url>
+The current working repository is the target repository.
 
-Adopt the standards into this repository.
+Adopt the standards from VibeRails into this repository.
 
 Follow the standards repository README, AGENTS.md, docs/INDEX.md, adoption standard, change
 protocol, documentation standard, stack profiles, documentation audit, and quality gate
