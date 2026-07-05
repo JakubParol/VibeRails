@@ -1,4 +1,4 @@
-﻿[CmdletBinding(SupportsShouldProcess = $true)]
+[CmdletBinding(SupportsShouldProcess = $true)]
 param(
     [ValidateSet("Context", "Doctor", "ListActive", "Show", "SelfReviewStatus", "WorkItems", "Commits", "Threads", "Reviewers", "Policies", "Iterations", "IterationChanges", "CreateDraft", "UpdateDescription", "SetDraft", "Publish", "LinkWorkItems", "AddThreadComment", "AddInlineComment", "SetReviewerVote", "Approve", "Complete", "Abandon")]
     [string] $Action = "ListActive",

@@ -2,7 +2,15 @@
 
 Run from: `<project-root>`
 
-## Commands
+## Canonical Command
+
+Use this command before creating a PR:
+
+```bash
+<single-quality-gate-command>
+```
+
+## Command Details
 
 ```bash
 # format or auto-fix
@@ -15,6 +23,12 @@ Run from: `<project-root>`
 
 # build
 ```
+
+## Path-To-Scope Map
+
+| Changed path | Scope | Commands | Required before PR |
+|---|---|---|---|
+| `<path-prefix-or-glob>` | `<scope>` | `<command>` | yes |
 
 ## Required Before PR
 

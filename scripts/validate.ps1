@@ -62,6 +62,17 @@ function Test-LineEndingsAndTrailingWhitespace {
     }
 }
 
+function Test-NoBom {
+    $files = Get-RepositoryFiles -Include @("*.md", "*.mjs", "*.sh", "*.ps1", "*.json", "*.yaml", "*.yml", ".gitattributes", "LICENSE")
+    foreach ($file in $files) {
+        $relativePath = $file.FullName.Substring($repoRoot.Path.Length + 1)
+        $bytes = [System.IO.File]::ReadAllBytes($file.FullName)
+        if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+            Add-Failure "$relativePath starts with a UTF-8 BOM; remove it for portable text diffs."
+        }
+    }
+}
+
 function ConvertTo-MarkdownAnchor {
     param([Parameter(Mandatory = $true)][string] $Heading)
 
@@ -113,6 +124,10 @@ function Test-MarkdownLinks {
                 continue
             }
             if ($target -match "^(https?:|mailto:)") {
+                continue
+            }
+            if ($relativeSource -eq "docs/templates/project-docs-INDEX.md" -and
+                ($target -eq "../README.md" -or $target -eq "../AGENTS.md")) {
                 continue
             }
 
@@ -266,7 +281,17 @@ function Test-RepositoryTextIsGeneric {
         "ElitMind",
         "elitmind",
         "ELITMIND",
-        "Elitmindvs"
+        "Elitmindvs",
+        "VibeRails-EM",
+        "SessionDeck",
+        "CrackerAi",
+        "SignalBoy",
+        "IQControl.Ai"
+    )
+    $forbiddenRegexes = @(
+        "/Users/[A-Za-z0-9._-]+/",
+        "/home/[A-Za-z0-9._-]+/",
+        "C:\\Users\\[A-Za-z0-9._-]+\\"
     )
     $allowlistedFiles = @(
         "scripts/validate.mjs",
@@ -285,10 +310,16 @@ function Test-RepositoryTextIsGeneric {
                 Add-Failure "$relativePath contains source-specific term '$pattern'."
             }
         }
+        foreach ($pattern in $forbiddenRegexes) {
+            if ($text -match $pattern) {
+                Add-Failure "$relativePath contains a local absolute path '$pattern'."
+            }
+        }
     }
 }
 
 Test-LineEndingsAndTrailingWhitespace
+Test-NoBom
 Test-AsciiFiles
 $markdownLinkGraph = Test-MarkdownLinks
 Test-OrphanMarkdownFiles -LinkGraph $markdownLinkGraph

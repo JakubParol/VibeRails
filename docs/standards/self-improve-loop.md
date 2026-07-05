@@ -30,26 +30,34 @@ When a reusable failure is found:
 2. Build a stable fingerprint from the tool, command family, provider, error class, and short
    sanitized symptom.
 3. Read `.viberails/adoption.json`.
-4. If `selfImprove.enabled` is `false`, the tracker is `none`, auth is missing, or the dedupe
-   rule is missing, prepare the sanitized ticket body locally, report the missing adoption
-   decision, and do not attempt tracker reads or writes.
+4. If `selfImprove.enabled` is `false`, the tracker is `none`, the read auth check is missing,
+   or the dedupe rule is missing, prepare the sanitized ticket body locally, report the
+   missing adoption decision, and do not attempt tracker reads or writes.
 5. If the failure affects the configured sink client itself, use the recorded alternate
-   connector or wrapper when one exists. If no working alternate exists, prepare the sanitized
-   ticket body locally and report the blocked self-improve write.
+   connector or wrapper from `selfImprove.alternateClients` when one exists. If no working
+   alternate exists, prepare the sanitized ticket body locally and report the blocked
+   self-improve read/write.
 6. Run the configured dedupe query.
 7. Treat an exact fingerprint match as the primary duplicate signal. Use provider/tool/error
    class matching only when exact fingerprint search is unavailable and the manual fallback
    says how to compare candidates.
-8. If a matching ticket exists, add a comment with the new evidence using the configured
-   comment template.
-9. If no matching ticket exists, create a new ticket in the configured sink.
-10. Link the ticket or record the ticket id in the final report when the user authorized the
-   write.
-11. If writes are not authorized, report the prepared ticket body locally and
-   name the auth or approval that is missing.
+8. Prepare the next write locally:
+   - if a matching ticket exists, prepare a comment body using the configured comment
+     template;
+   - if no matching ticket exists, prepare a new ticket body using the configured sink shape.
+9. Before writing, verify the write auth check and the `writeApprovalPolicy` for the current
+   task.
+10. If write auth is present and the policy authorizes this task, add the comment or create
+    the ticket.
+11. Link the ticket or record the ticket id in the final report when the write succeeds.
+12. If writes are not authorized, report the prepared ticket or comment body locally and name
+    the auth or approval that is missing.
 
 Agents must not guess the tracker, project, issue type, label, or auth flow. Adoption records
 those decisions.
+
+If read auth works but write auth is missing, agents still run dedupe and prepare the exact
+comment or ticket body. Missing write auth blocks only the final create/comment operation.
 
 ## Ticket Shape
 
@@ -113,6 +121,7 @@ The target repository must document:
 - environment variable names or connector names, without values
 - what to do when auth is missing
 - whether agents may create/comment automatically after user approval
+- alternate clients or wrappers for the same provider, or an explicit `none`
 
 Missing auth does not block the rest of the task. It blocks only the self-improve write.
 

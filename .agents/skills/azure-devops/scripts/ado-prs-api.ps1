@@ -1,4 +1,4 @@
-﻿function Add-QueryString {
+function Add-QueryString {
     param(
         [Parameter(Mandatory = $true)][string] $Url,
         [Parameter(Mandatory = $true)][hashtable] $Parameters

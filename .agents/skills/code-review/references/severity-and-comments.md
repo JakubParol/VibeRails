@@ -1,4 +1,4 @@
-﻿# Severity And PR Comments
+# Severity And PR Comments
 
 Use this severity scale for findings and PR comments.
 

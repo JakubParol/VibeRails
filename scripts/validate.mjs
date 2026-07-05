@@ -62,6 +62,17 @@ function testLineEndingsAndTrailingWhitespace(files) {
   }
 }
 
+function testNoBom(files) {
+  const checked = files.filter(isCheckedTextFile);
+
+  for (const file of checked) {
+    const bytes = fs.readFileSync(file);
+    if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+      addFailure(`${toRepoPath(file)} starts with a UTF-8 BOM; remove it for portable text diffs.`);
+    }
+  }
+}
+
 function testAsciiFiles(files) {
   const checked = files.filter(isCheckedTextFile);
 
@@ -134,6 +145,14 @@ function resolveMarkdownTarget(sourceFile, target) {
   };
 }
 
+function isAllowedTemplateCopyLink(sourceRelativePath, target) {
+  const allowedTargetsByTemplate = new Map([
+    ["docs/templates/project-docs-INDEX.md", new Set(["../README.md", "../AGENTS.md"])],
+  ]);
+
+  return allowedTargetsByTemplate.get(sourceRelativePath)?.has(target) ?? false;
+}
+
 function testMarkdownLinks(markdownFiles) {
   const anchorCache = new Map();
   const linkGraph = new Map(markdownFiles.map((file) => [fs.realpathSync(file), []]));
@@ -148,6 +167,9 @@ function testMarkdownLinks(markdownFiles) {
     while ((match = linkPattern.exec(text)) !== null) {
       const target = match[1].trim();
       if (!target || /^(https?:|mailto:)/i.test(target)) {
+        continue;
+      }
+      if (isAllowedTemplateCopyLink(sourceRelativePath, target)) {
         continue;
       }
 
@@ -290,6 +312,16 @@ function testAgentAssetsAreGeneric() {
     "elitmind",
     "ELITMIND",
     "Elitmindvs",
+    "VibeRails-EM",
+    "SessionDeck",
+    "CrackerAi",
+    "SignalBoy",
+    "IQControl.Ai",
+  ];
+  const forbiddenRegexes = [
+    /\/Users\/[A-Za-z0-9._-]+\//,
+    /\/home\/[A-Za-z0-9._-]+\//,
+    /C:\\Users\\[A-Za-z0-9._-]+\\/,
   ];
   const allowlistedFiles = new Set([
     "scripts/validate.mjs",
@@ -312,6 +344,12 @@ function testAgentAssetsAreGeneric() {
         addFailure(`${relativePath} contains source-specific term '${pattern}'.`);
       }
     }
+
+    for (const pattern of forbiddenRegexes) {
+      if (pattern.test(text)) {
+        addFailure(`${relativePath} contains a local absolute path '${pattern}'.`);
+      }
+    }
   }
 }
 
@@ -319,6 +357,7 @@ const files = walkFiles(repoRoot);
 const markdownFiles = files.filter((file) => file.endsWith(".md"));
 
 testLineEndingsAndTrailingWhitespace(files);
+testNoBom(files);
 testAsciiFiles(files);
 const markdownLinkGraph = testMarkdownLinks(markdownFiles);
 testOrphanMarkdownFiles(markdownFiles, markdownLinkGraph);

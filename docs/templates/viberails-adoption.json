@@ -11,10 +11,19 @@
     "repositoryRoot": "<target-repository-root>",
     "remote": "<target-remote-url-or-null>",
     "defaultBranch": "<default-branch>",
+    "prTargetBranch": "<branch-for-adoption-and-follow-up-prs>",
     "branchNaming": "<branch-naming-rule>",
     "qualityGate": {
       "canonicalCommand": "<quality-gate-command>",
-      "pathToScopeMap": []
+      "pathToScopeMap": [
+        {
+          "paths": ["<path-prefix-or-glob>"],
+          "scope": "<frontend|backend|infra|docs|repo>",
+          "commands": ["<command>"],
+          "workingDirectory": "<relative-working-directory>",
+          "requiredBeforePr": true
+        }
+      ]
     }
   },
   "profiles": {
@@ -70,13 +79,26 @@
       "notAuthenticatedErrors": [],
       "missingAuthBehavior": "Prepare the sanitized ticket body locally and report the blocked self-improve write."
     },
-    "writeApprovalPolicy": "Agents may create or comment self-improve tickets only after user approval for the current task."
+    "writeApprovalPolicy": "Agents may create or comment self-improve tickets only after user approval for the current task.",
+    "alternateClients": []
   },
-  "copiedFiles": [],
+  "copiedFiles": [
+    {
+      "sourcePath": "<viberails-source-path>",
+      "targetPath": "<target-path>",
+      "sourceRef": "<commit-tag-or-branch>",
+      "mode": "<created|merged|refreshed|skipped>",
+      "scope": "<adoption-scope>",
+      "reason": "<why-this-file-was-copied-or-skipped>"
+    }
+  ],
   "exceptions": [],
   "openQuestions": [
     {
+      "category": "self-improve",
       "question": "Select and configure the self-improve ticket sink, or confirm that tracker none is intentional.",
+      "impact": "Agents can prepare local self-improve bodies but cannot query, create, or comment sink tickets.",
+      "owner": "unknown",
       "neededBefore": "Agents can create or comment self-improve tickets."
     }
   ]

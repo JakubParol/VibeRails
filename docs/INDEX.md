@@ -30,6 +30,7 @@ This index is the entry point for all standards and templates in this repository
 | [adopt-standards-prompt.md](templates/adopt-standards-prompt.md) | Prompt for applying these standards to another repository. |
 | [viberails-adoption.md](templates/viberails-adoption.md) | Copy to target repositories as `docs/viberails-adoption.md`. |
 | [viberails-adoption.json](templates/viberails-adoption.json) | Copy to target repositories as `.viberails/adoption.json`. |
+| [adoption-audit.mjs](templates/adoption-audit.mjs) | Optional target-side audit script for adopted repositories. |
 | [project-README.md](templates/project-README.md) | Copy to a new project root as `README.md`. |
 | [project-AGENTS.md](templates/project-AGENTS.md) | Copy to a new project root as `AGENTS.md`. |
 | [project-docs-INDEX.md](templates/project-docs-INDEX.md) | Copy to a new project root as `docs/INDEX.md`. |

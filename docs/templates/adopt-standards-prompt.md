@@ -16,7 +16,7 @@ protocol, documentation standard, stack profiles, documentation audit, and quali
 standard.
 Use indexes and headings to route context. Do not load every standard, template, or skill file
 unless the audit result shows that area is in scope.
-First audit the target repository structure and identify:
+First run the target preflight from the adoption standard, summarize the evidence, and identify:
 
 - VibeRails source path, remote, source ref, and pack version
 - target repository root, remote, default/base branch, branch naming, and PR target branch
@@ -47,13 +47,15 @@ Then:
 10. document the self-improve loop: provider sink coordinates, exact fingerprint dedupe,
     manual fallback, create/comment policy, labels/tags, issue type, comment template, auth
     checks, missing-auth behavior, and write approval policy
-11. run the minimum adoption audit and documentation audit
-12. report all intentional exceptions and unresolved questions
+11. if useful for this repository, copy `docs/templates/adoption-audit.mjs` into a target-local
+    tooling folder and run it from the target repository root
+12. run the minimum adoption audit and documentation audit
+13. report all intentional exceptions and unresolved questions
 
 When updating existing docs, preserve target-specific project purpose, setup, architecture,
 quality gate, and local warnings. Merge VibeRails rules into those files instead of replacing
-them wholesale. Record conflicts and unresolved decisions in `docs/viberails-adoption.md` and
-`.viberails/adoption.json`.
+them wholesale. Record preserved sections, changed sections, conflicts, and unresolved
+decisions in `docs/viberails-adoption.md` and `.viberails/adoption.json`.
 
 Do not push or open a PR until you ask me and I approve it.
 ```

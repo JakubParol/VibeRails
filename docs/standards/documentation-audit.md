@@ -18,6 +18,26 @@ complete.
 | Quality gates | Root and child project quality gates are documented. |
 | Stack profile | Selected stack profile is documented in README or docs index. |
 
+## Exclusions
+
+Documentation graph checks must skip generated, dependency, and cache folders:
+
+- `.git`
+- `.venv`
+- `venv`
+- `node_modules`
+- `.next`
+- `dist`
+- `build`
+- `coverage`
+- `.pytest_cache`
+- `.mypy_cache`
+- `.ruff_cache`
+- `.turbo`
+- `.nx`
+- `bin`
+- `obj`
+
 ## Required Report
 
 Report:

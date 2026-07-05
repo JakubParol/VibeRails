@@ -57,9 +57,9 @@ set.
 To apply these standards to another repository, start with
 [docs/templates/adopt-standards-prompt.md](docs/templates/adopt-standards-prompt.md).
 
-That prompt is designed for a standards repository path or URL and a target repository path or
-URL. Replace those values as needed, then give it to the AI agent working in the target
-repository.
+Open the target repository in Codex first, then provide the standards repository path or URL
+in that prompt. The agent records the target repository root during preflight instead of
+guessing it from the prompt text.
 
 ## How To Use This Repository
 
@@ -154,6 +154,7 @@ documented sub-area:
 - `adopt-standards-prompt.md` - prompt for applying these standards to another repository.
 - `viberails-adoption.md` - human-readable adoption record for target repositories.
 - `viberails-adoption.json` - machine-readable adoption manifest template.
+- `adoption-audit.mjs` - optional target-side audit script to copy into adopted repositories.
 - `project-README.md` - copy to project root as `README.md`.
 - `project-AGENTS.md` - copy to project root as `AGENTS.md`.
 - `project-docs-INDEX.md` - copy to project root as `docs/INDEX.md`.

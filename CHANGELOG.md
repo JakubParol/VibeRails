@@ -21,6 +21,11 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   structured for auth/dedupe/comment behavior, template indexes include the new required
   standards, and validation now rejects CRLF/trailing whitespace and source-specific terms
   outside an explicit validator allowlist.
+- Adoption review hardening: self-improve writes now gate on read auth, dedupe, write auth, and
+  task approval in that order; manifests include PR target branch, copied-file shapes,
+  path-to-scope map shapes, alternate self-improve clients, and open-question taxonomy; target
+  adoption gets a repeatable preflight, merge preservation report, generated-folder audit
+  exclusions, optional target-side audit script, and BOM rejection in validators.
 
 ## 0.2.0 - 2026-07-03
 

@@ -17,9 +17,11 @@ tokens, raw API responses, or private identity payloads.
 | `viberails.sourcePath` | Local path used during adoption when available. |
 | `viberails.sourceRemote` | Remote URL for the VibeRails source when available. |
 | `viberails.sourceRef` | Commit, tag, or branch used for adoption. Prefer immutable commit hash. |
+| `viberails.packVersion` | Pack version recorded from VibeRails `CHANGELOG.md`. |
 | `target.repositoryRoot` | Target repository root path at adoption time. |
 | `target.remote` | Target repository remote when available. |
 | `target.defaultBranch` | Default branch used for adoption and PR target decisions. |
+| `target.prTargetBranch` | Branch that adoption and follow-up PRs should target. Usually the default branch. |
 | `target.branchNaming` | Branch naming convention for agent changes. |
 | `target.qualityGate` | Target-local quality gate commands and path-to-scope map. |
 | `profiles.agentRuntime` | `codex`. |
@@ -27,10 +29,36 @@ tokens, raw API responses, or private identity payloads.
 | `profiles.workTracking` | Selected work tracking profile or `none`. |
 | `profiles.codeHosting` | Selected code hosting profile or `none`. |
 | `profiles.scriptPlatform` | `powershell`, `posix-shell`, or `both`. |
+| `auth` | Non-secret read/write auth documents or commands for selected integrations. |
 | `selfImprove` | Ticket sink and dedupe rules for reusable agent/tooling failures. |
 | `copiedFiles` | Standards and templates copied into the target repository. |
 | `exceptions` | Intentional deviations from VibeRails defaults. |
 | `openQuestions` | Decisions that still need a human answer. |
+
+## Field Shapes
+
+Use stable object shapes so automation can audit adoption without parsing prose.
+
+`target.qualityGate.pathToScopeMap` items:
+
+| Field | Purpose |
+|---|---|
+| `paths` | Glob-like path prefixes or file patterns covered by this gate entry. |
+| `scope` | Human-readable scope such as `frontend`, `backend`, `infra`, or `docs`. |
+| `commands` | Commands required when matching paths change. |
+| `workingDirectory` | Directory where commands run. |
+| `requiredBeforePr` | `true` when the commands must pass before PR creation. |
+
+`copiedFiles` items:
+
+| Field | Purpose |
+|---|---|
+| `sourcePath` | VibeRails source file path. |
+| `targetPath` | Target repository file path. |
+| `sourceRef` | VibeRails commit, tag, or branch used for this copy. |
+| `mode` | `created`, `merged`, `refreshed`, or `skipped`. |
+| `scope` | Adoption scope affected by the file. |
+| `reason` | Short reason for copying, merging, refreshing, or skipping. |
 
 ## Self-Improve Manifest Section
 
@@ -50,6 +78,7 @@ Required fields:
 | `commentTemplate` | Required fields for comments on existing tickets. |
 | `auth` | Read/write auth checks, env var names, connector names, and missing-auth behavior. |
 | `writeApprovalPolicy` | Whether agents may create/comment after user approval or must only prepare local bodies. |
+| `alternateClients` | Same-provider fallback connectors or wrappers for self-improve sink failures. |
 
 If the self-improve sink is not configured during adoption, set `enabled` to `false` and add an
 open question that names the missing decision. Agents must not run tracker reads or writes
@@ -81,6 +110,18 @@ For Jira, record at least:
 If the repository stores these details in another target-local document, the manifest may link
 to that document, but the link must be specific enough for an agent to run dedupe before
 creating a duplicate.
+
+## Open Question Taxonomy
+
+Each `openQuestions` item should include:
+
+| Field | Purpose |
+|---|---|
+| `category` | `provider`, `auth`, `quality-gate`, `documentation`, `stack-exception`, `self-improve`, or `workflow`. |
+| `question` | Human-readable decision needed. |
+| `impact` | What adoption or automation cannot safely do until the decision is made. |
+| `neededBefore` | Milestone such as `first PR`, `self-improve write`, or `CI adoption`. |
+| `owner` | Person, team, or `unknown`. |
 
 ## Update Rules
 

@@ -64,15 +64,25 @@ Reusable agent/tooling failures are reported here:
 | Comment policy | Add sanitized evidence to an existing matching ticket before creating a new one. |
 | Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |
 | Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
+| Write approval policy | `<when agents may create or comment self-improve tickets>` |
+| Alternate clients | `<same-provider fallback connectors or wrappers, or none>` |
 
 If auth or write approval is missing, agents prepare the ticket body locally and report the
 blocker instead of silently skipping the learning.
 
 ## Copied Standards
 
-| File | Source | Notes |
-|---|---|---|
-| `<target path>` | `<source path>` | `<notes>` |
+| Target path | Source path | Source ref | Mode | Scope | Reason |
+|---|---|---|---|---|---|
+| `<target path>` | `<source path>` | `<commit, tag, or branch>` | `<created|merged|refreshed|skipped>` | `<scope>` | `<reason>` |
+
+## Preservation Report
+
+| File | Preserved sections | Changed sections | Conflicts or follow-up |
+|---|---|---|---|
+| `README.md` |  |  |  |
+| `AGENTS.md` |  |  |  |
+| `docs/INDEX.md` |  |  |  |
 
 ## Exceptions
 
@@ -82,10 +92,12 @@ blocker instead of silently skipping the learning.
 
 ## Open Questions
 
-| Question | Needed before |
-|---|---|
-| `<question>` | `<task or date>` |
+| Category | Question | Impact | Owner | Needed before |
+|---|---|---|---|---|
+| `<provider|auth|quality-gate|documentation|stack-exception|self-improve|workflow>` | `<question>` | `<blocked behavior>` | `<owner>` | `<task or date>` |
 
 ## Navigation
 
-- Documentation index after copy: `docs/INDEX.md`
+- Template source index: [Documentation index](../INDEX.md)
+- After copying this template to `docs/viberails-adoption.md`, replace this bullet with a
+  real Markdown link to the target repository documentation index.

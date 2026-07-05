@@ -1,4 +1,4 @@
-﻿function Get-PullRequestCreatorId {
+function Get-PullRequestCreatorId {
     param([Parameter(Mandatory = $true)][object] $PullRequest)
 
     $createdBy = Get-ObjectPropertyValue -Value $PullRequest -Name "createdBy"

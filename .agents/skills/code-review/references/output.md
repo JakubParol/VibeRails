@@ -1,4 +1,4 @@
-﻿# Review Output
+# Review Output
 
 Use this output structure for user-facing reports. Keep it concise and evidence based.
 

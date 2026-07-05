@@ -1,4 +1,4 @@
-﻿function Get-WorkItem {
+function Get-WorkItem {
     param([int] $WorkItemId)
 
     return Invoke-AzJson (Add-OrgArgs @("boards", "work-item", "show", "--id", ([string] $WorkItemId), "--expand", "relations"))
