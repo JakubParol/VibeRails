@@ -90,10 +90,12 @@ Record:
 - allowed `gh` write operations, if any
 
 Do not assume GitHub Issues is the work tracker unless the target repository says so. For this
-version of VibeRails, work tracking profiles are Azure Boards, Jira, or `none`.
+version of VibeRails, work tracking profiles are Azure Boards, Jira, `unsupported-provider`,
+or `none`.
 
-If the target repository uses GitHub for code hosting and Jira or Azure Boards for tracking,
-record both profiles separately. GitHub PR review publishing is not a default VibeRails skill
+If the target repository uses GitHub for code hosting and Jira, Azure Boards, or another real
+tracker, record both profiles separately. Use `unsupported-provider` for a real tracker that
+VibeRails does not model yet. GitHub PR review publishing is not a default VibeRails skill
 workflow yet; local-diff review is supported.
 
 ### Azure Repos Code Hosting

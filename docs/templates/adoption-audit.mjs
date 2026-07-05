@@ -24,6 +24,47 @@ const excludedDirectories = new Set([
   "bin",
   "obj",
 ]);
+const htmlTagNames = new Set([
+  "a",
+  "abbr",
+  "b",
+  "br",
+  "code",
+  "dd",
+  "del",
+  "details",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "hr",
+  "i",
+  "img",
+  "kbd",
+  "li",
+  "ol",
+  "p",
+  "pre",
+  "samp",
+  "span",
+  "strong",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "th",
+  "thead",
+  "tr",
+  "ul",
+]);
 
 function toRepoPath(filePath) {
   return path.relative(repoRoot, filePath).split(path.sep).join("/");
@@ -148,7 +189,7 @@ function auditMarkdown(markdownFiles) {
 
     const visibleText = stripInlineCode(stripFencedBlocks(text));
     const shouldCheckPlaceholders = !sourceRelativePath.startsWith("docs/standards/");
-    if (shouldCheckPlaceholders && (/<[^>\n]+>/.test(visibleText) || /\bTODO\b/i.test(visibleText))) {
+    if (shouldCheckPlaceholders && (containsPlaceholder(visibleText) || /\bTODO\b/i.test(visibleText))) {
       fail(`${sourceRelativePath} contains unresolved placeholder or TODO text.`);
     }
 
@@ -243,6 +284,10 @@ function auditManifest() {
   }
   if (!Array.isArray(manifest.target?.projectProfiles)) {
     fail(".viberails/adoption.json must record target.projectProfiles as an array.");
+  } else if (manifest.target.projectProfiles.length === 0) {
+    fail(".viberails/adoption.json must record at least one target.projectProfiles entry.");
+  } else if (!manifest.target.projectProfiles.some((profile) => profile?.documentationRoot === ".")) {
+    fail(".viberails/adoption.json must include a root target.projectProfiles entry with documentationRoot '.'.");
   }
   if (!Array.isArray(manifest.copiedFiles)) {
     fail(".viberails/adoption.json must record copiedFiles as an array.");
@@ -306,7 +351,7 @@ function auditPrPolicy(prPolicy) {
 
 function auditManifestPlaceholders(value, pathParts = []) {
   if (typeof value === "string") {
-    if (isPlaceholder(value) || /\bTODO\b/i.test(value) || /^n\/a$/i.test(value.trim())) {
+    if (containsPlaceholder(value) || /\bTODO\b/i.test(value) || /^n\/a$/i.test(value.trim())) {
       fail(`.viberails/adoption.json contains unresolved value at '${pathParts.join(".")}'.`);
     }
     return;
@@ -323,7 +368,39 @@ function auditManifestPlaceholders(value, pathParts = []) {
 }
 
 function isPlaceholder(value) {
-  return typeof value === "string" && /<[^>\n]+>/.test(value);
+  return typeof value === "string" && containsPlaceholder(value);
+}
+
+function containsPlaceholder(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const matches = value.matchAll(/<([^>\n]+)>/g);
+  for (const match of matches) {
+    if (isPlaceholderToken(match[1])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isPlaceholderToken(rawToken) {
+  const token = rawToken.trim();
+  if (!token || token.startsWith("!--") || token.startsWith("/") || /^[a-z]+:/i.test(token)) {
+    return false;
+  }
+  if (/^\S+@\S+\.\S+$/.test(token)) {
+    return false;
+  }
+
+  const tagName = token.split(/\s+/)[0].replace(/\/$/, "").toLowerCase();
+  if (htmlTagNames.has(tagName)) {
+    return false;
+  }
+
+  return true;
 }
 
 function requireNonPlaceholderString(value, field) {
@@ -373,11 +450,40 @@ function auditSelfImproveSection(selfImprove, openQuestions) {
     requireNonPlaceholderString(selfImprove.auth?.readCheck, "selfImprove.auth.readCheck");
     requireNonPlaceholderString(selfImprove.auth?.writeCheck, "selfImprove.auth.writeCheck");
     requireNonPlaceholderString(selfImprove.writeApprovalPolicy, "selfImprove.writeApprovalPolicy");
+    auditSelfImproveSink(selfImprove);
   } else if (!hasSelfImproveDecision(selfImprove, openQuestions)) {
     fail(".viberails/adoption.json must record selfImprove.disabledReason or a self-improve open question when selfImprove.enabled is false.");
   }
   if (!Array.isArray(selfImprove.alternateClients)) {
     fail(".viberails/adoption.json must record selfImprove.alternateClients as an array.");
+  }
+}
+
+function auditSelfImproveSink(selfImprove) {
+  switch (selfImprove.tracker) {
+    case "azure-devops":
+      for (const field of ["organizationUrl", "project", "workItemType", "queryCommand", "createCommand", "commentCommand"]) {
+        requireNonPlaceholderString(selfImprove.sink?.azureDevOps?.[field], `selfImprove.sink.azureDevOps.${field}`);
+      }
+      break;
+    case "jira":
+      for (const field of ["baseUrl", "projectKey", "issueType", "queryCommand", "createCommand", "commentCommand"]) {
+        requireNonPlaceholderString(selfImprove.sink?.jira?.[field], `selfImprove.sink.jira.${field}`);
+      }
+      break;
+    case "custom-ticket-sink":
+      for (const field of ["name", "owner", "queryCommand", "createCommand", "commentCommand", "authCheck"]) {
+        requireNonPlaceholderString(selfImprove.sink?.customTicketSink?.[field], `selfImprove.sink.customTicketSink.${field}`);
+      }
+      break;
+    case "local-file-sink":
+      for (const field of ["path", "writePolicy", "dedupeRule", "reviewOwner"]) {
+        requireNonPlaceholderString(selfImprove.sink?.localFileSink?.[field], `selfImprove.sink.localFileSink.${field}`);
+      }
+      break;
+    default:
+      fail(".viberails/adoption.json cannot enable selfImprove when selfImprove.tracker is 'none'.");
+      break;
   }
 }
 
@@ -450,27 +556,34 @@ function auditDiscoveredProjectRoots(projectProfiles) {
     return;
   }
 
-  const coveredRoots = new Set();
+  const coveredDocumentationRoots = new Set();
   for (const profile of projectProfiles) {
     if (typeof profile.documentationRoot === "string") {
-      coveredRoots.add(path.normalize(profile.documentationRoot));
-    }
-    for (const profilePath of profile.paths ?? []) {
-      if (typeof profilePath === "string") {
-        coveredRoots.add(path.normalize(profilePath));
-      }
+      coveredDocumentationRoots.add(path.normalize(profile.documentationRoot));
     }
   }
 
   for (const root of discoverLikelyProjectRoots()) {
-    if (!coveredRoots.has(path.normalize(root))) {
-      fail(`Likely standalone project root '${root}' is not listed in target.projectProfiles.`);
+    if (!coveredDocumentationRoots.has(path.normalize(root))) {
+      fail(`Likely standalone project root '${root}' is not listed as a target.projectProfiles documentationRoot.`);
     }
   }
 }
 
 function discoverLikelyProjectRoots() {
-  const containerNames = ["apps", "services", "workers", "packages", "libs", "infra", "infrastructure"];
+  const containerNames = [
+    "apps",
+    "services",
+    "workers",
+    "packages",
+    "libs",
+    "infra",
+    "infrastructure",
+    "mobile",
+    "tools",
+    "crates",
+    "cmd",
+  ];
   const markerFiles = ["package.json", "pyproject.toml", "requirements.txt", "Dockerfile", "docs/INDEX.md"];
   const discovered = [];
 
@@ -485,15 +598,30 @@ function discoverLikelyProjectRoots() {
         continue;
       }
 
-      const candidateRelative = path.join(containerName, entry.name);
-      const candidatePath = path.join(repoRoot, candidateRelative);
-      if (markerFiles.some((marker) => fs.existsSync(path.join(candidatePath, marker)))) {
-        discovered.push(candidateRelative.split(path.sep).join("/"));
-      }
+      discoverRootCandidates(path.join(containerName, entry.name), markerFiles, discovered, entry.name.startsWith("@") ? 2 : 1);
     }
   }
 
   return discovered;
+}
+
+function discoverRootCandidates(relativeDirectory, markerFiles, discovered, remainingDepth) {
+  const directory = path.join(repoRoot, relativeDirectory);
+  if (markerFiles.some((marker) => fs.existsSync(path.join(directory, marker)))) {
+    discovered.push(relativeDirectory.split(path.sep).join("/"));
+    return;
+  }
+
+  if (remainingDepth <= 0) {
+    return;
+  }
+
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    if (!entry.isDirectory() || excludedDirectories.has(entry.name)) {
+      continue;
+    }
+    discoverRootCandidates(path.join(relativeDirectory, entry.name), markerFiles, discovered, remainingDepth - 1);
+  }
 }
 
 function auditCopiedFiles(copiedFiles) {

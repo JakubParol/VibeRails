@@ -41,6 +41,10 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   self-improve templates now include custom ticket and local file sinks.
 - Code-hosting policy polish: adoption now records draft PR defaults, allowed PR writes, and
   review publishing behavior separately from the selected code-hosting profile.
+- Audit strictness polish: target adoption audit now requires a root project profile, validates
+  selected self-improve sink coordinates, treats discovered roots as covered only by matching
+  documentation roots, expands likely monorepo containers, and avoids false positives for
+  ordinary Markdown HTML tags and autolinks.
 
 ## 0.2.0 - 2026-07-03
 
