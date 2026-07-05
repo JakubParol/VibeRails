@@ -1,0 +1,111 @@
+# Integration Profiles Standard
+
+Integration profiles describe how an adopting repository records external workflow choices.
+They are documentation contracts first. They do not require live service access during
+adoption, and they do not authorize agents to perform writes unless the target repository and
+user instruction allow those writes.
+
+## Selection Rules
+
+- Select profiles from target repository evidence or user confirmation.
+- Do not infer profiles from the VibeRails source repository.
+- Record `none` when a target repository deliberately has no provider for an area.
+- Record auth setup without secrets.
+- Record uncertainty in `docs/viberails-adoption.md` and `.viberails/adoption.json`.
+
+## Work Tracking Profiles
+
+| Profile | Use when |
+|---|---|
+| `azure-devops-work-tracking` | Work is planned in Azure Boards. |
+| `jira-work-tracking` | Work is planned in Jira. |
+| `none` | The repository does not use a supported tracker yet. |
+
+### Azure DevOps Work Tracking
+
+Record:
+
+- organization URL
+- project name
+- default work item types for Story, Task, Bug, and self-improve ticket
+- area path and iteration policy when relevant
+- labels/tags used for VibeRails adoption and self-improvement
+- read command for checking auth and project access
+- write approval rule for creating or commenting on work items
+
+Do not guess organization, project, area path, iteration, or work item type.
+
+### Jira Work Tracking
+
+Record:
+
+- Jira base URL or cloud site identifier
+- project key
+- default issue types for Story, Task, Bug, and self-improve ticket
+- labels/components used for VibeRails adoption and self-improvement
+- query used to find existing self-improve issues
+- read command for checking auth and project access
+- write approval rule for creating or commenting on issues
+
+Do not guess project key, board, sprint, issue type, component, or transition names.
+
+## Code Hosting Profiles
+
+| Profile | Use when |
+|---|---|
+| `github-code-hosting` | Git remotes and PRs are hosted in GitHub. |
+| `azure-repos-code-hosting` | Git remotes and PRs are hosted in Azure Repos. |
+| `none` | The repository has no supported remote or PR host yet. |
+
+### GitHub Code Hosting
+
+Record:
+
+- repository owner and name
+- default branch
+- branch naming convention
+- PR target branch
+- whether draft PRs are default
+- auth check command, usually `gh auth status`
+- allowed `gh` write operations, if any
+
+Do not assume GitHub Issues is the work tracker unless the target repository says so. For this
+version of VibeRails, work tracking profiles are Azure Boards, Jira, or `none`.
+
+### Azure Repos Code Hosting
+
+Record:
+
+- organization URL
+- project name
+- repository name
+- default branch
+- branch naming convention
+- PR target branch
+- whether draft PRs are default
+- auth check command for `az devops` or the repository's chosen wrapper
+- allowed PR write operations, if any
+
+Do not reuse Azure Boards settings as Azure Repos settings unless the target repository records
+that they are the same project.
+
+## Auth Documentation
+
+Each selected profile must point to target-local auth instructions. The instructions should
+cover:
+
+- required CLI or connector
+- read-only auth check
+- write auth check when writes are allowed
+- expected environment variables by name only
+- where tokens must be stored outside git
+- what error means "not authenticated"
+
+Never commit token values, cookies, generated credential files, raw user profiles, or private
+identity payloads.
+
+## Navigation
+
+- [Documentation index](../INDEX.md)
+- [Adoption standard](adoption.md)
+- [Self-improve loop](self-improve-loop.md)

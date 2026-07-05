@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Structured repository code reviews"
+  default_prompt: "Use $code-review to run a structured review on the current branch or pull request."
+policy:
+  allow_implicit_invocation: true

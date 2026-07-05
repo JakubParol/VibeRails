@@ -1,4 +1,0 @@
-interface:
-  display_name: "Azure DevOps ElitMind"
-  short_description: "Work with ElitMind Azure Boards, PRs, and reusable fixes"
-  default_prompt: "Use $azure-devops-elitmind to update ElitMind Azure Boards work items or pull requests safely, and capture reusable Azure DevOps fixes in the skill when appropriate."

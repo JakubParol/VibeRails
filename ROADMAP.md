@@ -19,14 +19,14 @@ Goals, in priority order:
 
 Hard constraints:
 
-- The pack targets OpenAI Codex and GPT 5.5 by company requirement. All designs must follow
-  current Codex documentation, not assumptions.
+- The pack targets OpenAI Codex first. Other agent runtimes are out of scope until they are
+  deliberately added as profiles.
 - Existing guardrails must not be weakened: write approvals, self-review blocking, dirty-tree
   protection, and quality-gate integrity stay as they are or get stricter.
 - Documentation stays ASCII-only English; `.\scripts\validate.ps1` must pass at every commit.
 
-Evidence base: session transcripts from a reference adopting repository (DocMind.Ai), the
-`lint.ps1` and PR validation pipeline in that repository, and the Codex skills documentation
+Evidence base: session transcripts from a reference adopting repository, its quality gate and
+PR validation pipeline, and the Codex skills documentation
 (skill scopes: repo `.agents/skills`, user `$HOME/.agents/skills`, admin, system; repo wins on
 name collision; same-name skills do not merge).
 
@@ -52,7 +52,7 @@ Decisions and verifications that later phases depend on.
 - [x] 0.3 Decision: approve the scoped quality gate policy wording (local gate proves the
       changed scope, CI proves the whole repository) before editing standards in Phase 4.
 
-## Phase 1 - Skill: azure-devops-elitmind (reliability first, then tokens)
+## Phase 1 - Skill: azure-devops (reliability first, then tokens)
 
 Fixes the largest observed session losses: sign-in HTML treated as data, hanging POSTs,
 missing fallbacks, no timeouts, misleading errors.
@@ -82,12 +82,12 @@ missing fallbacks, no timeouts, misleading errors.
 - [x] 1.6 Token cuts on read actions: summary output as default for `Show`, `Metadata`,
       `QueryByMarker`, PR `Show`, `Threads`, `IterationChanges` (project only the fields the
       workflows need), with a `-Raw` switch for full payloads.
-- [x] 1.7 Slim the reference router: `references/elitmind-ado.md` is nearly pure indirection.
+- [x] 1.7 Slim the reference router: the old Azure DevOps router was nearly pure indirection.
       Link operation files directly from `SKILL.md` and delete or reduce the router.
 - [~] 1.8 Verify: `.\scripts\validate.ps1` passes; live check of one inline PR comment with
       Polish multiline content on a marked test draft PR, with cleanup commands reported.
 
-## Phase 2 - Skill: code-review-elitmind
+## Phase 2 - Skill: code-review
 
 - [x] 2.1 Flatten `references/modes.md` indirection: `SKILL.md` links mode files directly.
 - [x] 2.2 Add an architecture shortcut checklist to the backend/API specialist prompt:
@@ -99,7 +99,7 @@ missing fallbacks, no timeouts, misleading errors.
 - [x] 2.4 Verify: validate passes; dry-run review on a sample branch confirms the new
       checklists appear in agent prompts.
 
-## Phase 3 - Skill: e2e-work-item-elitmind
+## Phase 3 - Skill: e2e-work-item
 
 - [x] 3.1 Final Guard Rails section: replace "run the full required guard rails" with the
       scoped gate policy (scoped commands for changed areas; full run only for cross-cutting
@@ -161,8 +161,8 @@ Depends on Phase 0 decisions.
       agent mid-task appends a structured learning instead of stopping to author a full
       patch; add a consolidation workflow description (a periodic VibeRails session turns
       inbox entries into real patches).
-- [x] 6.4 Extend the learning loop pattern to `code-review-elitmind` and
-      `e2e-work-item-elitmind`.
+- [x] 6.4 Extend the learning loop pattern to `code-review` and
+      `e2e-work-item`.
 - [x] 6.5 Introduce pack versioning: `CHANGELOG.md` plus a version marker adopting
       repositories can record, so standard copies can be diffed and upgraded.
 
@@ -188,7 +188,7 @@ Depends on Phase 0 decisions.
 |---|---|---|
 | 2026-07-03 | - | Roadmap created on branch `docs/optimization-roadmap`. |
 | 2026-07-03 | Phase 0 | Started. |
-| 2026-07-03 | 0.1 | Junction created at `$HOME\.agents\skills\azure-devops-elitmind` pointing to this checkout; SKILL.md resolves through it. Pending: owner restarts Codex and confirms the skill appears in `/skills` inside another repository. Note: inside the VibeRails project Codex may list this skill twice (repo scope plus user scope); expected, not a defect. |
+| 2026-07-03 | 0.1 | Junction created at `$HOME\.agents\skills\azure-devops` pointing to this checkout; SKILL.md resolves through it. Pending: owner restarts Codex and confirms the skill appears in `/skills` inside another repository. Note: inside the VibeRails project Codex may list this skill twice (repo scope plus user scope); expected, not a defect. |
 | 2026-07-03 | 0.2 | Adopted recommended default (user-scope distribution, no vendored copies except pinning). Autonomous decision, flagged for owner review. |
 | 2026-07-03 | 0.3 | Adopted recommended wording (local gate proves changed scope, CI proves whole repo). Autonomous decision, flagged for owner review. |
 | 2026-07-03 | Phase 0 | Done except 0.1 owner verification. |
@@ -206,6 +206,7 @@ Depends on Phase 0 decisions.
 | 2026-07-03 | Phase 6 | Started and done. install-skills.ps1 ran on this machine: azure-devops junction from Phase 0 recognized, code-review and e2e junctions created - all three skills now at user scope here. LEARNINGS.md inbox added per skill with entry format and consolidation workflow; learning loop routing rewritten for the junction model; CHANGELOG.md with pack version 0.2.0 added and adoption now records the adopted version. Owner follow-up unchanged from 0.1: restart Codex and confirm skills appear in another repository. |
 | 2026-07-03 | Phase 7 | Started and done. validate.ps1 now checks Markdown anchors (GitHub-style slugs, code fences skipped) and orphaned Markdown files (BFS from README.md over the link graph); both verified with a deliberate negative test. Also fixed a pre-existing validator flaw: with ErrorActionPreference=Stop the first Write-Error hid all remaining failures, so agents saw one failure per run - all failures now print at once. BOM stripped from two openai.yaml files. |
 | 2026-07-03 | Effort | All phases complete. Open items for the owner: 0.1 (restart Codex, confirm skills at user scope appear in another repository via /skills) and 1.8 (live inline PR comment write test with Polish multiline content on a marked draft PR). Recommended next steps: merge this branch, run install-skills.ps1 on other machines, and schedule the first LEARNINGS consolidation session. |
+| 2026-07-05 | Generic adoption | Added the process-neutral adoption contract for Codex-first target repositories, explicit Azure DevOps/Jira/GitHub/Azure Repos and PowerShell/POSIX profiles, adoption manifest templates, and the first-stage ticket-based self-improve loop. |
 
 ## Navigation
 

@@ -244,7 +244,16 @@ function Test-AgentAssetsAreGeneric {
         return
     }
 
-    $forbiddenPatterns = @("DocMind", "docmind", "DOCMINDAI", "ELITMIND.DOCMINDAI")
+    $forbiddenPatterns = @(
+        "DocMind",
+        "docmind",
+        "DOCMINDAI",
+        "ELITMIND.DOCMINDAI",
+        "ElitMind",
+        "elitmind",
+        "ELITMIND",
+        "Elitmindvs"
+    )
     $files = Get-ChildItem -LiteralPath $agentsRoot -Recurse -File -Force
     foreach ($file in $files) {
         $text = Get-Content -LiteralPath $file.FullName -Raw

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Code Review ElitMind"
-  short_description: "Structured ElitMind code reviews"
-  default_prompt: "Use $code-review-elitmind to run an ElitMind code review on the current branch or Azure DevOps pull request."
-policy:
-  allow_implicit_invocation: true

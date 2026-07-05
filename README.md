@@ -5,15 +5,20 @@ Standards, guardrails, and documentation templates for AI-assisted software proj
 Pack version: see [CHANGELOG.md](CHANGELOG.md). Adopting repositories record the adopted
 version in their `docs/INDEX.md`.
 
-This repository is a reusable standards pack for software projects developed with AI coding
-agents. It is meant to be referenced from another repository when a project is created or when
-an existing project needs consistent documentation, agent instructions, architecture rules, and
-quality gates.
+This repository is a reusable, process-neutral standards pack for software projects developed
+with AI coding agents. It is meant to be referenced from another repository when a project is
+created or when an existing project needs consistent documentation, agent instructions,
+architecture rules, and quality gates.
 
 A user can point an AI agent at this repository and ask it to adopt these standards in the
 target project. The agent should copy the relevant templates, create missing Markdown files,
-wire the documentation navigation, and adapt the standards to the target repository without
-turning this repository into project-specific documentation.
+wire the documentation navigation, record selected profiles, and adapt the standards to the
+target repository without turning this repository into project-specific documentation.
+
+VibeRails is currently Codex-first. It supports generic adoption across Windows, Linux, and
+macOS with optional profiles for Azure DevOps or Jira work tracking, GitHub or Azure Repos code
+hosting, and PowerShell or POSIX shell commands. Provider choices belong to the target
+repository and must be recorded during adoption.
 
 The standards are project-agnostic, but currently cover these common setups:
 
@@ -29,14 +34,15 @@ they should not weaken the defaults unless the exception is explicit and justifi
 ## Agent Skills
 
 Versioned Codex skills live in [.agents/skills](.agents/skills/README.md). They capture
-repeatable ElitMind workflows. Install them once per machine at the Codex user scope with
-`scripts/install-skills.ps1`; they are then available in every repository:
+repeatable repository workflows. They are optional agent assets, not part of core adoption.
+Install them once per machine at the Codex user scope with `scripts/install-skills.ps1` only
+when the user wants these workflows available in every repository:
 
 | Skill | Intended use |
 |---|---|
-| [azure-devops-elitmind](.agents/skills/azure-devops-elitmind/SKILL.md) | Work safely with ElitMind Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
-| [code-review-elitmind](.agents/skills/code-review-elitmind/SKILL.md) | Run structured local branch and Azure DevOps PR reviews with repository-aware specialist routing. |
-| [e2e-work-item-elitmind](.agents/skills/e2e-work-item-elitmind/SKILL.md) | Run an Azure Boards work item from `[E2E]` prompt through implementation, guard rails, and Code Review state. |
+| [azure-devops](.agents/skills/azure-devops/SKILL.md) | Work safely with Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
+| [code-review](.agents/skills/code-review/SKILL.md) | Run structured local branch and pull request reviews with repository-aware specialist routing. |
+| [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Run an Azure Boards work item from `[E2E]` prompt through implementation, guard rails, and Code Review state. |
 
 ## Quick Adoption Prompt
 
@@ -53,17 +59,19 @@ When working in another repository, give the AI agent access to this repository 
 
 1. Read this repository's `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
 2. Follow [docs/standards/adoption.md](docs/standards/adoption.md).
-3. Copy the relevant standards into the target repository's `docs/standards/`.
-4. Create or update the target repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-5. For monorepos, create a full documentation root for each standalone app, service, worker,
+3. Select stack, work tracking, code hosting, platform, and self-improve profiles.
+4. Copy the relevant standards into the target repository's `docs/standards/`.
+5. Create `.viberails/adoption.json` and `docs/viberails-adoption.md`.
+6. Create or update the target repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
+7. For monorepos, create a full documentation root for each standalone app, service, worker,
    mobile app, or package.
-6. Add local `README.md` files to significant feature, module, adapter, and bounded-context
+8. Add local `README.md` files to significant feature, module, adapter, and bounded-context
    folders.
-7. Add folder-level `AGENTS.md` files only where local agent rules differ from the parent.
-8. Do not copy skills into the target project. Install them once per machine at the Codex
+9. Add folder-level `AGENTS.md` files only where local agent rules differ from the parent.
+10. Do not copy skills into the target project. Install them once per machine at the Codex
    user scope with `scripts/install-skills.ps1`; see
    [.agents/skills](.agents/skills/README.md).
-9. Update navigation links so agents can drill down from general standards to local context.
+11. Update navigation links so agents can drill down from general standards to local context.
 
 The target repository owns its final documentation. This repository provides reusable defaults,
 templates, and structure.
@@ -89,10 +97,14 @@ For every project that uses this template, start from broad context and drill do
 |---|---|
 | Agent workflow | [docs/standards/agent-workflow.md](docs/standards/agent-workflow.md) |
 | Adoption | [docs/standards/adoption.md](docs/standards/adoption.md) |
+| Adoption manifest | [docs/standards/adoption-manifest.md](docs/standards/adoption-manifest.md) |
 | Change protocol | [docs/standards/change-protocol.md](docs/standards/change-protocol.md) |
 | Documentation | [docs/standards/documentation.md](docs/standards/documentation.md) |
 | Documentation audit | [docs/standards/documentation-audit.md](docs/standards/documentation-audit.md) |
+| Integration profiles | [docs/standards/integration-profiles.md](docs/standards/integration-profiles.md) |
+| Platform profiles | [docs/standards/platform-profiles.md](docs/standards/platform-profiles.md) |
 | Quality gate | [docs/standards/quality-gate.md](docs/standards/quality-gate.md) |
+| Self-improve loop | [docs/standards/self-improve-loop.md](docs/standards/self-improve-loop.md) |
 | Stack profiles | [docs/standards/stack-profiles.md](docs/standards/stack-profiles.md) |
 | Architecture | [docs/standards/architecture.md](docs/standards/architecture.md) |
 | General coding | [docs/standards/coding.md](docs/standards/coding.md) |
@@ -111,12 +123,20 @@ For every project that uses this template, start from broad context and drill do
 
 Before reporting changes as ready, run:
 
+```bash
+node scripts/validate.mjs
+```
+
+This checks Markdown links and anchors, orphaned Markdown files, ASCII-only documentation and
+skill files, skill metadata, and source-specific terms in `.agents`.
+
+When PowerShell is available, also run:
+
 ```powershell
 .\scripts\validate.ps1
 ```
 
-This checks Markdown links and anchors, orphaned Markdown files, ASCII-only documentation and
-skill files, skill metadata, PowerShell syntax, and source-specific terms in `.agents`.
+The PowerShell gate performs the same repository checks and additionally parses `.ps1` files.
 
 ## Templates
 
@@ -124,6 +144,8 @@ Use files in [docs/templates](docs/templates/) when starting a new project or ad
 documented sub-area:
 
 - `adopt-standards-prompt.md` - prompt for applying these standards to another repository.
+- `viberails-adoption.md` - human-readable adoption record for target repositories.
+- `viberails-adoption.json` - machine-readable adoption manifest template.
 - `project-README.md` - copy to project root as `README.md`.
 - `project-AGENTS.md` - copy to project root as `AGENTS.md`.
 - `project-docs-INDEX.md` - copy to project root as `docs/INDEX.md`.
@@ -137,6 +159,7 @@ documented sub-area:
 - Keep documentation Markdown-first.
 - Follow the change protocol for branch setup, commits, push, PR, and review loops.
 - Use the adoption standard when applying these standards to another repository.
+- Record selected profiles and the self-improve ticket sink during adoption.
 - Prefer local context files over long global documents.
 - Every repository root and standalone monorepo project has `README.md`, `AGENTS.md`, and
   `docs/INDEX.md`.

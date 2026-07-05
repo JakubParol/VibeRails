@@ -3,6 +3,19 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.3.0 - 2026-07-05
+
+- Generic adoption contract: Codex-first, process-neutral adoption across Windows, Linux, and
+  macOS with explicit stack, work tracking, code hosting, and script platform profiles.
+- New adoption manifest standard and templates for `.viberails/adoption.json` and
+  `docs/viberails-adoption.md`.
+- New integration and platform profile standards for Azure DevOps Boards, Jira, GitHub, Azure
+  Repos, PowerShell, and POSIX shell decisions.
+- First-stage self-improve loop: adopting repositories now record where agents should search,
+  create, or comment tickets for reusable Azure DevOps, Jira, Git, and GitHub CLI failures.
+- Agent skills renamed away from source-specific names and documented as optional assets, not
+  files copied by default during adoption.
+
 ## 0.2.0 - 2026-07-03
 
 - Azure DevOps wrappers hardened: shared `ado-common.ps1`, hang-proof az calls with timeouts,
@@ -15,7 +28,7 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   path-to-scope map and recommended gate script interface in `quality-gate.md`.
 - Anti-shortcut standards: layer definition-of-done checklists and wrong/right examples in
   `backend.md`, required import-linter contracts, test value rules in both test standards,
-  review checklists in `code-review-elitmind`.
+  review checklists in `code-review`.
 - E2E runbook split: User Story child-task logic moved to a reference loaded only for User
   Story runs; final guard rails follow the scoped gate.
 - Distribution model: skills install once per machine at the Codex user scope via

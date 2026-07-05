@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "adoptedAt": "<iso-8601-timestamp>",
+  "viberails": {
+    "sourcePath": "<local-path-used-for-adoption-or-null>",
+    "sourceRemote": "<remote-url-or-null>",
+    "sourceRef": "<commit-tag-or-branch>",
+    "packVersion": "<version-from-changelog>"
+  },
+  "target": {
+    "repositoryRoot": "<target-repository-root>",
+    "remote": "<target-remote-url-or-null>",
+    "defaultBranch": "<default-branch>"
+  },
+  "profiles": {
+    "agentRuntime": "codex",
+    "stack": "<stack-profile-or-exception>",
+    "workTracking": "<azure-devops-work-tracking|jira-work-tracking|none>",
+    "codeHosting": "<github-code-hosting|azure-repos-code-hosting|none>",
+    "scriptPlatform": "<powershell|posix-shell|both>"
+  },
+  "auth": {
+    "workTracking": "<target-local-auth-doc-or-command>",
+    "codeHosting": "<target-local-auth-doc-or-command>"
+  },
+  "selfImprove": {
+    "enabled": false,
+    "tracker": "none",
+    "project": null,
+    "issueType": null,
+    "labels": ["viberails-self-improve"],
+    "dedupeQuery": null,
+    "commentPolicy": "If a matching open ticket exists, add sanitized evidence as a comment instead of creating a duplicate.",
+    "authProfile": "<target-local-auth-doc-or-command>"
+  },
+  "copiedFiles": [],
+  "exceptions": [],
+  "openQuestions": []
+}

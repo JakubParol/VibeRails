@@ -1,0 +1,4 @@
+interface:
+  display_name: "Azure DevOps"
+  short_description: "Work with Azure Boards, PRs, and reusable fixes"
+  default_prompt: "Use $azure-devops to update Azure Boards work items or pull requests safely, and capture reusable Azure DevOps fixes in the skill when appropriate."
