@@ -45,6 +45,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   selected self-improve sink coordinates, treats discovered roots as covered only by matching
   documentation roots, expands likely monorepo containers, and avoids false positives for
   ordinary Markdown HTML tags and autolinks.
+- Manifest consistency polish: target adoption audit now requires `exceptions` and
+  `openQuestions`, and the human adoption record uses `none` instead of `n/a` for local-only PR
+  targets.
 
 ## 0.2.0 - 2026-07-03
 

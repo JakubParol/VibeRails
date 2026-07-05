@@ -27,33 +27,95 @@ const excludedDirectories = new Set([
 const htmlTagNames = new Set([
   "a",
   "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
   "b",
+  "base",
+  "bdi",
+  "bdo",
+  "blockquote",
+  "body",
   "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
   "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
   "dd",
   "del",
   "details",
+  "dfn",
+  "dialog",
   "div",
   "dl",
   "dt",
   "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
   "h1",
   "h2",
   "h3",
   "h4",
   "h5",
   "h6",
+  "head",
+  "header",
   "hr",
+  "html",
   "i",
+  "iframe",
   "img",
+  "input",
+  "ins",
   "kbd",
+  "label",
+  "legend",
   "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
   "ol",
+  "optgroup",
+  "option",
+  "output",
   "p",
+  "param",
+  "picture",
   "pre",
+  "progress",
+  "q",
+  "rp",
+  "rt",
+  "ruby",
+  "s",
   "samp",
+  "script",
+  "search",
+  "section",
+  "select",
+  "slot",
+  "small",
+  "source",
   "span",
   "strong",
+  "style",
   "sub",
   "summary",
   "sup",
@@ -62,8 +124,15 @@ const htmlTagNames = new Set([
   "td",
   "th",
   "thead",
+  "time",
+  "title",
   "tr",
+  "track",
+  "u",
   "ul",
+  "var",
+  "video",
+  "wbr",
 ]);
 
 function toRepoPath(filePath) {
@@ -187,9 +256,8 @@ function auditMarkdown(markdownFiles) {
     const text = readText(sourceFile);
     let match;
 
-    const visibleText = stripInlineCode(stripFencedBlocks(text));
     const shouldCheckPlaceholders = !sourceRelativePath.startsWith("docs/standards/");
-    if (shouldCheckPlaceholders && (containsPlaceholder(visibleText) || /\bTODO\b/i.test(visibleText))) {
+    if (shouldCheckPlaceholders && (containsPlaceholder(text) || /\bTODO\b/i.test(text))) {
       fail(`${sourceRelativePath} contains unresolved placeholder or TODO text.`);
     }
 
@@ -271,7 +339,7 @@ function auditManifest() {
   }
 
   auditManifestPlaceholders(manifest);
-  for (const field of ["schemaVersion", "adoptedAt", "viberails", "target", "profiles", "auth", "selfImprove", "copiedFiles"]) {
+  for (const field of ["schemaVersion", "adoptedAt", "viberails", "target", "profiles", "auth", "selfImprove", "copiedFiles", "exceptions", "openQuestions"]) {
     if (manifest[field] === undefined) {
       fail(`.viberails/adoption.json is missing '${field}'.`);
     }
@@ -291,6 +359,12 @@ function auditManifest() {
   }
   if (!Array.isArray(manifest.copiedFiles)) {
     fail(".viberails/adoption.json must record copiedFiles as an array.");
+  }
+  if (!Array.isArray(manifest.exceptions)) {
+    fail(".viberails/adoption.json must record exceptions as an array.");
+  }
+  if (!Array.isArray(manifest.openQuestions)) {
+    fail(".viberails/adoption.json must record openQuestions as an array.");
   }
   requireEnum(manifest.profiles?.stack, "profiles.stack", [
     "nextjs-frontend-only",
@@ -409,6 +483,18 @@ function requireNonPlaceholderString(value, field) {
   }
 }
 
+function requireNullableStringField(parent, field, displayName) {
+  if (!parent || !Object.prototype.hasOwnProperty.call(parent, field)) {
+    fail(`.viberails/adoption.json must record '${displayName}' as a string or null.`);
+    return;
+  }
+
+  const value = parent[field];
+  if (value !== null && (typeof value !== "string" || value.trim() === "" || isPlaceholder(value))) {
+    fail(`.viberails/adoption.json must record '${displayName}' as a concrete string or null.`);
+  }
+}
+
 function requireEnum(value, field, allowedValues) {
   if (!allowedValues.includes(value)) {
     fail(`.viberails/adoption.json has invalid '${field}': expected one of ${allowedValues.join(", ")}.`);
@@ -462,14 +548,16 @@ function auditSelfImproveSection(selfImprove, openQuestions) {
 function auditSelfImproveSink(selfImprove) {
   switch (selfImprove.tracker) {
     case "azure-devops":
-      for (const field of ["organizationUrl", "project", "workItemType", "queryCommand", "createCommand", "commentCommand"]) {
+      for (const field of ["organizationUrl", "project", "workItemType", "iterationPolicy", "queryCommand", "createCommand", "commentCommand"]) {
         requireNonPlaceholderString(selfImprove.sink?.azureDevOps?.[field], `selfImprove.sink.azureDevOps.${field}`);
       }
+      requireNullableStringField(selfImprove.sink?.azureDevOps, "areaPath", "selfImprove.sink.azureDevOps.areaPath");
       break;
     case "jira":
       for (const field of ["baseUrl", "projectKey", "issueType", "queryCommand", "createCommand", "commentCommand"]) {
         requireNonPlaceholderString(selfImprove.sink?.jira?.[field], `selfImprove.sink.jira.${field}`);
       }
+      requireNullableStringField(selfImprove.sink?.jira, "component", "selfImprove.sink.jira.component");
       break;
     case "custom-ticket-sink":
       for (const field of ["name", "owner", "queryCommand", "createCommand", "commentCommand", "authCheck"]) {

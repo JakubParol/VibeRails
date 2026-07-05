@@ -30,7 +30,7 @@ This repository adopted VibeRails standards from:
 | Remote | `<target remote URL or n/a>` |
 | Default/base branch | `<branch>` |
 | Branch naming | `<rule>` |
-| PR target | `<branch or n/a>` |
+| PR target | `<branch or none>` |
 
 ## Pull Request Policy
 
