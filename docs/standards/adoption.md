@@ -57,9 +57,10 @@ docs, config files, and user confirmation.
 3. Run the target preflight and save the evidence for the adoption report.
 4. Audit the target repository structure, remotes, existing docs, scripts, CI, and issue
    references.
-5. Select stack, integration, platform, and self-improvement profiles. Ask before recording an
-   uncertain profile. Use `unsupported-provider` when a provider exists but VibeRails has no
-   first-class profile; use `none` only when the target intentionally has no provider.
+5. Select stack, integration, platform, optional skill-linking, and self-improvement profiles.
+   Ask before recording an uncertain profile. Use `unsupported-provider` when a provider exists
+   but VibeRails has no first-class profile; use `none` only when the target intentionally has no
+   provider.
 6. Copy required standards into the target repository `docs/standards/`.
 7. Create or update root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
 8. Create `.viberails/adoption.json` from the manifest template, including the final copied
@@ -73,7 +74,7 @@ docs, config files, and user confirmation.
 13. Do not copy skills into the target repository by default. Skills are optional Codex assets
     distributed at the Codex user scope from the VibeRails checkout. Vendor a pinned copy into
     the target `.agents/skills/` only on an explicit repository decision; never keep the same
-    skill name in both scopes.
+    skill name in both scopes. Record the decision in `agentSkills`.
 14. Define quality gates from existing scripts and stack profile defaults, including the
     path-to-scope map required by `quality-gate.md`.
 15. Record `target.projectProfiles[]` for the repository root and every standalone app,
@@ -92,7 +93,7 @@ Run these commands or platform-equivalent commands before editing. Record output
 |---|---|---|
 | Repository root | `git rev-parse --show-toplevel` | `git rev-parse --show-toplevel` |
 | Branch and dirty state | `git status --short --branch` | `git status --short --branch` |
-| Remotes | `git remote -v` | `git remote -v` |
+| Sanitized remotes | `git remote \| while read name; do url=$(git remote get-url "$name"); safe=$(printf '%s\n' "$url" \| sed -E 's#^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@#\\1#; s#[?#].*$##'); printf '%s %s\n' "$name" "$safe"; done` | `git remote \| ForEach-Object { $url = git remote get-url $_; $safe = $url -replace '^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@','$1' -replace '[?#].*$',''; "$_ $safe" }` |
 | Default branch | `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null || git remote show origin` | `git symbolic-ref refs/remotes/origin/HEAD; git remote show origin` |
 | Stack indicators | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name package.json -o -name pyproject.toml -o -name requirements.txt -o -name Dockerfile \) -print` | `Get-ChildItem -Recurse -File -Include package.json,pyproject.toml,requirements.txt,Dockerfile \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
 | Existing docs | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name README.md -o -name AGENTS.md -o -path '*/docs/INDEX.md' \) -print` | `Get-ChildItem -Recurse -File -Include README.md,AGENTS.md,INDEX.md \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
@@ -101,6 +102,9 @@ Run these commands or platform-equivalent commands before editing. Record output
 Skip generated and dependency folders during preflight: `.git`, `.venv`, `venv`,
 `node_modules`, `.next`, `dist`, `build`, `coverage`, `.pytest_cache`, `.mypy_cache`,
 `.ruff_cache`, `.turbo`, `.nx`, `bin`, and `obj`.
+
+Do not run or report raw `git remote -v` output during adoption. Remote evidence must be
+sanitized before it reaches reports, manifests, PR descriptions, or chat transcripts.
 
 ## Existing Repository Merge Policy
 

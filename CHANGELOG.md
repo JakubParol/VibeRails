@@ -57,6 +57,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   provider labels, dedupe metadata, and comment templates; PR write permissions must match the
   selected code-hosting profile; copy-ready adoption-record links are allowed in source
   templates without introducing broken target links.
+- Adoption routing polish: manifests now record provider-specific integration coordinates and
+  Codex skill-linking decisions; the target audit checks copied-file existence and mirrors key
+  manifest values into the human adoption report.
 
 ## 0.2.0 - 2026-07-03
 

@@ -16,7 +16,7 @@ This repository adopted VibeRails standards from:
 |---|---|
 | Repository root | `<command and result summary>` |
 | Branch and dirty state | `<command and result summary>` |
-| Remotes | `<command and result summary>` |
+| Sanitized remotes | `<command and result summary>` |
 | Default branch | `<command and result summary>` |
 | Stack indicators | `<command and result summary>` |
 | Existing docs | `<command and result summary>` |
@@ -51,6 +51,20 @@ This repository adopted VibeRails standards from:
 | Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<notes>` |
 | Script platform | `<powershell|posix-shell|both>` | `<notes>` |
 
+## Integrations
+
+| Area | Profile | Coordinates | Auth check | Write approval |
+|---|---|---|---|---|
+| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<Azure DevOps org/project, Jira site/project key, unsupported provider name, or none reason>` | `<read check or n/a>` | `<write approval policy or n/a>` |
+| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<GitHub owner/repo, Azure Repos org/project/repo, unsupported provider name, or none reason>` | `<auth check or n/a>` | `<allowed PR write operations or n/a>` |
+
+| Provider | Required routing details |
+|---|---|
+| Azure DevOps work tracking | `<organization URL, project, Story/Task/Bug/self-improve work item types, area path or none, iteration policy, labels>` |
+| Jira work tracking | `<base URL, project key, Story/Task/Bug/self-improve issue types, component or none, labels>` |
+| GitHub code hosting | `<owner, repository, default branch, PR target branch, branch naming, draft default, allowed write operations>` |
+| Azure Repos code hosting | `<organization URL, project, repository, default branch, PR target branch, branch naming, draft default, allowed write operations>` |
+
 ## Project Profiles
 
 | Paths | Documentation root | Profile | Standards | Quality gate scope | Exception |
@@ -66,6 +80,18 @@ This repository adopted VibeRails standards from:
 
 Do not commit tokens, cookies, generated credentials, raw user profiles, or private identity
 payloads.
+
+## Codex Skills
+
+| Field | Value |
+|---|---|
+| Mode | `<none|user-scope|vendored>` |
+| Selected skills | `<skill names or none>` |
+| Source path | `<skills source path or n/a>` |
+| Source ref | `<commit, tag, branch, or n/a>` |
+| Target path | `<vendored target path or n/a>` |
+| Duplicate-name policy | `Never keep the same skill name in both Codex user scope and target repository scope.` |
+| Decision reason | `<why skills are not used, installed at user scope, or vendored>` |
 
 ## Quality Gate
 

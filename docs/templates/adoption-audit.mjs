@@ -343,7 +343,7 @@ function auditManifest() {
   }
 
   auditManifestPlaceholders(manifest);
-  for (const field of ["schemaVersion", "adoptedAt", "viberails", "target", "profiles", "auth", "selfImprove", "copiedFiles", "exceptions", "openQuestions"]) {
+  for (const field of ["schemaVersion", "adoptedAt", "viberails", "target", "profiles", "integrations", "agentSkills", "auth", "selfImprove", "copiedFiles", "exceptions", "openQuestions"]) {
     if (manifest[field] === undefined) {
       fail(`.viberails/adoption.json is missing '${field}'.`);
     }
@@ -410,6 +410,8 @@ function auditManifest() {
   requireNonPlaceholderString(manifest.target?.branchNaming, "target.branchNaming");
   requireNonPlaceholderString(manifest.target?.qualityGate?.canonicalCommand, "target.qualityGate.canonicalCommand");
   auditPrPolicy(manifest.target?.prPolicy, manifest.profiles?.codeHosting);
+  auditIntegrationsSection(manifest.integrations, manifest.profiles, manifest.target);
+  auditAgentSkillsSection(manifest.agentSkills);
   auditAuthSection(manifest.auth);
   auditSelfImproveSection(manifest.selfImprove, manifest.openQuestions);
   auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
@@ -417,6 +419,7 @@ function auditManifest() {
   auditDiscoveredProjectRoots(manifest.target?.projectProfiles);
   auditCopiedFiles(manifest.copiedFiles);
   auditOpenQuestions(manifest.openQuestions);
+  auditAdoptionReportMirror(manifest);
 }
 
 function auditPrPolicy(prPolicy, codeHostingProfile) {
@@ -582,6 +585,173 @@ function auditAuthSection(auth) {
     const value = auth[key];
     if (typeof value !== "string" || value.trim() === "" || isPlaceholder(value)) {
       fail(`.viberails/adoption.json must record concrete auth.${key} instructions or 'none'.`);
+    }
+  }
+}
+
+function auditIntegrationsSection(integrations, profiles, target) {
+  if (!integrations || typeof integrations !== "object") {
+    fail(".viberails/adoption.json must record integrations as an object.");
+    return;
+  }
+
+  auditWorkTrackingIntegration(integrations.workTracking, profiles?.workTracking);
+  auditCodeHostingIntegration(integrations.codeHosting, profiles?.codeHosting, target);
+}
+
+function auditWorkTrackingIntegration(workTracking, selectedProfile) {
+  if (!workTracking || typeof workTracking !== "object") {
+    fail(".viberails/adoption.json must record integrations.workTracking as an object.");
+    return;
+  }
+  if (workTracking.profile !== selectedProfile) {
+    fail(".viberails/adoption.json integrations.workTracking.profile must match profiles.workTracking.");
+  }
+
+  switch (selectedProfile) {
+    case "azure-devops-work-tracking":
+      for (const field of ["organizationUrl", "project", "iterationPolicy", "readCheck", "writeApprovalPolicy"]) {
+        requireNonPlaceholderString(workTracking.azureDevOps?.[field], `integrations.workTracking.azureDevOps.${field}`);
+      }
+      requireNullableStringField(workTracking.azureDevOps, "areaPath", "integrations.workTracking.azureDevOps.areaPath");
+      auditStringArray(workTracking.azureDevOps?.labels, "integrations.workTracking.azureDevOps.labels");
+      auditProviderTypeMap(workTracking.azureDevOps?.workItemTypes, "integrations.workTracking.azureDevOps.workItemTypes");
+      break;
+    case "jira-work-tracking":
+      for (const field of ["baseUrl", "projectKey", "readCheck", "writeApprovalPolicy"]) {
+        requireNonPlaceholderString(workTracking.jira?.[field], `integrations.workTracking.jira.${field}`);
+      }
+      requireNullableStringField(workTracking.jira, "component", "integrations.workTracking.jira.component");
+      auditStringArray(workTracking.jira?.labels, "integrations.workTracking.jira.labels");
+      auditProviderTypeMap(workTracking.jira?.issueTypes, "integrations.workTracking.jira.issueTypes");
+      break;
+    case "unsupported-provider":
+      auditUnsupportedProvider(workTracking.unsupportedProvider, "integrations.workTracking.unsupportedProvider");
+      break;
+    case "none":
+      requireNonPlaceholderString(workTracking.noneReason, "integrations.workTracking.noneReason");
+      break;
+    default:
+      fail(".viberails/adoption.json integrations.workTracking cannot be validated without a valid profiles.workTracking value.");
+      break;
+  }
+}
+
+function auditCodeHostingIntegration(codeHosting, selectedProfile, target) {
+  if (!codeHosting || typeof codeHosting !== "object") {
+    fail(".viberails/adoption.json must record integrations.codeHosting as an object.");
+    return;
+  }
+  if (codeHosting.profile !== selectedProfile) {
+    fail(".viberails/adoption.json integrations.codeHosting.profile must match profiles.codeHosting.");
+  }
+
+  switch (selectedProfile) {
+    case "github-code-hosting":
+      for (const field of ["owner", "repository", "defaultBranch", "prTargetBranch", "branchNaming", "authCheck"]) {
+        requireNonPlaceholderString(codeHosting.github?.[field], `integrations.codeHosting.github.${field}`);
+      }
+      requireMatchingValue(codeHosting.github?.defaultBranch, target?.defaultBranch, "integrations.codeHosting.github.defaultBranch", "target.defaultBranch");
+      requireMatchingValue(codeHosting.github?.prTargetBranch, target?.prTargetBranch, "integrations.codeHosting.github.prTargetBranch", "target.prTargetBranch");
+      requireMatchingValue(codeHosting.github?.branchNaming, target?.branchNaming, "integrations.codeHosting.github.branchNaming", "target.branchNaming");
+      requireMatchingValue(codeHosting.github?.draftByDefault, target?.prPolicy?.draftByDefault, "integrations.codeHosting.github.draftByDefault", "target.prPolicy.draftByDefault");
+      requireArrayEquals(codeHosting.github?.allowedWriteOperations, target?.prPolicy?.allowedWriteOperations, "integrations.codeHosting.github.allowedWriteOperations", "target.prPolicy.allowedWriteOperations");
+      break;
+    case "azure-repos-code-hosting":
+      for (const field of ["organizationUrl", "project", "repository", "defaultBranch", "prTargetBranch", "branchNaming", "authCheck"]) {
+        requireNonPlaceholderString(codeHosting.azureRepos?.[field], `integrations.codeHosting.azureRepos.${field}`);
+      }
+      requireMatchingValue(codeHosting.azureRepos?.defaultBranch, target?.defaultBranch, "integrations.codeHosting.azureRepos.defaultBranch", "target.defaultBranch");
+      requireMatchingValue(codeHosting.azureRepos?.prTargetBranch, target?.prTargetBranch, "integrations.codeHosting.azureRepos.prTargetBranch", "target.prTargetBranch");
+      requireMatchingValue(codeHosting.azureRepos?.branchNaming, target?.branchNaming, "integrations.codeHosting.azureRepos.branchNaming", "target.branchNaming");
+      requireMatchingValue(codeHosting.azureRepos?.draftByDefault, target?.prPolicy?.draftByDefault, "integrations.codeHosting.azureRepos.draftByDefault", "target.prPolicy.draftByDefault");
+      requireArrayEquals(codeHosting.azureRepos?.allowedWriteOperations, target?.prPolicy?.allowedWriteOperations, "integrations.codeHosting.azureRepos.allowedWriteOperations", "target.prPolicy.allowedWriteOperations");
+      break;
+    case "unsupported-provider":
+      auditUnsupportedProvider(codeHosting.unsupportedProvider, "integrations.codeHosting.unsupportedProvider");
+      break;
+    case "none":
+      requireNonPlaceholderString(codeHosting.noneReason, "integrations.codeHosting.noneReason");
+      break;
+    default:
+      fail(".viberails/adoption.json integrations.codeHosting cannot be validated without a valid profiles.codeHosting value.");
+      break;
+  }
+}
+
+function auditProviderTypeMap(value, field) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    fail(`.viberails/adoption.json must record ${field} as an object.`);
+    return;
+  }
+
+  for (const type of ["story", "task", "bug", "selfImprove"]) {
+    requireNonPlaceholderString(value[type], `${field}.${type}`);
+  }
+}
+
+function auditUnsupportedProvider(value, field) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    fail(`.viberails/adoption.json must record ${field} as an object.`);
+    return;
+  }
+
+  for (const key of ["name", "evidence", "manualPolicy"]) {
+    requireNonPlaceholderString(value[key], `${field}.${key}`);
+  }
+}
+
+function requireMatchingValue(actual, expected, actualField, expectedField) {
+  if (actual !== expected) {
+    fail(`.viberails/adoption.json ${actualField} must match ${expectedField}.`);
+  }
+}
+
+function requireArrayEquals(actual, expected, actualField, expectedField) {
+  if (!Array.isArray(actual) || !Array.isArray(expected) || actual.length !== expected.length) {
+    fail(`.viberails/adoption.json ${actualField} must match ${expectedField}.`);
+    return;
+  }
+
+  for (const [index, item] of actual.entries()) {
+    if (item !== expected[index]) {
+      fail(`.viberails/adoption.json ${actualField} must match ${expectedField}.`);
+      return;
+    }
+  }
+}
+
+function auditAgentSkillsSection(agentSkills) {
+  if (!agentSkills || typeof agentSkills !== "object") {
+    fail(".viberails/adoption.json must record agentSkills as an object.");
+    return;
+  }
+
+  requireEnum(agentSkills.mode, "agentSkills.mode", ["none", "user-scope", "vendored"]);
+  if (!Array.isArray(agentSkills.selectedSkills)) {
+    fail(".viberails/adoption.json must record agentSkills.selectedSkills as an array.");
+  } else if (agentSkills.mode !== "none" && agentSkills.selectedSkills.length === 0) {
+    fail(".viberails/adoption.json must record at least one selected skill when agentSkills.mode is not 'none'.");
+  } else {
+    for (const [index, skill] of agentSkills.selectedSkills.entries()) {
+      requireNonPlaceholderString(skill, `agentSkills.selectedSkills[${index}]`);
+    }
+  }
+  requireNullableStringField(agentSkills, "sourcePath", "agentSkills.sourcePath");
+  requireNullableStringField(agentSkills, "sourceRef", "agentSkills.sourceRef");
+  requireNullableStringField(agentSkills, "targetPath", "agentSkills.targetPath");
+  requireNonPlaceholderString(agentSkills.duplicateNamePolicy, "agentSkills.duplicateNamePolicy");
+  requireNonPlaceholderString(agentSkills.decisionReason, "agentSkills.decisionReason");
+
+  if (agentSkills.mode !== "none") {
+    requireNonPlaceholderString(agentSkills.sourceRef, "agentSkills.sourceRef");
+  }
+  if (agentSkills.mode === "vendored") {
+    requireNonPlaceholderString(agentSkills.targetPath, "agentSkills.targetPath");
+    if (typeof agentSkills.targetPath === "string"
+      && !isPlaceholder(agentSkills.targetPath)
+      && !fs.existsSync(path.join(repoRoot, agentSkills.targetPath))) {
+      fail(`agentSkills.targetPath '${agentSkills.targetPath}' does not exist for vendored skills.`);
     }
   }
 }
@@ -848,10 +1018,115 @@ function auditCopiedFiles(copiedFiles) {
       requireNonPlaceholderString(entry[field], `copiedFiles[${index}].${field}`);
     }
     requireEnum(entry.mode, `copiedFiles[${index}].mode`, ["created", "merged", "refreshed", "skipped"]);
+    if (["created", "merged", "refreshed"].includes(entry.mode)
+      && typeof entry.targetPath === "string"
+      && !isPlaceholder(entry.targetPath)
+      && !fs.existsSync(path.join(repoRoot, entry.targetPath))) {
+      fail(`copiedFiles[${index}].targetPath '${entry.targetPath}' does not exist.`);
+    }
     if (typeof entry.targetPath === "string" && entry.targetPath.endsWith(".md")) {
       markdownPlaceholderAuditPaths.add(entry.targetPath);
     }
   }
+}
+
+function auditAdoptionReportMirror(manifest) {
+  const reportPath = path.join(repoRoot, "docs/viberails-adoption.md");
+  if (!fs.existsSync(reportPath)) {
+    return;
+  }
+
+  const reportText = readText(reportPath);
+  const requiredValues = [];
+  addReportValue(requiredValues, manifest.viberails?.sourceRef);
+  addReportValue(requiredValues, manifest.viberails?.packVersion);
+  addReportValue(requiredValues, manifest.target?.defaultBranch);
+  addReportValue(requiredValues, manifest.target?.prTargetBranch);
+  addReportValue(requiredValues, manifest.target?.branchNaming);
+  addReportValue(requiredValues, manifest.target?.qualityGate?.canonicalCommand);
+  addReportValue(requiredValues, manifest.target?.prPolicy?.draftByDefault);
+  addReportValue(requiredValues, manifest.target?.prPolicy?.reviewPublishing);
+  addReportValues(requiredValues, manifest.target?.prPolicy?.allowedWriteOperations);
+  addReportValue(requiredValues, manifest.profiles?.agentRuntime);
+  addReportValue(requiredValues, manifest.profiles?.stack);
+  addReportValue(requiredValues, manifest.profiles?.workTracking);
+  addReportValue(requiredValues, manifest.profiles?.codeHosting);
+  addReportValue(requiredValues, manifest.profiles?.scriptPlatform);
+  addReportValue(requiredValues, manifest.integrations?.workTracking?.profile);
+  addReportValue(requiredValues, manifest.integrations?.codeHosting?.profile);
+  addIntegrationReportValues(requiredValues, manifest.integrations, manifest.profiles);
+  addReportValue(requiredValues, manifest.agentSkills?.mode);
+  addReportValues(requiredValues, manifest.agentSkills?.selectedSkills);
+  addReportValue(requiredValues, manifest.selfImprove?.enabled);
+  addReportValue(requiredValues, manifest.selfImprove?.tracker);
+  addReportValues(requiredValues, manifest.selfImprove?.labels);
+  addReportValues(requiredValues, manifest.selfImprove?.providerLabels);
+
+  for (const value of new Set(requiredValues)) {
+    if (!reportText.includes(value)) {
+      fail(`docs/viberails-adoption.md must mirror manifest value '${value}'.`);
+    }
+  }
+}
+
+function addIntegrationReportValues(requiredValues, integrations, profiles) {
+  switch (profiles?.workTracking) {
+    case "azure-devops-work-tracking":
+      addReportValue(requiredValues, integrations?.workTracking?.azureDevOps?.organizationUrl);
+      addReportValue(requiredValues, integrations?.workTracking?.azureDevOps?.project);
+      addReportValue(requiredValues, integrations?.workTracking?.azureDevOps?.areaPath);
+      addReportValue(requiredValues, integrations?.workTracking?.azureDevOps?.iterationPolicy);
+      addReportValues(requiredValues, integrations?.workTracking?.azureDevOps?.labels);
+      break;
+    case "jira-work-tracking":
+      addReportValue(requiredValues, integrations?.workTracking?.jira?.baseUrl);
+      addReportValue(requiredValues, integrations?.workTracking?.jira?.projectKey);
+      addReportValue(requiredValues, integrations?.workTracking?.jira?.component);
+      addReportValues(requiredValues, integrations?.workTracking?.jira?.labels);
+      break;
+    case "unsupported-provider":
+      addReportValue(requiredValues, integrations?.workTracking?.unsupportedProvider?.name);
+      break;
+    default:
+      break;
+  }
+
+  switch (profiles?.codeHosting) {
+    case "github-code-hosting":
+      addReportValue(requiredValues, integrations?.codeHosting?.github?.owner);
+      addReportValue(requiredValues, integrations?.codeHosting?.github?.repository);
+      break;
+    case "azure-repos-code-hosting":
+      addReportValue(requiredValues, integrations?.codeHosting?.azureRepos?.organizationUrl);
+      addReportValue(requiredValues, integrations?.codeHosting?.azureRepos?.project);
+      addReportValue(requiredValues, integrations?.codeHosting?.azureRepos?.repository);
+      break;
+    case "unsupported-provider":
+      addReportValue(requiredValues, integrations?.codeHosting?.unsupportedProvider?.name);
+      break;
+    default:
+      break;
+  }
+}
+
+function addReportValues(requiredValues, values) {
+  if (!Array.isArray(values)) {
+    return;
+  }
+  for (const value of values) {
+    addReportValue(requiredValues, value);
+  }
+}
+
+function addReportValue(requiredValues, value) {
+  if (value === null || value === undefined) {
+    return;
+  }
+  const text = String(value).trim();
+  if (!text || isPlaceholder(text)) {
+    return;
+  }
+  requiredValues.push(text);
 }
 
 requiredFile("README.md");

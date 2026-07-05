@@ -49,6 +49,85 @@
     "codeHosting": "<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>",
     "scriptPlatform": "<powershell|posix-shell|both>"
   },
+  "integrations": {
+    "workTracking": {
+      "profile": "<same-as-profiles.workTracking>",
+      "azureDevOps": {
+        "organizationUrl": null,
+        "project": null,
+        "workItemTypes": {
+          "story": null,
+          "task": null,
+          "bug": null,
+          "selfImprove": null
+        },
+        "areaPath": null,
+        "iterationPolicy": null,
+        "labels": [],
+        "readCheck": null,
+        "writeApprovalPolicy": null
+      },
+      "jira": {
+        "baseUrl": null,
+        "projectKey": null,
+        "issueTypes": {
+          "story": null,
+          "task": null,
+          "bug": null,
+          "selfImprove": null
+        },
+        "component": null,
+        "labels": [],
+        "readCheck": null,
+        "writeApprovalPolicy": null
+      },
+      "unsupportedProvider": {
+        "name": null,
+        "evidence": null,
+        "manualPolicy": null
+      },
+      "noneReason": null
+    },
+    "codeHosting": {
+      "profile": "<same-as-profiles.codeHosting>",
+      "github": {
+        "owner": null,
+        "repository": null,
+        "defaultBranch": null,
+        "prTargetBranch": null,
+        "branchNaming": null,
+        "draftByDefault": true,
+        "authCheck": null,
+        "allowedWriteOperations": []
+      },
+      "azureRepos": {
+        "organizationUrl": null,
+        "project": null,
+        "repository": null,
+        "defaultBranch": null,
+        "prTargetBranch": null,
+        "branchNaming": null,
+        "draftByDefault": true,
+        "authCheck": null,
+        "allowedWriteOperations": []
+      },
+      "unsupportedProvider": {
+        "name": null,
+        "evidence": null,
+        "manualPolicy": null
+      },
+      "noneReason": null
+    }
+  },
+  "agentSkills": {
+    "mode": "<none|user-scope|vendored>",
+    "selectedSkills": [],
+    "sourcePath": "<skills-source-path-or-null>",
+    "sourceRef": "<commit-tag-or-branch-or-null>",
+    "targetPath": "<vendored-target-path-or-null>",
+    "duplicateNamePolicy": "Never keep the same skill name in both Codex user scope and target repository scope.",
+    "decisionReason": "<why-skills-are-not-used-installed-or-vendored>"
+  },
   "auth": {
     "workTracking": "<target-local-auth-doc-or-command>",
     "codeHosting": "<target-local-auth-doc-or-command>"

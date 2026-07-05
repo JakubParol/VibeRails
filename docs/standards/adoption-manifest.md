@@ -31,6 +31,8 @@ tokens, raw API responses, or private identity payloads.
 | `profiles.workTracking` | Selected work tracking profile or `none`. |
 | `profiles.codeHosting` | Selected code hosting profile or `none`. |
 | `profiles.scriptPlatform` | `powershell`, `posix-shell`, or `both`. |
+| `integrations` | Provider-specific work tracking and code hosting coordinates for the selected profiles. |
+| `agentSkills` | Codex skill-linking decision: none, user-scope, or vendored pinned copy. |
 | `auth` | Non-secret read/write auth documents or commands for selected integrations. |
 | `selfImprove` | Ticket sink and dedupe rules for reusable agent/tooling failures. |
 | `copiedFiles` | Standards and templates copied into the target repository. |
@@ -81,6 +83,38 @@ Use stable object shapes so automation can audit adoption without parsing prose.
 | `allowedWriteOperations` | PR writes agents may perform after user approval, such as `create-pr`, `edit-description`, `comment`, or `none`. |
 | `reviewPublishing` | `local-only`, `provider-comments`, or `target-local-profile`. |
 | `notes` | Short explanation of provider-specific limits or manual steps. |
+
+`integrations.workTracking` fields:
+
+| Field | Purpose |
+|---|---|
+| `profile` | Must match `profiles.workTracking`. |
+| `azureDevOps` | Azure Boards organization, project, work item types, area path, iteration policy, labels, auth check, and write approval policy. |
+| `jira` | Jira base URL, project key, issue types, component, labels, auth check, and write approval policy. |
+| `unsupportedProvider` | Provider name, evidence, and manual policy when `profiles.workTracking` is `unsupported-provider`. |
+| `noneReason` | Required when `profiles.workTracking` is `none`. |
+
+`integrations.codeHosting` fields:
+
+| Field | Purpose |
+|---|---|
+| `profile` | Must match `profiles.codeHosting`. |
+| `github` | Owner, repository, branch policy, auth check, and allowed PR write operations for GitHub. |
+| `azureRepos` | Organization URL, project, repository, branch policy, auth check, and allowed PR write operations for Azure Repos. |
+| `unsupportedProvider` | Provider name, evidence, and manual policy when `profiles.codeHosting` is `unsupported-provider`. |
+| `noneReason` | Required when `profiles.codeHosting` is `none`. |
+
+`agentSkills` fields:
+
+| Field | Purpose |
+|---|---|
+| `mode` | `none`, `user-scope`, or `vendored`. |
+| `selectedSkills` | Skill names installed or vendored for this target; empty only when `mode` is `none`. |
+| `sourcePath` | VibeRails skill source path or `null`. |
+| `sourceRef` | Commit, tag, or branch for selected skills; required unless `mode` is `none`. |
+| `targetPath` | Vendored target path; required when `mode` is `vendored`. |
+| `duplicateNamePolicy` | Rule that prevents the same skill name from existing in both user and repository scope. |
+| `decisionReason` | Why this repository uses no skills, user-scope skills, or vendored skills. |
 
 ## Profile Values
 
