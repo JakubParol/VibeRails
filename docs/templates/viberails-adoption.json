@@ -12,6 +12,12 @@
     "remote": "<target-remote-url-or-null>",
     "defaultBranch": "<default-branch>",
     "prTargetBranch": "<branch-for-adoption-and-follow-up-prs>",
+    "prPolicy": {
+      "draftByDefault": true,
+      "allowedWriteOperations": ["<create-pr|edit-description|comment|none>"],
+      "reviewPublishing": "<local-only|provider-comments|target-local-profile>",
+      "notes": "<code-hosting-pr-policy>"
+    },
     "branchNaming": "<branch-naming-rule>",
     "qualityGate": {
       "canonicalCommand": "<quality-gate-command>",
@@ -69,6 +75,20 @@
         "queryCommand": null,
         "createCommand": null,
         "commentCommand": null
+      },
+      "customTicketSink": {
+        "name": null,
+        "owner": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null,
+        "authCheck": null
+      },
+      "localFileSink": {
+        "path": null,
+        "writePolicy": null,
+        "dedupeRule": null,
+        "reviewOwner": null
       }
     },
     "labels": ["viberails-self-improve"],
@@ -90,6 +110,7 @@
       "missingAuthBehavior": "Prepare the sanitized ticket body locally and report the blocked self-improve write."
     },
     "writeApprovalPolicy": "Agents may create or comment self-improve tickets only after user approval for the current task.",
+    "disabledReason": null,
     "alternateClients": []
   },
   "copiedFiles": [

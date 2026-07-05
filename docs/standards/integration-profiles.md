@@ -35,7 +35,7 @@ connector, CLI command, or explicit manual-only policy in `.viberails/adoption.j
 | `azure-devops-work-tracking` | Work is planned in Azure Boards. |
 | `jira-work-tracking` | Work is planned in Jira. |
 | `unsupported-provider` | A real tracker exists but VibeRails has no first-class profile for it yet. |
-| `none` | The repository does not use a supported tracker yet. |
+| `none` | The repository intentionally does not use a work tracker. |
 
 ### Azure DevOps Work Tracking
 
@@ -75,7 +75,7 @@ Do not guess project key, board, sprint, issue type, component, or transition na
 | `github-code-hosting` | Git remotes and PRs are hosted in GitHub. |
 | `azure-repos-code-hosting` | Git remotes and PRs are hosted in Azure Repos. |
 | `unsupported-provider` | A real code host exists but VibeRails has no first-class profile for it yet. |
-| `none` | The repository has no supported remote or PR host yet. |
+| `none` | The repository intentionally has no remote or PR host. |
 
 ### GitHub Code Hosting
 

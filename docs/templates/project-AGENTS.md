@@ -30,6 +30,7 @@ Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
 - Next.js frontend only
 - Next.js full stack
 - Next.js + Python FastAPI
+- mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
 - documented exception: <profile>
 
 ## Architecture Rules

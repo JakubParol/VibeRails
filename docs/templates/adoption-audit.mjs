@@ -276,11 +276,32 @@ function auditManifest() {
   requireNonPlaceholderString(manifest.target?.defaultBranch, "target.defaultBranch");
   requireNonPlaceholderString(manifest.target?.prTargetBranch, "target.prTargetBranch");
   requireNonPlaceholderString(manifest.target?.qualityGate?.canonicalCommand, "target.qualityGate.canonicalCommand");
+  auditPrPolicy(manifest.target?.prPolicy);
   auditAuthSection(manifest.auth);
-  auditSelfImproveSection(manifest.selfImprove);
+  auditSelfImproveSection(manifest.selfImprove, manifest.openQuestions);
   auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
   auditProjectProfiles(manifest.target?.projectProfiles);
+  auditDiscoveredProjectRoots(manifest.target?.projectProfiles);
   auditCopiedFiles(manifest.copiedFiles);
+}
+
+function auditPrPolicy(prPolicy) {
+  if (!prPolicy || typeof prPolicy !== "object") {
+    fail(".viberails/adoption.json must record target.prPolicy as an object.");
+    return;
+  }
+  if (typeof prPolicy.draftByDefault !== "boolean") {
+    fail(".viberails/adoption.json must record target.prPolicy.draftByDefault as a boolean.");
+  }
+  if (!Array.isArray(prPolicy.allowedWriteOperations) || prPolicy.allowedWriteOperations.length === 0) {
+    fail(".viberails/adoption.json must record target.prPolicy.allowedWriteOperations as a non-empty array.");
+  }
+  requireEnum(prPolicy.reviewPublishing, "target.prPolicy.reviewPublishing", [
+    "local-only",
+    "provider-comments",
+    "target-local-profile",
+  ]);
+  requireNonPlaceholderString(prPolicy.notes, "target.prPolicy.notes");
 }
 
 function auditManifestPlaceholders(value, pathParts = []) {
@@ -302,7 +323,7 @@ function auditManifestPlaceholders(value, pathParts = []) {
 }
 
 function isPlaceholder(value) {
-  return typeof value === "string" && /^<.*>$/.test(value.trim());
+  return typeof value === "string" && /<[^>\n]+>/.test(value);
 }
 
 function requireNonPlaceholderString(value, field) {
@@ -331,7 +352,7 @@ function auditAuthSection(auth) {
   }
 }
 
-function auditSelfImproveSection(selfImprove) {
+function auditSelfImproveSection(selfImprove, openQuestions) {
   if (!selfImprove || typeof selfImprove !== "object") {
     fail(".viberails/adoption.json must record selfImprove as an object.");
     return;
@@ -352,10 +373,21 @@ function auditSelfImproveSection(selfImprove) {
     requireNonPlaceholderString(selfImprove.auth?.readCheck, "selfImprove.auth.readCheck");
     requireNonPlaceholderString(selfImprove.auth?.writeCheck, "selfImprove.auth.writeCheck");
     requireNonPlaceholderString(selfImprove.writeApprovalPolicy, "selfImprove.writeApprovalPolicy");
+  } else if (!hasSelfImproveDecision(selfImprove, openQuestions)) {
+    fail(".viberails/adoption.json must record selfImprove.disabledReason or a self-improve open question when selfImprove.enabled is false.");
   }
   if (!Array.isArray(selfImprove.alternateClients)) {
     fail(".viberails/adoption.json must record selfImprove.alternateClients as an array.");
   }
+}
+
+function hasSelfImproveDecision(selfImprove, openQuestions) {
+  if (typeof selfImprove.disabledReason === "string" && selfImprove.disabledReason.trim() && !isPlaceholder(selfImprove.disabledReason)) {
+    return true;
+  }
+
+  return Array.isArray(openQuestions)
+    && openQuestions.some((question) => question?.category === "self-improve");
 }
 
 function auditPathToScopeMap(pathToScopeMap) {
@@ -411,6 +443,57 @@ function auditProjectProfiles(projectProfiles) {
       }
     }
   }
+}
+
+function auditDiscoveredProjectRoots(projectProfiles) {
+  if (!Array.isArray(projectProfiles)) {
+    return;
+  }
+
+  const coveredRoots = new Set();
+  for (const profile of projectProfiles) {
+    if (typeof profile.documentationRoot === "string") {
+      coveredRoots.add(path.normalize(profile.documentationRoot));
+    }
+    for (const profilePath of profile.paths ?? []) {
+      if (typeof profilePath === "string") {
+        coveredRoots.add(path.normalize(profilePath));
+      }
+    }
+  }
+
+  for (const root of discoverLikelyProjectRoots()) {
+    if (!coveredRoots.has(path.normalize(root))) {
+      fail(`Likely standalone project root '${root}' is not listed in target.projectProfiles.`);
+    }
+  }
+}
+
+function discoverLikelyProjectRoots() {
+  const containerNames = ["apps", "services", "workers", "packages", "libs", "infra", "infrastructure"];
+  const markerFiles = ["package.json", "pyproject.toml", "requirements.txt", "Dockerfile", "docs/INDEX.md"];
+  const discovered = [];
+
+  for (const containerName of containerNames) {
+    const containerPath = path.join(repoRoot, containerName);
+    if (!fs.existsSync(containerPath)) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(containerPath, { withFileTypes: true })) {
+      if (!entry.isDirectory() || excludedDirectories.has(entry.name)) {
+        continue;
+      }
+
+      const candidateRelative = path.join(containerName, entry.name);
+      const candidatePath = path.join(repoRoot, candidateRelative);
+      if (markerFiles.some((marker) => fs.existsSync(path.join(candidatePath, marker)))) {
+        discovered.push(candidateRelative.split(path.sep).join("/"));
+      }
+    }
+  }
+
+  return discovered;
 }
 
 function auditCopiedFiles(copiedFiles) {

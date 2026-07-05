@@ -60,6 +60,7 @@ Select one:
 - Next.js frontend only
 - Next.js full stack
 - Next.js + Python FastAPI
+- mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
 - documented exception: <profile>
 
 Reference the canonical standards:

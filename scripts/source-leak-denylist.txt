@@ -9,3 +9,7 @@ elitmind
 ELITMIND
 Elitmindvs
 VibeRails-EM
+SessionDeck
+CrackerAi
+SignalBoy
+IQControl.Ai

@@ -36,6 +36,11 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   generated/dependency folders.
 - Validator cleanup: source-specific leakage terms now live in a small denylist file instead
   of being hard-coded in validator logic.
+- Final audit polish: target adoption audit discovers likely monorepo roots, requires an
+  explicit self-improve disabled decision, catches embedded manifest placeholders, and
+  self-improve templates now include custom ticket and local file sinks.
+- Code-hosting policy polish: adoption now records draft PR defaults, allowed PR writes, and
+  review publishing behavior separately from the selected code-hosting profile.
 
 ## 0.2.0 - 2026-07-03
 

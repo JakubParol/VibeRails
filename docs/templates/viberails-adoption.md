@@ -32,6 +32,15 @@ This repository adopted VibeRails standards from:
 | Branch naming | `<rule>` |
 | PR target | `<branch or n/a>` |
 
+## Pull Request Policy
+
+| Field | Value |
+|---|---|
+| Draft by default | `<true|false>` |
+| Allowed PR write operations | `<create-pr, edit-description, comment, none>` |
+| Review publishing | `<local-only|provider-comments|target-local-profile>` |
+| Notes | `<provider-specific limits or manual steps>` |
+
 ## Profiles
 
 | Area | Selected profile | Notes |
@@ -73,7 +82,7 @@ Reusable agent/tooling failures are reported here:
 | Field | Value |
 |---|---|
 | Enabled | `<true|false>` |
-| Tracker | `<azure-devops|jira|none>` |
+| Tracker | `<azure-devops|jira|custom-ticket-sink|local-file-sink|none>` |
 | Sink coordinates | `<organization/project, Jira site/project key, or n/a>` |
 | Issue type | `<issue type or n/a>` |
 | Labels/tags | `viberails-self-improve`, `<provider/tool labels>` |
@@ -84,6 +93,7 @@ Reusable agent/tooling failures are reported here:
 | Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
 | Write approval policy | `<when agents may create or comment self-improve tickets>` |
 | Alternate clients | `<same-provider fallback connectors or wrappers, or none>` |
+| Disabled reason | `<required when enabled is false unless recorded as an open question>` |
 
 If auth or write approval is missing, agents prepare the ticket body locally and report the
 blocker instead of silently skipping the learning.

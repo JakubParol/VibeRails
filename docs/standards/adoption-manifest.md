@@ -22,6 +22,7 @@ tokens, raw API responses, or private identity payloads.
 | `target.remote` | Target repository remote when available. |
 | `target.defaultBranch` | Default branch used for adoption and PR target decisions. |
 | `target.prTargetBranch` | Branch that adoption and follow-up PRs should target. Usually the default branch. |
+| `target.prPolicy` | Draft PR default and allowed PR write operations for the selected code host. |
 | `target.branchNaming` | Branch naming convention for agent changes. |
 | `target.qualityGate` | Target-local quality gate commands and path-to-scope map. |
 | `target.projectProfiles` | Per-root stack profiles for the repository root and standalone apps, services, workers, packages, or infrastructure areas. |
@@ -72,6 +73,15 @@ Use stable object shapes so automation can audit adoption without parsing prose.
 | `qualityGateScope` | Scope name used in `target.qualityGate.pathToScopeMap`. |
 | `exception` | Exception details or `null` when a standard profile fits. |
 
+`target.prPolicy` fields:
+
+| Field | Purpose |
+|---|---|
+| `draftByDefault` | `true` when adoption and follow-up PRs should be drafts by default. |
+| `allowedWriteOperations` | PR writes agents may perform after user approval, such as `create-pr`, `edit-description`, `comment`, or `none`. |
+| `reviewPublishing` | `local-only`, `provider-comments`, or `target-local-profile`. |
+| `notes` | Short explanation of provider-specific limits or manual steps. |
+
 ## Profile Values
 
 Use these values unless an adopting repository documents an explicit extension:
@@ -111,6 +121,7 @@ Required fields:
 | `auth` | Read/write auth checks, env var names, connector names, and missing-auth behavior. |
 | `writeApprovalPolicy` | Whether agents may create/comment after user approval or must only prepare local bodies. |
 | `alternateClients` | Same-provider fallback connectors or wrappers for self-improve sink failures. |
+| `disabledReason` | Required when `enabled` is `false` unless an open question records the missing decision. |
 
 If the self-improve sink is not configured during adoption, set `enabled` to `false` and add an
 open question that names the missing decision. Agents must not run tracker reads or writes

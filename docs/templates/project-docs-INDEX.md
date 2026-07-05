@@ -14,7 +14,7 @@ target paths are known.
 
 ## Stack Profile
 
-Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Python FastAPI | documented exception>`
+Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Python FastAPI | mixed monorepo | documented exception>`
 
 ## Local Documents
 
