@@ -24,6 +24,7 @@ tokens, raw API responses, or private identity payloads.
 | `target.prTargetBranch` | Branch that adoption and follow-up PRs should target. Usually the default branch. |
 | `target.branchNaming` | Branch naming convention for agent changes. |
 | `target.qualityGate` | Target-local quality gate commands and path-to-scope map. |
+| `target.projectProfiles` | Per-root stack profiles for the repository root and standalone apps, services, workers, packages, or infrastructure areas. |
 | `profiles.agentRuntime` | `codex`. |
 | `profiles.stack` | Selected stack profile or explicit exception. |
 | `profiles.workTracking` | Selected work tracking profile or `none`. |
@@ -60,6 +61,37 @@ Use stable object shapes so automation can audit adoption without parsing prose.
 | `scope` | Adoption scope affected by the file. |
 | `reason` | Short reason for copying, merging, refreshing, or skipping. |
 
+`target.projectProfiles` items:
+
+| Field | Purpose |
+|---|---|
+| `paths` | Path prefixes owned by this project, service, worker, package, or infrastructure area. |
+| `documentationRoot` | Directory containing that area's `README.md`, `AGENTS.md`, and `docs/INDEX.md`. |
+| `profile` | Stack profile or documented exception for this area. |
+| `standards` | Standards that apply to this area. |
+| `qualityGateScope` | Scope name used in `target.qualityGate.pathToScopeMap`. |
+| `exception` | Exception details or `null` when a standard profile fits. |
+
+## Profile Values
+
+Use these values unless an adopting repository documents an explicit extension:
+
+| Field | Allowed values |
+|---|---|
+| `profiles.stack` | `nextjs-frontend-only`, `nextjs-full-stack`, `nextjs-python-fastapi`, `mixed`, `documented-exception` |
+| `profiles.workTracking` | `azure-devops-work-tracking`, `jira-work-tracking`, `unsupported-provider`, `none` |
+| `profiles.codeHosting` | `github-code-hosting`, `azure-repos-code-hosting`, `unsupported-provider`, `none` |
+| `profiles.scriptPlatform` | `powershell`, `posix-shell`, `both` |
+| `selfImprove.tracker` | `azure-devops`, `jira`, `custom-ticket-sink`, `local-file-sink`, `none` |
+| `target.projectProfiles[].profile` | `nextjs-frontend-only`, `nextjs-full-stack`, `nextjs-python-fastapi`, `python-cli`, `python-worker`, `shared-package`, `infrastructure`, `dapr-distributed-app`, `documented-exception` |
+
+Use `unsupported-provider` when a real provider exists but VibeRails does not yet define a
+first-class profile for it. Use `none` only when the target repository intentionally has no
+provider for that area.
+
+Use `profiles.stack: mixed` when `target.projectProfiles[]` carries the concrete stack profile
+for each standalone area.
+
 ## Self-Improve Manifest Section
 
 The `selfImprove` section tells agents where to record reusable failures such as Azure DevOps,
@@ -70,7 +102,7 @@ Required fields:
 | Field | Purpose |
 |---|---|
 | `enabled` | `true` when a ticket sink is configured. |
-| `tracker` | `azure-devops`, `jira`, or `none`. |
+| `tracker` | `azure-devops`, `jira`, `custom-ticket-sink`, `local-file-sink`, or `none`. |
 | `sink` | Provider-specific tracker coordinates and create/comment command references. |
 | `labels` | Base labels/tags used for all self-improve tickets. |
 | `providerLabels` | Provider/tool labels such as `azure-devops`, `jira`, `git`, or `gh`. |
@@ -106,6 +138,22 @@ For Jira, record at least:
 - query command or JQL template
 - create command or connector reference
 - comment command or connector reference
+
+For a custom ticket sink, record at least:
+
+- sink name and owner
+- read/search command or connector reference
+- create command or connector reference
+- comment command or connector reference
+- auth checks and missing-auth behavior
+- exact fingerprint dedupe rule
+
+For a local file sink, record at least:
+
+- target file path
+- append or replace policy
+- dedupe rule
+- review owner
 
 If the repository stores these details in another target-local document, the manifest may link
 to that document, but the link must be specific enough for an agent to run dedupe before

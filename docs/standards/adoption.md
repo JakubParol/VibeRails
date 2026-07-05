@@ -32,8 +32,10 @@ Before editing the target repository, identify or ask for:
 - VibeRails source path or URL
 - project type: single project or monorepo
 - stack profile, or an explicit exception when no supplied profile matches
-- work tracking profile: `azure-devops-work-tracking`, `jira-work-tracking`, or `none`
-- code hosting profile: `github-code-hosting`, `azure-repos-code-hosting`, or `none`
+- work tracking profile: `azure-devops-work-tracking`, `jira-work-tracking`,
+  `unsupported-provider`, or `none`
+- code hosting profile: `github-code-hosting`, `azure-repos-code-hosting`,
+  `unsupported-provider`, or `none`
 - script platform profile: `powershell`, `posix-shell`, or `both`
 - self-improvement ticket sink: tracker coordinates, issue type, labels/tags, dedupe rule,
   comment template, auth checks, write approval policy, and missing-auth behavior
@@ -52,7 +54,8 @@ docs, config files, and user confirmation.
 4. Audit the target repository structure, remotes, existing docs, scripts, CI, and issue
    references.
 5. Select stack, integration, platform, and self-improvement profiles. Ask before recording an
-   uncertain profile.
+   uncertain profile. Use `unsupported-provider` when a provider exists but VibeRails has no
+   first-class profile; use `none` only when the target intentionally has no provider.
 6. Copy required standards into the target repository `docs/standards/`.
 7. Create or update root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
 8. Create `.viberails/adoption.json` from the manifest template, including the final copied
@@ -60,7 +63,7 @@ docs, config files, and user confirmation.
 9. Create `docs/viberails-adoption.md` from the human-readable adoption template, mirroring
    the manifest decisions for humans.
 10. In monorepos, create a documentation root for each standalone app, service, worker, mobile
-   app, or package.
+    app, or package.
 11. Add `README.md` to significant feature, module, adapter, and bounded-context folders.
 12. Add folder-level `AGENTS.md` only where local rules differ from the parent.
 13. Do not copy skills into the target repository by default. Skills are optional Codex assets
@@ -69,10 +72,12 @@ docs, config files, and user confirmation.
     skill name in both scopes.
 14. Define quality gates from existing scripts and stack profile defaults, including the
     path-to-scope map required by `quality-gate.md`.
-15. Record the adopted pack version from the VibeRails `CHANGELOG.md` in the target
+15. Record `target.projectProfiles[]` for the repository root and every standalone app,
+    service, worker, package, or infrastructure area.
+16. Record the adopted pack version from the VibeRails `CHANGELOG.md` in the target
     `docs/INDEX.md`.
-16. Run the documentation audit checklist.
-17. Report intentional exceptions and unresolved gaps.
+17. Run the documentation audit checklist.
+18. Report intentional exceptions and unresolved gaps.
 
 ## Target Preflight Evidence
 
@@ -85,9 +90,9 @@ Run these commands or platform-equivalent commands before editing. Record output
 | Branch and dirty state | `git status --short --branch` | `git status --short --branch` |
 | Remotes | `git remote -v` | `git remote -v` |
 | Default branch | `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null || git remote show origin` | `git symbolic-ref refs/remotes/origin/HEAD; git remote show origin` |
-| Stack indicators | `find . -name package.json -o -name pyproject.toml -o -name requirements.txt -o -name Dockerfile` | `Get-ChildItem -Recurse -File -Include package.json,pyproject.toml,requirements.txt,Dockerfile` |
-| Existing docs | `find . -name README.md -o -name AGENTS.md -o -path '*/docs/INDEX.md'` | `Get-ChildItem -Recurse -File -Include README.md,AGENTS.md,INDEX.md` |
-| CI and gates | `find .github .azuredevops . -maxdepth 3 -name '*pipeline*' -o -name '*quality*' -o -name Makefile` | `Get-ChildItem -Recurse -File -Include '*pipeline*','*quality*',Makefile` |
+| Stack indicators | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name package.json -o -name pyproject.toml -o -name requirements.txt -o -name Dockerfile \) -print` | `Get-ChildItem -Recurse -File -Include package.json,pyproject.toml,requirements.txt,Dockerfile \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
+| Existing docs | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name README.md -o -name AGENTS.md -o -path '*/docs/INDEX.md' \) -print` | `Get-ChildItem -Recurse -File -Include README.md,AGENTS.md,INDEX.md \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
+| CI and gates | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -path './.github/*' -o -path './.azuredevops/*' -o -name 'azure-pipelines*.yml' -o -name '*quality*' -o -name Makefile \) -print` | `Get-ChildItem -Recurse -File -Include '*pipeline*','*quality*',Makefile \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
 
 Skip generated and dependency folders during preflight: `.git`, `.venv`, `venv`,
 `node_modules`, `.next`, `dist`, `build`, `coverage`, `.pytest_cache`, `.mypy_cache`,
@@ -132,6 +137,14 @@ Preservation report shape:
 | `AGENTS.md` |  |  |  |
 | `docs/INDEX.md` |  |  |  |
 
+## Self-Improve Completion
+
+Adoption may finish with `selfImprove.enabled: false` only when the adoption record includes
+an open question or explicit decision explaining why. In that state agents prepare local
+self-improve ticket bodies but do not query, create, or comment sink tickets. Adoption is
+complete for documentation purposes, but self-improve writes remain disabled until the target
+repository records a concrete sink and auth checks.
+
 ## Context Discipline
 
 Use indexes and folder lists to route the audit before opening detailed files. Load standards,
@@ -165,6 +178,7 @@ At the end of adoption, the target repository must have:
 - `docs/viberails-adoption.md`
 - relevant standards under `docs/standards/`
 - selected integration, platform, and self-improvement decisions recorded
+- project profiles for the root and standalone monorepo areas
 - auth setup documented without secrets
 - documentation roots for standalone monorepo projects
 - local folder `README.md` files for significant folders
@@ -187,7 +201,8 @@ Before reporting adoption complete:
    `.git`, `.venv`, `venv`, `node_modules`, `.next`, `dist`, `build`, `coverage`,
    `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `.turbo`, `.nx`, `bin`, and `obj`.
 8. If an audit script was copied from `docs/templates/adoption-audit.mjs`, run it from the
-   target repository root.
+   target repository root with `node <path-to-script>` or pass the target root explicitly as
+   the first argument.
 9. Report every audit check that was not automated and why.
 
 ## Navigation

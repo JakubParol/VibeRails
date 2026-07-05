@@ -6,6 +6,23 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.join(path.dirname(fileURLToPath(import.meta.url)), ".."));
 const failures = [];
+const excludedDirectories = new Set([
+  ".git",
+  ".venv",
+  "venv",
+  "node_modules",
+  ".next",
+  "dist",
+  "build",
+  "coverage",
+  ".pytest_cache",
+  ".mypy_cache",
+  ".ruff_cache",
+  ".turbo",
+  ".nx",
+  "bin",
+  "obj",
+]);
 
 function addFailure(message) {
   failures.push(message);
@@ -22,7 +39,7 @@ function walkFiles(directory) {
     const fullPath = path.join(directory, entry.name);
     const relativePath = toRepoPath(fullPath);
 
-    if (relativePath === ".git" || relativePath.startsWith(".git/")) {
+    if (entry.isDirectory() && excludedDirectories.has(entry.name)) {
       continue;
     }
 
@@ -38,6 +55,18 @@ function walkFiles(directory) {
 
 function readText(filePath) {
   return fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
+}
+
+function readDenylist() {
+  const denylistPath = path.join(repoRoot, "scripts", "source-leak-denylist.txt");
+  if (!fs.existsSync(denylistPath)) {
+    return [];
+  }
+
+  return readText(denylistPath)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"));
 }
 
 function isCheckedTextFile(file) {
@@ -303,21 +332,7 @@ function testSkillMetadata() {
 }
 
 function testAgentAssetsAreGeneric() {
-  const forbiddenPatterns = [
-    "DocMind",
-    "docmind",
-    "DOCMINDAI",
-    "ELITMIND.DOCMINDAI",
-    "ElitMind",
-    "elitmind",
-    "ELITMIND",
-    "Elitmindvs",
-    "VibeRails-EM",
-    "SessionDeck",
-    "CrackerAi",
-    "SignalBoy",
-    "IQControl.Ai",
-  ];
+  const forbiddenPatterns = readDenylist();
   const forbiddenRegexes = [
     /\/Users\/[A-Za-z0-9._-]+\//,
     /\/home\/[A-Za-z0-9._-]+\//,
@@ -326,6 +341,7 @@ function testAgentAssetsAreGeneric() {
   const allowlistedFiles = new Set([
     "scripts/validate.mjs",
     "scripts/validate.ps1",
+    "scripts/source-leak-denylist.txt",
   ]);
 
   for (const file of walkFiles(repoRoot)) {

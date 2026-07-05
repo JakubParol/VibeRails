@@ -20,14 +20,16 @@ First run the target preflight from the adoption standard, summarize the evidenc
 
 - VibeRails source path, remote, source ref, and pack version
 - target repository root, remote, default/base branch, branch naming, and PR target branch
-- stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI, or an
-  explicit exception
-- work tracking profile: Azure DevOps Boards, Jira, or none
-- code hosting profile: GitHub, Azure Repos, or none
+- stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI, mixed,
+  or an explicit exception
+- work tracking profile: Azure DevOps Boards, Jira, unsupported provider, or none
+- code hosting profile: GitHub, Azure Repos, unsupported provider, or none
 - script platform profile: PowerShell, POSIX shell, or both
 - self-improve ticket sink for reusable agent/tooling failures
 - auth checks for selected integrations, documented without secrets
 - existing quality gate commands and path-to-scope map
+- per-root project profiles for the repository root and each standalone app, service, worker,
+  package, or infrastructure area
 
 Then:
 
@@ -48,7 +50,7 @@ Then:
     manual fallback, create/comment policy, labels/tags, issue type, comment template, auth
     checks, missing-auth behavior, and write approval policy
 11. if useful for this repository, copy `docs/templates/adoption-audit.mjs` into a target-local
-    tooling folder and run it from the target repository root
+    tooling folder and run it from the target repository root with `node <path-to-script>`
 12. run the minimum adoption audit and documentation audit
 13. report all intentional exceptions and unresolved questions
 

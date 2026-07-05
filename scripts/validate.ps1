@@ -6,6 +6,23 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $failures = New-Object System.Collections.Generic.List[string]
+$excludedDirectories = @(
+    ".git",
+    ".venv",
+    "venv",
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "coverage",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".turbo",
+    ".nx",
+    "bin",
+    "obj"
+)
 
 function Add-Failure {
     param([Parameter(Mandatory = $true)][string] $Message)
@@ -19,8 +36,10 @@ function Get-RepositoryFiles {
     Get-ChildItem -LiteralPath $repoRoot -Recurse -File -Force -Include $Include |
         Where-Object {
             $relativePath = $_.FullName.Substring($repoRoot.Path.Length + 1)
-            if ($relativePath -match '(^|[\\/])\.git([\\/]|$)') {
-                return $false
+            foreach ($directory in $excludedDirectories) {
+                if ($relativePath -match "(^|[\\/])$([regex]::Escape($directory))([\\/]|$)") {
+                    return $false
+                }
             }
 
             foreach ($pattern in $Include) {
@@ -60,6 +79,17 @@ function Test-LineEndingsAndTrailingWhitespace {
             }
         }
     }
+}
+
+function Get-SourceLeakDenylist {
+    $denylistPath = Join-Path $repoRoot "scripts/source-leak-denylist.txt"
+    if (-not (Test-Path -LiteralPath $denylistPath -PathType Leaf)) {
+        return @()
+    }
+
+    return Get-Content -LiteralPath $denylistPath |
+        ForEach-Object { $_.Trim() } |
+        Where-Object { -not [string]::IsNullOrWhiteSpace($_) -and -not $_.StartsWith("#") }
 }
 
 function Test-NoBom {
@@ -111,7 +141,7 @@ function Test-MarkdownLinks {
     $linkGraph = @{}
 
     foreach ($file in $files) {
-        $relativeSource = $file.FullName.Substring($repoRoot.Path.Length + 1)
+        $relativeSource = $file.FullName.Substring($repoRoot.Path.Length + 1).Replace("\", "/")
         if (-not $linkGraph.ContainsKey($file.FullName)) {
             $linkGraph[$file.FullName] = @()
         }
@@ -273,21 +303,7 @@ function Test-PowerShellSyntax {
 }
 
 function Test-RepositoryTextIsGeneric {
-    $forbiddenPatterns = @(
-        "DocMind",
-        "docmind",
-        "DOCMINDAI",
-        "ELITMIND.DOCMINDAI",
-        "ElitMind",
-        "elitmind",
-        "ELITMIND",
-        "Elitmindvs",
-        "VibeRails-EM",
-        "SessionDeck",
-        "CrackerAi",
-        "SignalBoy",
-        "IQControl.Ai"
-    )
+    $forbiddenPatterns = Get-SourceLeakDenylist
     $forbiddenRegexes = @(
         "/Users/[A-Za-z0-9._-]+/",
         "/home/[A-Za-z0-9._-]+/",
@@ -295,7 +311,8 @@ function Test-RepositoryTextIsGeneric {
     )
     $allowlistedFiles = @(
         "scripts/validate.mjs",
-        "scripts/validate.ps1"
+        "scripts/validate.ps1",
+        "scripts/source-leak-denylist.txt"
     )
     $files = Get-RepositoryFiles -Include @("*.md", "*.mjs", "*.sh", "*.ps1", "*.json", "*.yaml", "*.yml", ".gitattributes", "LICENSE")
     foreach ($file in $files) {

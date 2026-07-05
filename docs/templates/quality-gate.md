@@ -26,9 +26,9 @@ Use this command before creating a PR:
 
 ## Path-To-Scope Map
 
-| Changed path | Scope | Commands | Required before PR |
-|---|---|---|---|
-| `<path-prefix-or-glob>` | `<scope>` | `<command>` | yes |
+| Changed path | Scope | Commands | Working directory | Platform/canonical command | CI check | Required before PR |
+|---|---|---|---|---|---|---|
+| `<path-prefix-or-glob>` | `<scope>` | `<command>` | `<working-directory>` | `<posix|powershell|both>` | `<ci check>` | yes |
 
 ## Required Before PR
 

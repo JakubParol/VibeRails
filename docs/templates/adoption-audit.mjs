@@ -2,11 +2,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 const repoRoot = process.argv[2]
   ? path.resolve(process.argv[2])
-  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
+  : process.cwd();
 const failures = [];
 const excludedDirectories = new Set([
   ".git",
@@ -58,6 +57,28 @@ function walkFiles(directory) {
 
 function readText(filePath) {
   return fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
+}
+
+function stripFencedBlocks(text) {
+  const lines = text.split(/\r?\n/);
+  const kept = [];
+  let insideFence = false;
+
+  for (const line of lines) {
+    if (/^\s*(```|~~~)/.test(line)) {
+      insideFence = !insideFence;
+      continue;
+    }
+    if (!insideFence) {
+      kept.push(line);
+    }
+  }
+
+  return kept.join("\n");
+}
+
+function stripInlineCode(text) {
+  return text.replace(/`[^`\n]*`/g, "");
 }
 
 function requiredFile(relativePath) {
@@ -125,7 +146,9 @@ function auditMarkdown(markdownFiles) {
     const text = readText(sourceFile);
     let match;
 
-    if (/<[^>\n]+>/.test(text) || /\bTODO\b/i.test(text)) {
+    const visibleText = stripInlineCode(stripFencedBlocks(text));
+    const shouldCheckPlaceholders = !sourceRelativePath.startsWith("docs/standards/");
+    if (shouldCheckPlaceholders && (/<[^>\n]+>/.test(visibleText) || /\bTODO\b/i.test(visibleText))) {
       fail(`${sourceRelativePath} contains unresolved placeholder or TODO text.`);
     }
 
@@ -206,6 +229,7 @@ function auditManifest() {
     return;
   }
 
+  auditManifestPlaceholders(manifest);
   for (const field of ["schemaVersion", "adoptedAt", "viberails", "target", "profiles", "auth", "selfImprove", "copiedFiles"]) {
     if (manifest[field] === undefined) {
       fail(`.viberails/adoption.json is missing '${field}'.`);
@@ -217,8 +241,188 @@ function auditManifest() {
   if (!Array.isArray(manifest.target?.qualityGate?.pathToScopeMap)) {
     fail(".viberails/adoption.json must record target.qualityGate.pathToScopeMap as an array.");
   }
+  if (!Array.isArray(manifest.target?.projectProfiles)) {
+    fail(".viberails/adoption.json must record target.projectProfiles as an array.");
+  }
   if (!Array.isArray(manifest.copiedFiles)) {
     fail(".viberails/adoption.json must record copiedFiles as an array.");
+  }
+  requireEnum(manifest.profiles?.stack, "profiles.stack", [
+    "nextjs-frontend-only",
+    "nextjs-full-stack",
+    "nextjs-python-fastapi",
+    "mixed",
+    "documented-exception",
+  ]);
+  requireEnum(manifest.profiles?.workTracking, "profiles.workTracking", [
+    "azure-devops-work-tracking",
+    "jira-work-tracking",
+    "unsupported-provider",
+    "none",
+  ]);
+  requireEnum(manifest.profiles?.codeHosting, "profiles.codeHosting", [
+    "github-code-hosting",
+    "azure-repos-code-hosting",
+    "unsupported-provider",
+    "none",
+  ]);
+  requireEnum(manifest.profiles?.scriptPlatform, "profiles.scriptPlatform", [
+    "powershell",
+    "posix-shell",
+    "both",
+  ]);
+  requireNonPlaceholderString(manifest.viberails?.sourceRef, "viberails.sourceRef");
+  requireNonPlaceholderString(manifest.viberails?.packVersion, "viberails.packVersion");
+  requireNonPlaceholderString(manifest.target?.defaultBranch, "target.defaultBranch");
+  requireNonPlaceholderString(manifest.target?.prTargetBranch, "target.prTargetBranch");
+  requireNonPlaceholderString(manifest.target?.qualityGate?.canonicalCommand, "target.qualityGate.canonicalCommand");
+  auditAuthSection(manifest.auth);
+  auditSelfImproveSection(manifest.selfImprove);
+  auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
+  auditProjectProfiles(manifest.target?.projectProfiles);
+  auditCopiedFiles(manifest.copiedFiles);
+}
+
+function auditManifestPlaceholders(value, pathParts = []) {
+  if (typeof value === "string") {
+    if (isPlaceholder(value) || /\bTODO\b/i.test(value) || /^n\/a$/i.test(value.trim())) {
+      fail(`.viberails/adoption.json contains unresolved value at '${pathParts.join(".")}'.`);
+    }
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => auditManifestPlaceholders(item, [...pathParts, String(index)]));
+    return;
+  }
+  if (value && typeof value === "object") {
+    for (const [key, item] of Object.entries(value)) {
+      auditManifestPlaceholders(item, [...pathParts, key]);
+    }
+  }
+}
+
+function isPlaceholder(value) {
+  return typeof value === "string" && /^<.*>$/.test(value.trim());
+}
+
+function requireNonPlaceholderString(value, field) {
+  if (typeof value !== "string" || value.trim() === "" || isPlaceholder(value)) {
+    fail(`.viberails/adoption.json must record a concrete '${field}'.`);
+  }
+}
+
+function requireEnum(value, field, allowedValues) {
+  if (!allowedValues.includes(value)) {
+    fail(`.viberails/adoption.json has invalid '${field}': expected one of ${allowedValues.join(", ")}.`);
+  }
+}
+
+function auditAuthSection(auth) {
+  if (!auth || typeof auth !== "object") {
+    fail(".viberails/adoption.json must record auth as an object.");
+    return;
+  }
+
+  for (const key of ["workTracking", "codeHosting"]) {
+    const value = auth[key];
+    if (typeof value !== "string" || value.trim() === "" || isPlaceholder(value)) {
+      fail(`.viberails/adoption.json must record concrete auth.${key} instructions or 'none'.`);
+    }
+  }
+}
+
+function auditSelfImproveSection(selfImprove) {
+  if (!selfImprove || typeof selfImprove !== "object") {
+    fail(".viberails/adoption.json must record selfImprove as an object.");
+    return;
+  }
+
+  requireEnum(selfImprove.tracker, "selfImprove.tracker", [
+    "azure-devops",
+    "jira",
+    "custom-ticket-sink",
+    "local-file-sink",
+    "none",
+  ]);
+  if (typeof selfImprove.enabled !== "boolean") {
+    fail(".viberails/adoption.json must record selfImprove.enabled as a boolean.");
+  }
+  if (selfImprove.enabled) {
+    requireNonPlaceholderString(selfImprove.dedupe?.queryTemplate, "selfImprove.dedupe.queryTemplate");
+    requireNonPlaceholderString(selfImprove.auth?.readCheck, "selfImprove.auth.readCheck");
+    requireNonPlaceholderString(selfImprove.auth?.writeCheck, "selfImprove.auth.writeCheck");
+    requireNonPlaceholderString(selfImprove.writeApprovalPolicy, "selfImprove.writeApprovalPolicy");
+  }
+  if (!Array.isArray(selfImprove.alternateClients)) {
+    fail(".viberails/adoption.json must record selfImprove.alternateClients as an array.");
+  }
+}
+
+function auditPathToScopeMap(pathToScopeMap) {
+  if (!Array.isArray(pathToScopeMap)) {
+    return;
+  }
+
+  for (const [index, entry] of pathToScopeMap.entries()) {
+    if (!Array.isArray(entry.paths) || entry.paths.length === 0) {
+      fail(`target.qualityGate.pathToScopeMap[${index}] must include non-empty paths.`);
+    }
+    if (!Array.isArray(entry.commands) || entry.commands.length === 0) {
+      fail(`target.qualityGate.pathToScopeMap[${index}] must include non-empty commands.`);
+    }
+    requireNonPlaceholderString(entry.scope, `target.qualityGate.pathToScopeMap[${index}].scope`);
+    requireNonPlaceholderString(entry.workingDirectory, `target.qualityGate.pathToScopeMap[${index}].workingDirectory`);
+    if (typeof entry.requiredBeforePr !== "boolean") {
+      fail(`target.qualityGate.pathToScopeMap[${index}].requiredBeforePr must be a boolean.`);
+    }
+  }
+}
+
+function auditProjectProfiles(projectProfiles) {
+  if (!Array.isArray(projectProfiles)) {
+    return;
+  }
+
+  for (const [index, entry] of projectProfiles.entries()) {
+    if (!Array.isArray(entry.paths) || entry.paths.length === 0) {
+      fail(`target.projectProfiles[${index}] must include non-empty paths.`);
+    }
+    requireNonPlaceholderString(entry.documentationRoot, `target.projectProfiles[${index}].documentationRoot`);
+    requireEnum(entry.profile, `target.projectProfiles[${index}].profile`, [
+      "nextjs-frontend-only",
+      "nextjs-full-stack",
+      "nextjs-python-fastapi",
+      "python-cli",
+      "python-worker",
+      "shared-package",
+      "infrastructure",
+      "dapr-distributed-app",
+      "documented-exception",
+    ]);
+    if (!Array.isArray(entry.standards) || entry.standards.length === 0) {
+      fail(`target.projectProfiles[${index}] must include non-empty standards.`);
+    }
+    requireNonPlaceholderString(entry.qualityGateScope, `target.projectProfiles[${index}].qualityGateScope`);
+
+    const documentationRoot = path.resolve(repoRoot, entry.documentationRoot);
+    for (const required of ["README.md", "AGENTS.md", "docs/INDEX.md"]) {
+      if (!fs.existsSync(path.join(documentationRoot, required))) {
+        fail(`target.projectProfiles[${index}] documentation root is missing ${path.join(entry.documentationRoot, required)}.`);
+      }
+    }
+  }
+}
+
+function auditCopiedFiles(copiedFiles) {
+  if (!Array.isArray(copiedFiles)) {
+    return;
+  }
+
+  for (const [index, entry] of copiedFiles.entries()) {
+    for (const field of ["sourcePath", "targetPath", "sourceRef", "mode", "scope", "reason"]) {
+      requireNonPlaceholderString(entry[field], `copiedFiles[${index}].${field}`);
+    }
+    requireEnum(entry.mode, `copiedFiles[${index}].mode`, ["created", "merged", "refreshed", "skipped"]);
   }
 }
 

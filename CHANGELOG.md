@@ -26,6 +26,16 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   path-to-scope map shapes, alternate self-improve clients, and open-question taxonomy; target
   adoption gets a repeatable preflight, merge preservation report, generated-folder audit
   exclusions, optional target-side audit script, and BOM rejection in validators.
+- Audit follow-up: target-side adoption audit now defaults to the current working directory,
+  ignores placeholders inside copied standards and fenced examples, validates profile enums
+  and key auth/self-improve fields, and documentation now distinguishes provider profile
+  support from bundled automation coverage.
+- Multi-root hardening: adoption manifests now include `target.projectProfiles[]`, target audit
+  checks documented project roots, quality gate templates preserve working directories and CI
+  context, unsupported real providers are distinct from `none`, and repository validators skip
+  generated/dependency folders.
+- Validator cleanup: source-specific leakage terms now live in a small denylist file instead
+  of being hard-coded in validator logic.
 
 ## 0.2.0 - 2026-07-03
 

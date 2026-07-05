@@ -5,6 +5,21 @@ They are documentation contracts first. They do not require live service access 
 adoption, and they do not authorize agents to perform writes unless the target repository and
 user instruction allow those writes.
 
+## Automation Coverage
+
+Supported profile means VibeRails can record the decision and guide agents through the
+provider safely. It does not always mean VibeRails ships a complete automation wrapper.
+
+| Profile combination | Current automation status |
+|---|---|
+| Azure Boards + Azure Repos | Optional Codex skills include PowerShell Azure DevOps wrappers for work items and PR review. |
+| Azure Boards + GitHub | Azure Boards skill support is available; GitHub PR review defaults to local-diff review. |
+| Jira + GitHub | Documentation and manifest contract are supported; Jira ticket writes and GitHub inline review publishing require target-local connector or wrapper decisions. |
+| Jira + Azure Repos | Documentation and manifest contract are supported; Jira ticket writes require target-local connector or wrapper decisions. |
+
+If a selected provider has no bundled wrapper for the requested write, record the target-local
+connector, CLI command, or explicit manual-only policy in `.viberails/adoption.json`.
+
 ## Selection Rules
 
 - Select profiles from target repository evidence or user confirmation.
@@ -19,6 +34,7 @@ user instruction allow those writes.
 |---|---|
 | `azure-devops-work-tracking` | Work is planned in Azure Boards. |
 | `jira-work-tracking` | Work is planned in Jira. |
+| `unsupported-provider` | A real tracker exists but VibeRails has no first-class profile for it yet. |
 | `none` | The repository does not use a supported tracker yet. |
 
 ### Azure DevOps Work Tracking
@@ -58,6 +74,7 @@ Do not guess project key, board, sprint, issue type, component, or transition na
 |---|---|
 | `github-code-hosting` | Git remotes and PRs are hosted in GitHub. |
 | `azure-repos-code-hosting` | Git remotes and PRs are hosted in Azure Repos. |
+| `unsupported-provider` | A real code host exists but VibeRails has no first-class profile for it yet. |
 | `none` | The repository has no supported remote or PR host yet. |
 
 ### GitHub Code Hosting

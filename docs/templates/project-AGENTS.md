@@ -77,11 +77,11 @@ full gate only for cross-cutting changes or on explicit request.
 
 Path-to-scope map (keep aligned with CI change detection):
 
-| Path prefix | Scope | Gate command |
-|---|---|---|
-| `<services/api/**>` | `<api>` | `<scoped command>` |
-| `<apps/web/**>` | `<web>` | `<scoped command>` |
-| `<shared tooling, lockfiles>` | all | `<full gate command>` |
+| Path prefix | Scope | Working directory | Gate command | Platform/canonical command | CI check |
+|---|---|---|---|---|---|
+| `<services/api/**>` | `<api>` | `<services/api>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
+| `<apps/web/**>` | `<web>` | `<apps/web>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
+| `<shared tooling, lockfiles>` | all | `<repo root>` | `<full gate command>` | `<posix|powershell|both>` | `<ci check>` |
 
 ```bash
 # scoped gate for one changed scope

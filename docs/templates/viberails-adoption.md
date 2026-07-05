@@ -10,6 +10,18 @@ This repository adopted VibeRails standards from:
 | Pack version | `<version>` |
 | Adopted at | `<date/time>` |
 
+## Preflight Evidence
+
+| Evidence | Summary |
+|---|---|
+| Repository root | `<command and result summary>` |
+| Branch and dirty state | `<command and result summary>` |
+| Remotes | `<command and result summary>` |
+| Default branch | `<command and result summary>` |
+| Stack indicators | `<command and result summary>` |
+| Existing docs | `<command and result summary>` |
+| CI and gates | `<command and result summary>` |
+
 ## Target Repository
 
 | Field | Value |
@@ -25,10 +37,16 @@ This repository adopted VibeRails standards from:
 | Area | Selected profile | Notes |
 |---|---|---|
 | Agent runtime | `codex` | Codex is the supported runtime for this adoption. |
-| Stack | `<profile>` | `<notes>` |
-| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|none>` | `<notes>` |
-| Code hosting | `<github-code-hosting|azure-repos-code-hosting|none>` | `<notes>` |
+| Stack | `<primary profile or summary>` | See project profiles below. |
+| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<notes>` |
+| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<notes>` |
 | Script platform | `<powershell|posix-shell|both>` | `<notes>` |
+
+## Project Profiles
+
+| Paths | Documentation root | Profile | Standards | Quality gate scope | Exception |
+|---|---|---|---|---|---|
+| `.` | `.` | `<profile>` | `<standards>` | `<scope>` | `<exception or none>` |
 
 ## Auth
 
@@ -42,9 +60,9 @@ payloads.
 
 ## Quality Gate
 
-| Scope/path | Command | Notes |
-|---|---|---|
-| `<path or scope>` | `<command>` | `<notes>` |
+| Paths | Scope | Commands | Working directory | Required before PR | Notes |
+|---|---|---|---|---|---|
+| `<path prefix or glob>` | `<scope>` | `<commands>` | `<working directory>` | `<yes|no>` | `<notes>` |
 
 Canonical local command: `<command>`.
 
