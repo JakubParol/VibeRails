@@ -21,8 +21,9 @@ First run the target preflight from the adoption standard, summarize the evidenc
 - VibeRails source path, remote, source ref, and pack version
 - target repository root, remote, default/base branch, branch naming, and PR target branch
 - PR policy: draft default, allowed PR write operations, and review publishing behavior
-- stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI, mixed,
-  or an explicit exception
+- stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI,
+  Python CLI, Python worker, shared package, infrastructure, Dapr or distributed app, mixed
+  monorepo, or an explicit exception
 - work tracking profile: Azure DevOps Boards, Jira, unsupported provider, or none
 - code hosting profile: GitHub, Azure Repos, unsupported provider, or none
 - provider-specific integration coordinates for the selected work tracking and code hosting

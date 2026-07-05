@@ -299,7 +299,22 @@ function Invoke-AdoRestJson {
             }
         }
         if (-not [string]::IsNullOrWhiteSpace($errorDetails)) {
-            throw "Azure DevOps REST request failed: $($_.Exception.Message) $errorDetails"
+            $statusCode = "unknown"
+            if ($null -ne $response -and $null -ne $response.PSObject.Properties["StatusCode"]) {
+                $statusCode = [int]$response.StatusCode
+            }
+            if ($errorDetails -match "<html|<title|Sign in|login.microsoftonline.com|Authorization has been denied") {
+                throw ("Azure DevOps REST request failed: $($_.Exception.Message) " +
+                    "StatusCode=$statusCode. Response looked like an HTML/sign-in or authorization " +
+                    "payload; raw response body was not logged. Run -Action Doctor and prefer the CLI channels.")
+            }
+
+            $redactedSummary = ($errorDetails -replace "[\r\n]+", " " -replace "(?i)(token|authorization|cookie|password|secret)[^,; ]*", "[redacted]")
+            if ($redactedSummary.Length -gt 180) {
+                $redactedSummary = $redactedSummary.Substring(0, 180)
+            }
+            throw ("Azure DevOps REST request failed: $($_.Exception.Message) " +
+                "StatusCode=$statusCode. Redacted response summary: $redactedSummary")
         }
 
         throw "Azure DevOps REST request failed: $($_.Exception.Message)"

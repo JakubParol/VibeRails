@@ -4,8 +4,8 @@ This repository adopted VibeRails standards from:
 
 | Field | Value |
 |---|---|
-| Source path | `<local path or n/a>` |
-| Source remote | `<remote URL or n/a>` |
+| Source path | `<local path or null>` |
+| Source remote | `<sanitized remote URL or null>` |
 | Source ref | `<commit, tag, or branch>` |
 | Pack version | `<version>` |
 | Adopted at | `<date/time>` |
@@ -27,7 +27,7 @@ This repository adopted VibeRails standards from:
 | Field | Value |
 |---|---|
 | Repository root | `<target repository root>` |
-| Remote | `<target remote URL or n/a>` |
+| Remote | `<sanitized target remote URL or null>` |
 | Default/base branch | `<branch>` |
 | Branch naming | `<rule>` |
 | PR target | `<branch or none>` |
@@ -55,8 +55,8 @@ This repository adopted VibeRails standards from:
 
 | Area | Profile | Coordinates | Auth check | Write approval |
 |---|---|---|---|---|
-| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<Azure DevOps org/project, Jira site/project key, unsupported provider name, or none reason>` | `<read check or n/a>` | `<write approval policy or n/a>` |
-| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<GitHub owner/repo, Azure Repos org/project/repo, unsupported provider name, or none reason>` | `<auth check or n/a>` | `<allowed PR write operations or n/a>` |
+| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<Azure DevOps org/project, Jira site/project key, unsupported provider name, or none reason>` | `<read check or none>` | `<write approval policy or none>` |
+| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<GitHub owner/repo, Azure Repos org/project/repo, unsupported provider name, or none reason>` | `<auth check or none>` | `<allowed PR write operations or none>` |
 
 | Provider | Required routing details |
 |---|---|
@@ -87,9 +87,9 @@ payloads.
 |---|---|
 | Mode | `<none|user-scope|vendored>` |
 | Selected skills | `<skill names or none>` |
-| Source path | `<skills source path or n/a>` |
-| Source ref | `<commit, tag, branch, or n/a>` |
-| Target path | `<vendored target path or n/a>` |
+| Source path | `<skills source path or null>` |
+| Source ref | `<commit, tag, branch, or null>` |
+| Target path | `<vendored target path or null>` |
 | Duplicate-name policy | `Never keep the same skill name in both Codex user scope and target repository scope.` |
 | Decision reason | `<why skills are not used, installed at user scope, or vendored>` |
 
@@ -109,10 +109,10 @@ Reusable agent/tooling failures are reported here:
 |---|---|
 | Enabled | `<true|false>` |
 | Tracker | `<azure-devops|jira|custom-ticket-sink|local-file-sink|none>` |
-| Sink coordinates | `<organization/project, Jira site/project key, or n/a>` |
-| Issue type | `<issue type or n/a>` |
+| Sink coordinates | `<organization/project, Jira site/project key, or none>` |
+| Issue type | `<issue type or none>` |
 | Labels/tags | `viberails-self-improve`, `<provider/tool labels>` |
-| Dedupe query template | `<query or n/a>` |
+| Dedupe query template | `<query or none>` |
 | Match rule | Exact fingerprint first; fallback by provider, command family, and error class only when configured. |
 | Comment policy | Add sanitized evidence to an existing matching ticket before creating a new one. |
 | Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |

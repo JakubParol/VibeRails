@@ -160,6 +160,10 @@ function Test-MarkdownLinks {
                 ($target -eq "../README.md" -or $target -eq "../AGENTS.md")) {
                 continue
             }
+            if ($relativeSource -eq "docs/templates/project-docs-INDEX.md" -and
+                $target.StartsWith("<relative-path-to-repo>/docs/standards/")) {
+                continue
+            }
             if ($relativeSource -eq "docs/templates/viberails-adoption.md" -and $target -eq "INDEX.md") {
                 continue
             }

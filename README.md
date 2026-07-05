@@ -76,9 +76,9 @@ When working in another repository, give the AI agent access to this repository 
 8. Add local `README.md` files to significant feature, module, adapter, and bounded-context
    folders.
 9. Add folder-level `AGENTS.md` files only where local agent rules differ from the parent.
-10. Do not copy skills into the target project. Install them once per machine at the Codex
-   user scope only when those optional workflows are needed; see
-   [.agents/skills](.agents/skills/README.md).
+10. Do not copy skills into the target project by default. Install them once per machine at the
+   Codex user scope when optional workflows are needed, or vendor a pinned copy only after an
+   explicit repository decision; see [.agents/skills](.agents/skills/README.md).
 11. Update navigation links so agents can drill down from general standards to local context.
 
 The target repository owns its final documentation. This repository provides reusable defaults,

@@ -60,6 +60,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Adoption routing polish: manifests now record provider-specific integration coordinates and
   Codex skill-linking decisions; the target audit checks copied-file existence and mirrors key
   manifest values into the human adoption report.
+- Final review polish: copied project docs now use real Markdown link templates, adoption
+  templates avoid `n/a` placeholder conflicts, preflight avoids raw remote inspection, and Azure
+  DevOps REST failures no longer throw raw response bodies.
 
 ## 0.2.0 - 2026-07-03
 

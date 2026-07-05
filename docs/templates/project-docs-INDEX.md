@@ -39,19 +39,19 @@ Link to the repository-level standards instead of duplicating them inside this p
 
 | Standard | Purpose |
 |---|---|
-| `<relative-path-to-repo>/docs/standards/agent-workflow.md` | How agents load context, edit, verify, and report work. |
-| `<relative-path-to-repo>/docs/standards/adoption.md` | How agents apply this standards pack to another repository. |
-| `<relative-path-to-repo>/docs/standards/adoption-manifest.md` | Required `.viberails/adoption.json` fields for adopted repositories. |
-| `<relative-path-to-repo>/docs/standards/change-protocol.md` | Required branch, commit, push, PR, and review-loop protocol for AI agents. |
-| `<relative-path-to-repo>/docs/standards/documentation.md` | Documentation structure, indexes, and navigation rules. |
-| `<relative-path-to-repo>/docs/standards/documentation-audit.md` | Checklist for verifying documentation coverage and navigation. |
-| `<relative-path-to-repo>/docs/standards/integration-profiles.md` | Azure DevOps, Jira, GitHub, and Azure Repos profile contracts. |
-| `<relative-path-to-repo>/docs/standards/platform-profiles.md` | PowerShell and POSIX shell profile rules. |
-| `<relative-path-to-repo>/docs/standards/quality-gate.md` | Required verification command standards by project and stack. |
-| `<relative-path-to-repo>/docs/standards/self-improve-loop.md` | Ticket-based reporting loop for reusable agent and tooling failures. |
-| `<relative-path-to-repo>/docs/standards/stack-profiles.md` | Stack-specific standard bundles for Next.js and FastAPI projects. |
-| `<relative-path-to-repo>/docs/standards/architecture.md` | Architecture and dependency rules. |
-| `<relative-path-to-repo>/docs/standards/coding.md` | General coding rules. |
+| [Agent workflow](<relative-path-to-repo>/docs/standards/agent-workflow.md) | How agents load context, edit, verify, and report work. |
+| [Adoption](<relative-path-to-repo>/docs/standards/adoption.md) | How agents apply this standards pack to another repository. |
+| [Adoption manifest](<relative-path-to-repo>/docs/standards/adoption-manifest.md) | Required `.viberails/adoption.json` fields for adopted repositories. |
+| [Change protocol](<relative-path-to-repo>/docs/standards/change-protocol.md) | Required branch, commit, push, PR, and review-loop protocol for AI agents. |
+| [Documentation](<relative-path-to-repo>/docs/standards/documentation.md) | Documentation structure, indexes, and navigation rules. |
+| [Documentation audit](<relative-path-to-repo>/docs/standards/documentation-audit.md) | Checklist for verifying documentation coverage and navigation. |
+| [Integration profiles](<relative-path-to-repo>/docs/standards/integration-profiles.md) | Azure DevOps, Jira, GitHub, and Azure Repos profile contracts. |
+| [Platform profiles](<relative-path-to-repo>/docs/standards/platform-profiles.md) | PowerShell and POSIX shell profile rules. |
+| [Quality gate](<relative-path-to-repo>/docs/standards/quality-gate.md) | Required verification command standards by project and stack. |
+| [Self-improve loop](<relative-path-to-repo>/docs/standards/self-improve-loop.md) | Ticket-based reporting loop for reusable agent and tooling failures. |
+| [Stack profiles](<relative-path-to-repo>/docs/standards/stack-profiles.md) | Stack-specific standard bundles for Next.js and FastAPI projects. |
+| [Architecture](<relative-path-to-repo>/docs/standards/architecture.md) | Architecture and dependency rules. |
+| [Coding](<relative-path-to-repo>/docs/standards/coding.md) | General coding rules. |
 
 Replace `<relative-path-to-repo>` with the path from this `docs/INDEX.md` file to the
 repository root. For `apps/web/docs/INDEX.md`, this is `../../..`.

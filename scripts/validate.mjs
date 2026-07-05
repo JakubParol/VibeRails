@@ -180,6 +180,11 @@ function isAllowedTemplateCopyLink(sourceRelativePath, target) {
     ["docs/templates/viberails-adoption.md", new Set(["INDEX.md"])],
   ]);
 
+  if (sourceRelativePath === "docs/templates/project-docs-INDEX.md"
+    && target.startsWith("<relative-path-to-repo>/docs/standards/")) {
+    return true;
+  }
+
   return allowedTargetsByTemplate.get(sourceRelativePath)?.has(target) ?? false;
 }
 
