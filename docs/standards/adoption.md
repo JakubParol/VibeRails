@@ -43,6 +43,10 @@ Before editing the target repository, identify or ask for:
 - base branch and branch naming rules
 - documented quality gate, if one already exists
 
+Sanitize remote URLs before recording them in `.viberails/adoption.json`: remove username,
+password, token userinfo, query strings, and fragments. Use `null` instead of committing an
+unsafe remote value.
+
 Do not infer a provider from the VibeRails repository. Use target repository remotes, existing
 docs, config files, and user confirmation.
 

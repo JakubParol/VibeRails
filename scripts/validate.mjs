@@ -177,6 +177,7 @@ function resolveMarkdownTarget(sourceFile, target) {
 function isAllowedTemplateCopyLink(sourceRelativePath, target) {
   const allowedTargetsByTemplate = new Map([
     ["docs/templates/project-docs-INDEX.md", new Set(["../README.md", "../AGENTS.md"])],
+    ["docs/templates/viberails-adoption.md", new Set(["INDEX.md"])],
   ]);
 
   return allowedTargetsByTemplate.get(sourceRelativePath)?.has(target) ?? false;

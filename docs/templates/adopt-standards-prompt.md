@@ -32,6 +32,9 @@ First run the target preflight from the adoption standard, summarize the evidenc
 - per-root project profiles for the repository root and each standalone app, service, worker,
   package, or infrastructure area
 
+Sanitize source and target remotes before writing them into `.viberails/adoption.json`; do not
+commit remotes with username, password, token userinfo, query strings, or fragments.
+
 Then:
 
 1. copy only relevant standards into docs/standards/

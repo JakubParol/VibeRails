@@ -160,6 +160,9 @@ function Test-MarkdownLinks {
                 ($target -eq "../README.md" -or $target -eq "../AGENTS.md")) {
                 continue
             }
+            if ($relativeSource -eq "docs/templates/viberails-adoption.md" -and $target -eq "INDEX.md") {
+                continue
+            }
 
             $pathPart = ($target -split "#")[0].Trim("<", ">")
             $anchorPart = ""

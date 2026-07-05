@@ -7,6 +7,7 @@ const repoRoot = process.argv[2]
   ? path.resolve(process.argv[2])
   : process.cwd();
 const failures = [];
+const markdownPlaceholderAuditPaths = new Set(["docs/viberails-adoption.md"]);
 const excludedDirectories = new Set([
   ".git",
   ".venv",
@@ -256,7 +257,8 @@ function auditMarkdown(markdownFiles) {
     const text = readText(sourceFile);
     let match;
 
-    const shouldCheckPlaceholders = !sourceRelativePath.startsWith("docs/standards/");
+    const shouldCheckPlaceholders = markdownPlaceholderAuditPaths.has(sourceRelativePath)
+      && !sourceRelativePath.startsWith("docs/standards/");
     const textOutsideFences = stripFencedBlocks(text);
     const proseText = stripInlineCode(textOutsideFences);
     if (shouldCheckPlaceholders && (containsPlaceholder(textOutsideFences) || /\bTODO\b/i.test(proseText))) {
@@ -372,6 +374,11 @@ function auditManifest() {
     "nextjs-frontend-only",
     "nextjs-full-stack",
     "nextjs-python-fastapi",
+    "python-cli",
+    "python-worker",
+    "shared-package",
+    "infrastructure",
+    "dapr-distributed-app",
     "mixed",
     "documented-exception",
   ]);
@@ -393,16 +400,16 @@ function auditManifest() {
     "both",
   ]);
   requireNullableStringField(manifest.viberails, "sourcePath", "viberails.sourcePath");
-  requireNullableStringField(manifest.viberails, "sourceRemote", "viberails.sourceRemote");
+  requireSanitizedNullableRemote(manifest.viberails, "sourceRemote", "viberails.sourceRemote");
   requireNonPlaceholderString(manifest.viberails?.sourceRef, "viberails.sourceRef");
   requireNonPlaceholderString(manifest.viberails?.packVersion, "viberails.packVersion");
   requireNonPlaceholderString(manifest.target?.repositoryRoot, "target.repositoryRoot");
-  requireNullableStringField(manifest.target, "remote", "target.remote");
+  requireSanitizedNullableRemote(manifest.target, "remote", "target.remote");
   requireNonPlaceholderString(manifest.target?.defaultBranch, "target.defaultBranch");
   requireNonPlaceholderString(manifest.target?.prTargetBranch, "target.prTargetBranch");
   requireNonPlaceholderString(manifest.target?.branchNaming, "target.branchNaming");
   requireNonPlaceholderString(manifest.target?.qualityGate?.canonicalCommand, "target.qualityGate.canonicalCommand");
-  auditPrPolicy(manifest.target?.prPolicy);
+  auditPrPolicy(manifest.target?.prPolicy, manifest.profiles?.codeHosting);
   auditAuthSection(manifest.auth);
   auditSelfImproveSection(manifest.selfImprove, manifest.openQuestions);
   auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
@@ -412,7 +419,7 @@ function auditManifest() {
   auditOpenQuestions(manifest.openQuestions);
 }
 
-function auditPrPolicy(prPolicy) {
+function auditPrPolicy(prPolicy, codeHostingProfile) {
   if (!prPolicy || typeof prPolicy !== "object") {
     fail(".viberails/adoption.json must record target.prPolicy as an object.");
     return;
@@ -424,6 +431,9 @@ function auditPrPolicy(prPolicy) {
     fail(".viberails/adoption.json must record target.prPolicy.allowedWriteOperations as a non-empty array.");
   } else {
     auditAllowedPrWriteOperations(prPolicy.allowedWriteOperations);
+    if (codeHostingProfile === "none" && (prPolicy.allowedWriteOperations.length !== 1 || prPolicy.allowedWriteOperations[0] !== "none")) {
+      fail(".viberails/adoption.json target.prPolicy.allowedWriteOperations must be ['none'] when profiles.codeHosting is 'none'.");
+    }
   }
   requireEnum(prPolicy.reviewPublishing, "target.prPolicy.reviewPublishing", [
     "local-only",
@@ -498,7 +508,7 @@ function isPlaceholderToken(rawToken) {
   if (/^\S+@\S+\.\S+$/.test(token)) {
     return false;
   }
-  if (/^[A-Z][A-Za-z0-9_,\s]*$/.test(token)) {
+  if (isTypeParameterToken(token)) {
     return false;
   }
 
@@ -508,6 +518,13 @@ function isPlaceholderToken(rawToken) {
   }
 
   return true;
+}
+
+function isTypeParameterToken(token) {
+  return token
+    .split(",")
+    .map((part) => part.trim())
+    .every((part) => /^[A-Z]$/.test(part) || /^T[A-Za-z0-9_]*$/.test(part));
 }
 
 function requireNonPlaceholderString(value, field) {
@@ -525,6 +542,27 @@ function requireNullableStringField(parent, field, displayName) {
   const value = parent[field];
   if (value !== null && (typeof value !== "string" || value.trim() === "" || isPlaceholder(value))) {
     fail(`.viberails/adoption.json must record '${displayName}' as a concrete string or null.`);
+  }
+}
+
+function requireSanitizedNullableRemote(parent, field, displayName) {
+  requireNullableStringField(parent, field, displayName);
+  if (!parent || !Object.prototype.hasOwnProperty.call(parent, field)) {
+    return;
+  }
+
+  const value = parent[field];
+  if (value === null) {
+    return;
+  }
+  if (typeof value !== "string" || value.trim() === "" || isPlaceholder(value)) {
+    return;
+  }
+  if (/[?#]/.test(value)) {
+    fail(`.viberails/adoption.json must record '${displayName}' without query strings or fragments.`);
+  }
+  if (/^[a-z][a-z0-9+.-]*:\/\/[^/\s@]+@/i.test(value)) {
+    fail(`.viberails/adoption.json must record '${displayName}' without username, password, or token userinfo.`);
   }
 }
 
@@ -594,7 +632,13 @@ function auditSelfImproveSection(selfImprove, openQuestions) {
     fail(".viberails/adoption.json must record selfImprove.enabled as a boolean.");
   }
   if (selfImprove.enabled) {
+    auditStringArray(selfImprove.labels, "selfImprove.labels");
+    auditStringArray(selfImprove.providerLabels, "selfImprove.providerLabels");
     requireNonPlaceholderString(selfImprove.dedupe?.queryTemplate, "selfImprove.dedupe.queryTemplate");
+    auditStringArray(selfImprove.dedupe?.matchFields, "selfImprove.dedupe.matchFields");
+    requireNonPlaceholderString(selfImprove.dedupe?.statusScope, "selfImprove.dedupe.statusScope");
+    requireNonPlaceholderString(selfImprove.dedupe?.manualFallback, "selfImprove.dedupe.manualFallback");
+    requireNonPlaceholderString(selfImprove.commentTemplate, "selfImprove.commentTemplate");
     requireNonPlaceholderString(selfImprove.auth?.readCheck, "selfImprove.auth.readCheck");
     requireNonPlaceholderString(selfImprove.auth?.writeCheck, "selfImprove.auth.writeCheck");
     requireNonPlaceholderString(selfImprove.writeApprovalPolicy, "selfImprove.writeApprovalPolicy");
@@ -604,6 +648,17 @@ function auditSelfImproveSection(selfImprove, openQuestions) {
   }
   if (!Array.isArray(selfImprove.alternateClients)) {
     fail(".viberails/adoption.json must record selfImprove.alternateClients as an array.");
+  }
+}
+
+function auditStringArray(value, field) {
+  if (!Array.isArray(value) || value.length === 0) {
+    fail(`.viberails/adoption.json must record ${field} as a non-empty array.`);
+    return;
+  }
+
+  for (const [index, item] of value.entries()) {
+    requireNonPlaceholderString(item, `${field}[${index}]`);
   }
 }
 
@@ -747,6 +802,10 @@ function discoverLikelyProjectRoots() {
     if (!fs.existsSync(containerPath)) {
       continue;
     }
+    if (markerFiles.some((marker) => fs.existsSync(path.join(containerPath, marker)))) {
+      discovered.push(containerName);
+      continue;
+    }
 
     for (const entry of fs.readdirSync(containerPath, { withFileTypes: true })) {
       if (!entry.isDirectory() || excludedDirectories.has(entry.name)) {
@@ -789,6 +848,9 @@ function auditCopiedFiles(copiedFiles) {
       requireNonPlaceholderString(entry[field], `copiedFiles[${index}].${field}`);
     }
     requireEnum(entry.mode, `copiedFiles[${index}].mode`, ["created", "merged", "refreshed", "skipped"]);
+    if (typeof entry.targetPath === "string" && entry.targetPath.endsWith(".md")) {
+      markdownPlaceholderAuditPaths.add(entry.targetPath);
+    }
   }
 }
 

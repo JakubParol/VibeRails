@@ -22,7 +22,7 @@ Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Pytho
 
 | Document | Purpose |
 |---|---|
-| [VibeRails adoption](viberails-adoption.md) | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
+| Replace with a relative link to root `docs/viberails-adoption.md` | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
 
 ## Local Documents
 

@@ -88,7 +88,7 @@ Use these values unless an adopting repository documents an explicit extension:
 
 | Field | Allowed values |
 |---|---|
-| `profiles.stack` | `nextjs-frontend-only`, `nextjs-full-stack`, `nextjs-python-fastapi`, `mixed`, `documented-exception` |
+| `profiles.stack` | `nextjs-frontend-only`, `nextjs-full-stack`, `nextjs-python-fastapi`, `python-cli`, `python-worker`, `shared-package`, `infrastructure`, `dapr-distributed-app`, `mixed`, `documented-exception` |
 | `profiles.workTracking` | `azure-devops-work-tracking`, `jira-work-tracking`, `unsupported-provider`, `none` |
 | `profiles.codeHosting` | `github-code-hosting`, `azure-repos-code-hosting`, `unsupported-provider`, `none` |
 | `profiles.scriptPlatform` | `powershell`, `posix-shell`, `both` |
@@ -101,6 +101,10 @@ provider for that area.
 
 Use `profiles.stack: mixed` when `target.projectProfiles[]` carries the concrete stack profile
 for each standalone area.
+
+Remote URL fields such as `viberails.sourceRemote` and `target.remote` must be sanitized before
+commit. Record remotes without username, password, token userinfo, query strings, or fragments;
+use `null` when a safe remote cannot be recorded.
 
 ## Self-Improve Manifest Section
 

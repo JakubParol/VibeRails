@@ -53,6 +53,10 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   question fields, and common top-level project-root folders, while placeholder scanning now
   ignores fenced examples and ordinary HTML/autolinks but still catches unresolved inline
   adoption tokens.
+- Contract consistency polish: target adoption audit now validates self-improve labels,
+  provider labels, dedupe metadata, and comment templates; PR write permissions must match the
+  selected code-hosting profile; copy-ready adoption-record links are allowed in source
+  templates without introducing broken target links.
 
 ## 0.2.0 - 2026-07-03
 

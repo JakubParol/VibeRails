@@ -126,6 +126,4 @@ blocker instead of silently skipping the learning.
 
 ## Navigation
 
-- Template source index: [Documentation index](../INDEX.md)
-- After copying this template to `docs/viberails-adoption.md`, replace this bullet with a
-  real Markdown link to the target repository documentation index.
+- [Documentation index](INDEX.md)

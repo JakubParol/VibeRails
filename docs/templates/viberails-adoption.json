@@ -44,7 +44,7 @@
   },
   "profiles": {
     "agentRuntime": "codex",
-    "stack": "<nextjs-frontend-only|nextjs-full-stack|nextjs-python-fastapi|mixed|documented-exception>",
+    "stack": "<nextjs-frontend-only|nextjs-full-stack|nextjs-python-fastapi|python-cli|python-worker|shared-package|infrastructure|dapr-distributed-app|mixed|documented-exception>",
     "workTracking": "<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>",
     "codeHosting": "<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>",
     "scriptPlatform": "<powershell|posix-shell|both>"
