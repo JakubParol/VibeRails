@@ -48,6 +48,11 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Manifest consistency polish: target adoption audit now requires `exceptions` and
   `openQuestions`, and the human adoption record uses `none` instead of `n/a` for local-only PR
   targets.
+- Final review polish: project templates list the full per-root profile set, the target audit
+  validates required source/target manifest fields, PR write operation enums, actionable open
+  question fields, and common top-level project-root folders, while placeholder scanning now
+  ignores fenced examples and ordinary HTML/autolinks but still catches unresolved inline
+  adoption tokens.
 
 ## 0.2.0 - 2026-07-03
 

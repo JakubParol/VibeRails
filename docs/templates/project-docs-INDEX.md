@@ -14,7 +14,15 @@ target paths are known.
 
 ## Stack Profile
 
-Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Python FastAPI | mixed monorepo | documented exception>`
+Adopted VibeRails pack version: `<version from CHANGELOG.md>`.
+
+Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Python FastAPI | Python CLI | Python worker | shared package | infrastructure | Dapr or distributed app | mixed monorepo | documented exception>`
+
+## Adoption Record
+
+| Document | Purpose |
+|---|---|
+| [VibeRails adoption](viberails-adoption.md) | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
 
 ## Local Documents
 

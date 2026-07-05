@@ -257,7 +257,9 @@ function auditMarkdown(markdownFiles) {
     let match;
 
     const shouldCheckPlaceholders = !sourceRelativePath.startsWith("docs/standards/");
-    if (shouldCheckPlaceholders && (containsPlaceholder(text) || /\bTODO\b/i.test(text))) {
+    const textOutsideFences = stripFencedBlocks(text);
+    const proseText = stripInlineCode(textOutsideFences);
+    if (shouldCheckPlaceholders && (containsPlaceholder(textOutsideFences) || /\bTODO\b/i.test(proseText))) {
       fail(`${sourceRelativePath} contains unresolved placeholder or TODO text.`);
     }
 
@@ -390,10 +392,15 @@ function auditManifest() {
     "posix-shell",
     "both",
   ]);
+  requireNullableStringField(manifest.viberails, "sourcePath", "viberails.sourcePath");
+  requireNullableStringField(manifest.viberails, "sourceRemote", "viberails.sourceRemote");
   requireNonPlaceholderString(manifest.viberails?.sourceRef, "viberails.sourceRef");
   requireNonPlaceholderString(manifest.viberails?.packVersion, "viberails.packVersion");
+  requireNonPlaceholderString(manifest.target?.repositoryRoot, "target.repositoryRoot");
+  requireNullableStringField(manifest.target, "remote", "target.remote");
   requireNonPlaceholderString(manifest.target?.defaultBranch, "target.defaultBranch");
   requireNonPlaceholderString(manifest.target?.prTargetBranch, "target.prTargetBranch");
+  requireNonPlaceholderString(manifest.target?.branchNaming, "target.branchNaming");
   requireNonPlaceholderString(manifest.target?.qualityGate?.canonicalCommand, "target.qualityGate.canonicalCommand");
   auditPrPolicy(manifest.target?.prPolicy);
   auditAuthSection(manifest.auth);
@@ -402,6 +409,7 @@ function auditManifest() {
   auditProjectProfiles(manifest.target?.projectProfiles);
   auditDiscoveredProjectRoots(manifest.target?.projectProfiles);
   auditCopiedFiles(manifest.copiedFiles);
+  auditOpenQuestions(manifest.openQuestions);
 }
 
 function auditPrPolicy(prPolicy) {
@@ -414,6 +422,8 @@ function auditPrPolicy(prPolicy) {
   }
   if (!Array.isArray(prPolicy.allowedWriteOperations) || prPolicy.allowedWriteOperations.length === 0) {
     fail(".viberails/adoption.json must record target.prPolicy.allowedWriteOperations as a non-empty array.");
+  } else {
+    auditAllowedPrWriteOperations(prPolicy.allowedWriteOperations);
   }
   requireEnum(prPolicy.reviewPublishing, "target.prPolicy.reviewPublishing", [
     "local-only",
@@ -421,6 +431,23 @@ function auditPrPolicy(prPolicy) {
     "target-local-profile",
   ]);
   requireNonPlaceholderString(prPolicy.notes, "target.prPolicy.notes");
+}
+
+function auditAllowedPrWriteOperations(operations) {
+  const allowed = new Set(["create-pr", "edit-description", "comment", "none"]);
+  const seen = new Set();
+
+  for (const operation of operations) {
+    if (typeof operation !== "string" || !allowed.has(operation)) {
+      fail(`.viberails/adoption.json has invalid target.prPolicy.allowedWriteOperations entry '${operation}'.`);
+      continue;
+    }
+    seen.add(operation);
+  }
+
+  if (seen.has("none") && seen.size > 1) {
+    fail(".viberails/adoption.json target.prPolicy.allowedWriteOperations cannot combine 'none' with write operations.");
+  }
 }
 
 function auditManifestPlaceholders(value, pathParts = []) {
@@ -462,10 +489,16 @@ function containsPlaceholder(value) {
 
 function isPlaceholderToken(rawToken) {
   const token = rawToken.trim();
-  if (!token || token.startsWith("!--") || token.startsWith("/") || /^[a-z]+:/i.test(token)) {
+  if (!token || token.startsWith("!--") || token.startsWith("/")) {
+    return false;
+  }
+  if (/^(https?|mailto|ftp|file):/i.test(token)) {
     return false;
   }
   if (/^\S+@\S+\.\S+$/.test(token)) {
+    return false;
+  }
+  if (/^[A-Z][A-Za-z0-9_,\s]*$/.test(token)) {
     return false;
   }
 
@@ -511,6 +544,35 @@ function auditAuthSection(auth) {
     const value = auth[key];
     if (typeof value !== "string" || value.trim() === "" || isPlaceholder(value)) {
       fail(`.viberails/adoption.json must record concrete auth.${key} instructions or 'none'.`);
+    }
+  }
+}
+
+function auditOpenQuestions(openQuestions) {
+  if (!Array.isArray(openQuestions)) {
+    return;
+  }
+
+  const allowedCategories = new Set([
+    "provider",
+    "auth",
+    "quality-gate",
+    "documentation",
+    "stack-exception",
+    "self-improve",
+    "workflow",
+  ]);
+
+  for (const [index, question] of openQuestions.entries()) {
+    if (!question || typeof question !== "object") {
+      fail(`openQuestions[${index}] must be an object.`);
+      continue;
+    }
+    if (!allowedCategories.has(question.category)) {
+      fail(`openQuestions[${index}].category must be one of ${Array.from(allowedCategories).join(", ")}.`);
+    }
+    for (const field of ["question", "impact", "owner", "neededBefore"]) {
+      requireNonPlaceholderString(question[field], `openQuestions[${index}].${field}`);
     }
   }
 }
@@ -668,6 +730,11 @@ function discoverLikelyProjectRoots() {
     "infra",
     "infrastructure",
     "mobile",
+    "frontend",
+    "backend",
+    "api",
+    "server",
+    "client",
     "tools",
     "crates",
     "cmd",

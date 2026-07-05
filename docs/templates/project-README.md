@@ -60,6 +60,11 @@ Select one:
 - Next.js frontend only
 - Next.js full stack
 - Next.js + Python FastAPI
+- Python CLI
+- Python worker
+- shared package
+- infrastructure
+- Dapr or distributed app
 - mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
 - documented exception: <profile>
 
