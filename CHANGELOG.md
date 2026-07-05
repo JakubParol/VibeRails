@@ -63,6 +63,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Final review polish: copied project docs now use real Markdown link templates, adoption
   templates avoid `n/a` placeholder conflicts, preflight avoids raw remote inspection, and Azure
   DevOps REST failures no longer throw raw response bodies.
+- Copy-template polish: target audits now reject leftover replacement-instruction prose in
+  adopted Markdown, and project documentation index templates use link placeholders for the
+  adoption record and repository index.
 
 ## 0.2.0 - 2026-07-03
 

@@ -261,8 +261,8 @@ function auditMarkdown(markdownFiles) {
       && !sourceRelativePath.startsWith("docs/standards/");
     const textOutsideFences = stripFencedBlocks(text);
     const proseText = stripInlineCode(textOutsideFences);
-    if (shouldCheckPlaceholders && (containsPlaceholder(textOutsideFences) || /\bTODO\b/i.test(proseText))) {
-      fail(`${sourceRelativePath} contains unresolved placeholder or TODO text.`);
+    if (shouldCheckPlaceholders && (containsPlaceholder(textOutsideFences) || /\bTODO\b/i.test(proseText) || /\bReplace (with|this)\b/i.test(proseText))) {
+      fail(`${sourceRelativePath} contains unresolved placeholder, TODO, or replacement instruction text.`);
     }
 
     while ((match = linkPattern.exec(text)) !== null) {

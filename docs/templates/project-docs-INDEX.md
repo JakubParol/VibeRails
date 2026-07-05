@@ -22,7 +22,7 @@ Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Pytho
 
 | Document | Purpose |
 |---|---|
-| Replace with a relative link to root `docs/viberails-adoption.md` | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
+| [VibeRails adoption](<relative-path-to-repo>/docs/viberails-adoption.md) | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
 
 ## Local Documents
 
@@ -60,5 +60,4 @@ repository root. For `apps/web/docs/INDEX.md`, this is `../../..`.
 
 - [Project README](../README.md)
 - [Project agents](../AGENTS.md)
-- Replace this bullet with a real Markdown link to the repository documentation index before
-  adoption is complete.
+- [Repository documentation index](<relative-path-to-repo>/docs/INDEX.md)

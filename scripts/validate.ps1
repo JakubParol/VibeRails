@@ -161,7 +161,9 @@ function Test-MarkdownLinks {
                 continue
             }
             if ($relativeSource -eq "docs/templates/project-docs-INDEX.md" -and
-                $target.StartsWith("<relative-path-to-repo>/docs/standards/")) {
+                ($target.StartsWith("<relative-path-to-repo>/docs/standards/") -or
+                    $target -eq "<relative-path-to-repo>/docs/viberails-adoption.md" -or
+                    $target -eq "<relative-path-to-repo>/docs/INDEX.md")) {
                 continue
             }
             if ($relativeSource -eq "docs/templates/viberails-adoption.md" -and $target -eq "INDEX.md") {

@@ -181,7 +181,9 @@ function isAllowedTemplateCopyLink(sourceRelativePath, target) {
   ]);
 
   if (sourceRelativePath === "docs/templates/project-docs-INDEX.md"
-    && target.startsWith("<relative-path-to-repo>/docs/standards/")) {
+    && (target.startsWith("<relative-path-to-repo>/docs/standards/")
+      || target === "<relative-path-to-repo>/docs/viberails-adoption.md"
+      || target === "<relative-path-to-repo>/docs/INDEX.md")) {
     return true;
   }
 
