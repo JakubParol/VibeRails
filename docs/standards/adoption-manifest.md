@@ -19,6 +19,9 @@ tokens, raw API responses, or private identity payloads.
 | `viberails.sourceRef` | Commit, tag, or branch used for adoption. Prefer immutable commit hash. |
 | `target.repositoryRoot` | Target repository root path at adoption time. |
 | `target.remote` | Target repository remote when available. |
+| `target.defaultBranch` | Default branch used for adoption and PR target decisions. |
+| `target.branchNaming` | Branch naming convention for agent changes. |
+| `target.qualityGate` | Target-local quality gate commands and path-to-scope map. |
 | `profiles.agentRuntime` | `codex`. |
 | `profiles.stack` | Selected stack profile or explicit exception. |
 | `profiles.workTracking` | Selected work tracking profile or `none`. |
@@ -40,15 +43,44 @@ Required fields:
 |---|---|
 | `enabled` | `true` when a ticket sink is configured. |
 | `tracker` | `azure-devops`, `jira`, or `none`. |
-| `project` | Project, board, or Jira project key. |
-| `issueType` | Work item type or issue type to create. |
-| `labels` | Labels/tags used for dedupe and reporting. |
-| `dedupeQuery` | Query agents run before creating a new ticket. |
-| `commentPolicy` | Rule for adding a comment when a matching ticket exists. |
-| `authProfile` | Non-secret auth instructions or link to target docs. |
+| `sink` | Provider-specific tracker coordinates and create/comment command references. |
+| `labels` | Base labels/tags used for all self-improve tickets. |
+| `providerLabels` | Provider/tool labels such as `azure-devops`, `jira`, `git`, or `gh`. |
+| `dedupe` | Query template, exact-match rule, status scope, and manual fallback. |
+| `commentTemplate` | Required fields for comments on existing tickets. |
+| `auth` | Read/write auth checks, env var names, connector names, and missing-auth behavior. |
+| `writeApprovalPolicy` | Whether agents may create/comment after user approval or must only prepare local bodies. |
 
 If the self-improve sink is not configured during adoption, set `enabled` to `false` and add an
-open question that names the missing decision.
+open question that names the missing decision. Agents must not run tracker reads or writes
+until the sink and dedupe rule are configured.
+
+## Provider Sink Shape
+
+For Azure DevOps, record at least:
+
+- organization URL
+- project name
+- work item type
+- area path or explicit `null`
+- iteration policy
+- query command or WIQL link
+- create command or wrapper reference
+- comment command or wrapper reference
+
+For Jira, record at least:
+
+- base URL or cloud site
+- project key
+- issue type
+- component or explicit `null`
+- query command or JQL template
+- create command or connector reference
+- comment command or connector reference
+
+If the repository stores these details in another target-local document, the manifest may link
+to that document, but the link must be specific enough for an agent to run dedupe before
+creating a duplicate.
 
 ## Update Rules
 

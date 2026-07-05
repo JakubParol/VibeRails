@@ -1,8 +1,7 @@
 # Optimization Roadmap
 
-Working document for the 2026 VibeRails optimization effort. This file is the single place to
-track scope and execution status. Update the checkboxes and the Execution Log as stages
-complete. Remove or archive this file when the effort is done.
+Internal historical document for the 2026 VibeRails optimization effort. This file is not an
+adoption template and should not be copied into target repositories.
 
 Started: 2026-07-03. Owner: Jakub Parol. Branch: `docs/optimization-roadmap`.
 
@@ -23,11 +22,13 @@ Hard constraints:
   deliberately added as profiles.
 - Existing guardrails must not be weakened: write approvals, self-review blocking, dirty-tree
   protection, and quality-gate integrity stay as they are or get stricter.
-- Documentation stays ASCII-only English; `.\scripts\validate.ps1` must pass at every commit.
+- Documentation stays ASCII-only English. `node scripts/validate.mjs` is the required
+  cross-platform gate; `.\scripts\validate.ps1` adds PowerShell syntax parsing when
+  PowerShell is available.
 
 Evidence base: session transcripts from a reference adopting repository, its quality gate and
 PR validation pipeline, and the Codex skills documentation
-(skill scopes: repo `.agents/skills`, user `$HOME/.agents/skills`, admin, system; repo wins on
+(skill scopes: repo `.agents/skills`, user `$HOME/.codex/skills`, admin, system; repo wins on
 name collision; same-name skills do not merge).
 
 ## Status Legend
@@ -42,7 +43,7 @@ name collision; same-name skills do not merge).
 Decisions and verifications that later phases depend on.
 
 - [~] 0.1 Verify Codex discovers a skill through a Windows directory junction from
-      `$HOME\.agents\skills\<skill>` to the VibeRails checkout. Test: create one junction,
+      `$HOME\.codex\skills\<skill>` to the VibeRails checkout. Test: create one link,
       restart Codex, confirm the skill appears in `/skills` inside another repository.
       Fallback if junctions fail: file-copy sync script (weakens the learning loop but keeps
       distribution).
@@ -149,10 +150,10 @@ missing fallbacks, no timeouts, misleading errors.
 
 Depends on Phase 0 decisions.
 
-- [x] 6.1 New `scripts/install-skills.ps1`: creates or repairs junctions from
-      `$HOME\.agents\skills\<skill>` to this checkout for each skill, verifies discovery
-      preconditions, reports drift; document the one-liner in `README.md` and
-      `scripts/README.md`.
+- [x] 6.1 New skill installers create or repair links from the Codex user-scope skill root
+      (`$CODEX_HOME/skills` or `$HOME/.codex/skills`) to this checkout for each skill,
+      verify discovery preconditions, report drift, and document the commands in `README.md`
+      and `scripts/README.md`.
 - [x] 6.2 Rewrite the Failure Learning Loop routing in the ADO skill for the junction model:
       durable wrapper/reference fixes are edited through the user-scope junction (which is
       this repository's working tree) on a VibeRails branch; repository-specific facts go to
@@ -178,7 +179,7 @@ Depends on Phase 0 decisions.
 
 ## Out Of Scope For This Effort
 
-- Multi-agent or non-Codex support (company constraint).
+- Multi-agent or non-Codex runtime support beyond the current Codex-first profile.
 - New stack profiles beyond Next.js and FastAPI (worth a separate discussion).
 - CI pipeline for VibeRails itself (candidate follow-up after Phase 7).
 
@@ -188,7 +189,7 @@ Depends on Phase 0 decisions.
 |---|---|---|
 | 2026-07-03 | - | Roadmap created on branch `docs/optimization-roadmap`. |
 | 2026-07-03 | Phase 0 | Started. |
-| 2026-07-03 | 0.1 | Junction created at `$HOME\.agents\skills\azure-devops` pointing to this checkout; SKILL.md resolves through it. Pending: owner restarts Codex and confirms the skill appears in `/skills` inside another repository. Note: inside the VibeRails project Codex may list this skill twice (repo scope plus user scope); expected, not a defect. |
+| 2026-07-03 | 0.1 | Skill link created at `$HOME\.codex\skills\azure-devops` pointing to this checkout; SKILL.md resolves through it. Pending: owner restarts Codex and confirms the skill appears in `/skills` inside another repository. Note: inside the VibeRails project Codex may list this skill twice (repo scope plus user scope); expected, not a defect. |
 | 2026-07-03 | 0.2 | Adopted recommended default (user-scope distribution, no vendored copies except pinning). Autonomous decision, flagged for owner review. |
 | 2026-07-03 | 0.3 | Adopted recommended wording (local gate proves changed scope, CI proves whole repo). Autonomous decision, flagged for owner review. |
 | 2026-07-03 | Phase 0 | Done except 0.1 owner verification. |

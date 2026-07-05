@@ -8,7 +8,8 @@ This folder contains repository maintenance commands for VibeRails.
 |---|---|
 | [validate.mjs](validate.mjs) | Cross-platform VibeRails documentation and skill quality gate. |
 | [validate.ps1](validate.ps1) | PowerShell quality gate with the same checks plus `.ps1` syntax parsing. |
-| [install-skills.ps1](install-skills.ps1) | Install the skills at the Codex user scope (`$HOME\.agents\skills`) as junctions to this checkout. `-Remove` deletes the junctions. Local machine state only; touches nothing outside `$HOME\.agents\skills`. |
+| [install-skills.sh](install-skills.sh) | POSIX installer for optional skills at the Codex user scope (`$CODEX_HOME/skills` or `$HOME/.codex/skills`) as symlinks to this checkout. `--remove` deletes only the symlinks. |
+| [install-skills.ps1](install-skills.ps1) | PowerShell installer for optional skills at the Codex user scope (`$env:CODEX_HOME\skills` or `$HOME\.codex\skills`) as Windows junctions or Unix symlinks. `-Remove` deletes only the links. |
 
 ## Rules
 

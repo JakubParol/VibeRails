@@ -29,12 +29,23 @@ When a reusable failure is found:
    and large raw API responses.
 2. Build a stable fingerprint from the tool, command family, provider, error class, and short
    sanitized symptom.
-3. Run the configured dedupe query from `.viberails/adoption.json`.
-4. If a matching ticket exists, add a comment with the new evidence.
-5. If no matching ticket exists, create a new ticket in the configured sink.
-6. Link the ticket or record the ticket id in the final report when the user authorized the
+3. Read `.viberails/adoption.json`.
+4. If `selfImprove.enabled` is `false`, the tracker is `none`, auth is missing, or the dedupe
+   rule is missing, prepare the sanitized ticket body locally, report the missing adoption
+   decision, and do not attempt tracker reads or writes.
+5. If the failure affects the configured sink client itself, use the recorded alternate
+   connector or wrapper when one exists. If no working alternate exists, prepare the sanitized
+   ticket body locally and report the blocked self-improve write.
+6. Run the configured dedupe query.
+7. Treat an exact fingerprint match as the primary duplicate signal. Use provider/tool/error
+   class matching only when exact fingerprint search is unavailable and the manual fallback
+   says how to compare candidates.
+8. If a matching ticket exists, add a comment with the new evidence using the configured
+   comment template.
+9. If no matching ticket exists, create a new ticket in the configured sink.
+10. Link the ticket or record the ticket id in the final report when the user authorized the
    write.
-7. If auth is missing or writes are not authorized, report the prepared ticket body locally and
+11. If writes are not authorized, report the prepared ticket body locally and
    name the auth or approval that is missing.
 
 Agents must not guess the tracker, project, issue type, label, or auth flow. Adoption records
@@ -72,6 +83,27 @@ Safety:
 - private payload removed: yes
 ```
 
+Use this structure for comments added to existing tickets:
+
+```text
+Additional evidence from <target-repository> at <iso-8601-timestamp>
+
+Fingerprint:
+<same fingerprint as ticket>
+
+Observed again:
+- Platform:
+- Tool/provider:
+- Command family:
+- Sanitized symptom:
+- Attempted command:
+- Verified workaround:
+
+Safety:
+- secrets removed: yes
+- private payload removed: yes
+```
+
 ## Auth Contract
 
 The target repository must document:
@@ -91,10 +123,12 @@ Prefer queries that combine:
 - a stable label such as `viberails-self-improve`
 - provider or tool label such as `azure-devops`, `jira`, `git`, or `gh`
 - status not done/closed
-- text search for the fingerprint or error class when the provider supports it
+- text search for the exact fingerprint when the provider supports it
+- error class and command family as a fallback only when exact fingerprint search is not
+  available
 
 If the provider cannot search reliably, agents should list recent open self-improve tickets and
-match manually by fingerprint.
+match manually by fingerprint first, then by provider, command family, and error class.
 
 ## Navigation
 

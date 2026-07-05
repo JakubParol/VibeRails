@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Orchestrate repository code reviews for local branches and pull requests. Use for review, code review, PR review, current PR review, pre-PR review, multi-agent review, independent agent review, review loop, or review-and-fix requests in adopting repositories. Supports local branch mode without a PR URL and Azure DevOps PR mode with a PR URL, including generic specialist routing for apps, services, packages, infrastructure, docs, tests, scripts, and .agents assets.
+description: Orchestrate repository code reviews for local branches and pull requests. Use for review, code review, PR review, current PR review, pre-PR review, multi-agent review, independent agent review, review loop, or review-and-fix requests in adopting repositories. Supports local branch mode, GitHub PR local-diff mode, and Azure DevOps PR mode, including generic specialist routing for apps, services, packages, infrastructure, docs, tests, scripts, and .agents assets.
 ---
 
 # Code Review
@@ -13,7 +13,10 @@ supports two modes:
 - Local branch mode: no PR URL is provided. Review the current branch and local changes
   read-only by default. Apply fixes only when the user explicitly asks for review-and-fix or
   approves proposed fixes, then run the relevant gates and repeat the focused loop.
-- PR mode: an Azure DevOps PR URL is provided. Review the PR as a reviewer, run one or two
+- GitHub PR local-diff mode: a GitHub PR URL is provided. Fetch and review the PR diff locally
+  or with read-only GitHub metadata. Keep findings local unless a repository-specific GitHub
+  publishing workflow is later added.
+- Azure DevOps PR mode: an Azure DevOps PR URL is provided. Review the PR as a reviewer, run one or two
   passes, publish valid findings as inline PR comments, and cast an approve vote when no
   actionable findings remain. If the authenticated Azure DevOps user created the PR, run the
   review but keep the outcome local.
@@ -68,7 +71,10 @@ exception before final reporting.
 ## Workflow
 
 1. Detect the mode:
-   - PR URL present: use [PR mode](references/pr-mode.md).
+   - Azure DevOps PR URL present: use [Azure DevOps PR mode](references/pr-mode.md).
+   - GitHub PR URL present: use [GitHub PR local-diff mode](references/github-pr-mode.md).
+   - Other PR URL present: ask for the provider profile or fall back to local branch mode only
+     after the user confirms the intended source/target refs.
    - No PR URL: use [local branch mode](references/local-branch-mode.md).
 2. Load repository context from root `AGENTS.md`, `README.md`, `docs/INDEX.md`, and required
    local standards.
@@ -132,6 +138,9 @@ For any Azure DevOps PR read or write operation, load and follow
 Read-only discovery is allowed in PR mode. Review-output writes follow the PR mode publishing
 rules above; other PR writes still require explicit user approval.
 
+For GitHub PRs, keep review findings local unless the adopting repository explicitly documents
+a GitHub review publishing profile. Do not use the Azure DevOps wrapper for GitHub URLs.
+
 ## Failure Learning
 
 When a review run uncovers a reusable improvement to this skill (routing gap, checklist gap,
@@ -147,6 +156,8 @@ one-off issues, unverified workarounds, or any content from real diffs and findi
   authorization and policy discovery.
 - [references/local-branch-mode.md](references/local-branch-mode.md) - local branch review and
   review-and-fix workflow.
+- [references/github-pr-mode.md](references/github-pr-mode.md) - GitHub PR read-only local-diff
+  review workflow.
 - [references/pr-mode.md](references/pr-mode.md) - Azure DevOps PR review, publishing, and fix
   workflow.
 - [references/area-routing.md](references/area-routing.md) - specialist routing, required docs,

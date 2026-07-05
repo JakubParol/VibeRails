@@ -34,11 +34,30 @@ function Get-RepositoryFiles {
 }
 
 function Test-AsciiFiles {
-    $files = Get-RepositoryFiles -Include @("*.md", "*.ps1", "*.yaml", "*.yml")
+    $files = Get-RepositoryFiles -Include @("*.md", "*.mjs", "*.sh", "*.ps1", "*.json", "*.yaml", "*.yml", ".gitattributes", "LICENSE")
     foreach ($file in $files) {
         $text = Get-Content -LiteralPath $file.FullName -Raw
         if ($text -match "[^\x00-\x7F]") {
             Add-Failure "Non-ASCII content found in $($file.FullName.Substring($repoRoot.Path.Length + 1))."
+        }
+    }
+}
+
+function Test-LineEndingsAndTrailingWhitespace {
+    $files = Get-RepositoryFiles -Include @("*.md", "*.mjs", "*.sh", "*.ps1", "*.json", "*.yaml", "*.yml", ".gitattributes", "LICENSE")
+    foreach ($file in $files) {
+        $relativePath = $file.FullName.Substring($repoRoot.Path.Length + 1)
+        $text = Get-Content -LiteralPath $file.FullName -Raw
+        if ($text.Contains("`r`n")) {
+            Add-Failure "$relativePath uses CRLF line endings; use LF for cross-platform diffs."
+        }
+
+        $lines = $text -split "`n", -1
+        for ($index = 0; $index -lt $lines.Count; $index++) {
+            $line = $lines[$index] -replace "`r$", ""
+            if ($line -match "[ `t]+$") {
+                Add-Failure "${relativePath}:$($index + 1) has trailing whitespace."
+            }
         }
     }
 }
@@ -238,12 +257,7 @@ function Test-PowerShellSyntax {
     }
 }
 
-function Test-AgentAssetsAreGeneric {
-    $agentsRoot = Join-Path $repoRoot ".agents"
-    if (-not (Test-Path -LiteralPath $agentsRoot -PathType Container)) {
-        return
-    }
-
+function Test-RepositoryTextIsGeneric {
     $forbiddenPatterns = @(
         "DocMind",
         "docmind",
@@ -254,23 +268,33 @@ function Test-AgentAssetsAreGeneric {
         "ELITMIND",
         "Elitmindvs"
     )
-    $files = Get-ChildItem -LiteralPath $agentsRoot -Recurse -File -Force
+    $allowlistedFiles = @(
+        "scripts/validate.mjs",
+        "scripts/validate.ps1"
+    )
+    $files = Get-RepositoryFiles -Include @("*.md", "*.mjs", "*.sh", "*.ps1", "*.json", "*.yaml", "*.yml", ".gitattributes", "LICENSE")
     foreach ($file in $files) {
+        $relativePath = $file.FullName.Substring($repoRoot.Path.Length + 1).Replace("\", "/")
+        if ($allowlistedFiles -contains $relativePath) {
+            continue
+        }
+
         $text = Get-Content -LiteralPath $file.FullName -Raw
         foreach ($pattern in $forbiddenPatterns) {
             if ($text.Contains($pattern)) {
-                Add-Failure "$($file.FullName.Substring($repoRoot.Path.Length + 1)) contains source-specific term '$pattern'."
+                Add-Failure "$relativePath contains source-specific term '$pattern'."
             }
         }
     }
 }
 
+Test-LineEndingsAndTrailingWhitespace
 Test-AsciiFiles
 $markdownLinkGraph = Test-MarkdownLinks
 Test-OrphanMarkdownFiles -LinkGraph $markdownLinkGraph
 Test-SkillMetadata
 Test-PowerShellSyntax
-Test-AgentAssetsAreGeneric
+Test-RepositoryTextIsGeneric
 
 if ($failures.Count -gt 0) {
     # Write-Host, not Write-Error: with ErrorActionPreference=Stop the first Write-Error

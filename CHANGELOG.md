@@ -15,6 +15,12 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   create, or comment tickets for reusable Azure DevOps, Jira, Git, and GitHub CLI failures.
 - Agent skills renamed away from source-specific names and documented as optional assets, not
   files copied by default during adoption.
+- Follow-up hardening: Codex skill installers now target `$CODEX_HOME/skills` or
+  `$HOME/.codex/skills`, POSIX skill installation is documented, GitHub PR review falls back to
+  local-diff mode instead of Azure DevOps publishing, self-improve manifest fields are
+  structured for auth/dedupe/comment behavior, template indexes include the new required
+  standards, and validation now rejects CRLF/trailing whitespace and source-specific terms
+  outside an explicit validator allowlist.
 
 ## 0.2.0 - 2026-07-03
 

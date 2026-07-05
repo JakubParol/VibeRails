@@ -10,7 +10,12 @@
   "target": {
     "repositoryRoot": "<target-repository-root>",
     "remote": "<target-remote-url-or-null>",
-    "defaultBranch": "<default-branch>"
+    "defaultBranch": "<default-branch>",
+    "branchNaming": "<branch-naming-rule>",
+    "qualityGate": {
+      "canonicalCommand": "<quality-gate-command>",
+      "pathToScopeMap": []
+    }
   },
   "profiles": {
     "agentRuntime": "codex",
@@ -26,14 +31,53 @@
   "selfImprove": {
     "enabled": false,
     "tracker": "none",
-    "project": null,
-    "issueType": null,
+    "sink": {
+      "azureDevOps": {
+        "organizationUrl": null,
+        "project": null,
+        "workItemType": null,
+        "areaPath": null,
+        "iterationPolicy": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null
+      },
+      "jira": {
+        "baseUrl": null,
+        "projectKey": null,
+        "issueType": null,
+        "component": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null
+      }
+    },
     "labels": ["viberails-self-improve"],
-    "dedupeQuery": null,
+    "providerLabels": ["<azure-devops|jira|git|gh>"],
+    "dedupe": {
+      "queryTemplate": null,
+      "matchFields": ["fingerprint"],
+      "statusScope": "open",
+      "manualFallback": "List open self-improve tickets and match exact fingerprint first, then provider, command family, and error class."
+    },
     "commentPolicy": "If a matching open ticket exists, add sanitized evidence as a comment instead of creating a duplicate.",
-    "authProfile": "<target-local-auth-doc-or-command>"
+    "commentTemplate": "Additional evidence from <target-repository> at <iso-8601-timestamp>: fingerprint, platform, tool/provider, command family, sanitized symptom, attempted command, verified workaround, safety confirmation.",
+    "auth": {
+      "readCheck": "<command-or-doc-link>",
+      "writeCheck": "<command-or-doc-link>",
+      "envVars": [],
+      "connectorNames": [],
+      "notAuthenticatedErrors": [],
+      "missingAuthBehavior": "Prepare the sanitized ticket body locally and report the blocked self-improve write."
+    },
+    "writeApprovalPolicy": "Agents may create or comment self-improve tickets only after user approval for the current task."
   },
   "copiedFiles": [],
   "exceptions": [],
-  "openQuestions": []
+  "openQuestions": [
+    {
+      "question": "Select and configure the self-improve ticket sink, or confirm that tracker none is intentional.",
+      "neededBefore": "Agents can create or comment self-improve tickets."
+    }
+  ]
 }

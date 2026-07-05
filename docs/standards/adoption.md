@@ -35,8 +35,8 @@ Before editing the target repository, identify or ask for:
 - work tracking profile: `azure-devops-work-tracking`, `jira-work-tracking`, or `none`
 - code hosting profile: `github-code-hosting`, `azure-repos-code-hosting`, or `none`
 - script platform profile: `powershell`, `posix-shell`, or `both`
-- self-improvement ticket sink: tracker, project/board, issue type, labels/tags, dedupe query,
-  and comment format
+- self-improvement ticket sink: tracker coordinates, issue type, labels/tags, dedupe rule,
+  comment template, auth checks, write approval policy, and missing-auth behavior
 - auth model for every selected integration, recorded as non-secret setup instructions
 - base branch and branch naming rules
 - documented quality gate, if one already exists
@@ -54,8 +54,10 @@ docs, config files, and user confirmation.
    uncertain profile.
 5. Copy required standards into the target repository `docs/standards/`.
 6. Create or update root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-7. Create `.viberails/adoption.json` from the manifest template.
-8. Create `docs/viberails-adoption.md` from the human-readable adoption template.
+7. Create `.viberails/adoption.json` from the manifest template, including the final copied
+   file list and any unresolved adoption decisions.
+8. Create `docs/viberails-adoption.md` from the human-readable adoption template, mirroring
+   the manifest decisions for humans.
 9. In monorepos, create a documentation root for each standalone app, service, worker, mobile
    app, or package.
 10. Add `README.md` to significant feature, module, adapter, and bounded-context folders.
@@ -70,6 +72,23 @@ docs, config files, and user confirmation.
     `docs/INDEX.md`.
 15. Run the documentation audit checklist.
 16. Report intentional exceptions and unresolved gaps.
+
+## Existing Repository Merge Policy
+
+Adoption must preserve target repository knowledge. Do not replace existing docs wholesale
+unless the user explicitly approves that replacement.
+
+| Target file | Policy |
+|---|---|
+| Missing root `README.md`, `AGENTS.md`, or `docs/INDEX.md` | Create from the matching template and adapt placeholders immediately. |
+| Existing root `README.md` | Merge VibeRails navigation, quality gate, and standards references into the existing project overview. Preserve product purpose, setup, architecture, and operational details. |
+| Existing root `AGENTS.md` | Merge VibeRails required reading, change protocol, profile decisions, and local gate rules. Preserve target-specific constraints and warnings. |
+| Existing `docs/INDEX.md` | Add required VibeRails standards, adoption record, and local docs without deleting existing entries. |
+| Existing local docs | Link and reconcile them; do not duplicate their contents in global standards. |
+| Conflicting instructions | Record the conflict in `docs/viberails-adoption.md` and `openQuestions`; ask before choosing behavior that changes project workflow. |
+
+Every adoption report must summarize which existing sections were preserved, which were
+changed, and which unresolved conflicts remain.
 
 ## Context Discipline
 
@@ -110,6 +129,19 @@ At the end of adoption, the target repository must have:
 - documented quality gates with a path-to-scope map
 - no orphan Markdown files
 - a summary of gaps that need user decisions
+
+## Minimum Adoption Audit
+
+Before reporting adoption complete:
+
+1. Inspect `git diff --name-only` and confirm every changed file belongs to the adoption.
+2. Search for unresolved placeholders such as `<...>`, `TODO`, and `n/a` in adopted files.
+3. Verify all Markdown files are reachable from `README.md`, `AGENTS.md`, or a `docs/INDEX.md`.
+4. Verify relative Markdown links and anchors.
+5. Parse `.viberails/adoption.json`.
+6. Confirm `docs/viberails-adoption.md` mirrors the manifest's selected profiles, auth checks,
+   quality gate, and self-improve sink.
+7. Report every audit check that was not automated and why.
 
 ## Navigation
 

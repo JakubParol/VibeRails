@@ -40,8 +40,30 @@ function readText(filePath) {
   return fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, "");
 }
 
+function isCheckedTextFile(file) {
+  return path.basename(file) === "LICENSE" || /\.(md|mjs|sh|ps1|json|ya?ml|gitattributes)$/i.test(file);
+}
+
+function testLineEndingsAndTrailingWhitespace(files) {
+  const checked = files.filter(isCheckedTextFile);
+
+  for (const file of checked) {
+    const text = readText(file);
+    if (text.includes("\r\n")) {
+      addFailure(`${toRepoPath(file)} uses CRLF line endings; use LF for cross-platform diffs.`);
+    }
+
+    const lines = text.split("\n");
+    for (let index = 0; index < lines.length; index += 1) {
+      if (/[ \t]+$/.test(lines[index].replace(/\r$/, ""))) {
+        addFailure(`${toRepoPath(file)}:${index + 1} has trailing whitespace.`);
+      }
+    }
+  }
+}
+
 function testAsciiFiles(files) {
-  const checked = files.filter((file) => /\.(md|ps1|ya?ml)$/i.test(file));
+  const checked = files.filter(isCheckedTextFile);
 
   for (const file of checked) {
     const text = readText(file);
@@ -259,12 +281,6 @@ function testSkillMetadata() {
 }
 
 function testAgentAssetsAreGeneric() {
-  const agentsRoot = path.join(repoRoot, ".agents");
-
-  if (!fs.existsSync(agentsRoot)) {
-    return;
-  }
-
   const forbiddenPatterns = [
     "DocMind",
     "docmind",
@@ -275,12 +291,25 @@ function testAgentAssetsAreGeneric() {
     "ELITMIND",
     "Elitmindvs",
   ];
+  const allowlistedFiles = new Set([
+    "scripts/validate.mjs",
+    "scripts/validate.ps1",
+  ]);
 
-  for (const file of walkFiles(agentsRoot)) {
+  for (const file of walkFiles(repoRoot)) {
+    const relativePath = toRepoPath(file);
+    if (allowlistedFiles.has(relativePath)) {
+      continue;
+    }
+
+    if (!isCheckedTextFile(file)) {
+      continue;
+    }
+
     const text = readText(file);
     for (const pattern of forbiddenPatterns) {
       if (text.includes(pattern)) {
-        addFailure(`${toRepoPath(file)} contains source-specific term '${pattern}'.`);
+        addFailure(`${relativePath} contains source-specific term '${pattern}'.`);
       }
     }
   }
@@ -289,6 +318,7 @@ function testAgentAssetsAreGeneric() {
 const files = walkFiles(repoRoot);
 const markdownFiles = files.filter((file) => file.endsWith(".md"));
 
+testLineEndingsAndTrailingWhitespace(files);
 testAsciiFiles(files);
 const markdownLinkGraph = testMarkdownLinks(markdownFiles);
 testOrphanMarkdownFiles(markdownFiles, markdownLinkGraph);

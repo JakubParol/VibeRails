@@ -8,9 +8,9 @@ into target repositories by default.
 
 | Skill | Purpose |
 |---|---|
-| [azure-devops](azure-devops/SKILL.md) | Work with Azure Boards work items, Azure Repos pull requests, comments, cleanup tracking, and reusable Azure DevOps failure fixes. |
-| [code-review](code-review/SKILL.md) | Run structured code reviews for local branches and pull requests with optional independent review agents and specialist routing. |
-| [e2e-work-item](e2e-work-item/SKILL.md) | Run an Azure Boards work item from `[E2E]` prompt through implementation, guard rails, and Code Review state. |
+| [azure-devops](azure-devops/SKILL.md) | Optional Azure DevOps profile skill for Azure Boards work items, Azure Repos pull requests, comments, cleanup tracking, and reusable Azure DevOps failure fixes. |
+| [code-review](code-review/SKILL.md) | Optional review skill for local branches, GitHub PR local-diff review, and Azure DevOps PR publishing workflows. |
+| [e2e-work-item](e2e-work-item/SKILL.md) | Optional Azure DevOps profile skill for `[E2E]` Azure Boards work item implementation. |
 
 ## Rules
 

@@ -10,6 +10,16 @@ This repository adopted VibeRails standards from:
 | Pack version | `<version>` |
 | Adopted at | `<date/time>` |
 
+## Target Repository
+
+| Field | Value |
+|---|---|
+| Repository root | `<target repository root>` |
+| Remote | `<target remote URL or n/a>` |
+| Default/base branch | `<branch>` |
+| Branch naming | `<rule>` |
+| PR target | `<branch or n/a>` |
+
 ## Profiles
 
 | Area | Selected profile | Notes |
@@ -30,6 +40,14 @@ This repository adopted VibeRails standards from:
 Do not commit tokens, cookies, generated credentials, raw user profiles, or private identity
 payloads.
 
+## Quality Gate
+
+| Scope/path | Command | Notes |
+|---|---|---|
+| `<path or scope>` | `<command>` | `<notes>` |
+
+Canonical local command: `<command>`.
+
 ## Self-Improve Ticket Sink
 
 Reusable agent/tooling failures are reported here:
@@ -38,11 +56,14 @@ Reusable agent/tooling failures are reported here:
 |---|---|
 | Enabled | `<true|false>` |
 | Tracker | `<azure-devops|jira|none>` |
-| Project | `<project or n/a>` |
+| Sink coordinates | `<organization/project, Jira site/project key, or n/a>` |
 | Issue type | `<issue type or n/a>` |
 | Labels/tags | `viberails-self-improve`, `<provider/tool labels>` |
-| Dedupe query | `<query or n/a>` |
+| Dedupe query template | `<query or n/a>` |
+| Match rule | Exact fingerprint first; fallback by provider, command family, and error class only when configured. |
 | Comment policy | Add sanitized evidence to an existing matching ticket before creating a new one. |
+| Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |
+| Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
 
 If auth or write approval is missing, agents prepare the ticket body locally and report the
 blocker instead of silently skipping the learning.
@@ -67,4 +88,4 @@ blocker instead of silently skipping the learning.
 
 ## Navigation
 
-- [Documentation index](../INDEX.md)
+- Documentation index after copy: `docs/INDEX.md`

@@ -32,6 +32,8 @@ Record:
 - labels/tags used for VibeRails adoption and self-improvement
 - read command for checking auth and project access
 - write approval rule for creating or commenting on work items
+- self-improve dedupe query command or WIQL template
+- self-improve create and comment command, wrapper, or target-local doc link
 
 Do not guess organization, project, area path, iteration, or work item type.
 
@@ -46,6 +48,7 @@ Record:
 - query used to find existing self-improve issues
 - read command for checking auth and project access
 - write approval rule for creating or commenting on issues
+- self-improve create and comment command, connector, or target-local doc link
 
 Do not guess project key, board, sprint, issue type, component, or transition names.
 
@@ -71,6 +74,10 @@ Record:
 
 Do not assume GitHub Issues is the work tracker unless the target repository says so. For this
 version of VibeRails, work tracking profiles are Azure Boards, Jira, or `none`.
+
+If the target repository uses GitHub for code hosting and Jira or Azure Boards for tracking,
+record both profiles separately. GitHub PR review publishing is not a default VibeRails skill
+workflow yet; local-diff review is supported.
 
 ### Azure Repos Code Hosting
 

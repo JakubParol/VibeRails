@@ -23,10 +23,10 @@ detection uses. Example:
 
 | Path prefix | Scope | Gate command |
 |---|---|---|
-| `services/api/**` | `api` | `.\scripts\lint.ps1 -Service api` |
-| `services/worker/**` | `worker` | `.\scripts\lint.ps1 -Service worker` |
-| `apps/web/**` | `web` | `.\scripts\lint.ps1 -Service web` |
-| `pyproject.toml`, `uv.lock`, `scripts/lint.ps1`, shared packages | all backend | `.\scripts\lint.ps1 -Service backend` |
+| `services/api/**` | `api` | `./scripts/quality-gate.sh --scope api` or `.\scripts\quality-gate.ps1 -Scope api` |
+| `services/worker/**` | `worker` | `./scripts/quality-gate.sh --scope worker` or `.\scripts\quality-gate.ps1 -Scope worker` |
+| `apps/web/**` | `web` | `./scripts/quality-gate.sh --scope web` or `.\scripts\quality-gate.ps1 -Scope web` |
+| lockfiles, gate scripts, shared packages | shared | full repository gate |
 | `*.md` only | docs | documentation and link audit |
 
 Agents derive changed scopes from `git diff --name-only <base>...HEAD` and this map. When the
@@ -35,12 +35,27 @@ map is missing, propose one from the CI pipeline definition before falling back 
 ## Recommended Gate Script Interface
 
 Repositories with a gate script should expose scope controls so agents and CI share one entry
-point:
+point. Use the repository's selected platform profile from
+[platform-profiles.md](platform-profiles.md).
 
-- `-Service <scope>` runs one scope only.
-- `-SkipTests` and `-SkipBuild` for intentionally reduced local runs; never the default.
-- `-Changed` derives the scope set from the git diff using the same path-to-scope map as CI,
-  so agents do not have to reason about scoping at all.
+Recommended POSIX shape:
+
+```bash
+./scripts/quality-gate.sh --scope <scope>
+./scripts/quality-gate.sh --changed
+./scripts/quality-gate.sh --scope <scope> --skip-tests
+```
+
+Recommended PowerShell shape:
+
+```powershell
+.\scripts\quality-gate.ps1 -Scope <scope>
+.\scripts\quality-gate.ps1 -Changed
+.\scripts\quality-gate.ps1 -Scope <scope> -SkipTests
+```
+
+Reduced local runs such as `--skip-tests`, `-SkipTests`, `--skip-build`, or `-SkipBuild` must
+be intentional exceptions, never the default.
 
 ## Required Gate Areas
 

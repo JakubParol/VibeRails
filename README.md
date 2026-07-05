@@ -35,14 +35,22 @@ they should not weaken the defaults unless the exception is explicit and justifi
 
 Versioned Codex skills live in [.agents/skills](.agents/skills/README.md). They capture
 repeatable repository workflows. They are optional agent assets, not part of core adoption.
-Install them once per machine at the Codex user scope with `scripts/install-skills.ps1` only
-when the user wants these workflows available in every repository:
+Install them once per machine at the Codex user scope only when the user wants these workflows
+available in every repository:
+
+| Platform | Command |
+|---|---|
+| Linux/macOS | `scripts/install-skills.sh` |
+| Windows or PowerShell | `.\scripts\install-skills.ps1` |
+
+Both installers target `$CODEX_HOME/skills`, or `$HOME/.codex/skills` when `CODEX_HOME` is not
+set.
 
 | Skill | Intended use |
 |---|---|
-| [azure-devops](.agents/skills/azure-devops/SKILL.md) | Work safely with Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
-| [code-review](.agents/skills/code-review/SKILL.md) | Run structured local branch and pull request reviews with repository-aware specialist routing. |
-| [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Run an Azure Boards work item from `[E2E]` prompt through implementation, guard rails, and Code Review state. |
+| [azure-devops](.agents/skills/azure-devops/SKILL.md) | Optional Azure DevOps profile skill for Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
+| [code-review](.agents/skills/code-review/SKILL.md) | Optional review skill for local branch reviews, GitHub PR local-diff reviews, and Azure DevOps PR reviews. |
+| [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Optional Azure DevOps profile skill for Azure Boards `[E2E]` work item implementation. |
 
 ## Quick Adoption Prompt
 
@@ -61,15 +69,15 @@ When working in another repository, give the AI agent access to this repository 
 2. Follow [docs/standards/adoption.md](docs/standards/adoption.md).
 3. Select stack, work tracking, code hosting, platform, and self-improve profiles.
 4. Copy the relevant standards into the target repository's `docs/standards/`.
-5. Create `.viberails/adoption.json` and `docs/viberails-adoption.md`.
-6. Create or update the target repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
+5. Create or update the target repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
+6. Create `.viberails/adoption.json` and `docs/viberails-adoption.md`.
 7. For monorepos, create a full documentation root for each standalone app, service, worker,
    mobile app, or package.
 8. Add local `README.md` files to significant feature, module, adapter, and bounded-context
    folders.
 9. Add folder-level `AGENTS.md` files only where local agent rules differ from the parent.
 10. Do not copy skills into the target project. Install them once per machine at the Codex
-   user scope with `scripts/install-skills.ps1`; see
+   user scope only when those optional workflows are needed; see
    [.agents/skills](.agents/skills/README.md).
 11. Update navigation links so agents can drill down from general standards to local context.
 

@@ -18,6 +18,8 @@ Use indexes and headings to route context. Do not load every standard, template,
 unless the audit result shows that area is in scope.
 First audit the target repository structure and identify:
 
+- VibeRails source path, remote, source ref, and pack version
+- target repository root, remote, default/base branch, branch naming, and PR target branch
 - stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI, or an
   explicit exception
 - work tracking profile: Azure DevOps Boards, Jira, or none
@@ -25,13 +27,15 @@ First audit the target repository structure and identify:
 - script platform profile: PowerShell, POSIX shell, or both
 - self-improve ticket sink for reusable agent/tooling failures
 - auth checks for selected integrations, documented without secrets
+- existing quality gate commands and path-to-scope map
 
 Then:
 
-1. create or update README.md, AGENTS.md, and docs/INDEX.md at the repository root
-2. create `.viberails/adoption.json` from the VibeRails manifest template
-3. create `docs/viberails-adoption.md` from the VibeRails adoption record template
-4. copy only relevant standards into docs/standards/
+1. copy only relevant standards into docs/standards/
+2. create or update README.md, AGENTS.md, and docs/INDEX.md at the repository root
+3. create `.viberails/adoption.json` from the VibeRails manifest template, including copied
+   files and unresolved decisions
+4. create `docs/viberails-adoption.md` from the VibeRails adoption record template
 5. create documentation roots for standalone monorepo apps, services, workers, mobile apps,
    and packages
 6. add README.md files to significant feature, module, adapter, and bounded-context folders
@@ -40,10 +44,16 @@ Then:
    the standards repository (vendor a pinned copy only on explicit decision)
 9. document quality gates from existing scripts or stack defaults, including the
    path-to-scope map from the quality gate standard
-10. document the self-improve loop: dedupe query, create/comment policy, labels/tags, issue
-    type, and auth blocker behavior
-11. run the documentation audit
+10. document the self-improve loop: provider sink coordinates, exact fingerprint dedupe,
+    manual fallback, create/comment policy, labels/tags, issue type, comment template, auth
+    checks, missing-auth behavior, and write approval policy
+11. run the minimum adoption audit and documentation audit
 12. report all intentional exceptions and unresolved questions
+
+When updating existing docs, preserve target-specific project purpose, setup, architecture,
+quality gate, and local warnings. Merge VibeRails rules into those files instead of replacing
+them wholesale. Record conflicts and unresolved decisions in `docs/viberails-adoption.md` and
+`.viberails/adoption.json`.
 
 Do not push or open a PR until you ask me and I approve it.
 ```

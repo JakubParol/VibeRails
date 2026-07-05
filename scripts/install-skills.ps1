@@ -6,14 +6,18 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Installs the skills from this repository at the Codex user scope by creating directory
-# junctions from $HOME\.agents\skills\<skill> to this checkout. A junction keeps a single
-# source of truth: git pull here updates the skills everywhere, and skill edits made from any
-# repository land in this working tree where they can be reviewed and committed.
+# Installs the skills from this repository at the Codex user scope. On Windows the script uses
+# directory junctions; on Unix-like systems PowerShell creates symbolic links. The target root
+# is $env:CODEX_HOME\skills when CODEX_HOME is set, otherwise $HOME\.codex\skills.
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $skillsSource = Join-Path $repoRoot ".agents\skills"
-$skillsTargetRoot = Join-Path $HOME ".agents\skills"
+$codexHome = if (-not [string]::IsNullOrWhiteSpace($env:CODEX_HOME)) { $env:CODEX_HOME } else { Join-Path $HOME ".codex" }
+$skillsTargetRoot = Join-Path $codexHome "skills"
+$isWindowsPlatformVariable = Get-Variable -Name IsWindows -ErrorAction SilentlyContinue
+$isWindowsPlatform = if ($null -ne $isWindowsPlatformVariable) { [bool] $isWindowsPlatformVariable.Value } else { $true }
+$linkItemType = if ($isWindowsPlatform) { "Junction" } else { "SymbolicLink" }
+$linkTypeName = if ($isWindowsPlatform) { "junction" } else { "symlink" }
 
 if (-not (Test-Path -LiteralPath $skillsSource -PathType Container)) {
     throw "Skill source folder not found: $skillsSource"
@@ -31,14 +35,14 @@ if ($Remove) {
         }
 
         $item = Get-Item -LiteralPath $linkPath -Force
-        if ($item.LinkType -ne "Junction") {
-            $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "skipped"; Detail = "not a junction; refusing to delete a real directory" }
+        if ($item.LinkType -notin @("Junction", "SymbolicLink")) {
+            $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "skipped"; Detail = "not a link; refusing to delete a real directory" }
             continue
         }
 
-        # Remove only the junction itself, never the target content.
+        # Remove only the link itself, never the target content.
         $item.Delete()
-        $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "removed"; Detail = "junction removed" }
+        $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "removed"; Detail = "$linkTypeName removed" }
     }
 }
 else {
@@ -51,16 +55,16 @@ else {
 
         if (Test-Path -LiteralPath $linkPath) {
             $item = Get-Item -LiteralPath $linkPath -Force
-            if ($item.LinkType -eq "Junction") {
+            if ($item.LinkType -in @("Junction", "SymbolicLink")) {
                 $currentTarget = [string] ($item.Target | Select-Object -First 1)
                 if ($currentTarget -eq $skillDirectory.FullName) {
-                    $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "ok"; Detail = "junction already points here" }
+                    $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "ok"; Detail = "$linkTypeName already points here" }
                     continue
                 }
 
                 $item.Delete()
-                New-Item -ItemType Junction -Path $linkPath -Target $skillDirectory.FullName | Out-Null
-                $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "repaired"; Detail = "junction retargeted from $currentTarget" }
+                New-Item -ItemType $linkItemType -Path $linkPath -Target $skillDirectory.FullName | Out-Null
+                $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "repaired"; Detail = "$linkTypeName retargeted from $currentTarget" }
                 continue
             }
 
@@ -68,14 +72,14 @@ else {
             continue
         }
 
-        New-Item -ItemType Junction -Path $linkPath -Target $skillDirectory.FullName | Out-Null
+        New-Item -ItemType $linkItemType -Path $linkPath -Target $skillDirectory.FullName | Out-Null
         $skillFile = Join-Path $linkPath "SKILL.md"
         if (-not (Test-Path -LiteralPath $skillFile -PathType Leaf)) {
-            $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "error"; Detail = "junction created but SKILL.md not readable through it" }
+            $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "error"; Detail = "$linkTypeName created but SKILL.md not readable through it" }
             continue
         }
 
-        $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "installed"; Detail = "junction created" }
+        $results += [pscustomobject]@{ Skill = $skillDirectory.Name; Status = "installed"; Detail = "$linkTypeName created" }
     }
 }
 
@@ -88,9 +92,9 @@ if ($problems.Count -gt 0) {
 }
 
 if ($Remove) {
-    Write-Host "User-scope skill junctions removed."
+    Write-Host "User-scope skill links removed from $skillsTargetRoot."
 }
 else {
     Write-Host "Skills installed at the Codex user scope: $skillsTargetRoot"
-    Write-Host "Restart Codex so it rescans skills. Inside this repository Codex may list each skill twice (repo scope plus user scope); that is expected."
+    Write-Host "Restart Codex so it rescans skills."
 }

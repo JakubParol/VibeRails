@@ -71,8 +71,16 @@ Reference the canonical standards:
 
 Required standards:
 
+- `agent-workflow.md`
+- `adoption.md`
+- `adoption-manifest.md`
 - `change-protocol.md`
+- `documentation.md`
+- `documentation-audit.md`
+- `integration-profiles.md`
+- `platform-profiles.md`
 - `quality-gate.md`
+- `self-improve-loop.md`
 - `stack-profiles.md`
 - `architecture.md`
 - `coding.md`

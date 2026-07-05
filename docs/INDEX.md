@@ -46,17 +46,14 @@ This index is the entry point for all standards and templates in this repository
 | Document | Purpose |
 |---|---|
 | [../.agents/README.md](../.agents/README.md) | Repository-scoped agent assets for VibeRails. |
-| [../.agents/skills/README.md](../.agents/skills/README.md) | Versioned Codex skills for reusable repository workflows. |
-| [azure-devops](../.agents/skills/azure-devops/SKILL.md) | Azure Boards, Azure Repos, and reusable Azure DevOps failure-fix workflow skill. |
-| [code-review](../.agents/skills/code-review/SKILL.md) | Local branch and pull request review skill. |
-| [e2e-work-item](../.agents/skills/e2e-work-item/SKILL.md) | Azure Boards work-item implementation skill for `[E2E]` runs. |
+| [../.agents/skills/README.md](../.agents/skills/README.md) | Optional Codex skills grouped by provider/profile. |
 
 ## Repository Operations
 
 | Document | Purpose |
 |---|---|
 | [../scripts/README.md](../scripts/README.md) | Repository maintenance and validation commands. |
-| [../ROADMAP.md](../ROADMAP.md) | Working roadmap and status tracking for the 2026 optimization effort. |
+| [../ROADMAP.md](../ROADMAP.md) | Internal historical roadmap for the 2026 optimization effort; not an adoption template. |
 | [../CHANGELOG.md](../CHANGELOG.md) | Versioned changes to the standards pack. |
 
 ## Navigation
