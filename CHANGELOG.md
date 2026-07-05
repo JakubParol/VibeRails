@@ -66,6 +66,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Copy-template polish: target audits now reject leftover replacement-instruction prose in
   adopted Markdown, and project documentation index templates use link placeholders for the
   adoption record and repository index.
+- Validator polish: project documentation template links that use `<relative-path-to-repo>` now
+  verify copied standards by real source file existence instead of accepting every standards
+  prefix.
 
 ## 0.2.0 - 2026-07-03
 

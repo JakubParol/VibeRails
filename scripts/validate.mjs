@@ -180,11 +180,18 @@ function isAllowedTemplateCopyLink(sourceRelativePath, target) {
     ["docs/templates/viberails-adoption.md", new Set(["INDEX.md"])],
   ]);
 
-  if (sourceRelativePath === "docs/templates/project-docs-INDEX.md"
-    && (target.startsWith("<relative-path-to-repo>/docs/standards/")
-      || target === "<relative-path-to-repo>/docs/viberails-adoption.md"
-      || target === "<relative-path-to-repo>/docs/INDEX.md")) {
-    return true;
+  if (sourceRelativePath === "docs/templates/project-docs-INDEX.md") {
+    if (target === "<relative-path-to-repo>/docs/viberails-adoption.md"
+      || target === "<relative-path-to-repo>/docs/INDEX.md") {
+      return true;
+    }
+    const standardsPrefix = "<relative-path-to-repo>/docs/standards/";
+    if (target.startsWith(standardsPrefix)) {
+      const targetSuffix = target.slice(standardsPrefix.length);
+      return targetSuffix.endsWith(".md")
+        && !targetSuffix.includes("/")
+        && fs.existsSync(path.join(repoRoot, "docs", "standards", targetSuffix));
+    }
   }
 
   return allowedTargetsByTemplate.get(sourceRelativePath)?.has(target) ?? false;

@@ -161,10 +161,19 @@ function Test-MarkdownLinks {
                 continue
             }
             if ($relativeSource -eq "docs/templates/project-docs-INDEX.md" -and
-                ($target.StartsWith("<relative-path-to-repo>/docs/standards/") -or
-                    $target -eq "<relative-path-to-repo>/docs/viberails-adoption.md" -or
+                ($target -eq "<relative-path-to-repo>/docs/viberails-adoption.md" -or
                     $target -eq "<relative-path-to-repo>/docs/INDEX.md")) {
                 continue
+            }
+            if ($relativeSource -eq "docs/templates/project-docs-INDEX.md" -and
+                $target.StartsWith("<relative-path-to-repo>/docs/standards/")) {
+                $standardSuffix = $target.Substring("<relative-path-to-repo>/docs/standards/".Length)
+                $standardPath = Join-Path $repoRoot (Join-Path "docs/standards" $standardSuffix)
+                if ($standardSuffix.EndsWith(".md") -and
+                    -not $standardSuffix.Contains("/") -and
+                    (Test-Path -LiteralPath $standardPath)) {
+                    continue
+                }
             }
             if ($relativeSource -eq "docs/templates/viberails-adoption.md" -and $target -eq "INDEX.md") {
                 continue
