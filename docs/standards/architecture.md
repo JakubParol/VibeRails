@@ -70,7 +70,7 @@ Avoid files named `utils`, `helpers`, or `common` unless their purpose is narrow
 
 ## File And Module Boundaries
 
-- Prefer files under 400 lines.
+- Follow the file size limits in [coding.md](coding.md).
 - Split by responsibility before a file becomes hard to reason about.
 - One repository class per entity or aggregate.
 - One service or use case module per clear responsibility.

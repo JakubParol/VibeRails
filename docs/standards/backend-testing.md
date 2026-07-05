@@ -112,6 +112,21 @@ def test_rollback_when_audit_table_is_missing(client, database_url, restore_sche
     assert response.status_code == 500
 ```
 
+## Test Value Rules
+
+Many tests are welcome; meaningless tests are defects. Every new test must pass this bar:
+
+- It can fail for a real behavioral reason. If the production code can break without this
+  test failing, the test is not proving anything.
+- No mock-echo assertions: do not assert that a mock was called with the values the test just
+  passed in unless an observable outcome is also asserted.
+- No testing the framework: serialization defaults, ORM basics, or library behavior the
+  project does not own.
+- No duplicate coverage: a new test must prove a behavior no existing test proves.
+- The test name states the behavior and expected outcome, not the method name.
+- Assertions target the response envelope, persisted state, or returned domain values, not
+  internal call order or private attributes.
+
 ## Rules
 
 - One behavior per test.

@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "adoptedAt": "<iso-8601-timestamp>",
+  "viberails": {
+    "sourcePath": "<local-path-used-for-adoption-or-null>",
+    "sourceRemote": "<remote-url-or-null>",
+    "sourceRef": "<commit-tag-or-branch>",
+    "packVersion": "<version-from-changelog>"
+  },
+  "target": {
+    "repositoryRoot": "<target-repository-root>",
+    "remote": "<target-remote-url-or-null>",
+    "defaultBranch": "<default-branch>",
+    "prTargetBranch": "<branch-for-adoption-and-follow-up-prs>",
+    "prPolicy": {
+      "draftByDefault": true,
+      "allowedWriteOperations": ["<create-pr|edit-description|comment|none>"],
+      "reviewPublishing": "<local-only|provider-comments|target-local-profile>",
+      "notes": "<code-hosting-pr-policy>"
+    },
+    "branchNaming": "<branch-naming-rule>",
+    "qualityGate": {
+      "canonicalCommand": "<quality-gate-command>",
+      "pathToScopeMap": [
+        {
+          "paths": ["<path-prefix-or-glob>"],
+          "scope": "<frontend|backend|infra|docs|repo>",
+          "commands": ["<command>"],
+          "workingDirectory": "<relative-working-directory>",
+          "requiredBeforePr": true
+        }
+      ]
+    },
+    "projectProfiles": [
+      {
+        "paths": ["."],
+        "documentationRoot": ".",
+        "profile": "<nextjs-frontend-only|nextjs-full-stack|nextjs-python-fastapi|python-cli|python-worker|shared-package|infrastructure|dapr-distributed-app|documented-exception>",
+        "standards": ["<standard-file>"],
+        "qualityGateScope": "<scope>",
+        "exception": null
+      }
+    ]
+  },
+  "profiles": {
+    "agentRuntime": "codex",
+    "stack": "<nextjs-frontend-only|nextjs-full-stack|nextjs-python-fastapi|python-cli|python-worker|shared-package|infrastructure|dapr-distributed-app|mixed|documented-exception>",
+    "workTracking": "<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>",
+    "codeHosting": "<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>",
+    "scriptPlatform": "<powershell|posix-shell|both>"
+  },
+  "integrations": {
+    "workTracking": {
+      "profile": "<same-as-profiles.workTracking>",
+      "azureDevOps": {
+        "organizationUrl": null,
+        "project": null,
+        "workItemTypes": {
+          "story": null,
+          "task": null,
+          "bug": null,
+          "selfImprove": null
+        },
+        "areaPath": null,
+        "iterationPolicy": null,
+        "labels": [],
+        "readCheck": null,
+        "writeApprovalPolicy": null
+      },
+      "jira": {
+        "baseUrl": null,
+        "projectKey": null,
+        "issueTypes": {
+          "story": null,
+          "task": null,
+          "bug": null,
+          "selfImprove": null
+        },
+        "component": null,
+        "labels": [],
+        "readCheck": null,
+        "writeApprovalPolicy": null
+      },
+      "unsupportedProvider": {
+        "name": null,
+        "evidence": null,
+        "manualPolicy": null
+      },
+      "noneReason": null
+    },
+    "codeHosting": {
+      "profile": "<same-as-profiles.codeHosting>",
+      "github": {
+        "owner": null,
+        "repository": null,
+        "defaultBranch": null,
+        "prTargetBranch": null,
+        "branchNaming": null,
+        "draftByDefault": true,
+        "authCheck": null,
+        "allowedWriteOperations": []
+      },
+      "azureRepos": {
+        "organizationUrl": null,
+        "project": null,
+        "repository": null,
+        "defaultBranch": null,
+        "prTargetBranch": null,
+        "branchNaming": null,
+        "draftByDefault": true,
+        "authCheck": null,
+        "allowedWriteOperations": []
+      },
+      "unsupportedProvider": {
+        "name": null,
+        "evidence": null,
+        "manualPolicy": null
+      },
+      "noneReason": null
+    }
+  },
+  "agentSkills": {
+    "mode": "<none|user-scope|vendored>",
+    "selectedSkills": [],
+    "sourcePath": "<skills-source-path-or-null>",
+    "sourceRef": "<commit-tag-or-branch-or-null>",
+    "targetPath": "<vendored-target-path-or-null>",
+    "duplicateNamePolicy": "Never keep the same skill name in both Codex user scope and target repository scope.",
+    "decisionReason": "<why-skills-are-not-used-installed-or-vendored>"
+  },
+  "auth": {
+    "workTracking": "<target-local-auth-doc-or-command>",
+    "codeHosting": "<target-local-auth-doc-or-command>"
+  },
+  "selfImprove": {
+    "enabled": false,
+    "tracker": "none",
+    "sink": {
+      "azureDevOps": {
+        "organizationUrl": null,
+        "project": null,
+        "workItemType": null,
+        "areaPath": null,
+        "iterationPolicy": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null
+      },
+      "jira": {
+        "baseUrl": null,
+        "projectKey": null,
+        "issueType": null,
+        "component": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null
+      },
+      "customTicketSink": {
+        "name": null,
+        "owner": null,
+        "queryCommand": null,
+        "createCommand": null,
+        "commentCommand": null,
+        "authCheck": null
+      },
+      "localFileSink": {
+        "path": null,
+        "writePolicy": null,
+        "dedupeRule": null,
+        "reviewOwner": null
+      }
+    },
+    "labels": ["viberails-self-improve"],
+    "providerLabels": ["<azure-devops|jira|git|gh>"],
+    "dedupe": {
+      "queryTemplate": null,
+      "matchFields": ["fingerprint"],
+      "statusScope": "open",
+      "manualFallback": "List open self-improve tickets and match exact fingerprint first, then provider, command family, and error class."
+    },
+    "commentPolicy": "If a matching open ticket exists, add sanitized evidence as a comment instead of creating a duplicate.",
+    "commentTemplate": "Additional evidence from <target-repository> at <iso-8601-timestamp>: fingerprint, platform, tool/provider, command family, sanitized symptom, attempted command, verified workaround, safety confirmation.",
+    "auth": {
+      "readCheck": "<command-or-doc-link>",
+      "writeCheck": "<command-or-doc-link>",
+      "envVars": [],
+      "connectorNames": [],
+      "notAuthenticatedErrors": [],
+      "missingAuthBehavior": "Prepare the sanitized ticket body locally and report the blocked self-improve write."
+    },
+    "writeApprovalPolicy": "Agents may create or comment self-improve tickets only after user approval for the current task.",
+    "disabledReason": null,
+    "alternateClients": []
+  },
+  "copiedFiles": [
+    {
+      "sourcePath": "<viberails-source-path>",
+      "targetPath": "<target-path>",
+      "sourceRef": "<commit-tag-or-branch>",
+      "mode": "<created|merged|refreshed|skipped>",
+      "scope": "<adoption-scope>",
+      "reason": "<why-this-file-was-copied-or-skipped>"
+    }
+  ],
+  "exceptions": [],
+  "openQuestions": [
+    {
+      "category": "self-improve",
+      "question": "Select and configure the self-improve ticket sink, or confirm that tracker none is intentional.",
+      "impact": "Agents can prepare local self-improve bodies but cannot query, create, or comment sink tickets.",
+      "owner": "unknown",
+      "neededBefore": "Agents can create or comment self-improve tickets."
+    }
+  ]
+}

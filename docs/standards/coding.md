@@ -6,17 +6,9 @@ expectations without an explicit exception.
 
 ## Required Reading By Work Type
 
-Before changing code, read:
-
-1. [agent-workflow.md](agent-workflow.md)
-2. [change-protocol.md](change-protocol.md)
-3. [quality-gate.md](quality-gate.md)
-4. [architecture.md](architecture.md)
-5. this document
-6. the stack-specific standard for the files being changed
-7. the nearest local `README.md` or `AGENTS.md`
-
-Stack-specific standards:
+Follow the context loading order in [agent-workflow.md](agent-workflow.md); it is the single
+canonical reading list. For code changes it resolves to the change protocol, the quality gate,
+the architecture standard, this document, and the stack-specific standard for touched files:
 
 - Backend: [backend.md](backend.md)
 - Backend testing: [backend-testing.md](backend-testing.md)

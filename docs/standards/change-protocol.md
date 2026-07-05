@@ -96,16 +96,8 @@ If the task is too vague to choose a branch name, ask the user to clarify the in
 
 ## Required Reading
 
-Before implementation, agents must read:
-
-1. root `AGENTS.md`
-2. root `README.md`
-3. root `docs/INDEX.md`
-4. `docs/standards/agent-workflow.md`
-5. this change protocol
-6. standards relevant to the task
-7. nearest documentation-root files in monorepos
-8. nearest folder-level `README.md` or `AGENTS.md`
+Follow the context loading order in [agent-workflow.md](agent-workflow.md). It is the single
+canonical reading list; do not maintain a separate one here.
 
 During work, agents must read local documentation for each area before changing that area. Do
 not read the entire repository by default. Load context in the smallest useful chunks.
@@ -182,7 +174,8 @@ that exception.
 
 Before reporting that implementation is done, agents must:
 
-1. Run the documented quality gate from the relevant project root.
+1. Run the documented quality gate for the changed scopes, following the gate responsibility
+   split in [quality-gate.md](quality-gate.md). The full repository run belongs to CI.
 2. Confirm all task changes are committed, unless the user asked for uncommitted changes.
 3. Confirm the working tree does not contain accidental unrelated changes.
 4. Summarize what changed and what verification ran.

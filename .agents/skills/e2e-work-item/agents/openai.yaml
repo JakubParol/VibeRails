@@ -1,0 +1,4 @@
+interface:
+  display_name: "E2E Work Item"
+  short_description: "Run an Azure Boards work item end to end"
+  default_prompt: "Use $e2e-work-item for an [E2E] Azure Boards work item URL to implement the work item end to end."

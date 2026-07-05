@@ -26,6 +26,20 @@ For every task:
 8. Read the nearest folder-level `README.md` or `AGENTS.md`, starting from the target file's
    directory and walking upward until the owning documentation root.
 
+## Context Budget Rule
+
+Agents must use documentation indexes as routing maps, not as a reason to load every linked
+file. Load the smallest set of documents that can prove the next decision:
+
+- Always read required parent instructions and the standards that directly govern the change.
+- Prefer `rg`, file lists, tables of contents, and headings before opening long documents.
+- For multi-area work, load one area's local context at a time, then expand only when paths or
+  dependencies cross a documented boundary.
+- When a standard points to stack-specific rules, read only the stack rules for touched files.
+- When a skill has `references/`, read the entrypoint first and then only the referenced file
+  that matches the current operation.
+- If a task needs a broader audit, state that broader scope explicitly before widening reads.
+
 ## Folder Context Rule
 
 Each documentation root must provide the full trio:
@@ -45,58 +59,31 @@ and rules.
 Do not create `docs/` folders in ordinary feature or module folders. Reserve `docs/` for the
 repository root and standalone child project roots in monorepos.
 
-## Before Editing
+## Editing
 
-Agents must:
+Behavioral rules for branch setup, planning, when to ask, implementation, commits, push, PR,
+and review loops live in [change-protocol.md](change-protocol.md). This document only owns
+context loading and verification routing. Two rules worth repeating because they gate context
+loading:
 
-- Follow the change protocol for branch setup, commits, push, PR, and review loops.
-- Identify the smallest scope that satisfies the request.
-- Read the required standards for that scope.
-- Inspect existing patterns before proposing or making changes.
+- Identify the smallest scope that satisfies the request before reading widely.
 - Check whether project-specific instructions override template defaults.
-- Preserve user changes and unrelated work.
-- State blockers when required quality gates or required context are missing.
-
-## During Editing
-
-Agents must:
-
-- Keep changes focused on the requested outcome.
-- Follow existing project style unless it conflicts with these standards.
-- Prefer explicit boundaries, small modules, and dependency injection.
-- Avoid hidden suppressions such as ignored lints, disabled tests, or weakened configs.
-- Update documentation when behavior, setup, architecture, or folder rules change.
 
 ## Verification
 
-For code changes, follow `docs/standards/quality-gate.md` and run the project's documented
-quality gate from the relevant project root.
-At minimum, projects should expose commands for:
-
-- formatting or auto-fixing
-- linting with zero warnings
-- type checking where applicable
-- unit tests
-- integration tests when infrastructure behavior is affected
+For code changes, follow [quality-gate.md](quality-gate.md): run the documented gate for the
+changed scopes only, using the repository's path-to-scope map. The local gate proves the
+changed scope; CI proves the whole repository. During implementation, prefer cheap focused
+checks over full runs.
 
 If the documented quality gate is missing, stop and report the blocker instead of inventing
 an unofficial verification path.
 
 ## Reporting
 
-Final reports should include:
-
-- what changed
-- where the important files are
-- what verification was run
-- what could not be verified
-- any follow-up required from the user
-
-Do not claim work is complete unless verification was actually run or the limitation is clearly
-reported.
-
-Every interaction should end with either a concrete next action or a focused question that
-offers clear next-step options.
+Follow the final report requirements in
+[change-protocol.md#final-report](change-protocol.md#final-report). Do not claim work is
+complete unless verification was actually run or the limitation is clearly reported.
 
 ## Navigation
 

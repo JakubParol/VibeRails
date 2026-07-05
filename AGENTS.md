@@ -25,6 +25,12 @@ Read stack-specific standards only when editing that area.
 - Keep navigation links current whenever files move.
 - Use ASCII in documentation unless the file already requires another character set.
 - Prefer short sections, tables, and checklists over long prose.
+- Keep VibeRails Codex-first and process-neutral. Do not assume Azure DevOps, Jira, GitHub, or
+  Azure Repos unless the target repository or user selected that profile.
+- Adoption must record integration profiles, platform profile, auth instructions, and the
+  self-improve ticket sink.
+- Keep skills generic enough for reuse across adopting repositories; put repository-specific
+  decisions in the adopting repository, not in VibeRails.
 
 ## Structure Rules
 
@@ -32,6 +38,8 @@ Read stack-specific standards only when editing that area.
 - `docs/INDEX.md` is the table of contents.
 - `docs/standards/` contains reusable rules.
 - `docs/templates/` contains files meant to be copied into projects.
+- `.agents/skills/` contains optional versioned Codex skills meant to be installed at user
+  scope or referenced by adopting projects. They are not copied by default during adoption.
 - Do not place project-specific implementation details in the root.
 
 ## Change Workflow
@@ -40,9 +48,14 @@ Read stack-specific standards only when editing that area.
 2. Update the canonical document first.
 3. Update indexes and navigation links.
 4. Check for broken relative links.
-5. Report any intentional exception or unresolved ambiguity.
+5. Validate skill metadata when `.agents/skills/` changes.
+6. Run `node scripts/validate.mjs`; also run `.\scripts\validate.ps1` when PowerShell is
+   available.
+7. Report any intentional exception or unresolved ambiguity.
 
 ## Navigation
 
 - [README.md](README.md)
 - [docs/INDEX.md](docs/INDEX.md)
+- [.agents/README.md](.agents/README.md)
+- [scripts/README.md](scripts/README.md)

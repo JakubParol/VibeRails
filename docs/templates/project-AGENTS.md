@@ -10,12 +10,14 @@ For every task, read in this order:
    inside a monorepo
 2. this project `README.md`
 3. this project `docs/INDEX.md`
-4. shared standards from the repository root `docs/standards/`, or local copied standards when
-   this project is standalone
-5. `change-protocol.md` from that standards path
-6. `quality-gate.md` from that standards path
-7. stack-specific standards for touched files
-8. nearest folder-level `README.md` or `AGENTS.md`
+4. `agent-workflow.md`, `change-protocol.md`, and `quality-gate.md` from the owning standards
+   path
+5. task-specific standards from that path, selected through `docs/INDEX.md`
+6. stack-specific standards only for touched files
+7. nearest folder-level `README.md` or `AGENTS.md`
+
+Use indexes as routing maps. Do not load every standard or every local document unless the task
+is explicitly a broad audit.
 
 ## Project Context
 
@@ -28,6 +30,12 @@ Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
 - Next.js frontend only
 - Next.js full stack
 - Next.js + Python FastAPI
+- Python CLI
+- Python worker
+- shared package
+- infrastructure
+- Dapr or distributed app
+- mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
 - documented exception: <profile>
 
 ## Architecture Rules
@@ -41,26 +49,14 @@ Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
 
 ## Change Protocol
 
-Agents must follow the change protocol for branch setup, commits, push, PR, and review loops.
+Agents must follow `change-protocol.md` from the owning standards path for branch setup,
+commits, push, PR, and review loops. Do not restate those rules here; this section only
+records project-specific deltas:
 
-Default rules:
-
-- Check git status before switching branches, pulling, stashing, or committing.
-- Protect unrelated user changes.
-- Start from the documented base branch, defaulting to `main` when not specified.
-- Pull the latest base branch before creating the task branch.
-- Commit after each coherent logical step when verification for that step has passed or the
-  limitation is documented.
-- Do not push or open a PR without explicit user approval, unless the user requested an
-  end-to-end PR flow at the start.
-- After local work is done, ask whether the user wants to inspect first or wants the agent to
-  push and open a PR.
-- After opening a PR, request independent review with available review tools, skills, or
-  sub-agents, fix valid findings, and repeat until clean or five review cycles have run.
-- After five review cycles, escalate to the user with remaining findings and a recommended
-  next step.
-- End every interaction with either the next action being taken or a concrete question with
-  suggested next steps.
+- Base branch: `<main unless documented otherwise>`
+- Branch naming: `<repository convention, if any>`
+- Commit convention: `<repository convention, if any>`
+- Other deviations from the change protocol: `<none by default>`
 
 ## Local Documentation Rule
 
@@ -81,19 +77,22 @@ feature or module folders.
 
 ## Quality Gate
 
-Run from the relevant project root before reporting completion. Use `quality-gate.md` and the
-selected stack profile as defaults, then replace placeholders with real repository commands.
+Follow `quality-gate.md`: the local gate proves the changed scope, CI proves the whole
+repository. Run the scoped commands for changed scopes before reporting completion; run the
+full gate only for cross-cutting changes or on explicit request.
+
+Path-to-scope map (keep aligned with CI change detection):
+
+| Path prefix | Scope | Working directory | Gate command | Platform/canonical command | CI check |
+|---|---|---|---|---|---|
+| `<services/api/**>` | `<api>` | `<services/api>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
+| `<apps/web/**>` | `<web>` | `<apps/web>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
+| `<shared tooling, lockfiles>` | all | `<repo root>` | `<full gate command>` | `<posix|powershell|both>` | `<ci check>` |
 
 ```bash
-# format or auto-fix
+# scoped gate for one changed scope
 
-# lint
-
-# type check
-
-# test
-
-# build
+# full gate - cross-cutting changes only
 ```
 
 If these commands do not exist, stop and report a blocker unless this file documents an

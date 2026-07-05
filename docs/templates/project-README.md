@@ -60,6 +60,12 @@ Select one:
 - Next.js frontend only
 - Next.js full stack
 - Next.js + Python FastAPI
+- Python CLI
+- Python worker
+- shared package
+- infrastructure
+- Dapr or distributed app
+- mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
 - documented exception: <profile>
 
 Reference the canonical standards:
@@ -71,8 +77,16 @@ Reference the canonical standards:
 
 Required standards:
 
+- `agent-workflow.md`
+- `adoption.md`
+- `adoption-manifest.md`
 - `change-protocol.md`
+- `documentation.md`
+- `documentation-audit.md`
+- `integration-profiles.md`
+- `platform-profiles.md`
 - `quality-gate.md`
+- `self-improve-loop.md`
 - `stack-profiles.md`
 - `architecture.md`
 - `coding.md`

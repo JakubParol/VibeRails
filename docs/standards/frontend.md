@@ -127,6 +127,14 @@ Test:
 Do not unit test CSS classes or layout. Use E2E or visual regression when layout correctness
 matters.
 
+Test value rules:
+
+- Every test must be able to fail for a real behavioral reason.
+- No mock-echo assertions: do not assert a mocked fetch received the arguments the test just
+  passed in without asserting the resulting state or output.
+- No duplicate coverage and no testing React or library internals.
+- Test names state the behavior and expected outcome.
+
 Place tests next to source:
 
 ```text
