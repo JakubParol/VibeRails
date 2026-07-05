@@ -28,9 +28,23 @@ repository identity and remote setup.
    app, or package.
 8. Add `README.md` to significant feature, module, adapter, and bounded-context folders.
 9. Add folder-level `AGENTS.md` only where local rules differ from the parent.
-10. Define quality gates from existing scripts and stack profile defaults.
-11. Run the documentation audit checklist.
-12. Report intentional exceptions and unresolved gaps.
+10. Do not copy skills into the target repository by default. Skills are distributed at the
+    Codex user scope (`$HOME/.agents/skills`) from the standards repository checkout via
+    `scripts/install-skills.ps1`. Vendor a copy into the target `.agents/skills/` only when
+    that repository must pin a skill version; never keep the same skill name in both scopes.
+11. Define quality gates from existing scripts and stack profile defaults, including the
+    path-to-scope map required by `quality-gate.md`.
+12. Record the adopted pack version from the standards repository `CHANGELOG.md` in the target
+    `docs/INDEX.md`.
+13. Run the documentation audit checklist.
+14. Report intentional exceptions and unresolved gaps.
+
+## Context Discipline
+
+Use indexes and folder lists to route the audit before opening detailed files. Load standards,
+templates, and skills only when the target repository needs that area or the adoption checklist
+cannot be completed without it. For monorepos, inspect one standalone app, service, worker,
+mobile app, or package at a time, then generalize only when the structure is repeated.
 
 ## What To Copy
 
@@ -45,6 +59,10 @@ Copy standards that apply to the target repository:
 
 Do not copy standards that do not apply unless the target repository expects that stack soon.
 
+Skills are not copied during adoption. Install them once per machine at the Codex user scope
+with `scripts/install-skills.ps1` from the standards repository; they are then available in
+every repository. Vendor a pinned copy only on explicit decision.
+
 ## Output Requirements
 
 At the end of adoption, the target repository must have:
@@ -53,7 +71,7 @@ At the end of adoption, the target repository must have:
 - relevant standards under `docs/standards/`
 - documentation roots for standalone monorepo projects
 - local folder `README.md` files for significant folders
-- documented quality gates
+- documented quality gates with a path-to-scope map
 - no orphan Markdown files
 - a summary of gaps that need user decisions
 

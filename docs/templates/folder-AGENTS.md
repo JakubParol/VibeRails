@@ -47,6 +47,13 @@ Document the fastest useful tests for this folder and any required integration t
 - Add rules that are specific to this folder.
 - Do not repeat global standards unless the local rule is stricter.
 
+## Layer Checklists
+
+Optional: when this folder owns endpoints, services, repositories, or tests, copy the matching
+definition-of-done checklists from the owning standards path (`backend.md` Layer Definition Of
+Done, `backend-testing.md` Test Value Rules, or the frontend equivalents) so agents self-verify
+against them right where the code lives. Keep only the checklists that apply to this folder.
+
 ## Navigation
 
 - Parent README: `../README.md`

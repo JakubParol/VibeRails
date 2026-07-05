@@ -35,6 +35,24 @@ This index is the entry point for all standards and templates in this repository
 | [api-contract.md](templates/api-contract.md) | Copy for API contracts. |
 | [quality-gate.md](templates/quality-gate.md) | Copy for project quality gate documentation. |
 
+## Agent Assets
+
+| Document | Purpose |
+|---|---|
+| [../.agents/README.md](../.agents/README.md) | Repository-scoped agent assets for VibeRails. |
+| [../.agents/skills/README.md](../.agents/skills/README.md) | Versioned Codex skills for reusable ElitMind workflows. |
+| [azure-devops-elitmind](../.agents/skills/azure-devops-elitmind/SKILL.md) | ElitMind Azure Boards, Azure Repos, and reusable Azure DevOps failure-fix workflow skill. |
+| [code-review-elitmind](../.agents/skills/code-review-elitmind/SKILL.md) | ElitMind local branch and Azure DevOps PR review skill. |
+| [e2e-work-item-elitmind](../.agents/skills/e2e-work-item-elitmind/SKILL.md) | ElitMind Azure Boards work-item implementation skill for `[E2E]` runs. |
+
+## Repository Operations
+
+| Document | Purpose |
+|---|---|
+| [../scripts/README.md](../scripts/README.md) | Repository maintenance and validation commands. |
+| [../ROADMAP.md](../ROADMAP.md) | Working roadmap and status tracking for the 2026 optimization effort. |
+| [../CHANGELOG.md](../CHANGELOG.md) | Versioned changes to the standards pack. |
+
 ## Navigation
 
 - [Repository README](../README.md)

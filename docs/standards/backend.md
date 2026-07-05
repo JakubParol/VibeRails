@@ -46,6 +46,69 @@ feature/
 
 Routes never call repositories directly.
 
+## Layer Definition Of Done
+
+Self-verify every changed file against the checklist for its layer before committing. A miss
+is not a style nit; fix it before the commit.
+
+Endpoint (router function) is done when:
+
+- it only validates input, maps schemas, and calls one application service method;
+- it contains no branching on domain state and computes no derived business values;
+- it takes no repository, session, or SQL dependency;
+- it maps known failures through the shared exception handler, not per-route try/except.
+
+Application service is done when:
+
+- it orchestrates the use case against ports, not concrete infrastructure;
+- every dependency arrives through the constructor from `dependencies.py`;
+- persistence, HTTP, queue, and SDK calls happen behind ports it depends on;
+- expected failures raise typed application errors.
+
+Repository is done when:
+
+- it implements a port defined in the application layer;
+- it returns domain models or documented read models, never raw rows;
+- it contains no business decisions;
+- raw SQL stays inside it or in module-local SQL helpers.
+
+## Shortcut Examples
+
+Logic in the endpoint - wrong:
+
+```python
+@router.post("/orders")
+async def create_order(payload: OrderIn, repo: OrderRepo = Depends(get_repo)):
+    if payload.total > 10_000 and not payload.approved_by:
+        raise HTTPException(422, "approval required")
+    order = Order(**payload.dict(), status="pending")
+    return await repo.save(order)
+```
+
+Right - the rule lives in the service, the route stays transport-only:
+
+```python
+@router.post("/orders")
+async def create_order(payload: OrderIn, service: OrderService = Depends(get_order_service)):
+    order = await service.create_order(payload.to_command())
+    return OrderOut.from_domain(order)
+```
+
+Inline dependency construction - wrong:
+
+```python
+async def create_order(self, command: CreateOrder) -> Order:
+    repo = OrderRepository(get_session())
+    ...
+```
+
+Right - dependencies are injected once through the composition root:
+
+```python
+def __init__(self, orders: OrderRepositoryPort) -> None:
+    self._orders = orders
+```
+
 ## Dependency Injection
 
 - Use constructor injection for services and repositories.
@@ -114,7 +177,8 @@ Collections include pagination metadata when relevant.
 
 ## Import Boundaries
 
-Use tooling such as `import-linter` where practical.
+`import-linter` contracts are required for FastAPI projects. Prose rules alone do not stop
+shortcuts; the gate must fail on a wrong import direction.
 
 Rules:
 
@@ -122,6 +186,32 @@ Rules:
 - Domain cannot import any outer layer.
 - Feature modules cannot import another feature's internals.
 - Shared code lives in a documented shared package.
+
+Template contract for a feature module (adapt package names):
+
+```ini
+[importlinter]
+root_package = app
+
+[importlinter:contract:feature-layers]
+name = Feature layers point inward
+type = layers
+layers =
+    app.<feature>.api
+    app.<feature>.application
+    app.<feature>.domain
+containers =
+    app
+
+[importlinter:contract:application-independent]
+name = Application does not import infrastructure
+type = forbidden
+source_modules =
+    app.<feature>.application
+    app.<feature>.domain
+forbidden_modules =
+    app.<feature>.infrastructure
+```
 
 Do not add, widen, or justify `ignore_imports` entries to bypass architecture rules. If an
 import boundary fails, fix the dependency direction or stop and report the blocker.
