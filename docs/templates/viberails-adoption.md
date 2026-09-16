@@ -99,7 +99,11 @@ payloads.
 |---|---|---|---|---|---|
 | `<path prefix or glob>` | `<scope>` | `<commands>` | `<working directory>` | `<yes|no>` | `<notes>` |
 
-Canonical local command: `<command>`.
+Canonical full command (CI): `<command>`.
+
+Document focused local commands in the path map; do not assume an existing aggregate command
+is local merely because it has a scope flag. Record required CI checks and their evidence path
+in the target's quality-gate document. Missing CI is a limitation, not an automatic full-local fallback.
 
 ## Self-Improve Ticket Sink
 

@@ -66,10 +66,11 @@ Core gates:
    a structured entry to [LEARNINGS.md](LEARNINGS.md) instead of authoring the full patch.
    Author durable patches to `SKILL.md`, `references/`, or `scripts/` only with user approval,
    on a dedicated standards-repository branch, never mixed into the product repository task.
-4. After a skill update, run the standards repository quality gate with
-   `node scripts/validate.mjs`. If PowerShell scripts changed and PowerShell is available, also
-   run `.\scripts\validate.ps1` for parse checks; if a live Azure DevOps write was needed for
-   validation, use a marker tag and report cleanup commands.
+4. After a skill update, run focused changed-file/metadata checks and relevant behavior checks
+   in the standards repository. Full pack validation belongs to its PR CI unless the user
+   explicitly requests a full local run. Respect platform/task permissions for PowerShell
+   parsing; do not run it merely because it is installed. If a live Azure DevOps write was
+   needed and authorized for validation, use a marker tag and report cleanup commands.
 
 ## First Use
 
@@ -131,7 +132,9 @@ Before creating or completing a PR, follow the repository change protocol:
 2. Protect unrelated user work.
 3. Create or reuse an approved focused branch.
 4. Commit only files belonging to the task.
-5. Run the documented quality gate.
+5. Run documented focused local checks; obtain required current-revision CI evidence before
+   completing/merging, or report the explicitly agreed limitation. Do not rerun full gates
+   locally without an explicit request.
 6. Ask before push, PR creation, PR completion, or merge unless the user already explicitly
    requested that operation.
 

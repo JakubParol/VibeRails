@@ -129,22 +129,19 @@ For every project that uses this template, start from broad context and drill do
 
 ## Quality Gate
 
-Before reporting changes as ready, run:
+Locally validate the files you changed, for example:
 
 ```bash
-node scripts/validate.mjs
+node scripts/validate.mjs --files README.md docs/INDEX.md
 ```
 
-This checks Markdown links and anchors, orphaned Markdown files, ASCII-only documentation and
-skill files, skill metadata, and source-specific terms in `.agents`.
+Run the small validator regression tests when its behavior changes. Full documentation,
+navigation and skill validation belongs to [PR Verification](.github/README.md), together with
+validator regressions and the maintained architecture examples. Local full gates require an
+explicit user request; missing CI is a reported limitation, not permission to run them.
 
-When PowerShell is available, also run:
-
-```powershell
-.\scripts\validate.ps1
-```
-
-The PowerShell gate performs the same repository checks and additionally parses `.ps1` files.
+See [scripts/README.md](scripts/README.md) for exact commands, focused coverage and the legacy
+PowerShell validator's limits. Keep CI evidence tied to the source and actually tested revisions.
 
 ## Templates
 

@@ -1,0 +1,88 @@
+name: PR Verification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Repository checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Record tested revision
+        id: revision
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Node
+        id: node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Validator regression tests
+        id: tests
+        run: node --test scripts/tests/validate.test.mjs
+
+      - name: Full documentation and skill validation
+        id: validation
+        run: node scripts/validate.mjs --all
+
+      - name: Architecture example behavior
+        id: examples
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path("docs/templates/architecture-variants.md").read_text()
+          recipe = re.search(r"```bash\npython3 - <<'PY'\n(.*?)\nPY\n```", text, re.S)
+          if recipe is None:
+              raise SystemExit("Architecture behavior recipe is missing")
+          exec(compile(recipe.group(1), "architecture-behavior-recipe", "exec"))
+          PY
+
+      - name: Verification summary
+        if: always()
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+          TESTED_REVISION: ${{ steps.revision.outputs.sha || 'unavailable' }}
+          CHECKOUT_RESULT: ${{ steps.checkout.outcome }}
+          NODE_RESULT: ${{ steps.node.outcome }}
+          TEST_RESULT: ${{ steps.tests.outcome }}
+          VALIDATION_RESULT: ${{ steps.validation.outcome }}
+          EXAMPLE_RESULT: ${{ steps.examples.outcome }}
+        run: |
+          {
+            echo '# PR Verification'
+            printf 'Source revision: `%s`\n\n' "$SOURCE_REVISION"
+            printf 'Tested revision: `%s`\n\n' "$TESTED_REVISION"
+            echo '| Check | Outcome |'
+            echo '|---|---|'
+            printf '| Checkout | %s |\n' "$CHECKOUT_RESULT"
+            printf '| Node setup | %s |\n' "$NODE_RESULT"
+            printf '| Validator regressions | %s |\n' "$TEST_RESULT"
+            printf '| Full documentation/skill gate | %s |\n' "$VALIDATION_RESULT"
+            printf '| Architecture examples | %s |\n' "$EXAMPLE_RESULT"
+            echo
+            echo 'Skipped, cancelled, missing and failed checks are not passed verification.'
+            echo 'Open the failed step for details. No PowerShell, live HTTP or database validation is claimed.'
+          } >> "$GITHUB_STEP_SUMMARY"

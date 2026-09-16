@@ -1,61 +1,58 @@
 # Quality Gate Standard
 
-Every project must document exact commands that prove a change is ready to submit. Agents must
-run the documented gate for the changed scopes before reporting implementation complete.
+Document two responsibilities: focused local evidence and full PR verification. Record the
+actual commands, working directories and required CI checks. A green local subset is not a
+green repository gate; creating a PR can be the prerequisite for obtaining the CI evidence.
 
 ## Gate Responsibility Split
 
-The local gate proves the changed scope. The CI pipeline proves the whole repository.
+Locally run changed-file format/lint and the smallest meaningful behavior tests or guards.
+Broad type checks, full suites, builds and aggregate gates belong to PR Verification.
 
-- Locally, run the documented gate only for the scopes the change touched, plus focused tests
-  during implementation.
-- Do not run the full repository gate locally by default when a PR pipeline enforces it.
-  Full-suite runs on every task burn time and tokens without adding safety the pipeline does
-  not already provide.
-- Run the full local gate only when the change is cross-cutting (shared tooling, lockfiles,
-  shared packages, or the gate script itself), when the repository has no scoped commands, or
-  when the user explicitly asks for it.
+- Run a full local gate only on an explicit user request. Shared tooling, lockfiles, missing
+  scoped commands or unavailable CI do not grant that permission automatically.
+- `local-focused` documents focused local proof. `ci-first` adds an expected full PR pipeline.
+  Both retain existing required project checks and user acceptance/merge boundaries.
+- Record the selected policy in existing target instructions. The future configuration field
+  does not activate itself; follow [configuration.md](configuration.md)'s migration boundary.
+- Preserve green evidence while its inputs remain unchanged. After failure, reproduce and
+  rerun only the failing check or smallest relevant case; expand only for a concrete changed risk.
+- New behavior needs meaningful test evidence. Documentation-only work needs document checks,
+  not invented application tests or repeated unchanged examples.
+- Full CI results remain required wherever the project requires them. Never suppress a failing
+  check, lower a threshold, or treat absent/skipped verification as PASS.
 
 ## Path-To-Scope Map
 
-Each repository must document how paths map to gate scopes, in the same shape its CI change
-detection uses. Example:
+Map changed paths to focused local evidence and CI coverage. A scope name alone does not make
+an aggregate command cheap; inspect what an existing script actually runs. Example:
 
-| Path prefix | Scope | Gate command |
+| Changed paths | Focused local evidence | Full PR coverage |
 |---|---|---|
-| `services/api/**` | `api` | `./scripts/quality-gate.sh --scope api` or `.\scripts\quality-gate.ps1 -Scope api` |
-| `services/worker/**` | `worker` | `./scripts/quality-gate.sh --scope worker` or `.\scripts\quality-gate.ps1 -Scope worker` |
-| `apps/web/**` | `web` | `./scripts/quality-gate.sh --scope web` or `.\scripts\quality-gate.ps1 -Scope web` |
-| lockfiles, gate scripts, shared packages | shared | full repository gate |
-| `*.md` only | docs | documentation and link audit |
+| API/worker behavior | Changed-file checks and relevant behavior/adapter cases. | Required types, suites, integration and build checks. |
+| Web behavior | Changed-file checks and affected interaction tests. | Required web types, tests and build. |
+| Shared tooling/lockfiles | Small relevant regression or smoke test. | Required affected-project/full repository checks. |
+| Markdown only | Changed-document text, links and relevant metadata. | Full documentation/navigation/metadata gate. |
 
-Agents derive changed scopes from `git diff --name-only <base>...HEAD` and this map. When the
-map is missing, propose one from the CI pipeline definition before falling back to full runs.
+Use the branch diff and any current task edits to select evidence. If the map is missing,
+document a small mapping from existing commands/CI; do not fall back to a full local run.
 
 ## Recommended Gate Script Interface
 
-Repositories with a gate script should expose scope controls so agents and CI share one entry
-point. Use the repository's selected platform profile from
-[platform-profiles.md](platform-profiles.md).
-
-Recommended POSIX shape:
+Reuse project-native tools and the selected [platform profile](platform-profiles.md). A script
+is optional; do not build a new runner merely to wrap existing commands. Expose explicit local
+selection separately from the aggregate command. For this standards repository:
 
 ```bash
-./scripts/quality-gate.sh --scope <scope>
-./scripts/quality-gate.sh --changed
-./scripts/quality-gate.sh --scope <scope> --skip-tests
+# Local: explicit existing text files, not the whole repository.
+node scripts/validate.mjs --files docs/standards/architecture.md
+# CI (or an explicitly requested full local run):
+node scripts/validate.mjs --all
 ```
 
-Recommended PowerShell shape:
-
-```powershell
-.\scripts\quality-gate.ps1 -Scope <scope>
-.\scripts\quality-gate.ps1 -Changed
-.\scripts\quality-gate.ps1 -Scope <scope> -SkipTests
-```
-
-Reduced local runs such as `--skip-tests`, `-SkipTests`, `--skip-build`, or `-SkipBuild` must
-be intentional exceptions, never the default.
+A focused command must say what it covers and omits. It must not print a whole-repository
+success claim. Deletions, incoming links, global reachability and wider integration may require
+CI evidence even when selected-file checks pass. Choosing local scope is not disabling CI.
 
 ## Required Gate Areas
 
@@ -68,12 +65,13 @@ be intentional exceptions, never the default.
 | Integration tests | Behavior depends on database, API, filesystem, queue, auth, or network adapters. |
 | Build | The project produces a deployable artifact. |
 
-Within a changed scope, do not skip areas: a scoped run still covers format, lint, types, and
-tests for that scope. Build runs when the scope produces a deployable artifact.
+These remain coverage responsibilities; they are not instructions to run every category locally.
+Place broad categories in CI, with a small relevant local check when it materially helps the
+change. Real adapter correctness needs evidence against the actual production technology.
 
 ## Defaults By Stack
 
-Next.js:
+Full CI defaults for Next.js (replace with actual project commands):
 
 ```bash
 npm run lint
@@ -82,7 +80,7 @@ npm test
 npm run build
 ```
 
-Python FastAPI:
+Full CI defaults for Python/FastAPI:
 
 ```bash
 ruff check .
@@ -93,24 +91,35 @@ pytest
 Monorepo:
 
 ```bash
-# scoped gate for one changed project
-<project quality command>
-
-# full gate - cross-cutting changes only
-<root quality command>
+# Local: affected files / smallest relevant behavior test
+<documented focused command>
+# CI: required project and shared coverage
+<documented full verification command>
 ```
 
 Replace defaults with repository-specific commands when scripts already exist.
 
-## Missing Gate
+## Missing Gate Or CI
 
-If no quality gate exists, agents must:
+Use available focused checks and name the missing coverage, affected acceptance criteria and
+next action. Missing CI does not authorize a full local gate. Continue independent work, but
+do not claim required verification complete. A required-check exception needs explicit user
+agreement and a record; do not silently convert failure/unavailability into success.
 
-1. report the blocker
-2. propose the smallest useful gate for the stack
-3. ask whether to add the missing scripts or continue with a documented exception
+If no documented local commands exist, propose the smallest useful ones from existing tools.
+Implement them only within authorized scope or agree a documented exception. Do not present an
+ad-hoc check as the official complete gate.
 
-Do not invent an unofficial verification path and present it as the project gate.
+## CI Evidence And Failure Recovery
+
+Record source head, actually tested revision, run/check link, outcome and coverage. PR workflows
+may test a merge revision different from the source head; report both rather than calling them
+the same SHA. Before relying on CI, verify it still covers the current change.
+
+Read the summary first, then relevant failing-step output. Reproduce the smallest useful case,
+fix it, and keep unrelated green local evidence. A new push lets CI rerun its required full
+checks; do not mirror that full run locally. Pending, cancelled, skipped and absent are distinct
+from passed. Preserve required check identities and report branch-policy limitations honestly.
 
 ## Navigation
 

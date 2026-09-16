@@ -8,8 +8,9 @@ description: Run an autonomous end-to-end implementation from an Azure Boards wo
 ## Overview
 
 Use this skill for one agent-owned implementation run driven by one Azure Boards work item. The
-run exits only with a precise blocker or with all implementation commits complete, required
-guard rails green, and the work item moved to `Code Review`.
+run exits only with a precise blocker or with implementation commits complete, required local
+handoff checks passed, CI coverage/result explicitly recorded, and the work item in `Code Review`.
+Code Review handoff is not a claim that pending PR verification or merge acceptance is complete.
 
 This is an agent skill, not a rigid script. Resume from the actual state of the work item,
 branch, commits, and working tree. Do not replay completed steps or overwrite unrelated work.
@@ -77,7 +78,8 @@ Follow [references/runbook.md](references/runbook.md) in this order:
 
 - Read repository-mandated context before changing Azure Boards or Git state.
 - Stop before mutation when the start audit finds a blocker.
-- Do not skip documented quality gates to save time or tokens.
+- Preserve required verification: focused local checks before handoff and full PR checks in CI.
+  Full local gates require explicit user request; missing CI is not that request or a PASS.
 - Do not create child Tasks for a requested `Task`.
 - Do not create additional child Tasks when a `User Story` already has children; adapt to the
   existing child Tasks or stop with a blocker.

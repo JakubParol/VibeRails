@@ -1,7 +1,8 @@
 # Stack Profiles Standard
 
 Use the closest stack profile when adopting standards or deciding which documents and quality
-gates apply.
+gates apply. The command blocks below describe full CI coverage, not a local task checklist.
+Local work follows the focused-check policy in [quality-gate.md](quality-gate.md).
 
 ## Next.js Frontend Only
 
@@ -14,7 +15,7 @@ Required standards:
 - `coding.md`
 - `quality-gate.md`
 
-Default quality gate:
+Full PR verification defaults (CI):
 
 ```bash
 npm run lint
@@ -37,7 +38,7 @@ Required standards:
 - `coding.md`
 - `quality-gate.md`
 
-Default quality gate:
+Full PR verification defaults (CI):
 
 ```bash
 npm run lint
@@ -62,7 +63,7 @@ Required standards:
 - `coding.md`
 - `quality-gate.md`
 
-Default quality gate:
+Full PR verification defaults (CI):
 
 ```bash
 # frontend

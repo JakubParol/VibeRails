@@ -24,7 +24,7 @@ tokens, raw API responses, or private identity payloads.
 | `target.prTargetBranch` | Branch that adoption and follow-up PRs should target. Usually the default branch. |
 | `target.prPolicy` | Draft PR default and allowed PR write operations for the selected code host. |
 | `target.branchNaming` | Branch naming convention for agent changes. |
-| `target.qualityGate` | Target-local quality gate commands and path-to-scope map. |
+| `target.qualityGate` | Existing command references and path-to-scope map; execution responsibility is defined by the target's quality-gate documentation. |
 | `target.projectProfiles` | Per-root stack profiles for the repository root and standalone apps, services, workers, packages, or infrastructure areas. |
 | `profiles.agentRuntime` | `codex`. |
 | `profiles.stack` | Selected stack profile or explicit exception. |
@@ -49,9 +49,15 @@ Use stable object shapes so automation can audit adoption without parsing prose.
 |---|---|
 | `paths` | Glob-like path prefixes or file patterns covered by this gate entry. |
 | `scope` | Human-readable scope such as `frontend`, `backend`, `infra`, or `docs`. |
-| `commands` | Commands required when matching paths change. |
+| `commands` | Documented commands for matching paths; inspect actual scope before executing locally. |
 | `workingDirectory` | Directory where commands run. |
-| `requiredBeforePr` | `true` when the commands must pass before PR creation. |
+| `requiredBeforePr` | `true` when these are required focused local commands before PR creation. `false` does not disable CI requirements. |
+
+Keep the v1 field shapes. `canonicalCommand` remains the aggregate/full command reference;
+it is not an instruction to execute the full gate locally. Target docs distinguish focused
+local commands from CI commands and required statuses. Do not silently relabel an existing
+aggregate command as focused, flip flags, or migrate adopted manifests; reconcile actual
+behavior under an authorized adoption refresh. Automated configuration migration remains step 8.
 
 `copiedFiles` items:
 

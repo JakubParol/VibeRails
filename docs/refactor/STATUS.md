@@ -10,14 +10,15 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   `965bc3c0231d2a90c3c2d563ebc1987759130cf0`.
 - Last delivery: [PR #5](https://github.com/JakubParol/VibeRails/pull/5), owner-merged at
   `2026-09-16T09:49:17Z`; user confirmed `Zmergowane - dalej`.
-- Next action: implement focused validation, align local/CI policy, add repository PR Verification,
-  then run focused tests/review and verify the actual pipeline result before user acceptance.
+- Next action: publish the reviewed stage PR and verify its actual current-revision pipeline
+  result, then record the delivery and await user acceptance/explicit merge.
 - Active record: [stage 04 card](steps/04-verification.md).
 - Scope agreement: user replied `ok` on 2026-09-16 to the local/CI split and real repository CI.
-- Delegation: Terra/max owns validator/tests; Sol/high advises on policy consistency; parent
-  owns CI, documentation, integration and publication. No broad local gate is authorized.
-- Verification: the merged tree equals reviewed source `8a15110`; preserve prior evidence
-  and its limits. GitHub still reports zero Actions workflows and PR #5 has no check runs.
+- Delegation: Terra/max delivered validator/tests; two Sol/high reviews found and then closed
+  parser and database-guidance P2 issues. Final reviews have no actionable findings. Parent owns
+  integration/publication. No broad local gate is authorized. Measured usage is unavailable.
+- Verification: 10/10 targeted regression tests, 27-file focused validation, workflow YAML and
+  its architecture-example step passed. Actual CI is pending; no CI success is claimed.
 - The completed 00-02 review checkpoint is now included in merged PR #5; no separate PR needed.
 
 ## Stage Register
@@ -28,7 +29,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
-| 04 | Local/CI verification | In progress | [Verification card](steps/04-verification.md) |
+| 04 | Local/CI verification | Verification | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Planned | Create on stage entry. |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |

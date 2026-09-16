@@ -80,6 +80,7 @@ This register is internal VibeRails refactor material, not an adoption template.
 | Document | Purpose |
 |---|---|
 | [../scripts/README.md](../scripts/README.md) | Repository maintenance and validation commands. |
+| [../.github/README.md](../.github/README.md) | Repository PR Verification coverage, evidence and limitations. |
 | [../ROADMAP.md](../ROADMAP.md) | Internal historical roadmap for the 2026 optimization effort; not an adoption template. |
 | [../CHANGELOG.md](../CHANGELOG.md) | Versioned changes to the standards pack. |
 
