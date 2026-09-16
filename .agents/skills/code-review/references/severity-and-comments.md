@@ -58,16 +58,20 @@ Comment rules:
 - Be concise, technical, and actionable.
 - Prefer one concrete recommendation over a broad explanation.
 - Use a direct, professional technical instruction.
-- For Azure DevOps PRs, follow [pr-mode.md](pr-mode.md#pr-comment-posting): inline comments are the
-  required default for review findings when PR publishing is authorized.
+- For Azure DevOps PRs, follow [pr-mode.md](pr-mode.md#mcp-inline-comment-capability): inline comments are
+  the required default for review findings only when the current request explicitly authorizes
+  normal PR review output and MCP exposes a valid inline-comment operation with the required
+  current anchor.
 - Include path and line evidence in the comment text when helpful.
-- Use the `azure-devops` wrapper so PR iteration context and `changeTrackingId` are
-  verified before posting.
+- Use only the actual MCP read and inline-comment operations. If the required MCP operation or
+  anchor is unavailable, report the scoped limitation and keep the finding local; do not use a
+  wrapper, CLI, REST/API, or summary substitute.
 - Do not mention internal agent names in PR comments unless the user explicitly asks.
 - Do not paste long code blocks into PR comments. Use short snippets only when necessary.
-- Do not publish "No findings" comments. Cast an approve vote only when PR publishing is
-  authorized, the PR review has no actionable findings, and `SelfReviewStatus.isSelfReview` is
-  `false`; self-created PR reviews report the clean result locally.
+- Do not publish "No findings" comments. Cast an approve vote only when the current request
+  explicitly authorizes normal PR review output, the PR review has no actionable findings, and
+  MCP confirms a non-self-review identity and exposes a vote operation; self-review or unknown
+  identity reports the clean result locally.
 
 ## Inline Comment Format
 

@@ -48,9 +48,9 @@ set.
 
 | Skill | Intended use |
 |---|---|
-| [azure-devops](.agents/skills/azure-devops/SKILL.md) | Optional Azure DevOps profile skill for Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
+| [azure-devops](.agents/skills/azure-devops/SKILL.md) | Optional Azure DevOps MCP skill for Azure Boards work items, Azure Repos pull requests, and reusable Azure DevOps failure fixes. |
 | [code-review](.agents/skills/code-review/SKILL.md) | Optional review skill for local branch reviews, GitHub PR local-diff reviews, and Azure DevOps PR reviews. |
-| [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Optional Azure DevOps profile skill for Azure Boards `[E2E]` work item implementation. |
+| [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Optional authorized task implementation from a brief or selected tracker, with MCP provider bindings and no-tracker support. |
 
 ## Quick Adoption Prompt
 

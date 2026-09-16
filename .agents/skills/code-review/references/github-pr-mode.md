@@ -10,7 +10,8 @@ workflow.
 2. Confirm the URL host is GitHub before using this reference.
 3. Use `gh pr view` or local git refs for read-only metadata when `gh` is available and
    authenticated. If `gh` is unavailable, use local branch refs provided by the user.
-4. Identify source branch, target branch, changed files, and latest commits.
+4. Identify source branch, target branch, changed files, latest commits, and the exact source
+   commit to record as `reviewedSHA`.
 5. Fetch the source and target refs explicitly when the repository remote permits it:
 
    ```bash
@@ -25,8 +26,13 @@ workflow.
 ## Review Behavior
 
 - Review changed lines only, using surrounding context only to understand the change.
-- Keep findings local unless a target repository GitHub publishing profile explicitly allows
-  posting review comments.
+- Before reporting, compare the reviewed source commit with the current PR source head. If they
+  differ, refresh the changed scope and re-review it or report that the earlier review is stale.
+- Keep findings local unless the current review request explicitly authorizes GitHub publishing
+  and the target repository's GitHub profile allows it. A PR URL or profile alone is not write
+  authority.
+- When citing test evidence, bind it to the reviewed revision and actual executed cases; a
+  zero-case, stale, skipped, cancelled, or absent report is not test PASS.
 - Do not use Azure DevOps wrappers, Azure DevOps self-review checks, or Azure DevOps reviewer
   votes for GitHub PRs.
 - Ask before checking out branches, applying fixes, pushing commits, or posting comments.
@@ -36,6 +42,7 @@ workflow.
 Reports must include:
 
 - PR URL and reviewed source/target refs;
+- source commit actually reviewed and current source head at reporting time;
 - whether review used local git diff, `gh pr diff`, or API metadata;
 - triaged findings with compact review coverage per [output.md](output.md);
 - verification or limitations;

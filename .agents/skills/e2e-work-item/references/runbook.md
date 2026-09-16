@@ -1,258 +1,214 @@
-# E2E Work Item Runbook
+# E2E Task Runbook
 
-Canonical workflow for `e2e-work-item` runs.
+This is the common implementation runbook for the e2e-work-item skill. It applies the target's
+task lifecycle without assuming a tracker, code host, CI provider, transport, or shell.
+Resolve the target's lifecycle owner from its documentation index. The linked
+[source-pack change protocol](../../../../docs/standards/change-protocol.md#task-lifecycle) is
+default/reference material, not target authority; this runbook supplies task-level choices when
+the target has no more specific owner.
 
 ## Contents
 
+- [Task Source And Scope](#task-source-and-scope)
 - [Start Audit](#start-audit)
-- [Work Item Ownership And State](#work-item-ownership-and-state)
-- [Minimal Context Loading](#minimal-context-loading)
-- [Branch Setup](#branch-setup)
-- [Planning](#planning)
-- [User Story Child Tasks](#user-story-child-tasks)
+- [Context And Plan](#context-and-plan)
+- [Provider Readiness](#provider-readiness)
+- [Authority](#authority)
 - [Implementation Loop](#implementation-loop)
-- [Final Guard Rails](#final-guard-rails)
-- [Finish](#finish)
-- [Blocker Report](#blocker-report)
-- [Final Report](#final-report)
+- [Verification And Evidence](#verification-and-evidence)
+- [Handoff](#handoff)
+- [Blocker And Final Reports](#blocker-and-final-reports)
 - [Navigation](#navigation)
+
+## Task Source And Scope
+
+Start from one concrete source:
+
+- a user brief with an outcome and acceptance conditions;
+- an existing repository-local task record; or
+- a selected tracker item whose profile provides the needed read operation.
+
+A link or identifier is only enough to locate context. It is not permission to inspect a private
+system, change code, transition a task, push, publish a PR, or merge.
+
+For a no-tracker task, treat the user brief or existing local record as the task source. Capture
+scope, acceptance conditions, and unresolved decisions in the existing plan or task record when
+the target requires one. Do not create a hosted issue, a local board, or a new task document just
+to make the workflow look uniform. There is no tracker state to transition at handoff.
+
+For a tracked task, keep the task lifecycle common but load the selected profile only for the
+operation required. Tracker state mapping, code-host PR actions, CI reads, and transport are
+separate choices. A tracker transition must not imply a PR operation, and a PR must not imply a
+tracker transition.
 
 ## Start Audit
 
-Run a start audit before changing Azure Boards or Git state:
+Before any mutation, establish the current state needed for the next decision:
 
-1. Follow the target's `agent-workflow.md` router when present. Otherwise use applicable AGENTS
-   instructions and native docs/commands for the actual work-item paths; this optional skill
-   does not require VibeRails adoption. Identify scope, protected work, authorization, branch
-   setup and required handoff verification before mutation.
-2. Load `azure-devops` and resolve ADO context.
-3. Read the work item and comments:
+1. Identify the task source, current scope, acceptance conditions, and explicit authority.
+2. Inspect the current repository branch and working tree. Preserve unrelated work.
+3. Identify the applicable branch, change, review, and verification rules.
+4. Resolve only the selected external profile, MCP connection, and operation metadata when a
+   provider operation is required.
+5. Identify blockers: ambiguous scope, missing acceptance conditions, unsafe local state,
+   unavailable required context, unavailable required operation, or an authority gap.
 
-   ```powershell
-   .\.agents\skills\azure-devops\scripts\ado-work-items.ps1 -Action Show -Id <id> -Project <project>
-   .\.agents\skills\azure-devops\scripts\ado-work-items.ps1 -Action Comments -Id <id> -Project <project>
-   ```
+Stop a dependent mutation when its prerequisite is absent. Continue separately authorized,
+independent local work when its scope, safety, and handoff do not depend on the missing
+operation.
 
-   Record `System.WorkItemType`, `System.Title`, `System.State`, `System.AssignedTo`,
-   `System.AreaPath`, `System.IterationPath`, `System.Description`, acceptance criteria when
-   present, relations, and existing child Tasks.
+## Context And Plan
 
-4. Inspect local Git state:
+Follow the target's context router. Read current instructions and source for candidate paths
+before editing them, then make a short commit-shaped plan with expected files, focused evidence,
+and unresolved decisions.
 
-   ```powershell
-   git status --short --branch
-   git branch --show-current
-   git symbolic-ref refs/remotes/origin/HEAD
-   ```
+### Native Fallback
 
-5. Identify blockers before mutation:
-   - ADO authentication or context cannot be resolved.
-   - The work item is unreadable, deleted, closed, or in a state that should not be reopened
-     without user approval.
-   - Work item description, acceptance criteria, comments, or relations do not define an
-     implementable scope.
-   - Required repository docs or documented quality gates are missing.
-   - The working tree has unrelated user changes that would block branch setup or edits.
-   - The target repository cannot identify a base branch.
+Read this fallback only when the target documentation index has no applicable context router.
+Read, in order:
 
-If any blocker exists, report it and stop before assigning or moving the work item unless the
-mutation already happened in a prior run.
+1. applicable repository and path-level AGENTS instructions;
+2. the owning README or documentation index needed to identify local rules;
+3. the task-path documentation, contracts, and interfaces needed for the planned change;
+4. the actual focused quality commands and their limits; and
+5. current repository state and provider state only when each affects the next action.
 
-## Work Item Ownership And State
+Stop loading context when it supports the next decision. Historical task reports, provider
+examples, and previous branch records are reference knowledge, not current scope or authority.
+Read them only to resolve a concrete uncertainty, then verify any time-sensitive fact against
+current state.
 
-After the start audit passes and before creating a new local branch:
+For a delegated step, give the bounded scope, owned paths, relevant current decisions, and
+available evidence. Select only an actual dispatch route permitted by the target policy and
+runtime. Record requested model and reasoning settings separately from observed settings; an
+unobservable setting remains unknown.
 
-1. Resolve the authenticated Azure DevOps user with the Azure DevOps CLI connection data. Use
-   the user's `uniqueName` when available; otherwise use display name and verify the saved
-   `System.AssignedTo` value after the update.
-2. Assign the requested work item to the authenticated user unless it is already assigned to
-   that user. If it is assigned to someone else, reassign and include the previous assignee in
-   the final report.
-3. Move the requested work item to `In Progress` unless it is already `In Progress`.
-4. If the requested work item is already `Code Review`, verify whether this is a clean resume
-   with all local work complete. If not, stop with a blocker instead of silently moving it
-   backwards.
+## Provider Readiness
 
-Use the wrapper for writes:
+Before an external read or write, resolve the selected target-owned integration profile through
+its documentation index and inspect its current MCP connection and operation metadata. For Azure
+DevOps and Jira, use MCP only. Do not fall back to a non-MCP path or a raw provider payload when
+an MCP operation is absent. The linked
+[source-pack integration profile reference](../../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery)
+is a default when the target has no local profile, not authority for an external operation.
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action Update `
-  -Id <id> `
-  -Project "<project>" `
-  -Field "System.AssignedTo=<current-user>" `
-  -State "In Progress" `
-  -AllowWrite
-```
+Classify a failure before trying another route: environment or checkout, configuration,
+MCP connection startup, authorization, unsupported operation, or provider response. A successful
+empty read can be a valid result; interpret it through the selected operation instead of treating
+it as a transport failure. Do not retry permanent authorization, validation, not-found, process,
+or stale-revision errors. Retry a transient read at most once when the provider profile permits
+it. After an ambiguous create, update, comment, link, or transition, inspect remote state through
+the available MCP read operation before any retry. Do not treat an error or an empty tool result
+as proof that nothing happened.
 
-Verify the work item after each write. If assignment or state transition fails, stop with a
-blocker and report the current work item state.
+Use a provider revision or version precondition for shared writes when the selected MCP operation
+offers one. Readback verifies the saved outcome; it does not replace concurrency protection.
+When no allowed revision-capable MCP operation exists, leave the shared state unchanged and report
+the dependent operation as unavailable.
 
-## Minimal Context Loading
+For Jira, use a transition, comment, or other operation only when the selected MCP connection
+exposes it and the target-local profile authorizes it. If it does not, state the exact missing
+MCP operation and prepare the allowed local handoff or manual step.
 
-Use the context policy resolved in Start Audit for the candidate paths. This workflow adds the work
-item title, description, acceptance criteria, comments, relations and existing linked work as
-sources of scope. Search for the affected area, then read its local docs/source before editing.
-Reuse verified decisions on resume. Missing context blocks the decision that depends on it;
-the start-audit and state-transition requirements above remain unchanged.
+For Azure Boards, read [Azure Boards Work Item Binding](azure-devops-work-items.md). For any
+other tracker, use its target-local binding. For a no-tracker task, skip external task-state
+operations entirely.
 
-## Branch Setup
+## Authority
 
-For a new run:
+Read the target's authorization and delivery owner, resolved from its documentation index,
+before the first operation that changes repository or provider state. The linked
+[source-pack authority reference](../../../../docs/standards/change-protocol.md#authorization-and-delivery)
+is a reusable fallback, not target permission.
 
-1. Ensure the working tree is clean or contains only intentional resume changes.
-2. Switch to the resolved base branch, usually `main`.
-3. Pull the latest base branch with `git pull --ff-only`.
-4. Create a focused branch. Follow repository convention; otherwise use:
+A clear request can cover several operations, for example implementation, push, and PR creation,
+when it names them. Do not ask again for an already authorized operation. Keep the following
+boundaries explicit:
 
-   ```text
-   codex/e2e-<work-item-id>-<short-slug>
-   ```
+| Operation | Required authority |
+|---|---|
+| Implement scope | A clear request to make the described change. |
+| Commit | The target protocol and agreed implementation workflow. |
+| Push | A request that includes push. |
+| Create a draft PR | PR delivery authority that includes the necessary push. |
+| Publish or mark ready | A request that includes that PR action. |
+| Merge | An explicit merge instruction after current evidence is read back. |
+| Tracker write | A clear workflow request plus the selected profile's documented MCP operation and any target-local gate. |
 
-For a resumed run:
+A link, available tool, configured profile, or authenticated account grants none of these.
 
-- Continue on the existing task branch when it clearly belongs to the work item.
-- Fetch the latest base branch, but do not rewrite history or discard local work.
-- If the branch cannot be safely synchronized with the latest base because of conflicts,
-  unrelated changes, or unclear ownership, stop with a blocker.
-
-## Planning
-
-Create an implementation plan before editing code. The plan must be based on the work item and
-the minimal context loaded so far.
-
-Each plan item must include:
-
-- the concrete outcome;
-- the files or areas expected to change;
-- any local docs still needed before editing;
-- a focused verification hint when cheap and useful;
-- the intended commit message.
-
-Keep the plan short and commit-shaped. Prefer three to seven coherent steps over a long task
-list. If an existing partial implementation is present, mark completed steps and plan only the
-remaining work.
-
-## User Story Child Tasks
-
-Branch behavior by `System.WorkItemType` after the implementation plan exists and before the
-first code edit:
-
-- `Task`: do not create child Tasks. Treat the requested Task as the active implementation
-  work item and keep the normal finish behavior for the requested work item. Do not load the
-  child-task reference.
-- `User Story`: load [user-story-child-tasks.md](user-story-child-tasks.md) and follow it for
-  sizing, existing-children handling, creation, linking, and state flow.
-- Other work item types: stop with a blocker unless the user explicitly says how to handle the
-  type.
+When an authorized task deliberately stops at draft handoff, keep the human action explicit:
+source branch and head, review scope, evidence state, draft status if one was authorized, and
+the publication or merge action still owned by the human.
 
 ## Implementation Loop
 
 For each plan item:
 
-1. Update the active plan item to `in_progress`.
-2. For a `User Story`, ensure the mapped child Task is assigned to the authenticated user and
-   is `In Progress`. For a requested `Task`, the requested work item was already assigned and
-   moved to `In Progress` during the start phase.
-3. Read only the required local docs and source files for that item.
-4. Implement the item, including focused tests or docs when the behavior requires them.
-5. Run only cheap, focused checks when they materially reduce risk. Do not run full lint,
-   full test suites, full builds, or all guard rails after every step.
-6. Commit only the files for that plan item.
-7. For a `User Story`, if this was the last remaining plan item for the mapped child Task, move
-   that child Task to `Done` and verify it. Do not move a requested `Task` to `Done` unless the
-   user explicitly requested a different Task-state policy.
-8. Update the plan item to `completed`.
+1. Confirm the item still fits the task source and current authority.
+2. Load only the local context needed for that item.
+3. Implement the change and any meaningful focused test or documentation update.
+4. Run focused local evidence when it materially reduces the changed risk.
+5. Commit only the coherent task files when commits are part of the authorized workflow.
+6. Update the selected tracker only through its conditional binding and only after its required
+   evidence and safe write rules are satisfied.
 
-If a step uncovers ambiguous product behavior, missing acceptance criteria, unsafe migrations,
-external credentials, unavailable services, or conflicts with user-owned work, stop with a
-blocker. Include the last successful commit and the exact next decision needed.
+Stop for an unresolved product decision, unsafe migration, unavailable protected dependency,
+conflict with unrelated work, or missing authority. State the last safe commit or observed
+state and the smallest decision needed.
 
-## Final Guard Rails
+## Verification And Evidence
 
-After implementation commits, run the documented focused local handoff checks. Full types,
-suites, builds and aggregate gates belong to PR Verification. This does not waive a required
-check; report its result at the point where it can actually run.
+Use the target's quality-gate evidence rules, resolved from its documentation index. The linked
+[source-pack evidence reference](../../../../docs/standards/quality-gate.md#evidence-validity)
+is a reusable fallback. Run changed-file format or lint checks and the smallest meaningful
+behavior evidence locally. Full repository suites, builds, and aggregate gates belong to the
+actual PR verification path unless the user explicitly requests a full local gate.
 
-1. Read the documented quality gate commands and the path-to-scope map from repository docs.
-2. Determine the changed scopes from the branch diff:
+Keep evidence tied to the current source head and changed scope. A reviewed commit different
+from the current source head is stale and requires an updated review. For CI, record the source
+head, tested revision, actual run or check, outcome, and coverage. Do not call a draft PR green
+until the actual draft CI path has been inspected; providers differ on whether required checks
+run for drafts.
 
-   ```bash
-   git diff --name-only "<base-ref>...HEAD"
-   ```
+Pending, cancelled, skipped, absent, stale, or unrelated CI is not passing evidence. A successful
+test process with zero executed cases, stale results, or missing required coverage is also not
+passing evidence. Preserve valid unaffected evidence, and rerun only the focused check affected
+by a fix unless a changed risk requires more.
 
-3. Run changed-file format/lint and the smallest meaningful behavior checks for the change,
-   using actual target commands. A scope flag does not prove that a script is a focused check.
-4. Run a full local gate only when the user explicitly requests it. Cross-cutting changes,
-   missing scoped commands and unavailable CI do not automatically authorize one.
-5. Fix failures in focused commits and rerun only the affected local check/case. Preserve
-   unchanged green evidence; escalate scope only for a concrete changed risk.
-6. After an authorized PR is available, read required CI results for its source/tested revision.
-   Record the run link, outcome and relevant failure details. Missing/pending CI is not green.
-7. Stop repeated unsuccessful fix attempts after the existing five-cycle limit and report the
-   unresolved check. Do not repeat unrelated suites or lower verification requirements.
+## Handoff
 
-If a final guard-rail failure belongs to a child Task already marked `Done`, move that Task
-back to `In Progress` before applying the fix, then move it to `Done` again after the fix
-commit and focused check.
+Before reporting an implementation handoff, read back the actual state:
 
-If commands or CI are missing, report the uncovered requirement and next action; continue
-independent work. Agree any required-check exception explicitly. Do not invent a complete-gate
-claim or automatically compensate with a full local run.
+- source branch and current head;
+- reviewed commit and whether it still equals the source head;
+- changed scope and committed state;
+- actual PR status when a PR exists or was authorized;
+- local focused evidence;
+- CI source/tested revision, outcome, and coverage;
+- selected tracker state when a tracker was used; and
+- remaining human action, acceptance decision, or merge authority.
 
-## Finish
+Do not convert missing evidence into PASS. Task implementation completion, feature acceptance,
+PR publication, and merge are distinct states. Merge only after explicit authorization and a
+readback of the approved current state.
 
-Only finish successfully when all of these are true:
+## Blocker And Final Reports
 
-- all work item acceptance criteria are implemented or explicitly out of scope by work item
-  text;
-- all task changes are committed;
-- for User Story runs, every child Task used by this run is verified in `Done`;
-- required local handoff checks have passed, with CI state/coverage explicitly recorded;
-- any CI result required by the target's handoff policy is available for the current revision;
-- `git status --short --branch` shows no accidental unrelated changes;
-- the work item is moved to `Code Review` and verified there.
+Use the target's existing reporting record. A blocker report names the current task, branch or
+provider state, safe work already completed, evidence limits, exact blocked operation, and the
+smallest needed decision. Do not keep retrying the same unsupported or unauthorized operation.
 
-When creating a PR is outside this invocation's authorization, record PR CI as pending rather
-than publishing without consent or claiming complete verification. Preserve existing work-item
-transition policy; Code Review handoff is not merge readiness or overall acceptance.
-
-Move the work item with the Azure DevOps wrapper:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action Update `
-  -Id <id> `
-  -Project "<project>" `
-  -State "Code Review" `
-  -AllowWrite
-```
-
-Do not push, open a PR, complete a PR, merge, or change PR metadata unless the user explicitly
-asked for that or the current repository instructions already authorize it.
-
-## Blocker Report
-
-Use the target's reporting policy and existing task record; without a documented policy, give
-the outcome, evidence/limits and needed decision rather than requiring new documents. Preserve the
-work item/current state, relevant child states, branch/last commit, local or tracker mutations,
-verification limits and exact blocker with the smallest needed decision. The record supports
-recovery; the user needs the blocker and next action, not the same packet at every phase.
-
-Do not keep looping after the same blocker repeats. The run ends with a precise blocker or
-the work item verified in `Code Review`; no state-transition or finish requirement is waived.
-
-## Final Report
-
-Follow the target's reporting policy (or the compact fallback above). Add the work-item link and verified final
-state, relevant child outcomes and any required provider action/status. Keep the plan-to-commit
-trace in the existing task/commit record; link it instead of copying every commit into the final
-message. Include unresolved exceptions and requested push/PR status when applicable. Do not
-create a second report solely to repeat the same evidence.
+A final handoff report states the outcome, current revision, meaningful evidence and limits,
+provider status when used, and the exact next human action. Link to existing task or commit
+records instead of recreating a phase log.
 
 ## Navigation
 
-- Skill guide: [../SKILL.md](../SKILL.md)
-- Skills index: [../../README.md](../../README.md)
-- Azure DevOps skill: [../../azure-devops/SKILL.md](../../azure-devops/SKILL.md)
-- Repository docs: [../../../../docs/INDEX.md](../../../../docs/INDEX.md)
+- [Source-pack E2E skill guide](../SKILL.md)
+- [Source-pack Azure Boards Work Item Binding](azure-devops-work-items.md)
+- [Source-pack change protocol reference](../../../../docs/standards/change-protocol.md#task-lifecycle)
+- [Source-pack agent workflow reference](../../../../docs/standards/agent-workflow.md#delegation-and-runtime-routing)
+- [Source-pack integration profile reference](../../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery)
+- [Source-pack quality-gate reference](../../../../docs/standards/quality-gate.md#evidence-validity)

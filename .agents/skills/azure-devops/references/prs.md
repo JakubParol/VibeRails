@@ -1,124 +1,80 @@
 # Azure Repos Pull Request Reference
 
-Use this reference for Azure Repos pull request reads, PR metadata writes, descriptions, review
-comments, thread comments, and reviewer votes.
+Use this reference for Azure Repos pull-request reads, metadata changes, work-item links, review
+comments, reviewer votes, draft/publication state, and completion through the connected Azure
+DevOps MCP integration.
 
 ## Contents
 
 - [Reliable PR Commands](#reliable-pr-commands)
+- [Safe Write Recovery](#safe-write-recovery)
+- [Current Revision And Completion](#current-revision-and-completion)
 - [Known PR Pitfalls](#known-pr-pitfalls)
 - [Navigation](#navigation)
 
 ## Reliable PR Commands
 
-Wrapper read actions return compact summaries by default. Add `-Raw` only when a field is
-missing from the summary. The wrapper reads PR data through channels in this order: native
-`az repos` commands first, `az devops invoke` second, bearer-token REST last. When a call
-fails or hangs, read [troubleshooting.md](troubleshooting.md) before trying alternatives.
+There are no repository-provided PR commands. Inspect the connected Azure DevOps MCP tools and
+use only the operation whose current metadata matches the requested action.
 
-Read active PRs:
+Before any PR write:
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action ListActive -Project <project> -Repository <repository>
-```
+1. Read the repository and exact PR or source/target refs.
+2. Confirm current task authority for creation, publication, comment/vote, abandonment, or
+   completion.
+3. Inspect whether the MCP operation exposes the identities, revision/source commit, permissions,
+   and preconditions needed by target policy.
+4. After the write, read back the exact PR fields or related resource that establish success.
 
-Read PR details:
+Before creating a PR, query active PRs for the exact source and target. Before publishing review
+findings or a reviewer vote, compare the authenticated MCP actor with the PR creator when both are
+available. If self-review status cannot be established, keep review findings local.
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Show -PrId <pr-id> -Project <project> -Repository <repository>
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action WorkItems -PrId <pr-id> -Project <project> -Repository <repository>
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Reviewers -PrId <pr-id> -Project <project> -Repository <repository>
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Policies -PrId <pr-id> -Project <project> -Repository <repository>
-```
+## Safe Write Recovery
 
-Read PR commits and threads:
+| Operation | Read before write | Readback and ambiguous result |
+|---|---|---|
+| Create draft PR | Query active PRs for exact source/target refs; retain the current source commit. | Capture the MCP-returned PR identity. After ambiguity, query the exact refs and continue from one match; do not create another PR when present or uncertain. |
+| Update title, description, or draft state | Read PR identity, current value, state, and source commit. | Verify the intended field. Retry only when readback proves it was not applied and repetition is safe. |
+| Link work items | Read current PR work-item links. | Verify each intended identity once; after ambiguity, add only confirmed missing links. |
+| Add summary or inline review comment | Read existing threads and, for inline findings, current file/diff context exposed by MCP. | Capture thread/comment identity and verify content/location. After ambiguity, continue from one exact match and stop on uncertain matches. |
+| Reviewer vote | Read authenticated actor, creator, reviewers, and draft state. | Verify the intended vote for the same actor. Do not publish a non-reset vote when self-review or draft restrictions apply. |
+| Complete or abandon | Read status, source commit, approvals, policies, and required verification evidence. | Verify final status and merge metadata. After ambiguity, read before any repeat; a timeout is not proof that the action failed. |
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Commits -PrId <pr-id> -Project <project> -Repository <repository>
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Threads -PrId <pr-id> -Project <project> -Repository <repository>
-```
+MCP errors for authentication, authorization, validation, missing targets, policy rejection, or
+stale state require correction or reconciliation, not unchanged retry.
 
-Create a draft PR only after branch, commit, push, and approval:
+## Current Revision And Completion
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action CreateDraft -SourceBranch <branch> -TargetBranch main -Title "<title>" -DescriptionPath <markdown-file> -Project <project> -Repository <repository> -AllowRepoMutation
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action UpdateDescription -PrId <pr-id> -DescriptionPath <markdown-file> -Project <project> -Repository <repository> -AllowRepoMutation
-```
+Immediately before approval publication or completion, use available MCP reads to compare the
+current PR source commit with the commit actually reviewed and tested. Inspect current reviewers,
+policy evaluations, and current-revision CI/run evidence required by target policy.
 
-Before publishing review findings or approving a review, check whether the authenticated Azure
-DevOps user created the PR:
+A connected MCP integration, a configured policy, draft status, or an older successful run does
+not prove the current commit passed. When target policy requires an atomic expected-head
+precondition, verify that the MCP completion operation exposes it. If it does not, report
+completion as unavailable under that policy. A final read detects stale evidence but is not
+atomic concurrency protection.
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action SelfReviewStatus -PrId <pr-id> -Project <project> -Repository <repository>
-```
-
-If connection data cannot resolve the authenticated Azure DevOps user, pass
-`-ReviewerId <current-user-id>` after verifying the current reviewer identity. Do not infer it
-from Azure ARM account state.
-
-Add PR review findings through inline comments in the wrapper, not by composing REST JSON
-inline in a shell command. The wrapper resolves self-review metadata, iteration context,
-inline comments, and reviewer votes through the CLI channels first and uses bearer-token REST
-only as the last fallback:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 `
-  -Action AddInlineComment `
-  -PrId <pr-id> `
-  -Project "<project>" `
-  -Repository "<repository>" `
-  -FilePath "<repo-relative-path>" `
-  -Line <line> `
-  -CommentPath <markdown-file> `
-  -AllowRepoMutation
-```
-
-Use summary thread comments only for non-finding operational notes or an explicit
-user-approved summary exception, never as the default publishing path for review findings:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 `
-  -Action AddThreadComment `
-  -PrId <pr-id> `
-  -Project "<project>" `
-  -Repository "<repository>" `
-  -CommentPath <markdown-file> `
-  -AllowRepoMutation
-```
-
-Set reviewer votes through the wrapper because `az repos pr reviewer` does not expose a
-reliable update command in every environment:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action Approve -PrId <pr-id> -Project <project> -Repository <repository> -AllowRepoMutation
-.\.agents\skills\azure-devops\scripts\ado-prs.ps1 -Action SetReviewerVote -PrId <pr-id> -Vote reset -Project <project> -Repository <repository> -AllowRepoMutation
-```
+After completion, read the PR again and verify completed status plus the provider's resulting
+merge commit/state. Do not claim merge from a successful request alone.
 
 ## Known PR Pitfalls
 
-- PR comments are PR threads in the Git REST API, not an `az repos pr comment` CLI command.
-- Inline PR comments require verified PR iteration context, including change tracking data for
-  the current diff. Use `AddInlineComment`; it reads the latest iteration, resolves the file's
-  `changeTrackingId`, and fails closed when the file is not present in iteration changes.
-- Self-created PR reviews are local-only. Use `SelfReviewStatus` before review publishing;
-  `AddInlineComment`, `Approve`, and non-reset `SetReviewerVote` fail closed when the
-  authenticated Azure DevOps user created the PR.
-- Avoid passing one multiline string to `az repos pr create/update --description` in PowerShell;
-  it can store only the first line. Use `scripts/ado-prs.ps1`.
-- Avoid hand-written PowerShell hash literals for Polish review comments. Apostrophes can break
-  single-quoted strings before REST is called. Put multiline or Polish comments in a temporary
-  Markdown file and pass `-CommentPath`.
-- `az repos pr show` can misrender non-ASCII PR description text on Windows. Use
-  `scripts/ado-prs.ps1 -Action Show` when checking whether a PR description was preserved
-  correctly.
-- Direct Azure DevOps REST can return a login page or incomplete PR metadata while the CLI
-  channels still work. The wrapper detects HTML responses and reports the broken channel; that
-  is not permission to publish review findings outside `ado-prs.ps1`. See
-  [troubleshooting.md](troubleshooting.md).
-- Azure DevOps rejects reviewer votes on draft PRs. Inline comments can still be tested on a
-  draft, but `Approve` should fail fast until the PR is published with explicit approval.
-- A branch, commit, push, PR create, PR complete, or merge is a repository operation and
-  requires explicit user approval unless the user already requested it.
+- PR comments are thread resources; use only the exact MCP operation and location schema exposed
+  by the connected integration.
+- Inline comments require current diff/file context. If MCP cannot resolve it, keep the finding
+  local rather than posting a misplaced summary.
+- A self-created PR may prohibit published review findings or votes under the selected workflow.
+  Missing actor identity is not proof that publication is allowed.
+- PR creation and comment publication may not be idempotent. Read exact refs or threads after an
+  ambiguous response before any repeat.
+- Policy listings and pipeline configuration are not current-revision CI results.
+- Draft PR behavior varies by configured pipelines. Inspect actual current run evidence.
+- Missing MCP operation or permission blocks the dependent action. Do not use CLI, direct REST,
+  scripts, or raw payloads as fallback.
+- Authority already granted for an operation should be carried forward; PR existence or tool
+  availability does not grant additional authority.
 
 ## Navigation
 

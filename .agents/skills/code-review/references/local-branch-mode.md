@@ -17,6 +17,7 @@ Use this reference when the user does not provide a PR URL.
 - review the current branch before PR creation;
 - include committed branch diff plus staged, unstaged, and relevant untracked files;
 - stay read-only by default;
+- select local or independent coverage proportionately from the review scope and target policy;
 - fix valid findings only when the user explicitly asks for review-and-fix or approves proposed
   fixes;
 - rerun review and verification in review-and-fix mode until clean, blocked, or the loop limit
@@ -66,21 +67,25 @@ without respecting dirty-worktree rules.
 
 ## Read-Only Review Loop
 
-1. Resolve agent authorization with [agent-authorization.md](agent-authorization.md).
-2. Spawn read-only review agents when authorized. If agents are unavailable or blocked by tool
-   policy, report the blocker and ask whether to wait or retry.
+1. Resolve the base, current `HEAD`, changed paths, and any evidence with the revision it covers.
+2. Use [agent-authorization.md](agent-authorization.md) to choose proportionate local and
+   independent coverage. If independence is not required, continue locally without seeking an
+   opt-out. If required reviewers are unavailable, record the limitation.
 3. Aggregate findings.
-4. Present triaged findings, compact review coverage and expected verification per [output.md](output.md).
-5. Run gates only if the user requested verification as part of the read-only review.
+4. Run only focused checks selected by the task or target policy, including a check needed to
+   resolve an actionable finding unless an explicit static-only setting applies. Record actual
+   cases and revision; zero-case, stale, skipped, absent, or cancelled test evidence is not PASS.
+5. Present triaged findings, compact coverage, and evidence limits per [output.md](output.md).
 6. Ask whether to fix, ignore, discuss, or stop.
 
 ## Review-And-Fix Loop
 
 1. Check `git status --short --branch` before each fix cycle.
-2. Spawn read-only review agents when required or authorized.
+2. Use only the independent reviewers required or justified by the updated scope.
 3. Aggregate findings and triage duplicates before fixing.
 4. Fix approved, in-scope issues sequentially through the orchestrator or one worker at a time.
-5. Run focused verification for the touched areas.
+5. Run focused verification for the touched areas and bind its result to the revision/cases it
+   actually covers.
 6. Rerun focused review on changed files and repeat.
 7. Stop only when no actionable findings remain and focused gates pass, a blocker requires user
    input, or five cycles complete.
@@ -102,7 +107,8 @@ Ask before fixing:
 
 Follow [output.md](output.md) and the target's canonical final-report rule. Keep local findings
 local; include the reviewed scope, any fixes, relevant evidence/limitations and unresolved
-user decisions. Do not copy every delegate or cycle packet into the final response.
+user decisions. State the review revision and current `HEAD`; a prior review does not cover
+new local changes. Do not copy every delegate or cycle packet into the final response.
 
 ## Navigation
 

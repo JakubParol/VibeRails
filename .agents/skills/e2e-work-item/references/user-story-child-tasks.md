@@ -1,7 +1,12 @@
-# User Story Child Tasks
+# Azure Boards User Story Child Tasks
 
-Load this reference only when the requested work item is a `User Story`. Task runs never need
-it. Apply these rules after the implementation plan exists and before the first code edit.
+Read this reference only after [Azure Boards Work Item Binding](azure-devops-work-items.md) is
+selected and the requested Azure Boards item is a User Story. Do not load it for a requested Task,
+a Jira issue, another tracker, or a no-tracker brief.
+
+Apply these rules after the implementation plan exists and before the first code edit. The
+companion Azure reference owns operation capability, shared-write protection, retry, and
+readback; this reference owns child-task sizing and lifecycle mapping.
 
 ## Contents
 
@@ -13,9 +18,9 @@ it. Apply these rules after the implementation plan exists and before the first 
 
 ## Sizing Rules
 
-Codex-sized child Tasks are intentionally coarse. Do not create classic granular development
-tasks such as one task per endpoint, method, component, test case, or commit. Prefer one Task
-per standalone project or major workstream:
+Codex-sized child Tasks are intentionally coarse. Do not create one task per endpoint, method,
+component, test case, or commit. Prefer one child Task per standalone project or major
+workstream:
 
 | User Story scope | Child Tasks |
 |---|---|
@@ -26,87 +31,60 @@ per standalone project or major workstream:
 | Docs-only | one Docs Task |
 
 Include implementation, tests, docs, and focused checks for the same project in the same child
-Task. Add a separate Task only when the work would force an agent to load a clearly different
-documentation root, stack, or deployment surface.
+Task. Add a separate Task only when the work requires a clearly different documentation root,
+stack, or deployment surface.
 
 ## Existing Child Tasks
 
 Inspect existing child Tasks first. If any exist, adapt to them and do not create new Tasks:
 
-1. Read every child Task, including title, description, state, assignee, comments when useful,
-   and parent relation.
-2. Build the agent's own implementation plan separately from the child Task list.
-3. Map each plan item to an existing child Task. Adapt to the team's planning breakdown even
-   when it is more granular than ideal for Codex.
-4. Do not create new Tasks, delete Tasks, split Tasks, rename Tasks, or rewrite their scope.
-5. If the existing child Tasks do not cover part of the User Story scope, stop with a blocker
-   that names the missing workstream and asks for a task decision instead of creating another
-   Task.
-6. If a child Task is already `Done`, verify whether that scope is already complete. Reopen it
-   only when the current fix must change that scope.
+1. Read each child Task's title, description, state, assignee, relevant comments, and parent
+   relation.
+2. Build the implementation plan separately from the child Task list.
+3. Map every plan item to an existing child Task, even when the existing breakdown is more
+   granular than the preferred sizing.
+4. Do not create, delete, split, rename, or rewrite existing child Tasks.
+5. If existing child Tasks do not cover a User Story workstream, stop for a task decision rather
+   than creating another Task.
+6. If a child Task is Done, verify whether its scope is already complete. Return it to active
+   state only when the current authorized fix must change that scope.
 
 ## Creating Child Tasks
 
-When a User Story has no child Tasks, create coarse child Tasks with the Azure DevOps wrapper,
-inheriting the User Story area and iteration when available.
+When a User Story has no child Tasks, create only the coarse Tasks required by the approved
+workstream grouping. Inherit area and iteration only after the selected profile confirms their
+available values.
 
-Create only the Tasks required by the Codex-sized workstream grouping:
+Work-item creation is non-idempotent. Use an authorized Azure DevOps MCP operation with a
+task-specific fingerprint or marker. When the child needs rich text, acceptance criteria, or
+another post-create field, choose an MCP operation that supports required create fields directly,
+or a path that observes the created revision before a guarded follow-up MCP update. Do not default
+to a compound MCP create that writes rich text after creation without that guard. If no safe MCP
+path exists, block the dependent child creation. Read back the created item's area, iteration,
+state, assignee, title, and scoped description through MCP. After the safe relation update, read
+back its parent relation. If creation is ambiguous, query the authoritative remote state through
+MCP first, continue from exactly one matching item, stop for multiple or uncertain matches, and
+retry creation at most once only after absence is proved.
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action CreateTask `
-  -Project "<project>" `
-  -Title "<user-story-id>: <workstream> implementation" `
-  -Description "<short codex-sized scope and acceptance coverage>" `
-  -Area "<user-story-area-path>" `
-  -Iteration "<user-story-iteration-path>" `
-  -AllowWrite
-```
-
-Link each created Task as a child:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action LinkChild `
-  -Project "<project>" `
-  -ParentId <user-story-id> `
-  -ChildId <task-id> `
-  -AllowWrite
-```
+Linking the child changes shared parent state. Use an already authorized revision-capable Azure
+DevOps MCP relation update that protects the immediately observed parent revision. Do not link
+when the selected MCP operation lacks that precondition. When no such operation is available,
+leave the child unlinked and report the User Story transition as blocked.
 
 ## Child Task State Flow
 
-For every active child Task, assign it to the authenticated user before work starts, move it to
-`In Progress`, and verify the saved state:
+Before work on a mapped child Task, assign it to the authenticated user and move it to In
+Progress through an authorized revision-capable Azure DevOps MCP update. Read back the saved
+assignee and state through MCP. If a target process does not expose the required active or final
+state, inspect its MCP metadata and stop instead of guessing a substitute.
 
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action Update `
-  -Project "<project>" `
-  -Id <task-id> `
-  -Field "System.AssignedTo=<current-user>" `
-  -State "In Progress" `
-  -AllowWrite
-```
-
-When all plan items mapped to that child Task are committed and focused checks for that
-workstream pass, move the child Task to `Done` and verify it:
-
-```powershell
-.\.agents\skills\azure-devops\scripts\ado-work-items.ps1 `
-  -Action Update `
-  -Project "<project>" `
-  -Id <task-id> `
-  -State "Done" `
-  -AllowWrite
-```
-
-If `Done` is not a valid state in the project process, inspect metadata and stop with a blocker
-instead of guessing another final state.
+Move a child Task to Done only when all mapped plan items are committed and focused evidence for
+that workstream passes. Use the same safe MCP update and read back the final state. If a later
+fix changes a completed workstream, return the child Task to In Progress through a safe
+authorized MCP transition, make and verify the fix, then verify Done again.
 
 ## Navigation
 
-- Runbook: [runbook.md](runbook.md)
-- Skill guide: [../SKILL.md](../SKILL.md)
-- Azure DevOps skill: [../../azure-devops/SKILL.md](../../azure-devops/SKILL.md)
-- Skills index: [../../README.md](../../README.md)
+- [Source-pack Azure Boards Work Item Binding](azure-devops-work-items.md)
+- [Source-pack E2E task runbook](runbook.md)
+- [Source-pack skills index](../../README.md)

@@ -13,12 +13,12 @@ unchanged context already supplied, and read relevant source before producing a 
 Missing optional docs alone are not a defect. Report missing required context when it prevents
 a supported review decision; do not silently invent the target's rules.
 
-Agent 1 - Diff Content Review focuses on changed behavior, bugs, edge cases, readability,
-maintainability, performance, and error handling.
-
-Agent 2 - Standards and Infrastructure Review focuses on standards compliance, architecture
-boundaries, security, quality gates, project structure, deployment implications, and source
-delivery constraints.
+Choose review lenses from the changed scope and risk, rather than assigning a fixed pair. A
+general content lens can cover changed behavior, bugs, edge cases, readability, maintainability,
+performance, and error handling. A standards lens can cover architecture boundaries, security,
+quality gates, project structure, deployment implications, and source delivery constraints.
+Use either, both, or a specialist only when the task's required independence and expected value
+justify it.
 
 ## Standard Bundles
 
