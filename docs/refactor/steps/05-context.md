@@ -120,8 +120,26 @@ corrections. Both exercise snapshots and result limits are named in the comparis
 All changed files are Markdown. Focused text/link/metadata checks and whitespace checks pass;
 no executable, manifest schema, skill discovery metadata or workflow activation was changed.
 No full local gate, installer, PowerShell or deferred research was run. PR publication and
-actual current-head CI follow this completed review checkpoint. Live lifecycle belongs only in
-[STATUS](../STATUS.md).
+actual current-head CI followed this completed review checkpoint. Published as draft
+[PR #8](https://github.com/JakubParol/VibeRails/pull/8).
+
+The first [PR Verification run](https://github.com/JakubParol/VibeRails/actions/runs/35091265820)
+passed for source `a895280ec581c2d3901da72c3f7d0d0be815e6cd`, tested merge revision
+`27b7d159f02c633d9531bd45367f73fbdb7a6148`. API readback and job logs confirm all steps
+succeeded: 10/10 validator regressions, full document/skill validation and both unchanged
+architecture examples. Publication checkpoint changes are checked separately; the final
+PR/check record owns the current source/tested SHA after this commit. User acceptance and
+explicit merge remain pending. Live lifecycle belongs only in [STATUS](../STATUS.md).
+
+## Acceptance Walkthrough
+
+Review the [router](../../standards/agent-workflow.md), the
+[two bundles](../../standards/documentation.md#documentation-bundles) and the
+[D/B/R comparison](../context-proof-05.md). D must show a correct one-instruction edit with
+local protections and a focused check. B/R must retain the relevant rules and disclose their
+selection-only limits. The report includes both larger full-file unions and smaller selected
+fragments without claiming measured token savings. Check PR #8's current `Repository checks`
+result against its head before accepting the stage or authorizing merge.
 
 ## Navigation
 

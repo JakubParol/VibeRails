@@ -14,8 +14,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   essential/standard bundles, less duplicate reporting and a concrete task demonstration;
   follow-up requires before/after for all three existing baseline scenarios D/B/R, including
   rule-selection correctness, with no arbitrary percentage target or new measurement system.
-- Next action: publish the reviewed stage PR and verify its
-  actual current-head CI. Then present the result for acceptance; no stage 05 merge is authorized.
+- Current delivery: draft [PR #8](https://github.com/JakubParol/VibeRails/pull/8), content source
+  `a895280ec581c2d3901da72c3f7d0d0be815e6cd`. Its first CI run passed; reconcile the final head/check
+  after this publication checkpoint rather than reusing an older result blindly.
+- Next action: verify the publication checkpoint's current PR check, then await user acceptance
+  and explicit stage 05 merge authorization. Stage 06 remains unstarted.
 - Active record: [stage 05 card](steps/05-context.md).
 - Delegation: advice and separate before/after Luna/max exercises completed. Sol/high found
   and rechecked three P2 policy issues; no policy findings remain. Parent verified corrected
@@ -25,6 +28,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   retained B/R obligations, fewer selected sections and increased fixed whole-file counts.
   These are source-word proxies, not token/runtime savings. No full local gate or future-stage
   research is authorized.
+- CI: [run 35091265820](https://github.com/JakubParol/VibeRails/actions/runs/35091265820) passed on
+  source `a895280`, tested merge `27b7d15`; full revisions are in the stage card. Final-head
+  publication evidence belongs to PR #8's current check and description.
 - No stage 05 result acceptance or merge authorization is recorded.
 
 ## Stage Register
@@ -36,7 +42,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
-| 05 | Documentation and context | Verification | [Context card](steps/05-context.md) |
+| 05 | Documentation and context | Awaiting acceptance | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 08 | Adoption and migration | Planned | Create on stage entry. |
