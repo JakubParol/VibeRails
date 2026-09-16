@@ -33,7 +33,7 @@ follows the user's next instruction; source analysis remains deferred to step 7.
    [Source](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practice)
 
    Main reference for initiative, instruction following, style, delegation, testing, and
-   verification. The user cites it as the basis for an earlier IQControl.Ai environment-audit
+   verification. The user cites it as the basis for an earlier project environment-audit
    prompt.
 
 2. **Eric Provencher - "Rethinking skills and prompts for GPT-6 Astra"**

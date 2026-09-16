@@ -1,12 +1,21 @@
 # VibeRails Refactor Plan
 
-Updated: 2026-09-16.
-Status: preparation and design only; implementation stages have not started.
+Plan revision: 1.0-draft, compiled on 2026-09-16.
+Live progress belongs only in [STATUS](refactor/STATUS.md).
 
 This is the active internal refactor plan. It is not an adoption template. The root
 [ROADMAP.md](../ROADMAP.md) remains the historical July optimization record.
 
 ## User Decisions And Constraints
+
+**JE&#346;LI PROSTE ROZWI&#260;ZANIE WYSTARCZA, ROBIMY PROSTO.**
+
+**IF A SIMPLE SOLUTION IS ENOUGH, KEEP IT SIMPLE.**
+
+Choose the simplest solution that meets the agreed requirements and can be verified. Add
+complexity only for a demonstrated need. Defer niche edge cases and speculative abstractions.
+This applies to the framework, its documentation, and our own orchestration. Preserve agreed
+correctness, minimum architecture, and honest evidence; simplicity is not permission to skip them.
 
 - Make VibeRails lighter, configurable, and easier to adopt. Measure completed-task cost and
   quality, not just instruction length.
@@ -34,18 +43,91 @@ This is the active internal refactor plan. It is not an adoption template. The r
 
 ## Coordination
 
-The parent session owns orchestration, decisions, result verification, and this plan. Delegate
-bounded tasks to subagents with an explicit scope, file ownership, expected evidence, and
-allowed actions. Keep their handoffs compact and link to durable artifacts. The parent checks
-results before accepting them or advancing the plan.
+The parent owns orchestration, integration, verification, coordination records, and shared
+Git/PR operations. Overall plan acceptance approves the roadmap and working method, not every
+future stage's design. Stage agreements authorize routine implementation, commits and PR work
+within their scope. User acceptance and an explicit merge instruction remain separate gates;
+one user message can provide both. The current stage's authorization is recorded in its card.
 
-Current authorization covers analysis and recording the plan. It does not start the
-implementation stages, provider setup, deployments, or backlog writes.
+### Operating Loop
+
+1. **Restore first.** Read this plan, STATUS, and the active card. Reconcile the recorded
+   workspace, branch, changes, PR, current SHA, checks, and live agents with observable reality.
+   An absent agent does not mean Done; inspect its artifacts before reassigning work.
+2. **Branch before discussion.** Create `codex/refactor-NN-<scope>` from the updated accepted
+   base before starting each new stage/delivery unit. A resumed stage reuses its branch.
+   Preserve unrelated work and never switch the shared checkout beneath live workers.
+3. **Discuss in plain Polish.** In a few connected sentences explain the intended result,
+   approach, and material choices. Avoid long technical lists. Agree scope, exclusions,
+   acceptance criteria, and the way the user will see or test the result.
+4. **Record agreement.** Create/update the stage card with scope revision, date, a short user
+   approval quote/reference, decisions, and relevant prerequisites. Implementation waits for
+   this agreement. A material scope or acceptance change returns that part to discussion.
+5. **Delegate and supervise.** Assign bounded tasks, explicit model/effort, owned paths,
+   relevant context, and expected evidence. Avoid overlapping writes; isolate only when needed.
+   Workers do not change shared branches, publish, merge, or edit coordination records unless
+   specifically assigned. Parent inspects actual results and integrates accepted work.
+6. **Verify and correct.** Run focused checks, obtain proportionate independent review, and
+   resolve actionable findings. Preserve green evidence while its inputs remain valid. Publish
+   the PR, explain results and limitations, and give the user a simple acceptance walkthrough.
+7. **Accept and merge.** Wait for user acceptance and explicit merge authorization. Read back
+   the approved PR head and required checks before merge. Changed behavior/scope after acceptance
+   returns to acceptance. Missing required evidence is reported, never silently waived.
+8. **Close and introduce the next stage.** Confirm the actual merge and record source/merge
+   revisions without claiming an untested merge SHA was tested. Only then is the stage Done.
+   Introduce the next stage and wait for its agreement before implementation.
+
+Default delivery unit: one stage branch and PR. Agree splits before implementing a large
+stage; all agreed deliveries must be accepted and merged before stage Done. Routine work within
+an agreement does not require repeated permission. Missing prerequisites block dependent work
+only; continue useful independent work where safe.
+
+For this refactor's local execution, use POSIX/.sh commands. Never run `lint.ps1`; other
+PowerShell execution requires an explicit user request. Locally run changed-file format/lint
+and the smallest meaningful behavior or documentation checks. Broad type checks, builds,
+full suites and complete gates belong to PR verification unless the user explicitly requests
+a full local run. This task policy overrides older broader local-gate wording; future adopting
+projects still select their own supported script platforms.
+
+### Durable State And Checkpoints
+
+- This plan owns scope and process. [STATUS](refactor/STATUS.md) is the sole live lifecycle
+  register and exact next action. On-demand stage cards own agreements, decisions, assignments,
+  evidence and history, not a second current-status field. Use the [card structure](refactor/README.md#stage-card-fields).
+- Parent checkpoints after agreement, before dispatch, after accepted results, when a decision
+  or blocker changes, and before pausing/ending. Persist useful agent results, not tool logs.
+  Agent IDs are lookup aids, never the only durable record.
+- After merge, the first documentation commit on the next stage branch records the previous
+  stage as Done and the next as Discussion. This does not authorize next-stage implementation.
+  Publish that checkpoint with the next stage PR; until then it is a durable local commit.
+  If no further stage follows, use one closing-docs branch/PR; closing it does not create another
+  stage or an endless bookkeeping loop.
+- A published snapshot may lag a merge. Reconcile against Git/PR evidence before acting. Never
+  infer acceptance from silence or elapsed time. Read only relevant completed decisions on resume.
+- Optional stages may be explicitly `Skipped by user`, with the decision recorded. Skipped is
+  not implemented. A blocker remains a reason/next action alongside the current lifecycle state.
+
+### Model Selection For Our Delegates
+
+This policy applies from stage 0, before the configurable routing feature is implemented.
+Set model and effort explicitly through supported spawn parameters, using compact context.
+Choose by task complexity, ambiguity, risk, and observed results; simple bounded work may start
+with Luna, while consequential design or difficult review may start stronger.
+
+User-suggested escalation candidates: **Luna Max -> Terra Max -> Sol High -> Astra xHigh**.
+This is not a mandatory staircase or proven cost/quality ranking; other supported efforts may
+fit better. Before escalating, distinguish reasoning failure from missing context, unclear
+instructions or broken tools. Pass prior work and concrete gaps; do not restart blindly.
+
+Record task type, requested model/effort, reason, outcome and escalation in the stage card.
+Use measured usage when available; otherwise say unknown. Judge the total cost of an accepted
+correct result, including parent review, retries and rework. Feed observations into steps 10-11.
 
 ## Ordered Stages
 
 | Step | Area | Intended outcome |
 |---|---|---|
+| 0 | Controlled plan preparation | Discoverable plan, STATUS, preparation card, source records and startup prompt; independent review, fresh-context resume check, user acceptance and merge. |
 | 1 | Audit and baseline | Locate duplicated rules, conflicting instructions, unnecessary work, and representative task costs; include model/effort and prompt identity in comparable quality and completion measures. |
 | 2 | Small core and configuration | Separate minimum rules from optional modules; define presets, overrides, platform needs, the supported model catalog, and configurable routing by role/task with bounded agent choice. |
 | 3 | Architecture variants | Specify minimal and extended Clean Architecture, including per-project or per-area selection and migration boundaries. |
@@ -64,6 +146,11 @@ implementation stages, provider setup, deployments, or backlog writes.
 Steps 4 and 12 are distinct: step 4 defines how agents use verification, including existing
 pipelines; step 12 packages reusable provider-specific CI/CD assets. Full feedback-loop
 implementation stays in steps 10-11, while its minimal measurement needs inform step 1.
+Steps 1/9 use small comparison records before central collection exists. Step 4 must confirm
+VibeRails' own verification path: existing CI, or minimal repo CI if absent and agreed; this
+does not pull the reusable provider packages from step 12 forward. Step 13 can be explicitly
+skipped without blocking step 14. The next stage card locks detailed choices and exit evidence
+before implementation; the table is not approval to decide all future designs autonomously.
 
 ## Step 7 Astra Entry Gate
 
@@ -74,7 +161,8 @@ during earlier stages. Context, cost, and feedback findings also feed steps 10-1
 
 ## Model Routing And Prompt Versions
 
-This is a planned capability, not a change to the models used by the current session. The
+This section describes the planned framework capability; our actual delegate policy above
+already applies to this refactor. The
 initial catalog covers the GPT-5.6 family and GPT-6 Astra. Verify exact runtime model IDs,
 available reasoning efforts, account access, and dispatch capabilities during step 7 before
 turning candidate settings into supported presets.
@@ -234,9 +322,29 @@ needs; do not expand the supported stack during the core refactor.
   versions for rollback. Retrieve only relevant, applicable learnings during normal work.
 - Measure the feedback system's own overhead and keep product backlogs independent from
   framework telemetry.
+- Close important misses with what earlier review/QA missed, why, and the specific test/control
+  that prevents recurrence. Do not require an essay after routine success.
+- Record applicability and last verification; replace/archive obsolete advice without deleting
+  history or adding an ever-growing list of global instructions. Check relevant lessons when
+  used or when related code/tools change; start without a separate scheduled audit service.
+
+## Lightweight Readiness And Acceptance
+
+Use existing stage/task cards to identify only needed access, provider, test data, QA environment,
+and the concrete proof path before implementation. For UI, connect agreed design/behavior to an
+actual scenario and evidence from the tested build; Figma is optional. A screenshot or agent PASS
+alone does not prove all criteria. No automatic PASS for absent checks.
+
+Start with plain records and existing workflow/CI controls. Add a small programmatic guard only
+for a demonstrated repeated failure, not a new state-machine framework. Preserve parent ownership,
+SHA-bound evidence, and user acceptance. The scoped external analysis and four candidate
+refinements are in [inspiration review](refactor/inspiration-review.md); no extra stage is added.
 
 ## Navigation
 
 - [Documentation index](INDEX.md)
+- [Current state](refactor/STATUS.md)
+- [Record structure](refactor/README.md)
+- [Startup prompt](refactor/start.md)
 - [Deferred Astra reading list](astra-refactor-reading-list.md)
 - [Historical optimization roadmap](../ROADMAP.md)

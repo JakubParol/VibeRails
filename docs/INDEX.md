@@ -6,7 +6,12 @@ This index is the entry point for all standards and templates in this repository
 
 | Document | Purpose |
 |---|---|
-| [Active refactor plan](refactor-plan.md) | User decisions, orchestration, model routing, prompt versioning, ordered stages, and deferred scripts/integrations/CI/CD/kanban/language work. |
+| [Active refactor plan](refactor-plan.md) | Simplicity principle, complete scope, stage gates, delegation, routing and acceptance rules. |
+| [Current refactor status](refactor/STATUS.md) | Sole progress register and exact resume action; reconcile with Git/PR state. |
+| [Refactor record structure](refactor/README.md) | Lightweight card fields, lifecycle meanings, and record navigation. |
+| [Stage 00 preparation](refactor/steps/00-plan-preparation.md) | Scope agreement, independent reviews, verification and preparation PR evidence. |
+| [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
+| [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for refactor step 7: GPT-6 Astra prompt optimization, with supporting context, cost, and feedback-loop material. |
 
 At the start of step 7, read the register and assess every listed source before changing

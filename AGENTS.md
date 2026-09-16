@@ -16,6 +16,18 @@ Before changing this repository, read:
 
 Read stack-specific standards only when editing that area.
 
+## Active Refactor
+
+**IF A SIMPLE SOLUTION IS ENOUGH, KEEP IT SIMPLE.**
+
+For refactor work, including after context compaction, read the
+[plan and operating loop](docs/refactor-plan.md), [current checkpoint](docs/refactor/STATUS.md),
+and its active stage card before acting. Reconcile them with Git/PR evidence. These task-specific
+rules govern the refactor; do not copy them into adopting repositories. Parent owns coordination
+and shared Git operations. Use explicit, appropriate model/effort for bounded delegates. Discuss
+and agree each stage before implementation; Done requires user acceptance and confirmed merge
+after explicit authorization. Defer Astra research until its stage 7 gate.
+
 ## Editing Rules
 
 - Keep documents Markdown-first and easy to copy into other repositories.
