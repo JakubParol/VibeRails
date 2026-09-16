@@ -5,31 +5,29 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Stage 06 remains accepted, merged and Done; accepted scope: `workflows-2`.
-- [PR #11](https://github.com/JakubParol/VibeRails/pull/11) merged at `2026-09-16T13:32:02Z`,
-  source `c5c760407bfa67c392a9d7039b528ec4d7d147c8`, actual merge
-  `f68ff16e805453d6d4dbcce7dde72a8c28001538`. Source and merge trees are identical.
-- Final [PR Verification run 35102061602](https://github.com/JakubParol/VibeRails/actions/runs/35102061602)
-  passed all required steps on that source, testing merge revision
-  `989149deb722a88612caee94c4a57ee836eccb75`.
-- [Stage 06 record](steps/06-workflows.md) retains cleanup, independent review and behavior
-  evidence. Azure DevOps/Jira are MCP-only; eight command wrappers are removed. The optional
-  denylist is neutral. Real Azure/Jira access and provider enforcement were not tested.
-- [PR #12](https://github.com/JakubParol/VibeRails/pull/12) published the Done record and the
-  pre-merge closeout rule at accepted base `b60a91dca8bcaf7d191146456803a30c55530d8b`.
-  No local-only closing record remains to carry into a later stage.
-- Current delivery: planning-only revision 1.4 on `codex/refactor-plan-adoption-first`, from
-  that accepted base. Scope: swap unstarted 07/08, finish the general adoption baseline first,
-  keep one model-neutral prompt set and reconcile active dependencies/research gates.
-- Authorization: on 2026-09-16 the user said `Zrob branch, popraw, pr i zmerguj prosze`, approving
-  the discussed planning changes, branch, checks, PR and merge. This does not approve stage 07
-  implementation, model research, adopter changes or new runtime/schema behavior.
-- Review/verification: single-agent semantic review in this session; independent dispatch is
-  unavailable and is not claimed. Final document/CI evidence and source/tested/merge revisions
-  belong in this delivery's PR. Required current-head CI must pass before the authorized merge.
-- Next action: reconcile this planning PR's merge, then discuss and agree stage 07 adoption
-  scope. Both 07 and 08 remain Planned; research stays deferred to agreed stage 08 entry.
-  Keep the stage 09 decision gate and same-PR closeout rule. Do not create a checkpoint PR chain.
+- Stage 07 - adoption and migration, scope `adoption-1` under plan 1.4 - is accepted.
+  On 2026-09-16 the user said `Merge`, accepting the published result and explicitly
+  authorizing closeout and merge of [PR #14](https://github.com/JakubParol/VibeRails/pull/14).
+- Approved implementation/handoff source: `3886bf4a971eb2486cb65da45ec5aa61457155a0`.
+  Base: `418980e59b77327cbc63a3aa67728bba6bb09523`.
+  Branch: `codex/refactor-07-adoption`; [scope and evidence](steps/07-adoption.md).
+- The pre-closeout [PR run 35114881728](https://github.com/JakubParol/VibeRails/actions/runs/35114881728)
+  passed on the approved source, testing `c8bfd3e8f3f65e4af11f4f66d017691c39477b31`:
+  12 validator and 16 adoption tests, zero skipped, full documentation/skill validation
+  and both architecture examples. Final closeout-head CI must pass separately before merge.
+- The Done row below is prepared for the resulting main in this same PR. While PR #14
+  remains open, merge is pending and this record alone is not evidence of completion.
+  Verify its final source/tested SHA, merge result and remote main through the PR/check record.
+- Closeout changes only STATUS, the stage card and the 0.4.0 changelog entry. The approved
+  implementation, controlled evidence, MCP-only rules and completed 00-06 records stay unchanged.
+  The user-authorized single-agent exception remains explicit; no independent review is claimed.
+- Version 0.4.0 is the accepted general baseline once this authorized PR is confirmed merged.
+  Its final source/merge revisions in PR #14 identify the frozen baseline for 08/09; no tag,
+  release publication, model evaluation or live adopter migration is performed by this closeout.
+- Next action: if PR #14 is open, finish only its authorized closeout checks and merge,
+  then confirm remote main includes the closing documents. Once merged, wait for the user
+  to begin and agree stage 08 scope. All 15 research sources stay deferred until that entry.
+  Do not create a post-merge checkpoint PR or start another stage automatically.
 
 ## Stage Register
 
@@ -42,7 +40,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
-| 07 | Adoption and migration | Planned | Create on stage entry. |
+| 07 | Adoption and migration | Done | [Adoption card](steps/07-adoption.md) |
 | 08 | Shared prompt refinement and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 09 | Pilot and comparison | Planned | Create on stage entry. |
 | 10 | Central session reporting | Planned | Create on stage entry. |
@@ -53,11 +51,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Use plan revision 1.4 for future work: 07 delivers the versioned model-neutral adoption baseline;
-08 uses Astra to refine that same shared prompt set and evaluates models/routing separately.
-Completed 00-06 records keep their original numbering and evidence. Do not reopen them or infer
-future-stage approval from this planning merge. Preserve the deferred research gate and the
-[post-09 decision gate](../refactor-plan.md#decision-after-step-09).
+Reconcile PR #14 and remote main before acting. Its closing documents are committed before
+merge, not deferred to the next stage. Preserve completed evidence and the authorized solo
+exception; do not replay implementation or reinterpret old pending checkpoints as current.
+After confirmed merge, stage 08 remains Planned and needs its own scope agreement. Preserve
+[the post-09 decision gate](../refactor-plan.md#decision-after-step-09).
 
 ## Navigation
 

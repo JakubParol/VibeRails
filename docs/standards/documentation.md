@@ -24,8 +24,9 @@ remains the legacy/standard default. A small project may choose standard and a l
 choose essential if it retains the needed facts. Do not infer the choice from repository size.
 Changing a label neither deletes documents nor proves a migration. Preserve useful existing
 knowledge and navigation; reconcile any removal or relocation before claiming completion.
-The future manifest configuration field remains inactive until the
-[configuration migration boundary](configuration.md#compatibility-and-activation-boundary).
+Authorized adoption can record the bundle in the manifest under the
+[configuration contract](configuration.md#compatibility-and-activation-boundary). Reconcile
+existing local instructions before recording it; unselected projects retain their existing policy.
 
 ## Documentation Roots
 

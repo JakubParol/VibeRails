@@ -1,79 +1,42 @@
-# Adopt Standards Prompt
+# Adopt Or Refresh Standards
 
-Use this prompt after opening the target repository in Codex. The active working directory is
-the target repository that should receive these standards.
+Prompt ID: `viberails.adoption`. Version identity: this file's immutable Git source commit and
+actual content hash. This shared prompt is model-neutral; tools and client support remain
+explicit prerequisites. Open the target repository first, then replace the source placeholder.
 
 ```text
-Use the standards repository at <standards-repository-path-or-url>.
+Use VibeRails from <source-path-or-url-and-immutable-ref> to adopt or refresh the current repository.
+Follow applicable project instructions and the source adoption standard, located through its index.
 
-The current working repository is the target repository.
+Inspect existing documentation, manifest, code roots, commands and CI before making changes.
+Preserve local knowledge and unrelated work. Resolve source identity/version and safe target
+coordinates without printing secrets or unsanitized remotes. Explain the proposed changes briefly.
 
-Adopt the standards from VibeRails into this repository.
+For first adoption, suggest light or standard and only ask about material unresolved choices.
+Store complete explicit configuration values; modelRouting remains inherit. For a refresh, retain
+existing choices and compare the prior source, local content and requested source before replacing
+anything. Do not reapply a preset, discard local edits or treat a label change as completed migration.
 
-Follow applicable project instructions and the source pack's agent-workflow.md context router.
-Use the adoption standard for this operation, including its required source/target metadata,
-profiles, preservation, verification and completion evidence. Resolve relevant standards through
-the target/source indexes; do not turn the whole catalog into a mandatory reading list.
-First run the target preflight from the adoption standard, summarize the evidence, and identify:
+Copy only relevant rules and needed references, reconcile navigation, and retain project-owned
+commands and required CI. Provider profiles are independent choices; Azure DevOps/Jira use MCP only.
+No tracker or optional skills are required. Do not install tools or skills without covered authority.
 
-- VibeRails source path, remote, source ref, and pack version
-- target repository root, remote, default/base branch, branch naming, and PR target branch
-- PR policy: draft default, allowed PR write operations, and review publishing behavior
-- stack profile: Next.js frontend only, Next.js full stack, Next.js + Python FastAPI,
-  Python CLI, Python worker, shared package, infrastructure, Dapr or distributed app, mixed
-  monorepo, or an explicit exception
-- work tracking profile: Azure DevOps Boards, Jira, unsupported provider, or none
-- code hosting profile: GitHub, Azure Repos, unsupported provider, or none
-- provider-specific integration coordinates for the selected work tracking and code hosting
-  profiles, including project/repository identifiers, issue or work item types, branch policy,
-  labels, auth checks, and write approval policy
-- script platform profile: PowerShell, POSIX shell, or both
-- Codex skill decision: none, user-scope install/link, or vendored pinned copy
-- self-improve ticket sink for reusable agent/tooling failures
-- auth checks for selected integrations, documented without secrets
-- existing quality gate commands and path-to-scope map
-- per-root project profiles for the repository root and each standalone app, service, worker,
-  package, or infrastructure area
+Maintain the existing adoption manifest and human receipt. Record immutable source refs, actual
+copied/merged files, current instruction fingerprints and unobserved context. Preserve conflicts,
+remaining code migration and missing capabilities as explicit gaps; never repin unexplained drift.
 
-Sanitize source and target remotes before writing them into `.viberails/adoption.json` or
-reporting them in chat; do not print, paste, or commit raw remotes with username, password,
-token userinfo, query strings, or fragments.
+Verify the changed documents, configuration, pins and preservation using available native tools
+or the source pack's optional read-only audit. Run only meaningful focused checks; full project
+gates belong to CI. A structural audit is not proof of code compliance, live access or CI success.
+Repeat unchanged adoption as a no-op, not another generated document set or timestamp-only update.
 
-Then:
-
-1. copy only relevant standards into docs/standards/
-2. create or update README.md, AGENTS.md, and docs/INDEX.md at the repository root
-3. create `.viberails/adoption.json` from the VibeRails manifest template, including provider
-   coordinates, skill decision, copied files, and unresolved decisions
-4. create `docs/viberails-adoption.md` from the VibeRails adoption record template, mirroring
-   the manifest values for humans
-5. create documentation roots for standalone monorepo apps, services, workers, mobile apps,
-   and packages
-6. document significant folders under the explicitly selected documentation bundle, preserving
-   legacy requirements when unselected and useful existing knowledge in either bundle
-7. add folder AGENTS.md files only when local rules differ from the parent
-8. do not copy `.agents/skills/` entries by default; record whether skills are not used,
-   installed at the Codex user scope from the standards repository, or vendored as a pinned copy
-9. document quality gates from existing scripts or stack defaults, including the
-   path-to-scope map from the quality gate standard
-10. document the self-improve loop: provider sink coordinates, exact fingerprint dedupe,
-    manual fallback, create/comment policy, labels/tags, issue type, comment template, auth
-    checks, missing-auth behavior, and write approval policy
-11. if useful for this repository, copy `docs/templates/adoption-audit.mjs` into a target-local
-    tooling folder and run it from the target repository root with `node <path-to-script>`
-12. run the minimum adoption audit and documentation audit
-13. report all intentional exceptions and unresolved questions
-
-When updating existing docs, preserve target-specific project purpose, setup, architecture,
-quality gate, and local warnings. Merge VibeRails rules into those files instead of replacing
-them wholesale. Record preserved sections, changed sections, conflicts, and unresolved
-decisions in `docs/viberails-adoption.md`. Record applicable decisions, exceptions and open
-questions in the existing `.viberails/adoption.json` fields; do not duplicate the preservation
-table in the manifest or final message.
-
-Do not push or open a PR until you ask me and I approve it.
+Report effective choices, preserved decisions, results and remaining work. Continue only through
+an already-authorized delivery endpoint. Without push/PR authority, stop locally; merge always
+requires explicit authorization and current acceptance/evidence.
 ```
 
 ## Navigation
 
+- [Adoption procedure](../standards/adoption.md)
+- [Configuration contract](../standards/configuration.md)
 - [Documentation index](../INDEX.md)

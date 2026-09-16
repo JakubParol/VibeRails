@@ -43,6 +43,10 @@ jobs:
         id: tests
         run: node --test scripts/tests/validate.test.mjs
 
+      - name: Adoption and migration regressions
+        id: adoption
+        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs
+
       - name: Full documentation and skill validation
         id: validation
         run: node scripts/validate.mjs --all
@@ -68,6 +72,7 @@ jobs:
           CHECKOUT_RESULT: ${{ steps.checkout.outcome }}
           NODE_RESULT: ${{ steps.node.outcome }}
           TEST_RESULT: ${{ steps.tests.outcome }}
+          ADOPTION_RESULT: ${{ steps.adoption.outcome }}
           VALIDATION_RESULT: ${{ steps.validation.outcome }}
           EXAMPLE_RESULT: ${{ steps.examples.outcome }}
         run: |
@@ -80,6 +85,7 @@ jobs:
             printf '| Checkout | %s |\n' "$CHECKOUT_RESULT"
             printf '| Node setup | %s |\n' "$NODE_RESULT"
             printf '| Validator regressions | %s |\n' "$TEST_RESULT"
+            printf '| Adoption/update regressions | %s |\n' "$ADOPTION_RESULT"
             printf '| Full documentation/skill gate | %s |\n' "$VALIDATION_RESULT"
             printf '| Architecture examples | %s |\n' "$EXAMPLE_RESULT"
             echo

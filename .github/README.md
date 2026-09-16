@@ -2,7 +2,9 @@
 
 [PR Verification](workflows/pr-verification.yml) runs on pull requests, pushes to `main`, and
 manual dispatch. It uses Node 24 on Linux for validator regression tests and full documentation/
-skill validation, then runs the standard-library Python architecture example checks.
+skill validation, adoption/configuration/pin regressions on isolated synthetic targets, and the
+standard-library Python architecture example checks. Adoption regressions also run a small
+Python target's real behavior tests and a local Git three-way conflict; no provider is contacted.
 
 The job summary records the source head, actual checkout revision and each check's outcome.
 For a pull request, checkout normally tests a merge revision; it is not the source head.

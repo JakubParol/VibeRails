@@ -18,10 +18,11 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 04 verification](refactor/steps/04-verification.md) | Approved local/CI responsibility, implementation, tests and delivery evidence. |
 | [Stage 05 context](refactor/steps/05-context.md) | Approved context routing, documentation bundles and concrete task evidence. |
 | [Stage 06 workflows](refactor/steps/06-workflows.md) | Approved neutral cleanup, workflow/integration behavior and bounded evidence. |
+| [Stage 07 adoption](refactor/steps/07-adoption.md) | Agreed general adoption/update baseline, solo execution, tests and handoff. |
 | [Stage 05 context comparison](refactor/context-proof-05.md) | Before/after D/B/R context selection, correctness checks and honest measurement limits. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
 | [00-04 retrospective review](refactor/review-00-04.md) | User-requested correctness/completeness review before documentation/context work. |
-| [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |
+| [Core and configuration contract](standards/configuration.md) | Explicit version-1 choices, two presets, compatibility and authorized adoption. |
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
@@ -60,7 +61,10 @@ is internal VibeRails refactor material, not an adoption template.
 | [adopt-standards-prompt.md](templates/adopt-standards-prompt.md) | Prompt for applying these standards to another repository. |
 | [viberails-adoption.md](templates/viberails-adoption.md) | Copy to target repositories as `docs/viberails-adoption.md`. |
 | [viberails-adoption.json](templates/viberails-adoption.json) | Copy to target repositories as `.viberails/adoption.json`. |
-| [adoption-audit.mjs](templates/adoption-audit.mjs) | Optional target-side audit script for adopted repositories. |
+| [adoption-audit.mjs](templates/adoption-audit.mjs) | Optional read-only structural audit; run from source or copy with its helper directory and the helpers below. |
+| [Adoption audit internals](templates/adoption-audit/README.md) | Preserved structural checks split by responsibility. |
+| [adoption-state.mjs](templates/adoption-state.mjs) | Exact configuration/version checks and explicit preset initialization; no command execution. |
+| [adoption-pins.mjs](templates/adoption-pins.mjs) | Safe instruction identities, immutable refs and read-only fingerprint snapshots. |
 | [project-README.md](templates/project-README.md) | Copy to a new project root as `README.md`. |
 | [project-AGENTS.md](templates/project-AGENTS.md) | Copy to a new project root as `AGENTS.md`. |
 | [project-docs-INDEX.md](templates/project-docs-INDEX.md) | Copy to a new project root as `docs/INDEX.md`. |

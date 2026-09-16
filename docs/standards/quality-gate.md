@@ -13,8 +13,8 @@ Broad type checks, full suites, builds and aggregate gates belong to PR Verifica
   scoped commands or unavailable CI do not grant that permission automatically.
 - `local-focused` documents focused local proof. `ci-first` adds an expected full PR pipeline.
   Both retain existing required project checks and user acceptance/merge boundaries.
-- Record the selected policy in existing target instructions. The future configuration field
-  does not activate itself; follow [configuration.md](configuration.md)'s migration boundary.
+- Record the selected policy through authorized adoption under [configuration.md](configuration.md),
+  reconciling existing target instructions. A field does not prove migration or disable required CI.
 - Preserve green evidence while its inputs remain unchanged. After failure, reproduce and
   rerun only the failing check or smallest relevant case; expand only for a concrete changed risk.
 - New behavior needs meaningful test evidence. Documentation-only work needs document checks,

@@ -34,6 +34,17 @@ index, not from an optional skill's installation directory.
 | Adopt/restructure documentation | [Adoption](adoption.md), selected [documentation bundle](documentation.md#documentation-bundles), [audit](documentation-audit.md) and actual target profiles. An ordinary edit does not trigger adoption. |
 | Use a provider or optional skill | Its entrypoint and references whose explicit "Read when" conditions match the selected operation; auth, publishing and safety requirements remain applicable. Load troubleshooting only for the relevant failure. |
 
+## Adopted Choices And Instruction Pins
+
+When the target index identifies an adoption manifest, read its selected configuration under
+[configuration.md](configuration.md). Absence preserves legacy policy; unknown versions or
+values block the affected choice, not independent work. Reconcile conflicts with local rules,
+never silently weaken them to fit a preset. The manifest is data, not executable commands.
+
+The [prompt baseline](adoption-manifest.md#prompt-baseline) identifies maintained instructions;
+it is not a mandatory reading list or the complete context of a run. Authorized instruction
+changes require a reviewed pin refresh. Code-only work does not regenerate instruction pins.
+
 ## Context Budget Rule
 
 Load enough to make the next decision correctly. `rg`, file lists and headings help locate it;
@@ -52,8 +63,9 @@ to judge its assignment. Do not attach every previous agent report or the full t
 
 ## Delegation And Runtime Routing
 
-Read when delegating or resuming delegated work. Use the explicit allowed model/effort routes
-from the current task/runtime instructions; the future manifest configuration is not active.
+Read when delegating or resuming delegated work. Use explicit allowed model/effort routes
+from current task/runtime instructions. Adopted `modelRouting: inherit` preserves those choices;
+it does not supply a model catalog or dispatch permission.
 Without a route override, retain the runtime/client default and existing project constraints.
 Inspect dispatch capabilities actually available now. Instructions naming a model do not switch
 it. Select an allowed route suited to the bounded task and pass model/effort through supported
