@@ -46,7 +46,8 @@ Use this reference when the user provides an Azure DevOps PR URL.
 5. Before an inline comment, confirm that MCP exposes the current changed-file anchor required
    by the operation. If the MCP cannot read anchors or changed content, report the missing
    capability and keep findings local. Do not use a wrapper, CLI, REST/API, local Git, or a
-   summary-comment substitute.
+   summary-comment substitute for the missing remote capability. Local code inspection may
+   still use an authorized checkout; it cannot establish remote PR state or publication anchors.
 6. Avoid duplicating an unresolved comment when the MCP read operation can show it. If the
    operation is absent, state that limitation rather than assuming no duplicate exists.
 
@@ -64,8 +65,8 @@ Use this reference when the user provides an Azure DevOps PR URL.
 ## Pass Count
 
 - Default to one full pass.
-- Run a second pass when the first pass produced fixes, conflicting findings, unclear severity,
-  or broad cross-area changes.
+- Follow-up passes cover fixes, conflicting evidence or newly exposed risk; preserve unaffected
+  coverage rather than repeating the full pass because any file changed.
 - Run additional passes only when the user asks or when an approved review-and-fix loop is still
   within the five-cycle limit.
 
@@ -84,8 +85,8 @@ Use this reference when the user provides an Azure DevOps PR URL.
 - When an MCP read, inline-comment, or vote operation is missing, report that named capability
   gap and keep the affected outcome local. Do not substitute a wrapper, CLI, REST/API call,
   local Git operation, or another write.
-- Ask before making fixes, pushing commits, updating PR metadata, resolving existing threads,
-  completing, or merging the PR.
+- Ask before fixes, pushes, PR metadata writes, thread resolution, completion or merge only
+  when that action is not already authorized by the current request.
 
 ## MCP Inline Comment Capability
 

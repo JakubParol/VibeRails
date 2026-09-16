@@ -68,8 +68,8 @@ expressly exclude execution.
   without explicit user approval. A PR URL, profile, configuration, or link chooses a procedure;
   it does not authorize inline comments or reviewer votes. Use those writes only when the current
   request explicitly covers normal PR review output (a named workflow may cover several
-  operations), target policy permits it, and MCP confirms non-self-review. Unknown identity
-  keeps the result local.
+  operations) and target policy permits it. Azure DevOps publication additionally requires
+  MCP-confirmed non-self-review; unknown identity keeps that provider's result local.
 - In local branch mode, do not make fixes unless the user asked for review-and-fix or approved
   proposed fixes.
 - Review only changed code for diff-based findings. Mention pre-existing code only when it is
