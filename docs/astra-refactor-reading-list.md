@@ -5,7 +5,8 @@ Collected: 2026-09-16.
 **Status: Source registration only; full review of this list deferred to step 7.**
 
 Read and assess all 15 entries only when refactor step 7 (GPT-6 Astra prompt optimization)
-begins. Deferred context, cost, and feedback topics also inform the final feedback-loop stage.
+begins, as recorded in the [active refactor plan](refactor-plan.md#step-7-astra-entry-gate).
+Deferred context, cost, and feedback topics also inform the core refactor's feedback-loop stage.
 The descriptions below are user-provided research leads, not verified conclusions. URLs are
 preserved as supplied, with Markdown escaping removed; availability has not been checked.
 
