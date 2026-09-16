@@ -170,8 +170,10 @@ merge. Parent verified the approved head and current successful CI, then merged 
 - Final [PR run 35102061602](https://github.com/JakubParol/VibeRails/actions/runs/35102061602):
   all required steps passed, tested merge `989149deb722a88612caee94c4a57ee836eccb75`.
 - Actual merge: `f68ff16e805453d6d4dbcce7dde72a8c28001538`; source/merge trees are identical.
-- The post-merge Done record stays as a local checkpoint for the next authorized delivery,
-  preserving the agreed single-PR boundary without a checkpoint PR chain. Stage 07 has not started.
+- The initial Done record was kept locally after merge. The user explicitly corrected this:
+  publish it now, and always commit closing STATUS/card changes before merging future stages.
+  The documentation repair on `codex/refactor-06-closeout` implements that correction without
+  changing delivered behavior or evidence. Stage 07 has not started.
 
 ## Navigation
 

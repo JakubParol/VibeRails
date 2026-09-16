@@ -5,7 +5,8 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Completed stage: 06 - workflows, skills and integrations; accepted scope `workflows-2`.
+- Stage 06 implementation is accepted and merged; this repair publishes its Done record.
+  Accepted scope: `workflows-2`.
 - User accepted the result and explicitly authorized completion and merge on 2026-09-16.
 - [PR #11](https://github.com/JakubParol/VibeRails/pull/11) merged at `2026-09-16T13:32:02Z`,
   source `c5c760407bfa67c392a9d7039b528ec4d7d147c8`, actual merge
@@ -16,10 +17,12 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - [Stage 06 record](steps/06-workflows.md) retains cleanup, independent review and behavior
   evidence. Azure DevOps/Jira are MCP-only; eight command wrappers are removed. The optional
   denylist is neutral. Real Azure/Jira access and provider enforcement were not tested.
-- This post-merge Done record is a local checkpoint on the existing stage branch. Carry it into
-  the next authorized delivery; do not create an additional checkpoint PR or publish to a closed
-  PR branch. The remote merge/completion result is recorded in PR #11.
-- Next action: wait for the user to begin and agree stage 07 scope. No stage 07 research or
+- The user requires the Done record published now and all future closing commits before the
+  stage merge. This documentation repair on `codex/refactor-06-closeout` publishes the previously
+  local checkpoint and aligns the operating loop. Merge after current-head CI, then verify Done
+  in remote main. Future stages include closeout in their own PR; never defer it to another stage.
+- Next action: finish the authorized documentation repair and verify Done on remote main.
+  Then wait for the user to begin and agree stage 07 scope. No stage 07 research or
   implementation is authorized by the stage 06 merge. Stages 00-05 remain Done.
 
 ## Stage Register
@@ -44,8 +47,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-06 are accepted and merged. Preserve the local completion checkpoint when preparing
-the next authorized branch. Reconcile Git/PR state without repeating completed work or exposing
+Stage 06 implementation is accepted and merged. Confirm this documentation repair is merged
+and remote main contains Done; no local-only carry-over remains. Reconcile Git/PR state without
+repeating completed work or exposing
 historical denylist values. Stage 07 remains Planned; its reading gate applies only after entry
 is agreed. Preserve stage 08 activation and the post-09 decision gate.
 
