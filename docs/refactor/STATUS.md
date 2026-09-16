@@ -14,12 +14,17 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   essential/standard bundles, less duplicate reporting and a concrete task demonstration;
   follow-up requires before/after for all three existing baseline scenarios D/B/R, including
   rule-selection correctness, with no arbitrary percentage target or new measurement system.
-- Next action: run the after D/B/R exercise on the integrated documentation, compare rule
-  coverage and context with the before result, then independent review and current-head PR CI.
+- Next action: publish the reviewed stage PR and verify its
+  actual current-head CI. Then present the result for acceptance; no stage 05 merge is authorized.
 - Active record: [stage 05 card](steps/05-context.md).
-- Delegation: Terra/max and Luna/max advice completed and integrated. Before exercise Luna/max
-  completed; parent is preparing independent after exercise/review and comparing concrete rules.
-  No full local gate or future-stage research is authorized.
+- Delegation: advice and separate before/after Luna/max exercises completed. Sol/high found
+  and rechecked three P2 policy issues; no policy findings remain. Parent verified corrected
+  artifacts and D/B/R rule coverage; Sol/high reproduced the figures and independently confirmed
+  the completed comparison with no remaining findings.
+- Evidence: [D/B/R comparison](context-proof-05.md) records the same successful D edit/check,
+  retained B/R obligations, fewer selected sections and increased fixed whole-file counts.
+  These are source-word proxies, not token/runtime savings. No full local gate or future-stage
+  research is authorized.
 - No stage 05 result acceptance or merge authorization is recorded.
 
 ## Stage Register
@@ -31,7 +36,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
-| 05 | Documentation and context | In progress | [Context card](steps/05-context.md) |
+| 05 | Documentation and context | Verification | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 08 | Adoption and migration | Planned | Create on stage entry. |

@@ -63,6 +63,7 @@ source/merge trees match. The main check also passed. No previous audit is repea
 | Reporting duplication advice | GPT-5.6 Luna / max | Identify exact repeated report fields and their real consumers; read-only proposal, no workflow mutation. |
 | Canonical integration and concrete task exercise | Parent | Own shared edits, evidence, Git/PR and scope boundaries; dispatch a narrow exercise/review after preparation. |
 | Before/after D/B/R context exercise | GPT-5.6 Luna / max | Same requested settings and task packet on isolated before/after source copies; D makes a real doc correction, B/R check shared-rule selection only. |
+| Independent policy and comparison review | GPT-5.6 Sol / high | Check lost obligations, direct consumer consistency and the honesty of task evidence; read-only, focused follow-up. |
 
 Record actual outcomes and any follow-up below. Requested settings are not observed usage;
 token totals remain unknown unless runtime evidence becomes available.
@@ -82,7 +83,18 @@ Independent review (Sol/high) identified three P2 consistency gaps: legacy local
 requirements conflicting with essential coverage, a documentation reviewer row still requiring
 the audit for routine edits, and optional skills assuming the target already has a VibeRails
 router. Parent aligned the specific consumers and restored a compact native-context/reporting
-fallback. Verification and scope limits remain unchanged; focused re-review is pending.
+fallback. Sol's focused re-review confirmed all three resolved, with no remaining policy
+finding; focused validation of the final fallback documents passed.
+
+Separate after exercise (Luna/max) completed D correctly and retained B/R rules. Parent confirmed
+both corrected READMEs exactly match their unseeded sources. The after delegate clarified its
+selected sections, confirmed endpoints receive bound use cases, and checked that the later
+review fixes do not change its D/B/R conclusions. The
+[comparison record](../context-proof-05.md) retains both the increased full-file baseline unions
+and lower selected-section volumes, plus method and omission checks. Independent Sol/high
+review reproduced all figures and both file comparisons, confirmed retained D/B/R obligations
+and honest limits, and found no remaining evidence gap. An interim reference to the stage
+branch as main was corrected before publication. No model/token savings claim is made.
 
 ## Prompt Component Inventory And Composition
 
@@ -103,8 +115,12 @@ telemetry system. Model-specific content/version evaluation stays in 07.
 
 ## Verification And Delivery
 
-Implementation and task exercise follow this agreed checkpoint. Record concrete artifacts,
-review disposition and source/tested SHA evidence here; live lifecycle belongs only in
+Content commits: `87be2b2` for the router/bundle/report changes and `a1475c7` for focused review
+corrections. Both exercise snapshots and result limits are named in the comparison record.
+All changed files are Markdown. Focused text/link/metadata checks and whitespace checks pass;
+no executable, manifest schema, skill discovery metadata or workflow activation was changed.
+No full local gate, installer, PowerShell or deferred research was run. PR publication and
+actual current-head CI follow this completed review checkpoint. Live lifecycle belongs only in
 [STATUS](../STATUS.md).
 
 ## Navigation

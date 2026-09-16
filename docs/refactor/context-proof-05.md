@@ -17,7 +17,7 @@ cache and latency are not measured. One run per snapshot does not establish a ge
   scope, boundaries, test quality, finding evidence and local reporting.
 
 Before source: accepted `e9cc17dbe0f5f5ef1bca4d29500f435f2feaf4a6`. After source:
-`87be2b2` (resolve in Git). Both copies use the snapshot's project-AGENTS template as the entry
+`87be2b287052e006c8f1dd58f6854da8dfe460bb`. Both copies use the snapshot's project-AGENTS template as the entry
 point, the same exercise-local execution limits, the same scripts/AGENTS constraint and the
 same seeded typo. Task packets differ only in the isolated directory path. No copy has Git
 metadata or a real backend service/test runtime. B/R are therefore selection walkthroughs;
@@ -60,13 +60,56 @@ the flag correction or its proof; their conditions can be routed more precisely.
 
 ## After Exercise And Omission Review
 
-Pending independent after-run results and parent comparison. Check obligations, not just counts:
+The separate after agent corrected D and passed the same one-file check. Parent compared both
+corrected READMEs byte-for-byte with their unseeded Git sources: both match exactly. Therefore
+the PowerShell row and every coverage/limitation statement were preserved, not merely asserted.
+B/R selected applicable backend/review rules and disclosed missing code/runtime/diff inputs.
+
+Reported selected shared-source text, using the same whitespace-unit method as baseline 01:
+
+| Scenario | Shared files before / after | Selected words before / after | Observable result |
+|---|---:|---:|---|
+| D | 6 / 4 | 4323 / 3002 | Same correct flag edit and focused proof; after did not load documentation-audit or platform-profiles. |
+| B | 8 / 8 | 7183 / 6341 | Same relevant backend/test/verification obligations; after selected only the needed change-protocol and stack-profile sections. |
+| R | 14 / 14 | 11730 / 10798 | Same backend and local-review rules; shared B context reused and the report contract no longer demands copied agent/cycle packets. |
+
+These are source-text volumes for the delegate-reported read set, not instrumented context or
+token usage. As in the original baseline, root/project/local docs and indexes, commands, search
+output, prompts and repeated reads are excluded. They are still checked for rule preservation.
+In particular, D retained scripts/AGENTS in both runs, the after run skipped the root README
+when unnecessary, and R's after run additionally read the skills index for native review policy.
+The report artifact itself is required experiment evidence, not a sample final user response.
+
+For reproduction, before reads each selected shared file in full. D is the original D set plus
+`documentation-audit` and `platform-profiles`. B is the original B set plus `stack-profiles`.
+R is the original R set plus `stack-profiles`. After D uses the original D set; B/R retain the
+same extra stack-profile file. After partial reads are these complete H2 sections (up to the
+next H2); other selected shared files were read in full:
+
+- `change-protocol.md`: Start Of Work, Required Reading, Planning, When To Ask, Implementation,
+  End Of Task, Final Report (reused in B/R).
+- `documentation.md` for D: Documentation Bundles, Hierarchy, Navigation Rules,
+  When To Create More Docs, Doc Quality Rules.
+- `stack-profiles.md` for B/R: Next.js + Python FastAPI.
+
+No critical omission was found in the first-run reports against these task obligations:
 
 | Scenario | Required coverage |
 |---|---|
 | D | Applicable root/local instructions; source-owned flag; only intended Markdown edit; preserve PowerShell/coverage text; focused check; no installer/full gate; honest result. |
 | B | Actual owning service/local rules before implementation; variant/legacy boundary; no presentation persistence; existing application owner; relevant behavior/test-value proof; contract/consumer expansion when affected; required CI and no invented runtime result. |
 | R | Actual diff/revision and changed scope; local/read-only authority; applicable backend and test rules; evidence/severity; required review coverage or explicit missing input; local findings and useful handoff without invented clean approval. |
+
+Independent review subsequently fixed bundle-location, conditional docs-review audit and native
+skill-fallback inconsistencies in the stage branch (`a1475c7`). Those fixes do not change D's flag/source,
+checks or local constraints, and the fixture's unselected legacy bundle and VibeRails router
+remain present. The after delegate confirmed the original selection remains applicable after
+those fixes and explicitly rejected passing a persistence callback through an endpoint: the
+route receives the bound application operation. This was a narrow rule/evidence follow-up,
+not another cold-run measurement. Sol/high independently reproduced every table number and
+compared both corrected files with their unseeded sources. Review found no omitted required
+D/B/R rule or misleading measurement claim after correcting an interim reference from "main"
+to the actual stage branch. No actionable evidence gap remains.
 
 ## Reproduction And Limits
 
