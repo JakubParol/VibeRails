@@ -1,15 +1,1 @@
-# Terms that would indicate a source-specific leak from earlier pack migrations.
-# Keep this list generic to VibeRails history, not to future adopting repositories.
-DocMind
-docmind
-DOCMINDAI
-ELITMIND.DOCMINDAI
-ElitMind
-elitmind
-ELITMIND
-Elitmindvs
-VibeRails-EM
-SessionDeck
-CrackerAi
-SignalBoy
-IQControl.Ai
+# Optional literal patterns, one per line. Blank lines and comments are ignored.
