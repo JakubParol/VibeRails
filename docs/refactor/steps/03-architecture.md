@@ -66,15 +66,63 @@ The 15 Astra sources remain deferred.
 | Minimal example and comparison | GPT-5.6 Terra / high | Bounded code/example design must preserve dependency inversion without excess scaffolding | Read-only proposal; no files, installations, gates or framework execution. |
 | Canonical guidance consistency | GPT-5.6 Sol / high | Cross-document architectural constraints and legacy defaults need careful reconciliation | Read-only analysis of relevant current standards, no broad redesign. |
 | Standards/examples integration and verification | Parent | One owner for coherent boundaries, selection and evidence | Own edits and focused checks; no adoptee migrations or later-stage implementation. |
+| Independent architecture review | GPT-5.6 Sol / high | Check shared invariants, variant semantics and cross-document consistency | Read-only local diff; no broad gates or later-stage implementation. |
 
-Requested model/effort is not measured runtime usage; record outcomes and any escalation later.
+Advice assignments and independent review completed. Review reported No findings and independently
+ran the paired examples plus scoped link/whitespace checks. Parent integration corrected the
+draft example issues listed below; no agent escalation was needed. Requested model/effort is
+not observed runtime usage and no token-cost ranking is inferred.
+
+## Implementation And Triage
+
+- Canonical [variant rules](../../standards/architecture.md) now define common boundaries,
+  manual project/area selection, minimal/layered differences and incremental migration.
+- Backend, relevant frontend guidance, the project instruction template and the review checklist
+  are aligned. Minimal permits callable ports and parameter injection; neither variant permits
+  direct persistence from presentation or application imports of infrastructure.
+- [Paired examples](../../templates/architecture-variants.md) execute the same note behavior.
+  Parent corrected the delegate draft so the presentation receives a bound use case, removed
+  global mutable storage, and kept the layered domain invariant in the constructor.
+- The snippets are responsibility illustrations, not a scaffolded application or package-level
+  import fixture. Memory adapters are test doubles; no real HTTP/DB validation is claimed.
+- Application error guidance now leaves HTTP status mapping at the interface, preserving API
+  response behavior. Existing import enforcement remains required; excerpts use actual variant
+  shapes without requiring a nonexistent minimal domain package.
+- Parent verified import-linter forbidden/layer syntax against official documentation. The
+  old fully-qualified layers plus containers prefix was replaced by unprefixed qualified names.
+  These external technical references are unrelated to the deferred Astra source list.
+- Existing database-test policy, gate execution, broad reading and review orchestration remain
+  unchanged. Unrelated cross-feature policy cleanup was not included.
+- Used local skill-creator guidance only for the narrow review-reference edit; no model-specific
+  prompt optimization or skill entrypoint/activation change was performed.
+
+## Verification Evidence And Limits
+
+The embedded standard-library behavior recipe passed for both examples: normalized response
+and stored value, rejection without a write, and use of a failing injected dependency. Focused
+changed-file Markdown checks passed. Existing adoption/template JSON, backend-test/gate policy,
+scripts and code-review metadata were confirmed unchanged.
+
+The skill-creator quick validator could not start because PyYAML is absent in both available
+Python runtimes. No packages were installed. Focused checks of the unchanged SKILL frontmatter
+and required UI metadata passed; this is not a successful quick_validate run.
+
+Both import-contract excerpts parse as INI and their shown syntax was checked against official
+Import Linter documentation. No installed import-linter/target package graph was executed.
+Independent review found no concrete gap within this stage's documentation/example scope.
+No full gate, build, PowerShell, real HTTP/DB test or deferred Astra analysis was run.
 
 ## Delivery And Verification
 
 Branch: `codex/refactor-03-architecture`, created from accepted main
 `8c1ac9119f908323879a7a542d924a2828899369`. The completed review checkpoint `ea6e446` was carried
 as commit `d131a62`; publish it with this stage's eventual PR instead of a separate review PR.
-No stage PR or architecture changes exist yet. Current state is in [STATUS](../STATUS.md).
+No stage PR yet. Current state is in [STATUS](../STATUS.md).
+
+## Acceptance And Merge Evidence
+
+User approved architecture-1 execution; acceptance of the resulting changes and explicit merge
+authorization remain pending. Do not mark Done or begin step 04 before that gate closes.
 
 ## Navigation
 

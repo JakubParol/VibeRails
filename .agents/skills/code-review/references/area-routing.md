@@ -64,16 +64,21 @@ backend/API, worker, and shared package specialist prompt, and the
 
 ## Architecture Shortcut Checklist
 
+First read the owning project's explicit architecture variant and boundaries. Preserve legacy
+policy when unselected. In `minimal`, a function can be an application entry point and a typed
+callable a port; absence of a service class, domain package, separate ports file or per-feature
+`dependencies.py` is not itself a finding. Review the actual responsibility/import boundary.
+
 Backend/API, worker, and shared package specialists must check every changed file against
 these known agent shortcuts. Each hit is a finding, normally `P1` or `P2`:
 
 - Business logic in an endpoint: a route or controller that branches on domain state,
   computes derived values, or composes multi-step behavior instead of validating input,
-  mapping schemas, and calling one application service.
+  mapping schemas, and calling application behavior (a function or service method).
 - Route or controller calling a repository, session, or SQL directly instead of going
   through an application service.
 - Dependencies constructed inline (`Service()`, `Repository()` inside a function) instead of
-  injected through the module composition root or framework DI.
+  injected through an outer composition root, parameters or framework DI.
 - Application or domain code importing concrete infrastructure.
 - Persistence, HTTP calls, or queue access inside an application service instead of behind a
   port.

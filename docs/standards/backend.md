@@ -5,7 +5,22 @@ This standard applies to Python and FastAPI backend projects. It extends the gen
 
 ## Architecture
 
-Use Clean Architecture, package by feature, and enforce dependencies inward.
+Use the [selected architecture variant](architecture.md#variant-selection), package by feature,
+and enforce dependencies inward. Both variants preserve the responsibilities below. The current
+layered default remains for legacy adoptees without an explicit variant decision.
+
+A minimal feature can use these roles without a separate domain or ports package:
+
+```text
+feature/
+|-- api.py             # calls a bound application operation
+|-- application.py     # use case, pure rules, small callable/Protocol contracts
+|-- infrastructure.py  # adapters; persistence and external IO
+`-- dependencies.py    # optional location for edge wiring; app wiring may serve small features
+```
+
+A layered feature may use the following layout. Create only modules with a real responsibility;
+the tree illustrates possible roles, not files to scaffold unconditionally.
 
 ```text
 feature/
@@ -53,7 +68,7 @@ is not a style nit; fix it before the commit.
 
 Endpoint (router function) is done when:
 
-- it only validates input, maps schemas, and calls one application service method;
+- it only validates input, maps schemas, and calls an application entry point (function or method);
 - it contains no branching on domain state and computes no derived business values;
 - it takes no repository, session, or SQL dependency;
 - it maps known failures through the shared exception handler, not per-route try/except.
@@ -61,16 +76,22 @@ Endpoint (router function) is done when:
 Application service is done when:
 
 - it orchestrates the use case against ports, not concrete infrastructure;
-- every dependency arrives through the constructor from `dependencies.py`;
+- every dependency is supplied through parameters or a constructor from an outer composition root;
 - persistence, HTTP, queue, and SDK calls happen behind ports it depends on;
-- expected failures raise typed application errors.
+- expected failures raise typed application/domain errors.
 
-Repository is done when:
+Repository/adapter is done when:
 
 - it implements a port defined in the application layer;
-- it returns domain models or documented read models, never raw rows;
+- its result follows the port contract: plain values/domain/read models, or no value for a
+  write-only operation; never ORM objects or raw driver rows;
 - it contains no business decisions;
 - raw SQL stays inside it or in module-local SQL helpers.
+
+In minimal, a typed callable is a port and a function can implement it; do not require a class
+or a separate `ports.py` merely to satisfy the checklist. In layered, use explicit named ports
+and modules where they clarify the dependency. Pure rules need not acquire a domain package
+until it owns useful invariants or reuse. Both variants keep ORM models out of application code.
 
 ## Shortcut Examples
 
@@ -85,7 +106,8 @@ async def create_order(payload: OrderIn, repo: OrderRepo = Depends(get_repo)):
     return await repo.save(order)
 ```
 
-Right - the rule lives in the service, the route stays transport-only:
+Right - this service-class example keeps the rule outside the route. A bound use-case function
+is also valid; the [paired examples](../templates/architecture-variants.md) show both styles:
 
 ```python
 @router.post("/orders")
@@ -111,9 +133,12 @@ def __init__(self, orders: OrderRepositoryPort) -> None:
 
 ## Dependency Injection
 
-- Use constructor injection for services and repositories.
-- Use one `dependencies.py` composition root per feature module.
-- Wire dependencies as repo factory -> service factory -> route dependency.
+- Inject through ordinary parameters or constructors. Framework DI may bind the application
+  operation at the interface edge; no generic DI container is required.
+- For layered features, prefer explicit composition roots, commonly `dependencies.py` per
+  feature. Minimal features may share the application's outer wiring location.
+- Wire adapter -> application operation -> route dependency. A route receives the bound use
+  case, not a repository, ORM session or save callback to pass into business code itself.
 - Do not use global service or repository singletons.
 - Do not import concrete infrastructure into application or domain code.
 
@@ -127,17 +152,22 @@ def __init__(self, orders: OrderRepositoryPort) -> None:
 
 - Application depends on repository ports.
 - Infrastructure implements repository ports.
-- One repository per entity or aggregate.
-- Repositories return domain models or documented read models, never raw rows.
+- Keep persistence implementations cohesive by entity, aggregate or required capability;
+  minimal ports may be fulfilled by functions without a mandatory repository class.
+- Read ports return domain models or documented read values, never ORM objects or raw driver
+  rows. A write port may return an acknowledgement or no value, as its contract specifies.
 - Raw SQL stays in infrastructure.
 - Shared SQL helpers stay inside the module unless multiple modules truly need them.
 
 ## Error Handling
 
-- Use one application exception hierarchy.
-- Base error should include status code, public message, and error code.
+- Use small, typed, framework-neutral application/domain errors; share an exception base where
+  it helps handling, not to create an empty hierarchy.
+- Errors may carry an application code, safe message and details. HTTP status belongs to the
+  interface handler, not the application error type.
 - Standard error types: not found, validation, business rule, conflict.
-- One global exception handler converts known errors to the API error envelope.
+- One global exception handler maps known error types/codes to HTTP status and the API envelope.
+  Preserve existing externally visible status/envelope behavior when relocating this mapping.
 - Do not use per-route try/catch for known application errors.
 - Unhandled exceptions are logged with context and returned as generic 500 responses.
 
@@ -187,7 +217,25 @@ Rules:
 - Feature modules cannot import another feature's internals.
 - Shared code lives in a documented shared package.
 
-Template contract for a feature module (adapt package names):
+For a minimal feature, check the actual flat module names without inventing a domain package.
+Keep wiring outside `application`; indirect imports through wiring also violate this rule.
+
+```ini
+[importlinter]
+root_package = app
+
+[importlinter:contract:application-independent]
+name = Minimal application does not import infrastructure or API
+type = forbidden
+source_modules =
+    app.<feature>.application
+forbidden_modules =
+    app.<feature>.infrastructure
+    app.<feature>.api
+```
+
+For a layered feature with a domain package, use both the layer rule and the infrastructure
+rule. The fully qualified layer names below do not use a `containers` prefix:
 
 ```ini
 [importlinter]
@@ -200,11 +248,9 @@ layers =
     app.<feature>.api
     app.<feature>.application
     app.<feature>.domain
-containers =
-    app
 
 [importlinter:contract:application-independent]
-name = Application does not import infrastructure
+name = Inner layers do not import infrastructure
 type = forbidden
 source_modules =
     app.<feature>.application
@@ -212,6 +258,12 @@ source_modules =
 forbidden_modules =
     app.<feature>.infrastructure
 ```
+
+Adapt contracts to real modules and preserve existing checks. These are contract excerpts,
+not a complete project guard: retain checks for forbidden framework/ORM imports and cross-feature
+internals too. The [forbidden](https://import-linter.readthedocs.io/en/latest/contract_types/forbidden/)
+and [layers](https://import-linter.readthedocs.io/en/v2.11/contract_types/layers/) references explain
+the shown syntax. Selecting a variant does not authorize removing import enforcement.
 
 Do not add, widen, or justify `ignore_imports` entries to bypass architecture rules. If an
 import boundary fails, fix the dependency direction or stop and report the blocker.

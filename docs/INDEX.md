@@ -60,6 +60,7 @@ This register is internal VibeRails refactor material, not an adoption template.
 | [project-docs-INDEX.md](templates/project-docs-INDEX.md) | Copy to a new project root as `docs/INDEX.md`. |
 | [folder-README.md](templates/folder-README.md) | Copy into a significant non-root folder as `README.md`. |
 | [folder-AGENTS.md](templates/folder-AGENTS.md) | Copy into a folder with local agent rules or domain knowledge. |
+| [architecture-variants.md](templates/architecture-variants.md) | Paired minimal/layered behavior illustrations, stack mapping and focused checks. |
 | [adr.md](templates/adr.md) | Copy for architecture decision records. |
 | [design-note.md](templates/design-note.md) | Copy for design notes before larger changes. |
 | [runbook.md](templates/runbook.md) | Copy for operational procedures. |

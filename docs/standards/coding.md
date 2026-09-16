@@ -49,7 +49,8 @@ the change protocol.
 
 - Hard limit: 400 lines per source file unless the project documents a stricter limit.
 - If a file approaches the limit, split by responsibility.
-- One repository class per file.
+- Keep a repository implementation cohesive per file; a small function-based port adapter
+  does not need a class merely to satisfy this rule. Follow the selected architecture variant.
 - One service, use case, or component responsibility per file.
 - Group related files into subdirectories when a folder becomes hard to scan.
 
