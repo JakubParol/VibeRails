@@ -26,7 +26,7 @@ Acceptance criteria:
 - User selected Done after acceptance and merge. The latest request places a new branch before
   stage discussion and reserves final acceptance/merge for later.
 - Authorized: document edits, commits, review and preparation PR publication. User acceptance
-  of this prepared result and merge authorization are not recorded yet.
+  and merge were pending at publication; the subsequent owner action is recorded below.
 
 ## Decisions And Boundaries
 
@@ -78,9 +78,19 @@ metadata updates do not change the agreed process. Resolve final verification ag
 
 ## Acceptance And Merge Evidence
 
-No user acceptance or merge authorization is recorded yet. Record them against agreed scope
-and reviewed revision when provided. Observe merge before Done; persist closeout in the next
-stage's first documentation commit, avoiding a circular PR loop.
+Reconciled on 2026-09-16 after the owner directly merged [PR #2](https://github.com/JakubParol/VibeRails/pull/2).
+GitHub records `mergedBy: JakubParol`, `mergedAt: 2026-09-16T07:57:32Z`, source head
+`81eb17872257d83d7494a45051dee1edb886a575`, and merge commit
+`e19acf6af12976caef7a2053485a4fc39b95738e`. The explicit owner merge action is the closeout
+evidence; no separate chat acceptance or review comment was found or invented.
+
+Local and remote `main` matched that merge commit. The reviewed source head is its ancestor,
+and a tree diff between source and merge was empty. Previous focused documentation/review
+evidence therefore remains applicable to the content; no new tests were run against the merge
+SHA and the PR had no check runs. No delegates remained active on resume.
+
+The stage 01 branch persists this closeout as its first documentation commit, following the
+agreed non-circular checkpoint process. Stage 01 scope approval is still separate.
 
 ## Navigation
 
