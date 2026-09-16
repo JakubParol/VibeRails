@@ -12,7 +12,7 @@ semantics and step 8 provides explicit adoption/version handling.
 - Use the smallest design that meets the agreed need. Add complexity for evidence-backed
   requirements; do not prebuild niche cases or a general configuration/workflow engine.
 - Preserve minimum Clean Architecture: presentation cannot call ORM/persistence directly;
-  keep application behavior and IO responsibilities separate. Step 3 defines exact variants.
+  keep application behavior and IO responsibilities separate. See the [architecture variants](architecture.md#two-variants).
 - Support changed behavior with meaningful evidence. Preserve required project checks, identify
   the verified revision, and never treat missing checks or unavailable capabilities as PASS.
 - Protect unrelated work and secrets. Configuration cannot grant account access, authorize
@@ -51,7 +51,7 @@ there is no preset inheritance, deep-merge language or per-feature rule engine.
 |---|---|---|
 | `version` | `1` | Version of this section's contract, separate from the existing manifest schema version. |
 | `initializedFrom` | `light`, `standard` | Records the starting preset. It does not compute active settings. |
-| `architecture` | `minimal`, `layered` | Smallest sufficient Clean Architecture or expanded explicit boundaries; both retain the core. Detailed rules: step 3. |
+| `architecture` | `minimal`, `layered` | Smallest sufficient Clean Architecture or expanded explicit boundaries; both retain the core. [Variant rules](architecture.md#two-variants) define the distinction. |
 | `verification` | `local-focused`, `ci-first` | Small relevant local checks; `ci-first` also expects full PR verification. Neither disables existing required CI or authorizes broad local gates. Detailed policy: step 4. |
 | `documentation` | `essential`, `standard` | Minimum useful project context or fuller module/boundary documentation. Exact bundles: step 5. |
 | `workflow` | `local`, `pull-request` | Default delivery endpoint for authorized work. PR mode prepares a PR, not an automatic merge. Execution: step 6. |

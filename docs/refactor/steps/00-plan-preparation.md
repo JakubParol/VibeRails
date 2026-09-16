@@ -8,7 +8,8 @@ or merge belongs to this authorization.
 
 Acceptance criteria:
 
-- Preserve all fourteen stages and the uppercase simplicity principle.
+- Preserve all fourteen implementation stages (01-14), preparation stage 00, and the uppercase
+  simplicity principle.
 - Encode branch -> discussion -> agreement -> delegated work -> verification -> acceptance
   -> explicit merge -> Done -> next discussion, including recovery after compaction.
 - Preserve intelligent model/effort selection, escalation evidence and prompt/routing versions.
@@ -65,7 +66,7 @@ on resume; this is not a claim of green CI. During review, the scope agent addit
 the complete documentation validator, beyond the intended focused checks. It reported only the
 historical source-name failure above. Parent fixed it and reran only the failing text rule;
 independent follow-up confirmed the fix. Do not repeat the aggregate for this unchanged scope.
-No application suite, build or PowerShell was run. Current remote `main` is
+No application suite, build or PowerShell was run. At initial delivery, remote `main` was
 `916d85e2a0ebbdafb3751fc3e6eb923244b68288`.
 
 Final reviewed revision and check results belong in the preparation PR description. Reconcile

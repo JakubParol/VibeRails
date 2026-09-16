@@ -91,7 +91,7 @@ Requested settings are not observed runtime settings or measured usage; no cost 
 
 Branch: `codex/refactor-02-configuration`, created from accepted main
 `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`.
-Published draft: [PR #4](https://github.com/JakubParol/VibeRails/pull/4).
+Published for review as draft: [PR #4](https://github.com/JakubParol/VibeRails/pull/4).
 Reviewed design commit: `b1939f848cf8bb6b2caa76bc8ab6140925e40207`. Publication-only checkpoint
 updates are checked separately; reconcile final-head evidence in the PR before resuming.
 The initial checkpoint closed stage 01. Commit `2625c31` recorded approval of configuration-1.
@@ -106,8 +106,16 @@ PR check metadata will be recorded at publication. Current state belongs in [STA
 
 ## Acceptance And Merge Evidence
 
-User approved work on `configuration-1`; acceptance of the resulting design and an explicit
-merge instruction remain pending. Do not mark Done or start step 03 before that gate closes.
+On 2026-09-16 the user confirmed the merge and requested a retrospective review of stages 00-02
+before step 03. GitHub confirms the owner merged [PR #4](https://github.com/JakubParol/VibeRails/pull/4)
+at `2026-09-16T08:59:48Z`, from source head `cb72556c7aa82f7bb1817a2d70786f144ec57550`
+to merge commit `8c1ac9119f908323879a7a542d924a2828899369`.
+
+The refreshed main tree matches that source head. Prior design/example and independent-review
+evidence remains applicable to unchanged content; no new runtime or green CI result is claimed.
+PR checks are empty and earlier agents are completed. The owner merge action plus the user's
+confirmation close this stage's acceptance/merge gate. Step 03 remains unstarted pending the
+requested cross-stage review and its own discussion.
 
 ## Navigation
 

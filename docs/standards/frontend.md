@@ -8,6 +8,16 @@ This standard applies to Next.js and React frontend projects. It extends
 Package by feature. Keep pages thin and move behavior into view models, actions, adapters,
 hooks, and components with clear responsibilities.
 
+Use the [selected architecture variant](architecture.md#variant-selection). The roles below
+do not require a file for an empty responsibility. In minimal, pure application functions can
+depend on small injected client contracts; layered may extract shared domain rules and named
+ports/adapters when useful. Existing server/client boundaries remain unchanged.
+
+For Next.js full-stack work, route handlers and server actions are interface adapters: call
+application behavior rather than putting business decisions or ORM access there. A frontend-only
+project may use its existing API client/hooks; do not duplicate a backend domain or create a
+pass-through service for every HTTP call. Introduce application orchestration when it has work.
+
 | Layer | Location | Does | Does not |
 |---|---|---|---|
 | Pages | `app/<feature>/page.tsx` | Layout, route params, composition | Business logic, inline API clients |

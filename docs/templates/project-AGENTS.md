@@ -40,12 +40,17 @@ Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
 
 ## Architecture Rules
 
+- Architecture variant: `<explicit project decision: minimal or layered; preserve legacy policy when unselected>`.
+- Follow the owning `architecture.md` for selection and shared boundaries. Record an explicit
+  standalone-area exception only when needed; do not infer a variant from repository size.
 - Follow Clean Architecture and separation of concerns.
 - Dependencies point inward.
 - Domain code must not depend on frameworks or infrastructure.
 - Application code depends on ports, not concrete adapters.
 - Infrastructure implements ports and owns IO.
 - Keep modules grouped by feature or bounded context.
+- Minimal may use functions, colocated pure rules and narrow callable/Protocol ports; layered
+  uses explicit layers where meaningful. Do not scaffold empty roles or bypass application ports.
 
 ## Change Protocol
 
