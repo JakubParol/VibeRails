@@ -5,15 +5,17 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 04 - local checks and PR verification, scope discussion only.
+- Active stage: 04 - local checks and PR verification, approved scope `verification-1`.
 - Branch: `codex/refactor-04-verification`; base: accepted main
   `965bc3c0231d2a90c3c2d563ebc1987759130cf0`.
 - Last delivery: [PR #5](https://github.com/JakubParol/VibeRails/pull/5), owner-merged at
   `2026-09-16T09:49:17Z`; user confirmed `Zmergowane - dalej`.
-- Next action: discuss [verification-1](steps/04-verification.md), including minimal CI for
-  VibeRails itself, and obtain scope agreement before implementation.
+- Next action: implement focused validation, align local/CI policy, add repository PR Verification,
+  then run focused tests/review and verify the actual pipeline result before user acceptance.
 - Active record: [stage 04 card](steps/04-verification.md).
-- Delegation: all prior agents completed; no stage 04 assignments dispatched.
+- Scope agreement: user replied `ok` on 2026-09-16 to the local/CI split and real repository CI.
+- Delegation: Terra/max owns validator/tests; Sol/high advises on policy consistency; parent
+  owns CI, documentation, integration and publication. No broad local gate is authorized.
 - Verification: the merged tree equals reviewed source `8a15110`; preserve prior evidence
   and its limits. GitHub still reports zero Actions workflows and PR #5 has no check runs.
 - The completed 00-02 review checkpoint is now included in merged PR #5; no separate PR needed.
@@ -26,7 +28,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
-| 04 | Local/CI verification | Discussion | [Verification card](steps/04-verification.md) |
+| 04 | Local/CI verification | In progress | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Planned | Create on stage entry. |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
@@ -40,9 +42,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-03 and the retrospective review are reconciled. Stage 04's branch exists, but its
-scope is not yet approved. Do not recreate the branch or begin implementation before agreement.
-Keep the stage 7 research and stage 12 reusable CI/CD boundaries.
+Stages 00-03 and the retrospective review are reconciled. Stage 04's branch and approval exist.
+Recover actual delegate/artifact state rather than repeating work. Keep local checks focused
+and preserve the stage 7 research and stage 12 reusable CI/CD boundaries.
 
 ## Navigation
 

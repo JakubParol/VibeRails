@@ -1,13 +1,13 @@
 # Stage 04 - Local Checks And PR Verification
 
-## Proposed Goal
+## Goal
 
 Make verification proportional locally and complete where required in PR CI. Define the
 contract clearly and establish a working verification path for VibeRails itself.
 
-## Scope Proposal
+## Agreed Scope
 
-Scope revision: `verification-1`. Awaiting user agreement.
+Scope revision: `verification-1`, approved on 2026-09-16.
 
 - Define `local-focused` and `ci-first`: changed-file format/lint and the smallest relevant
   behavior checks locally; broad type checks, suites and builds in CI. Neither mode disables
@@ -36,7 +36,7 @@ Out of scope: application changes, project migrations, deployment/CD, repository
 or branch-protection changes without separate authorization, reusable CI/CD provider packages,
 model/routing optimization, central telemetry, and the deferred Astra sources.
 
-## Proposed Acceptance Criteria
+## Acceptance Criteria
 
 - Documentation and direct workflow consumers agree on local versus CI responsibility.
 - A focused local command checks its declared scope honestly; relevant broken input is detected
@@ -53,8 +53,20 @@ model/routing optimization, central telemetry, and the deferred Astra sources.
 
 - Entry date: 2026-09-16. User confirmed stage 03 merged and asked to continue.
 - Branch/checkpoint preparation and discussion are authorized by the operating loop.
-- No approval of `verification-1` is recorded yet. No implementation or agent assignment begins
-  before scope agreement. This proposal includes adding actual repository CI, not just prose.
+- Parent proposed small local checks, full PR verification and a real minimal GitHub Actions
+  pipeline for this repository. User replied `ok` on 2026-09-16, approving verification-1.
+- Authorized: scoped implementation, meaningful targeted tests, documentation, review, commits
+  and a stage PR including the workflow. Branch-protection/admin changes and merge remain excluded.
+
+## Delegation
+
+| Assignment | Requested model / effort | Reason | Ownership |
+|---|---|---|---|
+| Focused validator and regression tests | GPT-5.6 Terra / max | CLI scope, filesystem inputs and Markdown parsing need careful behavior checks | Only scripts/validate.mjs and scripts/tests/validate.test.mjs; no Git/PR operations or full real-repo gate. |
+| Verification-policy consistency | GPT-5.6 Sol / high | Reconcile directly conflicting standards/templates/skill references without broad redesign | Read-only advice; parent owns documentation edits. |
+| CI, integration and verification | Parent | Keep one publication/evidence owner | Workflow, documents, code review, focused checks and live CI readback. |
+
+Requested model/effort is not measured usage. Record outcomes and any escalation after work.
 
 ## Delivery And Verification
 
