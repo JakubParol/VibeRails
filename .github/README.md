@@ -26,11 +26,15 @@ This is reproducible artifact evidence, not a model-cost or team-productivity be
 ## Adoption Portability Scope
 
 The existing Linux `Repository checks` job is preserved. Separate Windows and macOS jobs run
-only adoption, refresh and instruction-boundary regressions with Node 24 and Bash. All three
+adoption, refresh, instruction-boundary and record-consistency regressions with Node 24 and Bash. All three
 jobs must pass on the current source/tested revision before delivery. Read actual test counts;
 a selected OS or a skipped job is not coverage. No `.ps1` file is executed. These checks cover
 filesystem/path, snapshot/audit, native Python and local Git examples, not production stacks,
 LLM behavior, live MCP or every user's shell. Branch-protection settings are not changed.
+
+The existing Linux and macOS jobs also run isolated POSIX installer regressions covering
+foreign/broken links, other checkouts, relative owned links and safe removal. On Windows that
+step is intentionally inapplicable; no PowerShell script is run or claimed tested.
 
 ## Navigation
 

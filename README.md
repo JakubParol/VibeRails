@@ -44,7 +44,8 @@ available in every repository:
 | Windows or PowerShell | `.\scripts\install-skills.ps1` |
 
 Both installers target `$CODEX_HOME/skills`, or `$HOME/.codex/skills` when `CODEX_HOME` is not
-set.
+set. Existing links to other checkouts or user skills are conflicts, never silently replaced;
+see [installation ownership](scripts/README.md#skill-installation-ownership) before upgrading.
 
 | Skill | Intended use |
 |---|---|

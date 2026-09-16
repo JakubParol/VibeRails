@@ -14,9 +14,12 @@ This repository adopted VibeRails standards from:
 
 Mirror the effective configuration choices from the manifest; remove this table only for a
 legacy/unselected adoption, explicitly stating that limit. Do not infer settings from the preset.
+Keep one row per configuration field in this section, including version; the read-only audit
+compares the keyed values, not words elsewhere in this document.
 
 | Field | Actual value |
 |---|---|
+| version | `1` |
 | initializedFrom | `<light or standard>` |
 | architecture | `<minimal or layered>` |
 | verification | `<local-focused or ci-first>` |

@@ -9,8 +9,30 @@ This folder contains repository maintenance commands for VibeRails.
 | [validate.mjs](validate.mjs) | Node validator with explicit focused-file and full-repository modes. |
 | [validation-markdown.mjs](validation-markdown.mjs) | Internal Markdown navigation checks shared by focused and full Node modes. |
 | [validate.ps1](validate.ps1) | Legacy full PowerShell validator with `.ps1` syntax parsing; no focused mode or current Node-parser parity claim. |
-| [install-skills.sh](install-skills.sh) | POSIX installer for optional skills at the Codex user scope (`$CODEX_HOME/skills` or `$HOME/.codex/skills`) as symlinks to this checkout. `--remove` deletes only the symlinks. |
-| [install-skills.ps1](install-skills.ps1) | PowerShell installer for optional skills at the Codex user scope (`$env:CODEX_HOME\skills` or `$HOME\.codex\skills`) as Windows junctions or Unix symlinks. `-Remove` deletes only the links. |
+| [install-skills.sh](install-skills.sh) | POSIX installer for optional skills at the Codex user scope (`$CODEX_HOME/skills` or `$HOME/.codex/skills`) as symlinks to this checkout. `--remove` deletes only symlinks owned by this checkout. |
+| [install-skills.ps1](install-skills.ps1) | PowerShell installer for optional skills at the Codex user scope (`$env:CODEX_HOME\skills` or `$HOME\.codex\skills`) as Windows junctions or Unix symlinks. `-Remove` deletes only links owned by this checkout. |
+
+## Skill Installation Ownership
+
+Installation and removal preserve existing real entries and links to other targets, including
+other checkouts and dangling links. A conflicting name is reported with a nonzero exit; it is
+never automatically retargeted. Other nonconflicting skills may already have been processed.
+For an intended upgrade, inspect the collision and explicitly approve removal of the old link
+(using its original checkout when available) before installing from the new pinned checkout.
+Do not delete the linked target or use a blanket force replacement. No ownership registry is added.
+
+The POSIX installer recognizes equivalent relative links to its current source. The PowerShell
+installer uses exact normalized target identity and conservatively reports unknown aliases as
+conflicts. Its changed ownership logic has only static review in this delivery; no PowerShell
+execution or Windows-installer parity is claimed. POSIX regression checks use isolated temporary
+`CODEX_HOME` directories, never the actual user's installation:
+
+```bash
+node --test scripts/tests/install-skills.test.mjs
+```
+
+CI runs these [installer checks](tests/install-skills.test.mjs) on Linux and macOS only. Windows
+still runs the Node adoption cases below; its inapplicable POSIX step is not PowerShell evidence.
 
 ## Local Verification
 
@@ -46,12 +68,13 @@ rerunning unchanged behavior tests.
 When adoption behavior changes, use the focused suite:
 
 ```bash
-node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
+node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs scripts/tests/adoption-records.test.mjs
 ```
 
 The [configuration/pin regressions](tests/adoption.test.mjs) and
 [controlled adoption/update examples](tests/adoption-refresh.test.mjs), and
-[instruction-boundary regressions](tests/adoption-boundaries.test.mjs) use
+[instruction-boundary regressions](tests/adoption-boundaries.test.mjs) and
+[record-consistency regressions](tests/adoption-records.test.mjs) use
 [synthetic target builders](tests/adoption-fixtures.mjs), real temporary files, native Python
 stdlib tests and local Git. They never run commands taken from a manifest or contact providers.
 They exercise structure, preservation and conflicts, not autonomous agent adherence or real

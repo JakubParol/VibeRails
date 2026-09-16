@@ -3,6 +3,20 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.4.3 - 2026-09-16 - Audit Corrections
+
+- Preserve unrelated user-scope skill links during installation and removal; replacing another
+  checkout requires an explicit collision resolution, not automatic repair.
+- Reject empty gate maps, non-string paths/commands and undefined project gate scopes.
+- Compare the human configuration table by key and value, including version; unrelated text,
+  duplicates and examples cannot conceal a mismatch. Legacy/unselected records are preserved.
+- Require a concrete rationale for a documented stack exception. Keep audits read-only.
+- Add targeted record and POSIX installer regressions. PowerShell ownership changes are
+  statically reviewed only; original 08/09 model/handoff criteria remain in Verification.
+
+This entry closes only the user-authorized audit corrections after confirmed PR merge.
+It is not a new model evaluation, release tag or automatic change to adopter settings.
+
 ## 0.4.2 - Instruction Inventory Corrections
 
 - Fingerprint explicitly configured standard files outside conventional folders, so their

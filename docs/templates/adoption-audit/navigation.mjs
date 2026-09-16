@@ -2,26 +2,27 @@
 import fs from "node:fs";
 import path from "node:path";
 
+export function stripFencedBlocks(text) {
+  const kept = [];
+  let fence = null;
+  for (const line of text.split(/\r?\n/)) {
+    if (fence) {
+      const close = line.match(/^\s*(`+|~+)\s*$/);
+      if (close && close[1][0] === fence[0] && close[1].length >= fence.length) fence = null;
+      kept.push("");
+    } else {
+      const opening = line.match(/^\s*(`{3,}|~{3,})/);
+      if (opening) { fence = opening[1]; kept.push(""); }
+      else kept.push(line);
+    }
+  }
+  return kept.join("\n");
+}
+
+
 export function createNavigationChecks(context, values = {}) {
   const { repoRoot, fail, readText, toRepoPath, markdownPlaceholderAuditPaths } = context;
   const { containsPlaceholder } = values;
-  function stripFencedBlocks(text) {
-    const kept = [];
-    let fence = null;
-    for (const line of text.split(/\r?\n/)) {
-      if (fence) {
-        const close = line.match(/^\s*(`+|~+)\s*$/);
-        if (close && close[1][0] === fence[0] && close[1].length >= fence.length) fence = null;
-        kept.push("");
-      } else {
-        const opening = line.match(/^\s*(`{3,}|~{3,})/);
-        if (opening) { fence = opening[1]; kept.push(""); }
-        else kept.push(line);
-      }
-    }
-    return kept.join("\n");
-  }
-
   // Mask complete same-line spans, preserving a link's nonempty code-formatted label.
   function stripInlineCode(text) {
     return text.split("\n").map((line) => {

@@ -5,31 +5,22 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- The user requested completion of the outstanding 08/09 work after receiving the limitations
-  of PRs #15/#16. Continue those stages under the existing solo and scoped automatic-merge
-  authority; do not start 10 or operate on another repository.
-- Merged artifacts remain: 08 in PR #15 at `d92f6fa34d1809997c2d9629d81ca382d00e9ff2`,
-  09 in PR #16 at `853a7bc299009baf9e899980e89e49907d0f8c97`. Frozen 0.4.0 remains
-  `a60dca9638bf12cd84244aedcf5fc8d2a9734baa`. Historical tests and source records are unchanged.
-- Correction: merged artifact deliveries did not complete the original multi-model evaluation
-  and real-task/handoff criteria. 08 and 09 return to Verification, not Done. Solo execution
-  permits self-review; it does not substitute for model comparisons or another participant.
-- Current corrective delivery: `codex/refactor-08-09-verification`, based on PR #16.
-  [Verification follow-up](verification-08-09.md) records reproduced defects, fixes, test scope,
-  remaining criteria and a concrete runtime handoff. No new numbered stage is introduced.
-- The instruction inventory now includes custom standard paths and checks actual vendored
-  entrypoints/content. Eight focused regressions pass locally, versus five failures before
-  the fix. The first macOS run exposed a root-alias navigation bug; a ninth regression
-  reproduces it and verifies the correction locally. All three final-head CI jobs must pass.
-- Required evidence still outstanding: actual baseline/candidate runs on multiple permitted
-  models, observed effort/usage where available, real task traces and independent continuation
-  from repository-only handoff. No live MCP or PowerShell parity is claimed.
-- Next action: finish this corrective PR's current-head verification and scoped authorized
-  merge. Afterward preserve Verification until the outstanding runtime/handoff evidence is
-  obtained or the user explicitly changes those criteria. Never replace missing runs with PASS.
-  Do not install a model runtime, authorize new billing, or modify a new repository implicitly.
-- Closing records travel in the same corrective PR. A merged bug fix does not close 08/09's
-  unperformed experiments. The post-09 continuation decision still blocks 10 and later work.
+- Active delivery: audit corrections A-01 through A-04, scope `audit-fixes-1` on
+  `codex/refactor-audit-00-09-fixes`, based on merged PR #17 at
+  `ffb80cb224b924aaea0d5baa3d02b53d03459e0b` (0.4.2).
+- The user explicitly requested all four fixes in one PR and merge after verification.
+  The [agreement and evidence](verification-08-09.md#audit-correction-agreement) own the scope;
+  the existing solo exception applies. No independent agent, model benchmark or user rollout
+  is claimed. Implementation/checks/publication/merge are covered, not administrative changes.
+- All 00-09 artifact deliveries are already merged. 00-07 remain Done; 08/09 remain
+  Verification for the still-unperformed runtime and independent-handoff criteria.
+- Implementation and solo review: 21/21 new targeted tests pass after the recorded red run;
+  one actual-standard-copy adoption case also passes. Focused checks cover all 17 changed files.
+  PowerShell installer edits have static review only; no runtime parity is claimed.
+- Next action: publish one PR and obtain all current-head required CI. Commit closing records
+  before merge, confirm remote main afterward, then report the next runtime verification step.
+- Preserve frozen 0.4.0/0.4.1 evidence. Do not start 10, create/modify another repository,
+  install model services, change branch protection or execute PowerShell implicitly.
 
 ## Stage Register
 
