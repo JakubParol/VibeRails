@@ -5,22 +5,19 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active work: authorized P3 Next.js composition wording fix after the completed 00-04 review.
-- Branch: `codex/fix-nextjs-composition`; accepted base:
-  `80c866b045b9eba567321acde9a614ed434d6b30`. The two review checkpoint commits are carried here.
-- Authorization: user said `To zrob szybki fix branch i zmergujmy ta poprawke` on 2026-09-16,
-  approving the described narrow correction and merge after verification. No stage 05 work is approved.
-- Next action: reconcile this branch's PR and current-head CI, then finish the authorized merge
-  if still pending. Once merged, record closeout with the next agreed stage checkpoint and discuss
-  05; its implementation still needs scope agreement.
-- Active record: [00-04 review and fix follow-up](review-00-04.md#authorized-fix-follow-up).
-- Delegation: architecture reviewer (Sol/high) confirmed the changed sentence closes R1 without
-  a new contradiction. The full retrospective is complete and must not be repeated.
-- Verification: focused changed-document and whitespace checks passed. Final PR #6 and merged-main
-  run `35084903602` cover unchanged implementation; this fix's current PR CI is the merge gate.
-- Delivery: one wording correction plus the existing review/closeout record; no new behavior,
-  examples, checker, rule or future-stage implementation. User merge authorization is recorded.
-- The completed 00-02 review checkpoint is now included in merged PR #5; no separate PR needed.
+- Active stage: 05 - documentation and context; approved scope `context-1`.
+- Branch: `codex/refactor-05-context`; accepted base:
+  `e9cc17dbe0f5f5ef1bca4d29500f435f2feaf4a6`.
+- Last delivery: [PR #7](https://github.com/JakubParol/VibeRails/pull/7) is merged; R1 from the
+  completed 00-04 review is closed. Source/merge trees match and PR/main CI passed.
+- Scope agreement: user's stage 05 instruction on 2026-09-16 defines one context owner,
+  essential/standard bundles, less duplicate reporting and a concrete task demonstration.
+- Next action: integrate bounded route/reporting advice, implement the agreed documentation
+  changes and run the concrete task exercise, focused review and current-head PR CI.
+- Active record: [stage 05 card](steps/05-context.md).
+- Delegation: Terra/max advises on routing/bundles; Luna/max on report duplication; parent owns
+  integration, task evidence and Git/PR. No full local gate or future-stage research is authorized.
+- No stage 05 result acceptance or merge authorization is recorded.
 
 ## Stage Register
 
@@ -31,7 +28,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
-| 05 | Documentation and context | Planned | Create on stage entry. |
+| 05 | Documentation and context | In progress | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 08 | Adoption and migration | Planned | Create on stage entry. |
@@ -44,9 +41,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-04 are merged and their retrospective review is complete. Finish/reconcile the
-authorized P3 fix delivery before discussing 05; do not repeat the audit. Keep local checks focused
-and preserve the stage 7 research and stage 12 reusable CI/CD boundaries.
+Stages 00-04 and the P3 follow-up are merged. Stage 05 has explicit scope approval and its own
+branch. Recover its actual artifacts/delegates rather than repeating completed audits. Preserve
+local constraints, focused verification and the stage 07/08 activation boundaries.
 
 ## Navigation
 
