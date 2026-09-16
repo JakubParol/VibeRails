@@ -26,6 +26,7 @@ Read additional material only for the selected situation:
 | Jira work item | The selected Jira MCP connection exposes an authorized operation needed for this task. Read the target-local profile and that operation's metadata. |
 | No tracker | The task starts from a user brief or existing local task record. Stay in the common runbook; do not create a tracker or task record merely to run the task. |
 | Review | The user requests a review or the target requires one before handoff. Read the [source-pack code-review reference](../code-review/SKILL.md). |
+| Historical skill knowledge | A directly relevant recurring issue needs comparison with [LEARNINGS.md](LEARNINGS.md). Treat it as history, reverify it, and never infer current rules or write authority from it. |
 
 Do not load a provider reference just because a link, tool, account, or optional skill exists.
 Those are routing clues, not instruction or write authority.

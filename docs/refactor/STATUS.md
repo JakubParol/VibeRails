@@ -19,6 +19,8 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   removed; discard active wrapper/CLI/REST guidance and add no automatic transport fallback.
 - Next action: recheck neutral current content/messages, publish the single stage PR and verify
   current-head CI, then await user acceptance and explicit merge authorization. Do not start 07.
+- Delivery: draft [PR #11](https://github.com/JakubParol/VibeRails/pull/11). Initial full CI found
+  one orphan E2E history file; the conditional link is restored and CI must confirm the new head.
 - Integrated content is committed through `c093aa5`; eight wrappers and active command paths
   are removed. Native zero-test output and synthetic cases are ready for Luna/max execution;
   Luna/max completed controlled trials, including local no-tracker execution and honest nested

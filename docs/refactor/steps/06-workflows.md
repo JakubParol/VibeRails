@@ -144,6 +144,11 @@ Default: one stage PR, cleanup first in its own commit, then coherent responsibi
 No additional checkpoint PR chain. The final PR/check record owns source/tested SHA evidence.
 Current lifecycle and next action belong only in [STATUS](../STATUS.md).
 
+Published draft: [PR #11](https://github.com/JakubParol/VibeRails/pull/11). The first CI run
+found one orphan historical E2E learning file after reference cleanup. Its conditional history
+link is restored; unchanged behavior evidence is retained. Current-head CI must pass before
+handoff, and merge is not authorized.
+
 ## Navigation
 
 - [Current status](../STATUS.md)
