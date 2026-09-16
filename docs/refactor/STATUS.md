@@ -8,10 +8,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Active stage: 03 - architecture variants, approved scope `architecture-1`.
 - Branch: `codex/refactor-03-architecture`; base: accepted main
   `8c1ac9119f908323879a7a542d924a2828899369`.
+- Stage PR: [#5 - architecture variants](https://github.com/JakubParol/VibeRails/pull/5), draft.
 - Last delivery: [PR #4](https://github.com/JakubParol/VibeRails/pull/4), owner-merged at
   `2026-09-16T08:59:48Z`; user confirmed merge and requested this review.
-- Next action: publish the reviewed architecture rules/examples, then wait for user acceptance
-  and explicit merge authorization. Step 04 has not started.
+- Next action: wait for user acceptance of the architecture rules/examples and explicit
+  authorization to merge PR #5. Step 04 has not started.
 - Active record: [stage 03 card](steps/03-architecture.md).
 - Scope agreement: user approved the concise minimal/layered explanation with `ok` on 2026-09-16.
 - Delegation: Terra/high and Sol/high advice complete; independent Sol/high review reported

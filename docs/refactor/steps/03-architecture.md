@@ -117,7 +117,10 @@ No full gate, build, PowerShell, real HTTP/DB test or deferred Astra analysis wa
 Branch: `codex/refactor-03-architecture`, created from accepted main
 `8c1ac9119f908323879a7a542d924a2828899369`. The completed review checkpoint `ea6e446` was carried
 as commit `d131a62`; publish it with this stage's eventual PR instead of a separate review PR.
-No stage PR yet. Current state is in [STATUS](../STATUS.md).
+Published draft: [PR #5](https://github.com/JakubParol/VibeRails/pull/5).
+Reviewed content commit: `edda1591ee857c3ae6c223b0c2fc3d11fec98239`; publication checkpoint
+updates are checked separately. Reconcile the final head in the PR before reusing its evidence.
+Current state is in [STATUS](../STATUS.md).
 
 ## Acceptance And Merge Evidence
 
