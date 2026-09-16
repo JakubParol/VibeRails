@@ -3,6 +3,15 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.4.2 - Instruction Inventory Corrections
+
+- Fingerprint explicitly configured standard files outside conventional folders, so their
+  changes cannot pass with stale instruction pins.
+- Validate selected vendored skill entrypoints and reject duplicate/path-like selections and
+  symlinked vendored content instead of silently omitting it from the snapshot.
+- Add focused negative regressions and platform-scoped adoption checks. Earlier frozen
+  comparison revisions remain unchanged; this entry makes no model-performance claim.
+
 ## 0.4.1 - 2026-09-16 - Shared Instruction Refinement
 
 - Shorter review/E2E routers and precise provider/activation boundaries in one general set.

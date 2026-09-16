@@ -19,6 +19,12 @@ authorize merge. Follow the [operating loop](../refactor-plan.md#operating-loop)
 closing STATUS/card before merge so the resulting remote main includes Done. A closeout
 prepared in an open PR still has pending merge; do not report completion until merge is verified. An optional stage may be `Skipped by user` with a recorded decision.
 
+A merged delivery does not complete criteria that were never exercised. If a later review
+finds such a gap, return the existing stage to Verification with the missing criterion and
+next action in STATUS; preserve the earlier delivery and evidence as history. An unavailable
+capability or an agent-written narrowed scope is not a user waiver. A solo-review exception
+does not establish multiple-model execution or independent handoff.
+
 ## Stage Card Fields
 
 Create `steps/NN-<scope>.md` on stage entry. Keep only useful fields:
@@ -55,6 +61,8 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [Audit findings](audit-01.md) and [reproducible baseline](baseline-01.md)
 - [Source comparison and candidate refinements](inspiration-review.md)
 - [Startup prompt](start.md)
+
+- [08-09 verification follow-up](verification-08-09.md)
 
 ## Navigation
 

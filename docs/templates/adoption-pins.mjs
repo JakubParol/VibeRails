@@ -34,21 +34,39 @@ export function localPath(root, relative, { directory = false } = {}) {
   return current;
 }
 
-function walk(root, relative = "") {
+function walk(root, relative = "", vendoredRoot = null) {
   const result = [];
   for (const entry of fs.readdirSync(path.join(root, relative), { withFileTypes: true })) {
     if (excluded.has(entry.name)) continue;
     const item = relative ? `${relative}/${entry.name}` : entry.name;
     if (entry.isSymbolicLink()) {
-      if (["AGENTS.md", "README.md"].includes(entry.name) || /(^|\/)docs\/standards(\/|$)/.test(item)) {
+      if (["AGENTS.md", "README.md"].includes(entry.name) || /(^|\/)docs\/standards(\/|$)/.test(item)
+        || (vendoredRoot && (item === vendoredRoot || item.startsWith(`${vendoredRoot}/`)))) {
         throw new Error("instruction symlink is not auditable");
       }
       continue;
     }
-    if (entry.isDirectory()) result.push(...walk(root, item));
+    if (entry.isDirectory()) result.push(...walk(root, item, vendoredRoot));
     else if (entry.isFile()) result.push(item);
   }
   return result;
+}
+
+/** Selected vendored skills must be real files, not only manifest labels. */
+export function vendoredSkillPaths(root, skills) {
+  if (skills?.mode !== "vendored") return [];
+  localPath(root, skills.targetPath, { directory: true });
+  const names = skills.selectedSkills;
+  if (!Array.isArray(names) || !names.length || new Set(names).size !== names.length) {
+    throw new Error("vendored skills need distinct selected names");
+  }
+  return names.map((name) => {
+    if (typeof name !== "string" || !name.trim() || name === "." || name === ".."
+      || /[/\\]/.test(name)) throw new Error("expected a skill directory name");
+    const relative = `${skills.targetPath}/${name}/SKILL.md`;
+    localPath(root, relative);
+    return relative;
+  });
 }
 
 /** Maintained instruction inventory, not a claim about everything loaded in any execution. */
@@ -61,13 +79,22 @@ export function instructionPaths(root, manifest) {
     localPath(root, profile.documentationRoot, { directory: true });
     const prefix = profile.documentationRoot === "." ? "" : `${profile.documentationRoot}/`;
     for (const name of ["README.md", "AGENTS.md", "docs/INDEX.md"]) selected.add(prefix + name);
+    // The manifest may deliberately locate shared rules outside docs/standards.
+    for (const standard of profile.standards ?? []) {
+      const relative = typeof standard === "string" && !standard.includes("/")
+        ? `docs/standards/${standard}` : standard;
+      localPath(root, relative);
+      selected.add(relative);
+    }
   }
   for (const entry of manifest.copiedFiles ?? []) {
     if (!isRecord(entry) || typeof entry.targetPath !== "string") throw new Error("invalid copy record");
     if (entry.mode !== "skipped" && /\.md$/i.test(entry.targetPath)
       && entry.targetPath !== "docs/viberails-adoption.md") selected.add(entry.targetPath);
   }
-  for (const item of walk(root)) {
+  for (const relative of vendoredSkillPaths(root, manifest.agentSkills)) selected.add(relative);
+  const vendoredRoot = manifest.agentSkills?.mode === "vendored" ? manifest.agentSkills.targetPath : null;
+  for (const item of walk(root, "", vendoredRoot)) {
     if (["AGENTS.md", "README.md"].includes(path.posix.basename(item))
       || /(^|\/)docs\/standards\/.*\.md$/i.test(item)) selected.add(item);
     const skills = manifest.agentSkills;

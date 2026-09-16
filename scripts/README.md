@@ -46,15 +46,18 @@ rerunning unchanged behavior tests.
 When adoption behavior changes, use the focused suite:
 
 ```bash
-node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs
+node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
 ```
 
 The [configuration/pin regressions](tests/adoption.test.mjs) and
-[controlled adoption/update examples](tests/adoption-refresh.test.mjs) use
+[controlled adoption/update examples](tests/adoption-refresh.test.mjs), and
+[instruction-boundary regressions](tests/adoption-boundaries.test.mjs) use
 [synthetic target builders](tests/adoption-fixtures.mjs), real temporary files, native Python
 stdlib tests and local Git. They never run commands taken from a manifest or contact providers.
-They exercise structure, preservation and conflicts, not autonomous agent adherence, Windows
-runtime behavior or real adopter integration. Existing validator coverage still belongs in CI.
+They exercise structure, preservation and conflicts, not autonomous agent adherence or real
+adopter integration. CI runs these cases on Linux, Windows and macOS using Node and Bash;
+inspect each actual job before claiming coverage. This does not execute PowerShell or prove
+live MCP/client compatibility. Existing validator coverage still belongs in CI.
 
 The optional source-owned auditor lives in [docs/templates/adoption-audit.mjs](../docs/templates/adoption-audit.mjs)
 with its [internal modules](../docs/templates/adoption-audit/README.md). Its read-only
