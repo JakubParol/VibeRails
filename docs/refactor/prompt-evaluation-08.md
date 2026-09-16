@@ -25,7 +25,7 @@ Only these entrypoints are measured, not a claim that the entire pack became sma
 
 | Component | Baseline words | Candidate words |
 |---|---:|---:|
-| `.agents/skills/code-review/SKILL.md` | 1496 | 760 |
+| `.agents/skills/code-review/SKILL.md` | 1496 | 758 |
 | `.agents/skills/e2e-work-item/SKILL.md` | 788 | 465 |
 | `.agents/skills/azure-devops/SKILL.md` | 976 | 945 |
 | `docs/templates/adopt-standards-prompt.md` | 337 | 357 |
@@ -66,7 +66,7 @@ that actually exposes them, not a reason to promote an untested preset here.
 
 ## Instruction Fingerprints
 
-- `.agents/skills/code-review/SKILL.md`: baseline `3c547567ac896eef5261d3483736ed9a14c088b111e22b2b50da2e695842c051`; candidate `76ec1ee455d03283c17f134c17a8b595b39a5019b859774fe4495719d0d43405`.
+- `.agents/skills/code-review/SKILL.md`: baseline `3c547567ac896eef5261d3483736ed9a14c088b111e22b2b50da2e695842c051`; candidate `27e9d1ba4c37a2b92471ec60c62929f609447d657bf2444ec65f6e5926002191`.
 - `.agents/skills/e2e-work-item/SKILL.md`: baseline `6ff344d3761635f570f9959176319ddd0970afdc44e33982604696d8ce6119e7`; candidate `d8aa46149e73ae2eef77a2b55ca567f6e9172e276eb54bf04c03d128971d85ee`.
 - `.agents/skills/azure-devops/SKILL.md`: baseline `01ecae85aca4d38ef5b11650f2901b926fcb26a594014ad404a86e2fd7cb273a`; candidate `5ef37129e4b3f5eda48908b9e379ac3f95a62c7d8d4eb4b6aa07419cf66dd42d`.
 - `docs/templates/adopt-standards-prompt.md`: baseline `4dc9eabc1c88b2b8c2addbe7d16366bd093bbd46d8657e8d06347caa26d284a1`; candidate `44b21c6d4b91c9046667191f1b412f0b1a10e156ca39be413904dad4795d2812`.

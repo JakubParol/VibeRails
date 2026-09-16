@@ -36,7 +36,7 @@ customization: [lifecycle/authority](../../../docs/standards/change-protocol.md)
 [provider recovery](../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery).
 Read their relevant sections only when no target owner supplies the needed rule.
 
-## Review And Handoff
+## Workflow
 
 1. Establish source/target refs, current reviewed SHA, changed paths and existing review/check
    evidence. Local inventory includes committed, staged, unstaged and relevant untracked changes;

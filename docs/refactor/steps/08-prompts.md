@@ -55,6 +55,11 @@ selected actual-standard-copy adoption case passed: one executed test, zero skip
 Whitespace checks also passed. Full repository checks remain in CI. The one fresh-adoption local case uses actual source standards and native assertions;
 passing it does not establish instruction-following or live integration correctness.
 
+The first PR CI run found one incoming link to the removed `#workflow` heading. The stable
+heading was restored, the direct consumer was checked and the component fingerprint updated.
+All 28 code tests passed in that run, but document validation failed and examples were skipped;
+that run is not accepted as a green gate. Final-head CI must rerun after this narrow correction.
+
 ## Authorized Closeout
 
 The user pre-authorized completion and merge of this scoped delivery. The local closing
