@@ -5,22 +5,32 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active delivery: audit corrections A-01 through A-04, scope `audit-fixes-1` on
-  `codex/refactor-audit-00-09-fixes`, based on merged PR #17 at
-  `ffb80cb224b924aaea0d5baa3d02b53d03459e0b` (0.4.2).
-- The user explicitly requested all four fixes in one PR and merge after verification.
-  The [agreement and evidence](verification-08-09.md#audit-correction-agreement) own the scope;
-  the existing solo exception applies. No independent agent, model benchmark or user rollout
-  is claimed. Implementation/checks/publication/merge are covered, not administrative changes.
-- All 00-09 artifact deliveries are already merged. 00-07 remain Done; 08/09 remain
-  Verification for the still-unperformed runtime and independent-handoff criteria.
-- Implementation and solo review: 21/21 new targeted tests pass after the recorded red run;
-  one actual-standard-copy adoption case also passes. Focused checks cover all 17 changed files.
-  PowerShell installer edits have static review only; no runtime parity is claimed.
-- Next action: publish one PR and obtain all current-head required CI. Commit closing records
-  before merge, confirm remote main afterward, then report the next runtime verification step.
-- Preserve frozen 0.4.0/0.4.1 evidence. Do not start 10, create/modify another repository,
-  install model services, change branch protection or execute PowerShell implicitly.
+- Audit corrections A-01 through A-04 are implemented and verified in
+  [PR #18](https://github.com/JakubParol/VibeRails/pull/18), scope `audit-fixes-1`, version 0.4.3.
+  The user explicitly authorized all four fixes in one PR and merge after verification.
+  [Agreement, results and limits](verification-08-09.md#audit-correction-agreement).
+- Base: `ffb80cb224b924aaea0d5baa3d02b53d03459e0b`; branch:
+  `codex/refactor-audit-00-09-fixes`. The implementation source
+  `b229e3284365193ff948b88db35149225bcaf621` has passed
+  [run 35131848103](https://github.com/JakubParol/VibeRails/actions/runs/35131848103), testing
+  `252833d52059d79b67946ee960758aa024263f50`. Logs confirm 38 adoption cases on all three
+  systems, 8 POSIX installer cases on Linux/macOS, plus Linux's 12 validator cases,
+  6 frozen pilot cases, full document/skill validation and both architecture examples.
+  Executed tests have zero failures/skips/cancellations; Windows's POSIX step is inapplicable.
+- This same-PR closeout is committed locally before publication and final-head verification.
+  While PR #18 is open, merge is pending; an implemented fix is not a completed merge.
+  The PR/check record owns the closing source/tested/merge identities and final results.
+- After confirmed merge the four audit findings are closed within the tested scope. The
+  PowerShell ownership fix has static review only, not executed parity. Solo review remains
+  explicit. No administration, provider wrapper, unrelated project or model runtime was changed.
+- All 00-09 artifact deliveries are merged. 00-07 remain Done; 08/09 remain Verification
+  until actual cross-model task traces and independent repository-only continuation are obtained.
+- Next action: if PR #18 is open, finish only final-head checks and its authorized merge, then
+  confirm remote main includes closeout. Once merged, report the completed audit corrections
+  and use the bounded runtime handoff for the separately scoped new-repository review.
+  Do not begin 10 or operate on another repository without the next scoped user request.
+- Preserve frozen 0.4.0/0.4.1 evidence. Do not add a post-merge checkpoint PR or replace
+  missing model/handoff evidence with structural test results.
 
 ## Stage Register
 

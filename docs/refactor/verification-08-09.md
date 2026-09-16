@@ -165,14 +165,30 @@ it is not a second configuration or an automatic migration tool.
 Local Node/POSIX tests, shell syntax, selected MJS syntax, whitespace and 17-file focused
 validation passed. One direct-consumer actual-standard-copy adoption case passed with its
 native Python checks. No full local gate or unrelated unchanged suite was rerun. The two new
-files are added to existing CI coverage: 38 adoption cases on each of Linux/Windows/macOS,
-plus 8 POSIX installer cases on Linux/macOS. These are expected counts until final-head logs
-confirm execution. The Windows POSIX step is inapplicable, not a PowerShell test.
+files are added to existing CI coverage. Implementation run `35131848103` on source
+`b229e3284365193ff948b88db35149225bcaf621`, tested merge
+`252833d52059d79b67946ee960758aa024263f50`, passed all three jobs. Actual logs confirm 38/38
+adoption cases on Linux/Windows/macOS and 8/8 POSIX installer cases on Linux/macOS, with zero
+failed/skipped/cancelled tests. Linux also passed 12 validator cases, 6 frozen pilot cases,
+full documentation/skill validation and both architecture examples. The Windows POSIX step
+is deliberately inapplicable, not a PowerShell test. Installer test roots were canonicalized
+before publication for system parent aliases; all eight targeted cases passed locally again.
 
 Solo semantic/diff review checks preservation, invalid records, receipt interpretation and
 the unchanged provider boundaries. The PowerShell installer has the same fail-closed ownership
 policy by static review only; no `.ps1` execution is claimed. GitHub administration remains
 unchanged. This fixes the four audited defects, not the still-open runtime experiments.
+
+### Audit Correction Closeout
+
+The user-authorized one-PR correction is [PR #18](https://github.com/JakubParol/VibeRails/pull/18).
+All four findings have reproductions, fixes and positive/negative regression evidence. This
+closing record and STATUS are edited/committed locally before publication, followed by CI on
+the actual closing head and expected-head merge. A successful earlier implementation run is
+not relabeled as final-head evidence. Final source/tested/merge identities stay in that PR.
+Once its merge and remote main are verified, this correction delivery is complete; it does
+not close the unperformed 08/09 model and handoff criteria. No additional checkpoint PR,
+release tag, administration change or work on stage 10 follows automatically.
 
 ## Navigation
 
