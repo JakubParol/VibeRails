@@ -5,33 +5,22 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 06 - workflows, skills and integrations; approved scope `workflows-2`.
-- User accepted plan 1.1 and completed its separate review on 2026-09-16, then authorized this
-  implementation, neutral denylist cleanup, agents/review, checks, commits, push and one PR.
-  Stage 06 merge and stage 07 work are not authorized.
-- Branch: `codex/refactor-06-workflows`; accepted base `78132cd9f2c8d5c80e949371e22dec546417d9ad`.
-  PR #10 is confirmed merged with successful CI. Stages 00-05 and their evidence remain Done.
-- Active record: [stage 06 scope and evidence](steps/06-workflows.md).
-- Cleanup commit `67f8b10` is complete. Original patterns appeared only in the denylist; the
-  post-cleanup scan has zero matches, with no exclusions or printed/copied values. Three targeted
-  Node tests and focused checks passed. PowerShell consumers were inspected, not executed.
-- Scope correction: Azure DevOps and Jira use MCP. Eight Azure DevOps wrapper scripts are
-  removed; discard active wrapper/CLI/REST guidance and add no automatic transport fallback.
-- Next action: confirm final-head publication CI, then await user acceptance and explicit
-  merge authorization. Do not mark 06 Done, merge it or start 07 without that approval.
-- Delivery: draft [PR #11](https://github.com/JakubParol/VibeRails/pull/11). Initial full CI found
-  one orphan E2E history file; the restored link passed subsequent full CI. Run `35101921806`
-  passed on source `4cbb244`, tested merge `2861781`, including 12/12 validator cases and both
-  examples. Resolve current-head evidence in the PR after this publication checkpoint.
-- Integrated content is committed through `c093aa5`; eight wrappers and active command paths
-  are removed. Native zero-test output and synthetic cases are ready for Luna/max execution;
-  Luna/max completed controlled trials, including local no-tracker execution and honest nested
-  dispatch limitations. Sol/high found two cross-file gaps; parent corrected them and the
-  remaining alternate-client checklist reference. Focused policy/evidence recheck is clean.
-  No live Azure DevOps/Jira write was attempted.
-- Delegation: Terra/max owns review skill Markdown; a separate Terra/max owns E2E Markdown;
-  Sol/high owns MCP provider guidance. Wrapper-oriented work was interrupted. Parent owns common
-  standards/templates, evidence and Git/PR. Actual model/effort and usage remain unobserved.
+- Completed stage: 06 - workflows, skills and integrations; accepted scope `workflows-2`.
+- User accepted the result and explicitly authorized completion and merge on 2026-09-16.
+- [PR #11](https://github.com/JakubParol/VibeRails/pull/11) merged at `2026-09-16T13:32:02Z`,
+  source `c5c760407bfa67c392a9d7039b528ec4d7d147c8`, actual merge
+  `f68ff16e805453d6d4dbcce7dde72a8c28001538`. Source and merge trees are identical.
+- Final [PR Verification run 35102061602](https://github.com/JakubParol/VibeRails/actions/runs/35102061602)
+  passed all required steps on that source, testing merge revision
+  `989149deb722a88612caee94c4a57ee836eccb75`.
+- [Stage 06 record](steps/06-workflows.md) retains cleanup, independent review and behavior
+  evidence. Azure DevOps/Jira are MCP-only; eight command wrappers are removed. The optional
+  denylist is neutral. Real Azure/Jira access and provider enforcement were not tested.
+- This post-merge Done record is a local checkpoint on the existing stage branch. Carry it into
+  the next authorized delivery; do not create an additional checkpoint PR or publish to a closed
+  PR branch. The remote merge/completion result is recorded in PR #11.
+- Next action: wait for the user to begin and agree stage 07 scope. No stage 07 research or
+  implementation is authorized by the stage 06 merge. Stages 00-05 remain Done.
 
 ## Stage Register
 
@@ -43,7 +32,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
-| 06 | Workflow and integrations | Awaiting acceptance | [Workflow card](steps/06-workflows.md) |
+| 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 08 | Adoption and migration | Planned | Create on stage entry. |
 | 09 | Pilot and comparison | Planned | Create on stage entry. |
@@ -55,9 +44,10 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stage 06 is explicitly approved and reuses its branch. Recover current artifact/delegate state;
-do not repeat 00-05 work or expose historical denylist values. Preserve 07 research, 08 activation
-and the post-09 decision gate. Stop after the verified PR for user acceptance and merge approval.
+Stages 00-06 are accepted and merged. Preserve the local completion checkpoint when preparing
+the next authorized branch. Reconcile Git/PR state without repeating completed work or exposing
+historical denylist values. Stage 07 remains Planned; its reading gate applies only after entry
+is agreed. Preserve stage 08 activation and the post-09 decision gate.
 
 ## Navigation
 
