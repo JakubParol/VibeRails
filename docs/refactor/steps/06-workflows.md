@@ -146,8 +146,18 @@ Current lifecycle and next action belong only in [STATUS](../STATUS.md).
 
 Published draft: [PR #11](https://github.com/JakubParol/VibeRails/pull/11). The first CI run
 found one orphan historical E2E learning file after reference cleanup. Its conditional history
-link is restored; unchanged behavior evidence is retained. Current-head CI must pass before
-handoff, and merge is not authorized.
+link is restored; unchanged behavior evidence is retained.
+[PR Verification run 35101921806](https://github.com/JakubParol/VibeRails/actions/runs/35101921806)
+passed all steps for source `4cbb2445b59e8e8b5e67beb799f08c523f6369ad`, tested merge
+`28617812f512f9be2dd86a7a68b1ea7a61b2a0ad`: 12/12 validator tests, full documentation/skill
+validation and both architecture examples. Parent read back step outcomes and source/tested
+revision evidence. The publication checkpoint is checked separately; resolve the final PR head
+and its check before relying on the result. User acceptance and merge are not yet authorized.
+
+Acceptance: inspect the deleted Azure wrapper paths, MCP-only integration/skill guidance and
+the controlled-behavior table above. The denylist is intentionally empty by default; synthetic
+matching and local-path checks remain. Real Azure/Jira access/permission/concurrency is not
+proved by these fixtures. The current PR/check record owns final-head CI and exact revisions.
 
 ## Navigation
 
