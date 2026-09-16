@@ -117,15 +117,22 @@ No full gate, build, PowerShell, real HTTP/DB test or deferred Astra analysis wa
 Branch: `codex/refactor-03-architecture`, created from accepted main
 `8c1ac9119f908323879a7a542d924a2828899369`. The completed review checkpoint `ea6e446` was carried
 as commit `d131a62`; publish it with this stage's eventual PR instead of a separate review PR.
-Published draft: [PR #5](https://github.com/JakubParol/VibeRails/pull/5).
+Published for review as draft: [PR #5](https://github.com/JakubParol/VibeRails/pull/5).
 Reviewed content commit: `edda1591ee857c3ae6c223b0c2fc3d11fec98239`; publication checkpoint
 updates are checked separately. Reconcile the final head in the PR before reusing its evidence.
 Current state is in [STATUS](../STATUS.md).
 
 ## Acceptance And Merge Evidence
 
-User approved architecture-1 execution; acceptance of the resulting changes and explicit merge
-authorization remain pending. Do not mark Done or begin step 04 before that gate closes.
+On 2026-09-16 the user confirmed `Zmergowane - dalej`. GitHub confirms the owner merged
+[PR #5](https://github.com/JakubParol/VibeRails/pull/5) at `2026-09-16T09:49:17Z`, from source
+`8a151107f7a36c8d3953c854d083f45a82de4dd1` to merge
+`965bc3c0231d2a90c3c2d563ebc1987759130cf0`.
+
+The refreshed main contains the source head and its tree matches it exactly. Earlier focused
+verification and independent review remain applicable to unchanged content; PR checks are empty,
+not green CI. No delegates remained active during the transition. The confirmed owner action
+and user message close acceptance/merge. Step 04 still requires its own scope agreement.
 
 ## Navigation
 
