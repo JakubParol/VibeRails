@@ -1,8 +1,9 @@
 # VibeRails Refactor Plan
 
-Plan revision: 1.1, updated on 2026-09-16.
-Revision 1.1 refines future steps 06-09 and the post-pilot decision. It preserves accepted
-00-05 scope and evidence; recording requirements does not implement or authorize a future stage.
+Plan revision: 1.2, updated on 2026-09-16.
+Revision 1.2 records the stage 06 decision to use MCP for Azure DevOps/Jira and remove command
+wrappers. The 1.1 scope refinements and post-pilot decision remain; accepted 00-05 scope and
+evidence are preserved. Stage authorization is recorded separately in STATUS and the stage card.
 Live progress belongs only in [STATUS](refactor/STATUS.md).
 
 This is the active internal refactor plan. It is not an adoption template. The root
@@ -359,18 +360,18 @@ from a Linux-only run.
 
 ## Trackers And The Deferred Kanban
 
-The current pack bundles Azure DevOps workflow skills and PowerShell wrappers. Jira currently
-has a documented integration/adoption contract, not an equivalent bundled E2E implementation.
+Azure DevOps and Jira workflows use their connected MCP operations. Stage 06 removes the Azure
+DevOps command wrappers and active instructions for using them. Missing MCP capability is
+reported explicitly, with no CLI/raw-REST workaround or replacement wrapper.
 
 Design a shared task lifecycle with provider-specific state mapping and capability discovery.
 Tracker, code host, CI provider, and connection method are independent configuration choices.
 When both Jira and Azure DevOps are used, define ownership and routing for each task; do not
 assume duplicate records or bidirectional synchronization.
 
-Recommendation for discussion: prefer the official MCP when it supports the required
-operation and authentication in the user's client. Record an explicit CLI/API or manual
-alternative for missing capabilities. Do not bind shared workflow rules to specific tool names
-or assume all providers expose the same operations.
+Resolve the required operation and authentication from the current MCP's exposed capabilities.
+Do not bind shared workflow rules to fixed tool names or assume all connections expose the same
+operations. An unavailable operation blocks its dependent action, not unrelated authorized work.
 
 The official [Atlassian Rovo MCP](https://developer.atlassian.com/cloud/rovo-mcp/) supports Jira
 Cloud task operations. Its Cloud support should not be generalized to Jira Data Center.

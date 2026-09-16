@@ -122,7 +122,7 @@ Reusable agent/tooling failures are reported here:
 | Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |
 | Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
 | Write approval policy | `<when agents may create or comment self-improve tickets>` |
-| Alternate clients | `<same-provider fallback connectors or wrappers, or none>` |
+| Alternate clients | `<authorized MCP connections for Azure DevOps/Jira, or none; other sink profiles use their explicit client policy>` |
 | Disabled reason | `<required when enabled is false unless recorded as an open question>` |
 
 If auth or write approval is missing, agents prepare the ticket body locally and report the

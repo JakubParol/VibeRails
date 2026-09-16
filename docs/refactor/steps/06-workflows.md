@@ -2,10 +2,16 @@
 
 ## Agreement And Scope
 
-Scope revision: `workflows-1`, approved on 2026-09-16. The user accepted plan revision 1.1
+Scope revision: `workflows-2`, amended on 2026-09-16. The user accepted plan revision 1.1
 and its separate review, authorized stage 06 implementation and neutral denylist cleanup,
 bounded delegates, independent review, focused local checks, CI, commits, push and one PR.
 This is scope agreement, not approval to merge or start stage 07.
+
+The user then explicitly required Azure DevOps and Jira through MCP and removal of the Azure
+DevOps command wrappers. This supersedes the earlier wrapper-maintenance direction. Remove
+the wrapper scripts and active CLI/REST instructions; missing MCP operations are reported as
+capability gaps, not replaced with an automatic command/API fallback. Git/GitHub operations
+for this repository remain authorized as before.
 
 **IF A SIMPLE SOLUTION IS ENOUGH, KEEP IT SIMPLE.**
 
@@ -16,8 +22,8 @@ This is scope agreement, not approval to merge or start stage 07.
   optional draft handoff, current-revision evidence and completion/acceptance distinction.
 - Apply canonical context routing inside skills with conditional references and separate rules,
   supporting knowledge and history. Preserve optional use without full VibeRails adoption.
-- Implement capability-aware integration selection, bounded retries, readback after ambiguous
-  writes and provider revision protection where available; identify actual wrapper limitations.
+- Implement MCP capability selection for Azure DevOps/Jira, bounded retries, readback after
+  ambiguous writes and exposed revision protection; report actual MCP limitations.
 - Make review staffing proportional, retain valid evidence and require real current test
   execution/coverage before claiming PASS. Preserve focused local versus full CI ownership.
 - Apply explicit allowed dispatch routes using actual runtime capabilities; record requested
@@ -34,7 +40,7 @@ migration, full pilot, telemetry, kanban or new stack support is authorized.
 |---|---|---|
 | Task lifecycle, authority and handoff | change-protocol.md | Project templates, E2E and review skills/modes, provider PR guidance. |
 | Context and dispatch | agent-workflow.md | Skill entrypoints/references and bounded delegate packets. |
-| Capabilities, failure classes, retry/concurrency | integration-profiles.md | Selected provider profiles and Azure DevOps references/wrappers where needed. |
+| Capabilities, failure classes, retry/concurrency | integration-profiles.md | Selected MCP provider profiles and direct skill references. |
 | Real verification evidence and reuse | quality-gate.md | Review/E2E runbooks, output guidance, project quality template. |
 | Review selection and mode behavior | code-review skill and its owning references | Local/GitHub/Azure modes and parent task orchestration. |
 | Optional pattern matching | Existing Node and PowerShell validators | Denylist file, script documentation and small Node fixture tests. |
@@ -79,6 +85,27 @@ Both readers ignore blank/comment lines by inspection; PowerShell was not execut
 Parent owns all shared Git/PR and coordination records. Assign bounded paths and explicit
 model/effort after the initial cleanup; record outcomes and any escalation here. Never delegate
 inspection/output of removed denylist values. Measured model usage is unavailable unless observed.
+
+| Assignment | Requested model / effort | Scope and reason |
+|---|---|---|
+| Review skill behavior | GPT-5.6 Terra / max | Own code-review Markdown entry/references: adaptive staffing, authority, targeted checks and current evidence. |
+| E2E skill lifecycle | GPT-5.6 Terra / max | Own e2e-work-item Markdown entry/references: common flow plus conditional provider/no-tracker paths. |
+| Provider safety/capability guidance | GPT-5.6 Sol / high | Azure DevOps MCP guidance and capability limits; wrapper-maintenance work stopped after scope correction. |
+| Common standards and integration | Parent | Own rule owners, direct templates, experiments, privacy scans and shared Git/PR. |
+
+No worker may run PowerShell, a full local gate, live external writes or Git/PR mutations.
+Eight Azure DevOps wrapper scripts are removed under the amended scope. Static inspection
+performed before removal is not runtime/platform verification. No replacement wrapper is added.
+
+Integration checkpoint: provider and E2E delegates replaced active Azure command/API guidance
+with MCP operation/capability selection, and retained the no-tracker path. Parent aligned the
+common owners, native fallback, templates, platform guidance and discovery descriptions.
+The active-guidance scan found no `ado-*`/Azure command invocations. The shared runtime exposes
+Jira MCP tool metadata; no Azure DevOps MCP tool is exposed in this session. Neither account
+access nor provider-side write permissions were exercised. Historical 00-05 records remain intact.
+Focused validation passed for 34 existing/new changed files and all three affected skills.
+No full local gate or PowerShell was run. Controlled behavior trials and independent review
+of the integrated result are still required before publication.
 
 Default: one stage PR, cleanup first in its own commit, then coherent responsibility commits.
 No additional checkpoint PR chain. The final PR/check record owns source/tested SHA evidence.

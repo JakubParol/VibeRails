@@ -5,19 +5,23 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 06 - workflows, skills and integrations; approved scope `workflows-1`.
+- Active stage: 06 - workflows, skills and integrations; approved scope `workflows-2`.
 - User accepted plan 1.1 and completed its separate review on 2026-09-16, then authorized this
   implementation, neutral denylist cleanup, agents/review, checks, commits, push and one PR.
   Stage 06 merge and stage 07 work are not authorized.
 - Branch: `codex/refactor-06-workflows`; accepted base `78132cd9f2c8d5c80e949371e22dec546417d9ad`.
   PR #10 is confirmed merged with successful CI. Stages 00-05 and their evidence remain Done.
 - Active record: [stage 06 scope and evidence](steps/06-workflows.md).
-- Next action: complete neutral denylist cleanup as the first separate commit, then implement
-  the existing rule owners/consumers and run bounded behavior trials, independent review and CI.
-- Initial tracked-file scan found 13 patterns with 15 occurrences in the denylist file only.
-  Values were not printed or copied. Recheck current files and new messages before publication.
-- The scope/card checkpoint is prepared before implementation; commit it after the separately
-  requested cleanup commit. Parent owns Git/PR; delegates will receive bounded, non-overlapping work.
+- Cleanup commit `67f8b10` is complete. Original patterns appeared only in the denylist; the
+  post-cleanup scan has zero matches, with no exclusions or printed/copied values. Three targeted
+  Node tests and focused checks passed. PowerShell consumers were inspected, not executed.
+- Scope correction: Azure DevOps and Jira use MCP. Eight Azure DevOps wrapper scripts are
+  removed; discard active wrapper/CLI/REST guidance and add no automatic transport fallback.
+- Next action: finish MCP-only profile/skill integration, then bounded behavior trials,
+  independent review and current-head CI. Recheck files and new messages before publication.
+- Delegation: Terra/max owns review skill Markdown; a separate Terra/max owns E2E Markdown;
+  Sol/high owns MCP provider guidance. Wrapper-oriented work was interrupted. Parent owns common
+  standards/templates, evidence and Git/PR. Actual model/effort and usage remain unobserved.
 
 ## Stage Register
 

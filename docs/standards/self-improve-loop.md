@@ -10,12 +10,11 @@ workflow.
 
 Create or update a self-improve ticket when an agent hits a reusable failure such as:
 
-- Azure DevOps CLI, REST, query, transition, or comment syntax
-- Jira query, transition, issue creation, or comment syntax
+- Azure DevOps/Jira MCP operation selection, query, transition or comment failures
 - Git command, branch, remote, merge, or rebase workflow mistakes
 - GitHub CLI auth, PR, review, check, or issue command mistakes
 - cross-platform command differences between PowerShell and POSIX shell
-- repeated auth setup confusion that can be fixed with better docs or wrappers
+- repeated auth setup confusion that can be fixed with better connection guidance
 
 Do not create self-improve tickets for product bugs, one-off local environment issues, secrets,
 private data, or customer-specific payloads. Product bugs belong in the target repository's
@@ -33,10 +32,10 @@ When a reusable failure is found:
 4. If `selfImprove.enabled` is `false`, the tracker is `none`, the read auth check is missing,
    or the dedupe rule is missing, prepare the sanitized ticket body locally, report the
    missing adoption decision, and do not attempt tracker reads or writes.
-5. If the failure affects the configured sink client itself, use the recorded alternate
-   connector or wrapper from `selfImprove.alternateClients` when one exists. If no working
-   alternate exists, prepare the sanitized ticket body locally and report the blocked
-   self-improve read/write.
+5. If the failure affects the sink connection itself, prepare the sanitized body locally and
+   report the blocked operation. Azure DevOps/Jira stay on authorized MCP connections; do not
+   fall back to command wrappers or raw REST. Other sink profiles may use an already-authorized
+   recorded alternate client; configuration alone is not write authority.
 6. Run the configured dedupe query.
 7. Treat an exact fingerprint match as the primary duplicate signal. Use provider/tool/error
    class matching only when exact fingerprint search is unavailable and the manual fallback

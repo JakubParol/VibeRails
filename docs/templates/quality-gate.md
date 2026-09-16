@@ -44,9 +44,12 @@ Full CI coverage, where applicable:
 
 ## Before Acceptance Or Merge
 
-Read required CI results for the current source and tested revision. Keep the run/check link,
+Apply the owning `quality-gate.md#evidence-validity` rules to required CI/test results for the
+current source and tested revision. Keep the run/check link, executed/failed/skipped evidence,
 outcome and a short failure summary. A pending, skipped, cancelled or absent check is not PASS.
-Required checks still need evidence or an explicitly agreed exception.
+Zero executed tests, stale reports and all-skipped runs are not test passes. Required checks
+still need evidence or an explicitly agreed exception. Record the actual draft-PR CI path and
+required publishing/handoff action; never infer it from the existence of a draft PR.
 
 A full local gate requires an explicit user request, even for shared changes or unavailable
 CI. After failure, rerun only the affected local check; reuse unchanged green evidence. CI runs
