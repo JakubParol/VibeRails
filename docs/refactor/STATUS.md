@@ -7,9 +7,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - Active stage: 00 - prepare the controlled plan.
 - Branch: `codex/refactor-plan`; PR target: `main`.
-- Preparation PR: not published yet; resolve by head branch if this snapshot predates publication.
-- Next action: publish the reviewed preparation PR, then wait for user acceptance and an
-  explicit merge decision. Reviews and focused documentation checks are complete.
+- Preparation PR: [#2 - controlled refactor plan](https://github.com/JakubParol/VibeRails/pull/2), published as a draft.
+- Next action: wait for user acceptance of the prepared plan and an explicit merge decision.
+  Reviews and focused documentation checks are complete; no implementation stage may start yet.
 - Blocker: none identified. Acceptance and merge are intentionally not granted yet.
 - Implementation stages 01-14 have not begun. The startup prompt alone does not authorize them.
 

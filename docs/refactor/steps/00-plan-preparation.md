@@ -60,8 +60,8 @@ Passed: focused Markdown links/anchors, ASCII/LF/whitespace, matching plan/regis
 against their original registration commit, and a fresh-context reconstruction of the next action.
 `git diff --check` passed. No external source was opened by these checks.
 
-GitHub reported zero Actions workflows on 2026-09-16. Remote PR checks will be inspected after
-publication; this is not a claim of green CI. During review, the scope agent additionally ran
+GitHub reported zero Actions workflows on 2026-09-16. Inspect the PR's current check metadata
+on resume; this is not a claim of green CI. During review, the scope agent additionally ran
 the complete documentation validator, beyond the intended focused checks. It reported only the
 historical source-name failure above. Parent fixed it and reran only the failing text rule;
 independent follow-up confirmed the fix. Do not repeat the aggregate for this unchanged scope.
@@ -71,8 +71,10 @@ No application suite, build or PowerShell was run. Current remote `main` is
 Final reviewed revision and check results belong in the preparation PR description. Reconcile
 its current head rather than reusing stale evidence after later changes.
 
-Branch: `codex/refactor-plan`, target `main`. Resolve the PR by head branch if its publication
-occurred after this card's commit.
+Branch: `codex/refactor-plan`, target `main`.
+Published draft: [PR #2](https://github.com/JakubParol/VibeRails/pull/2).
+Content delivery commit: `8d7c696e8d622670d7b0db3648a01bcb00a3e766`; subsequent publication
+metadata updates do not change the agreed process. Resolve final verification against the PR head.
 
 ## Acceptance And Merge Evidence
 
