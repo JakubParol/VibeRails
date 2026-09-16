@@ -14,6 +14,7 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 01 findings](refactor/audit-01.md) | Prioritized overhead findings, source evidence, preserved guards and later pilot scenarios. |
 | [Stage 01 baseline](refactor/baseline-01.md) | Reproducible selected-file measurements and explicit limits of cost inference. |
 | [Stage 02 configuration](refactor/steps/02-configuration.md) | Approved small-core/configuration scope, decisions and delivery evidence. |
+| [Stage 03 architecture](refactor/steps/03-architecture.md) | Proposed architecture-variant boundaries and acceptance criteria; awaits scope agreement. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
 | [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
