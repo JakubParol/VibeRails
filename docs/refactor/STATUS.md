@@ -5,21 +5,25 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Stage 07 is confirmed Done at `a60dca9638bf12cd84244aedcf5fc8d2a9734baa` (PR #14),
-  the frozen 0.4.0 general baseline. Completed evidence remains unchanged.
-- Stage 08, scope `prompts-1`, is prepared for authorized closeout; [evidence](steps/08-prompts.md).
-  Branch: `codex/refactor-08-prompts`, from that accepted baseline.
-- On 2026-09-16 the user authorized solo execution and automatic merge of 08, then 09,
-  with a final report and mandatory stop. No new manual acceptance/merge question is needed
-  for those scoped deliveries; final-head CI and pre-merge closeout remain required.
-- Research: all 15 sources assessed; nine readable, six unavailable, with explicit disposition.
-  No independently dispatchable model is exposed here. No cross-model performance claim,
-  measured model cost or tuned preset is promoted without evidence.
-- Scoped semantic review, changed-file validation and the actual-standard-copy adoption case
-  passed. The 08 Done row is prepared in the stage PR; it is not proof of merge while open.
-- Next: verify final-head CI and merge this authorized 08 PR, confirm its remote result, then
-  enter the already authorized bounded 09 pilot. Exact revisions/results belong in the PR.
-  No stage 10 or real adopter repository change is authorized.
+- Stage 08 is confirmed merged in [PR #15](https://github.com/JakubParol/VibeRails/pull/15)
+  at `d92f6fa34d1809997c2d9629d81ca382d00e9ff2` (0.4.1). Frozen 0.4.0 remains
+  `a60dca9638bf12cd84244aedcf5fc8d2a9734baa`. Earlier evidence is unchanged.
+- Stage 09, scope `pilot-1`, has completed its controlled local pilot and solo review on
+  `codex/refactor-09-pilot`; [card](steps/09-pilot.md), [results/limits](pilot-09.md).
+- The user pre-authorized 08 and 09 execution and automatic merge, then a final report and STOP.
+  Closing documents are committed before final-head CI and merge; no later manual acceptance
+  is claimed. The prepared Done row below is not proof of merge while the stage PR is open.
+- Local evidence: all six scenarios covered successfully after one test-expectation correction;
+  a selected follow-up rejects skipped native evidence. Existing code/standards remain unchanged.
+  Final-head CI must pass all required checks before the authorized merge; exact source/tested
+  and merge revisions belong in that PR and are read back before claiming completion.
+- The pilot compares actual pinned artifacts on small/multi-root fixtures. It does not establish
+  cross-model improvement, cost savings, independent team handoff, live MCP or platform parity.
+- Next action: if the stage 09 PR is open, finish only its final-head verification and authorized
+  merge, then confirm remote main contains closeout and provide the final report. Once merged,
+  STOP for the user's review on a new repository and explicit continuation decision.
+- Stage 10 and later work remain Planned and unauthorized. Do not create a post-merge
+  checkpoint PR or operate on another repository without the user's next scoped request.
 
 ## Stage Register
 
@@ -34,7 +38,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
 | 07 | Adoption and migration | Done | [Adoption card](steps/07-adoption.md) |
 | 08 | Shared prompt refinement and model evaluation | Done | [Prompt card](steps/08-prompts.md) |
-| 09 | Pilot and comparison | Planned | Create on stage entry. |
+| 09 | Pilot and comparison | Done | [Pilot card](steps/09-pilot.md) |
 | 10 | Central session reporting | Planned | Create on stage entry. |
 | 11 | Self-feedback and knowledge freshness | Planned | Create on stage entry. |
 | 12 | Azure Pipelines / GitHub Actions CI/CD | Planned | Create on stage entry. |
@@ -43,9 +47,10 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Use the actual branch/PR state, current source/checks and stage card. The latest user instruction
-pre-authorizes 08 and 09 delivery only, not skipped verification or work after the pilot. Preserve
-all earlier accepted records. After 09, report results and stop for the new-repository review.
+Reconcile the actual stage 09 PR/merge and its closing records before acting. Retain all source,
+CI and measurement limitations. The latest authorized endpoint is the final report and stop,
+not stage 10 or automatic new-repository adoption. Apply the
+[post-09 decision gate](../refactor-plan.md#decision-after-step-09).
 
 ## Navigation
 

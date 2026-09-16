@@ -89,6 +89,24 @@ its separate Markdown parser and PowerShell syntax checks are not covered by thi
 Never run `lint.ps1`; other PowerShell execution needs an explicit request. CI on Linux does
 not prove Windows runtime behavior. Shared script consolidation remains a later adoption task.
 
+## Controlled Pilot Reproduction
+
+The stage 09 pilot is test tooling, not a new project runner. Export the pinned accepted
+commits to two empty directories outside this checkout, then provide those paths:
+
+```bash
+git archive a60dca9638bf12cd84244aedcf5fc8d2a9734baa | tar -x -C /tmp/pilot-base
+git archive d92f6fa34d1809997c2d9629d81ca382d00e9ff2 | tar -x -C /tmp/pilot-candidate
+VIBERAILS_BASELINE_ROOT=/tmp/pilot-base VIBERAILS_CANDIDATE_ROOT=/tmp/pilot-candidate \
+  node --test scripts/tests/pilot.test.mjs
+```
+
+Create the two empty directories first and fetch those commits when absent. The test refuses
+missing snapshot inputs; it never silently compares the current checkout with itself. Node,
+Python 3 and Git are required. Temporary synthetic targets and clones are removed afterward.
+No provider calls, model execution or installation occurs. Test/check durations do not measure
+agent task time or cost. See the [pilot report](../docs/refactor/pilot-09.md) for evidence limits.
+
 ## Rules
 
 - Keep scripts deterministic and safe for read-only validation by default.
