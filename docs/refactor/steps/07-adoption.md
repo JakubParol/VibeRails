@@ -66,8 +66,8 @@ Instruction pins use immutable source/path identities and actual adopted-byte SH
 Project-owned rules are fingerprinted separately; unchanged partial-refresh records retain their
 original source refs. Runtime/dynamic and external user-scope content remain unobserved. The
 snapshot helper emits a candidate only; it never writes the manifest or executes its commands.
-The 0.4.0 general baseline is a candidate until user acceptance and confirmed stage merge; the
-final accepted source/merge record will identify the frozen baseline for 08/09.
+At initial publication the 0.4.0 general baseline was a candidate. The acceptance/closeout
+record below governs its promotion; confirmed merge freezes the baseline for 08/09.
 
 The former 1,151-line audit was split into bounded value, provider, record and navigation modules.
 Existing checks were retained rather than replaced with a new engine. Mechanical comparison
@@ -123,7 +123,8 @@ passed on that source, actually testing merge `1a216ae63205fce6b37c10376758e13e7
 Read-back job logs confirm 12/12 validator tests and 16/16 adoption tests, zero skipped,
 full document/skill validation and both architecture examples. The publication checkpoint
 changes only this card and STATUS; focused document checks cover it and final-head CI is
-recorded in PR #14 rather than relabeling the earlier run. Acceptance and merge remain pending.
+recorded in PR #14 rather than relabeling the earlier run. Acceptance and merge were pending
+at publication; the later user authorization is recorded below.
 
 ## Acceptance Walkthrough
 
@@ -135,14 +136,34 @@ pins cannot be silently refreshed to hide drift. The two scoped test files repro
 multi-root, conflict, no-op and rollback cases; the PR's current `Repository checks` run must
 cover its actual head. Neither a candidate version nor passing fixtures marks the stage Done.
 
-## Handoff And Closeout
+## Acceptance And Authorized Closeout
 
-Finish on a current-head verified PR and `Awaiting acceptance`, with a practical acceptance
-walkthrough. Do not mark this stage Done now. After the user's later acceptance and explicit
-merge instruction: locally update STATUS and this card with closing evidence, commit and push
-on the same branch, verify final-head CI, then merge only that head and read back remote main.
-A prepared closing record is not evidence that merge already occurred. Do not create a routine
-post-merge checkpoint PR or start stage 08. Final self-referential SHAs belong in the PR/report.
+On 2026-09-16 the user replied `Merge` to the published handoff, accepting stage 07 and
+explicitly authorizing closeout and merge of PR #14. The approved source is
+`3886bf4a971eb2486cb65da45ec5aa61457155a0`; its
+[PR run 35114881728](https://github.com/JakubParol/VibeRails/actions/runs/35114881728)
+tested `c8bfd3e8f3f65e4af11f4f66d017691c39477b31` successfully, including 12 validator
+and 16 adoption tests with zero skipped, full document/skill validation and both examples.
+
+The same-PR closing commit updates STATUS, this card and the 0.4.0 changelog entry only.
+Implementation, accepted scope, previous test evidence and the explicit solo-review exception
+are unchanged. These documents are edited and committed locally before publication through
+the connected GitHub API, since local Git network transport remains unavailable. The scoped
+local workspace is not claimed as a full reconstruction of the current implementation;
+closing-file bytes are checked against the fetched source before editing and against the
+published blobs afterward. Final repository verification belongs to CI on the actual PR head.
+
+Run focused closing-document checks and inspect the closing diff, publish the commit on the
+same branch, verify the required CI for that final head, then merge with expected-head
+protection and read back remote main. A prepared Done row or changelog entry in an open PR
+does not prove a completed merge. Final source/tested/merge SHAs and the actual check outcomes
+belong in PR #14, avoiding a self-referential documentation commit.
+
+Once the authorized merge is confirmed, its final source/merge record freezes the accepted
+0.4.0 general baseline for 08/09. No release tag, live migration, new runtime behavior or
+stage 08 research is part of closeout. Stage 08 requires a separate scope agreement; keep
+all 15 sources deferred and retain the post-09 user decision. Do not create a routine
+post-merge checkpoint PR. Current lifecycle and next action remain owned by STATUS.
 
 ## Navigation
 

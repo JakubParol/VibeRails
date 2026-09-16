@@ -5,26 +5,29 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 07 - adoption and migration, agreed scope `adoption-1` under plan 1.4.
-- User explicitly authorized single-agent execution, implementation, checks, commits, push and
-  a ready PR. Acceptance and merge are not authorized; no independent-agent review is claimed.
-- Base: PR #13 merge `418980e59b77327cbc63a3aa67728bba6bb09523`.
-  Branch: `codex/refactor-07-adoption`; active [scope and evidence](steps/07-adoption.md).
-- Stage 06 and its closeout are accepted/merged; earlier records remain unchanged.
-- Delivery: ready [PR #14](https://github.com/JakubParol/VibeRails/pull/14). Implementation and
-  solo review are complete; 16/16 scoped adoption/update tests pass locally. The implementation
-  tree published through GitHub exactly matches the tested local tree; temporary transfer
-  workflow is removed from the delivery.
-- [PR Verification run 35114630181](https://github.com/JakubParol/VibeRails/actions/runs/35114630181)
-  passed on source `3ba892f3f70c1faadd4207a8e5612a0eee51f695`, tested merge
-  `1a216ae63205fce6b37c10376758e13e73d1958c`: 12 validator and 16 adoption tests, zero skipped,
-  full documentation/skill validation and both architecture examples. The handoff documentation
-  delta receives its own final-head CI; the PR records that latest result and exact revisions.
-- Next action: await user acceptance of PR #14 and a separate explicit merge instruction.
-  Stage 07 is not Done; candidate 0.4.0 is not an accepted baseline yet. Defer all 15 source
-  contents to 08. No follow-up implementation or merge is authorized by this handoff.
-- Closeout after a later explicit merge instruction: update the closing documents locally,
-  commit/push on this branch, check final-head CI, then merge and confirm remote main.
+- Stage 07 - adoption and migration, scope `adoption-1` under plan 1.4 - is accepted.
+  On 2026-09-16 the user said `Merge`, accepting the published result and explicitly
+  authorizing closeout and merge of [PR #14](https://github.com/JakubParol/VibeRails/pull/14).
+- Approved implementation/handoff source: `3886bf4a971eb2486cb65da45ec5aa61457155a0`.
+  Base: `418980e59b77327cbc63a3aa67728bba6bb09523`.
+  Branch: `codex/refactor-07-adoption`; [scope and evidence](steps/07-adoption.md).
+- The pre-closeout [PR run 35114881728](https://github.com/JakubParol/VibeRails/actions/runs/35114881728)
+  passed on the approved source, testing `c8bfd3e8f3f65e4af11f4f66d017691c39477b31`:
+  12 validator and 16 adoption tests, zero skipped, full documentation/skill validation
+  and both architecture examples. Final closeout-head CI must pass separately before merge.
+- The Done row below is prepared for the resulting main in this same PR. While PR #14
+  remains open, merge is pending and this record alone is not evidence of completion.
+  Verify its final source/tested SHA, merge result and remote main through the PR/check record.
+- Closeout changes only STATUS, the stage card and the 0.4.0 changelog entry. The approved
+  implementation, controlled evidence, MCP-only rules and completed 00-06 records stay unchanged.
+  The user-authorized single-agent exception remains explicit; no independent review is claimed.
+- Version 0.4.0 is the accepted general baseline once this authorized PR is confirmed merged.
+  Its final source/merge revisions in PR #14 identify the frozen baseline for 08/09; no tag,
+  release publication, model evaluation or live adopter migration is performed by this closeout.
+- Next action: if PR #14 is open, finish only its authorized closeout checks and merge,
+  then confirm remote main includes the closing documents. Once merged, wait for the user
+  to begin and agree stage 08 scope. All 15 research sources stay deferred until that entry.
+  Do not create a post-merge checkpoint PR or start another stage automatically.
 
 ## Stage Register
 
@@ -37,7 +40,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
-| 07 | Adoption and migration | Awaiting acceptance | [Adoption card](steps/07-adoption.md) |
+| 07 | Adoption and migration | Done | [Adoption card](steps/07-adoption.md) |
 | 08 | Shared prompt refinement and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 09 | Pilot and comparison | Planned | Create on stage entry. |
 | 10 | Central session reporting | Planned | Create on stage entry. |
@@ -48,10 +51,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Resume stage 07 from its actual branch/artifacts and user-authorized solo scope. Preserve
-completed 00-06 evidence. Do not replay the planning change, repeat completed audits or begin
-08 research. Stop at a ready PR until the user accepts and explicitly requests merge; follow
-[pre-merge closeout](../refactor-plan.md#operating-loop) and the post-09 decision gate.
+Reconcile PR #14 and remote main before acting. Its closing documents are committed before
+merge, not deferred to the next stage. Preserve completed evidence and the authorized solo
+exception; do not replay implementation or reinterpret old pending checkpoints as current.
+After confirmed merge, stage 08 remains Planned and needs its own scope agreement. Preserve
+[the post-09 decision gate](../refactor-plan.md#decision-after-step-09).
 
 ## Navigation
 

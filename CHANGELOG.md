@@ -3,7 +3,7 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
-## 0.4.0 - General Baseline (pending acceptance)
+## 0.4.0 - 2026-09-16 - General Baseline
 
 - Complete agent-guided adoption and refresh with explicit version-1 configuration; legacy
   manifests remain unselected. No implicit presets, runtime loader or model-specific prompt fork.
@@ -14,8 +14,10 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Controlled fresh and multi-root update evidence, preserved native commands and small regression
   tests. Structural checks do not claim code compliance, live provider access or all-client support.
 
-The stage PR source commit identifies this candidate; acceptance and a confirmed merge freeze
-its baseline for later comparisons. No release tag is created by this entry.
+The user accepted this general baseline and authorized merge on 2026-09-16. The final source
+and confirmed merge of [PR #14](https://github.com/JakubParol/VibeRails/pull/14) identify the
+frozen baseline for 08/09. While that PR is open, this entry is prepared closeout, not a
+completed merge or published release. No release tag is created by this entry.
 
 ## 0.3.0 - 2026-07-05
 
