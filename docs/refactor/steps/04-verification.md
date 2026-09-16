@@ -144,6 +144,9 @@ On 2026-09-16 the user confirmed `Zmergowane` and requested a retrospective revi
   source, testing merge revision `35ff6bd11fef06d71ff496ee5e752b7af19b6b67`.
 - Source and actual merge trees are identical. The owner merge plus user confirmation closes
   stage 04; the requested retrospective review does not authorize stage 05 implementation.
+- The retrospective also read back successful [main CI run 35084903602](https://github.com/JakubParol/VibeRails/actions/runs/35084903602):
+  its source and tested revision both equal actual merge `80c866b045b9eba567321acde9a614ed434d6b30`.
+  All steps passed, including 10/10 validator regressions, full Node validation and both examples.
 
 ## Acceptance Walkthrough
 
