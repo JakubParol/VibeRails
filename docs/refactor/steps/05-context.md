@@ -128,8 +128,23 @@ passed for source `a895280ec581c2d3901da72c3f7d0d0be815e6cd`, tested merge revis
 `27b7d159f02c633d9531bd45367f73fbdb7a6148`. API readback and job logs confirm all steps
 succeeded: 10/10 validator regressions, full document/skill validation and both unchanged
 architecture examples. Publication checkpoint changes are checked separately; the final
-PR/check record owns the current source/tested SHA after this commit. User acceptance and
-explicit merge remain pending. Live lifecycle belongs only in [STATUS](../STATUS.md).
+PR/check record owns the current source/tested SHA after this commit. Acceptance and merge
+were pending at publication; their later completion is recorded below. Live lifecycle belongs
+only in [STATUS](../STATUS.md).
+
+## Acceptance And Merge Evidence
+
+On 2026-09-16 the user said `Oznacz jako zakonczone i merguj`, accepting the delivered stage
+and authorizing merge plus the immediate Done record. Parent verified the approved head and
+its successful CI, then merged [PR #8](https://github.com/JakubParol/VibeRails/pull/8) at
+`2026-09-16T11:40:51Z`:
+
+- Approved/final source: `25bbc59673e84c00b40d370e3052cc3557473327`.
+- Final [PR Verification run](https://github.com/JakubParol/VibeRails/actions/runs/35091401210)
+  passed, testing merge revision `ea6354833ba471c5d2dcb24bda923f548a08497d`.
+- Actual merge: `ab335f18b1e69b819f65c3a4408dce9b36b9a949`; source/merge trees are identical.
+- The requested record is published on `codex/refactor-05-closeout`, a documentation-only
+  follow-up. It does not change accepted implementation or authorize stage 06.
 
 ## Acceptance Walkthrough
 
