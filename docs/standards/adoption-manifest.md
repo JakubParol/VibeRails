@@ -20,7 +20,7 @@ tokens, raw API responses, or private identity payloads.
 | `viberails.packVersion` | Pack version recorded from VibeRails `CHANGELOG.md`. |
 | `target.repositoryRoot` | Target repository root path at adoption time. |
 | `target.remote` | Target repository remote when available. |
-| `target.defaultBranch` | Default branch used for adoption and PR target decisions. |
+| `target.defaultBranch` | Default branch used during adoption and PR target decisions. |
 | `target.prTargetBranch` | Branch that adoption and follow-up PRs should target. Usually the default branch. |
 | `target.prPolicy` | Draft PR default and allowed PR write operations for the selected code host. |
 | `target.branchNaming` | Branch naming convention for agent changes. |
@@ -57,7 +57,7 @@ Keep the v1 field shapes. `canonicalCommand` remains the aggregate/full command 
 it is not an instruction to execute the full gate locally. Target docs distinguish focused
 local commands from CI commands and required statuses. Do not silently relabel an existing
 aggregate command as focused, flip flags, or migrate adopted manifests; reconcile actual
-behavior under an authorized adoption refresh. Automated configuration migration remains step 8.
+behavior under an authorized adoption refresh. Automated configuration migration remains step 07.
 
 `copiedFiles` items:
 

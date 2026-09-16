@@ -14,7 +14,7 @@ Unconfigured legacy adoptees keep their previous layered requirements and explic
 Do not infer `minimal` from project size or silently migrate existing code. A user-approved,
 documented project decision may select a variant; target-specific constraints still apply.
 The future `configuration.architecture` field is defined in [configuration.md](configuration.md),
-but its automated adoption/activation remains deferred to refactor step 8. Recording that field
+but its automated adoption/activation remains deferred to refactor step 07. Recording that field
 alone does not select or implement a migration today.
 
 ## Core Principles

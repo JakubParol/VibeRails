@@ -5,9 +5,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Stage 06 implementation is accepted and merged; this repair publishes its Done record.
-  Accepted scope: `workflows-2`.
-- User accepted the result and explicitly authorized completion and merge on 2026-09-16.
+- Stage 06 remains accepted, merged and Done; accepted scope: `workflows-2`.
 - [PR #11](https://github.com/JakubParol/VibeRails/pull/11) merged at `2026-09-16T13:32:02Z`,
   source `c5c760407bfa67c392a9d7039b528ec4d7d147c8`, actual merge
   `f68ff16e805453d6d4dbcce7dde72a8c28001538`. Source and merge trees are identical.
@@ -17,13 +15,21 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - [Stage 06 record](steps/06-workflows.md) retains cleanup, independent review and behavior
   evidence. Azure DevOps/Jira are MCP-only; eight command wrappers are removed. The optional
   denylist is neutral. Real Azure/Jira access and provider enforcement were not tested.
-- The user requires the Done record published now and all future closing commits before the
-  stage merge. This documentation repair on `codex/refactor-06-closeout` publishes the previously
-  local checkpoint and aligns the operating loop. Merge after current-head CI, then verify Done
-  in remote main. Future stages include closeout in their own PR; never defer it to another stage.
-- Next action: finish the authorized documentation repair and verify Done on remote main.
-  Then wait for the user to begin and agree stage 07 scope. No stage 07 research or
-  implementation is authorized by the stage 06 merge. Stages 00-05 remain Done.
+- [PR #12](https://github.com/JakubParol/VibeRails/pull/12) published the Done record and the
+  pre-merge closeout rule at accepted base `b60a91dca8bcaf7d191146456803a30c55530d8b`.
+  No local-only closing record remains to carry into a later stage.
+- Current delivery: planning-only revision 1.4 on `codex/refactor-plan-adoption-first`, from
+  that accepted base. Scope: swap unstarted 07/08, finish the general adoption baseline first,
+  keep one model-neutral prompt set and reconcile active dependencies/research gates.
+- Authorization: on 2026-09-16 the user said `Zrob branch, popraw, pr i zmerguj prosze`, approving
+  the discussed planning changes, branch, checks, PR and merge. This does not approve stage 07
+  implementation, model research, adopter changes or new runtime/schema behavior.
+- Review/verification: single-agent semantic review in this session; independent dispatch is
+  unavailable and is not claimed. Final document/CI evidence and source/tested/merge revisions
+  belong in this delivery's PR. Required current-head CI must pass before the authorized merge.
+- Next action: reconcile this planning PR's merge, then discuss and agree stage 07 adoption
+  scope. Both 07 and 08 remain Planned; research stays deferred to agreed stage 08 entry.
+  Keep the stage 09 decision gate and same-PR closeout rule. Do not create a checkpoint PR chain.
 
 ## Stage Register
 
@@ -36,8 +42,8 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
-| 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
-| 08 | Adoption and migration | Planned | Create on stage entry. |
+| 07 | Adoption and migration | Planned | Create on stage entry. |
+| 08 | Shared prompt refinement and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 09 | Pilot and comparison | Planned | Create on stage entry. |
 | 10 | Central session reporting | Planned | Create on stage entry. |
 | 11 | Self-feedback and knowledge freshness | Planned | Create on stage entry. |
@@ -47,11 +53,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stage 06 implementation is accepted and merged. Confirm this documentation repair is merged
-and remote main contains Done; no local-only carry-over remains. Reconcile Git/PR state without
-repeating completed work or exposing
-historical denylist values. Stage 07 remains Planned; its reading gate applies only after entry
-is agreed. Preserve stage 08 activation and the post-09 decision gate.
+Use plan revision 1.4 for future work: 07 delivers the versioned model-neutral adoption baseline;
+08 uses Astra to refine that same shared prompt set and evaluates models/routing separately.
+Completed 00-06 records keep their original numbering and evidence. Do not reopen them or infer
+future-stage approval from this planning merge. Preserve the deferred research gate and the
+[post-09 decision gate](../refactor-plan.md#decision-after-step-09).
 
 ## Navigation
 

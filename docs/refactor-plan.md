@@ -1,8 +1,9 @@
 # VibeRails Refactor Plan
 
-Plan revision: 1.3, updated on 2026-09-16.
-Revision 1.3 requires stage-closeout documents in the stage PR before merge. MCP-only Azure
-DevOps/Jira integration, earlier scope refinements and the post-pilot decision remain unchanged.
+Plan revision: 1.4, updated on 2026-09-16.
+Revision 1.4 puts adoption/migration in 07 before shared-prompt refinement and model evaluation
+in 08. Reusable prompts remain model-neutral; Astra helps improve the common set, not create
+an Astra-only edition. Earlier MCP-only, closeout and post-pilot gates remain unchanged.
 Stage authorization is recorded separately in STATUS and the stage card.
 Live progress belongs only in [STATUS](refactor/STATUS.md).
 
@@ -30,6 +31,9 @@ correctness, minimum architecture, and honest evidence; simplicity is not permis
   design remains a proposal until accepted.
 - Support Jira and/or Azure DevOps through MCP integrations where suitable; keep teams without
   either provider supported.
+- Keep one model-neutral set of reusable prompts. Model/effort choices belong to runtime and
+  routing settings; client/tool prerequisites remain explicit integration contracts. General
+  wording does not establish support for every LLM, client or dispatch capability.
 - Add configurable routing of work to models and reasoning efforts, with VibeRails suggested
   presets and improvements informed by the self-feedback loop. Initial model scope is the
   GPT-5.6 family, including Sol, Terra, and Luna, plus GPT-6 Astra.
@@ -42,7 +46,7 @@ correctness, minimum architecture, and honest evidence; simplicity is not permis
   feedback loop, before a custom kanban.
 - Defer the optional custom kanban until after CI/CD. Add further language and framework
   support after the kanban stage, at the very end.
-- Keep all 15 [Astra research sources](astra-refactor-reading-list.md) deferred until step 7.
+- Keep all 15 [Astra research sources](astra-refactor-reading-list.md) deferred until step 08.
 
 ## Coordination
 
@@ -143,14 +147,19 @@ correct result, including parent review, retries and rework. Feed observations i
 | 4 | Verification responsibility | Define small local checks, full PR verification, targeted failure recovery, and behavior when CI is absent or unavailable. |
 | 5 | Documentation and context | Reduce mandatory reading and duplicated reports; inventory prompt components and their composition, and load only active, relevant rules. |
 | 6 | Workflows, skills, and integrations | Provider-neutral lifecycle and supported dispatch/routing operations, with the [workflow requirements](#step-06-workflows-skills-and-integrations) below. |
-| 7 | GPT-6 Astra prompt optimization | Revise, version and evaluate prompts/routing under the [research gate and evaluation scope](#step-7-astra-entry-gate). |
-| 8 | Adoption and migration | Short onboarding, pinned prompt/routing versions and materialized commands, with the [existing-project migration requirements](#step-08-adoption-and-migration) below. |
+| 7 | Adoption and migration | Complete the model-neutral baseline, short onboarding, minimal version pins and materialized commands under the [adoption requirements](#step-07-adoption-and-migration). |
+| 8 | Shared prompt refinement and model evaluation | Use Astra to improve the common prompt set, then evaluate it across selected LLMs and assess routing separately under the [refinement requirements](#step-08-shared-prompt-refinement-and-model-evaluation). |
 | 9 | Pilot and comparison | Run the [bounded pilot](#step-09-pilot-and-comparison) and reach the explicit continuation decision before later stages. |
 | 10 | Central session reporting | Collect outcomes, measured usage, requested/actual models and efforts, prompt/routing versions, attempts, errors, and verified workarounds with low overhead. |
 | 11 | Closed self-feedback loop | Group recurring failures, evaluate prompt and routing improvements, release versioned changes with rollback, retrieve applicable fixes, and measure whether outcomes improve. |
 | 12 | CI/CD provider packages | Add optional Azure Pipelines and GitHub Actions adapters/templates; begin with PR verification, then selected deployment scenarios. |
 | 13 | Optional lightweight kanban | Reassess existing no-tracker options before building a small board using the shared task contract. |
 | 14 | Additional languages and frameworks | Extend architecture, command, verification, and documentation profiles after the earlier stages are proven. |
+
+Revision 1.4 swaps only the two unstarted stages: former 08 adoption becomes 07; former 07
+prompt/model work becomes 08. Accepted 00-06 cards, audits and comparison records retain their
+historical numbering and evidence. Use this table for future work, not an old number in a
+completed record. No extra stage or retrospective re-review is introduced.
 
 Steps 4 and 12 are distinct: step 4 defines how agents use verification, including existing
 pipelines; step 12 packages reusable provider-specific CI/CD assets. Full feedback-loop
@@ -166,8 +175,8 @@ before implementation; the table is not approval to decide all future designs au
 These requirements refine the existing stage. Agree detailed scope, available capabilities and
 proof at entry; no future stage card, manifest field or implementation is created by this plan.
 Retain supported dispatch selection, escalation, fallback and traceable delegation under the
-[model/routing contract](#model-routing-and-prompt-versions); evaluation remains in 07 and
-configuration activation in 08.
+[model/routing contract](#model-routing-and-prompt-versions); evaluation remains in 08 and
+configuration activation in 07.
 Provider/transport choices and the no-tracker option remain owned by
 [Trackers And The Deferred Kanban](#trackers-and-the-deferred-kanban).
 
@@ -187,7 +196,7 @@ may authorize several operations; do not request consent again for actions alrea
 A link, available tool or configuration choice grants no implementation or write authority.
 Support an optional team handoff where the agent stops at a draft PR and a human owns publication
 and merge; do not make it the universal workflow. Manifest/configuration changes remain behind
-the [step 08 migration boundary](#step-08-adoption-and-migration).
+the [step 07 migration boundary](#step-07-adoption-and-migration).
 
 At handoff verify the repository, branches, reviewed commit, actual PR state and scope/revision
 of CI evidence. Agent-task completion is distinct from feature acceptance and merge. Inspect
@@ -197,7 +206,7 @@ the actual verification path for draft PRs rather than assuming required pipelin
 
 Distinguish environment/checkout, configuration, tool availability, connection startup,
 authorization and operation-support failures. Use bounded, justified retries. After an
-ambiguous write, inspect remote state before retrying creation of a PR, comment or work item;
+ambiguous write, inspect authoritative remote state before retrying creation of a PR, comment or work item;
 never treat a tool error as a successful empty result. Use existing provider revision/version
 preconditions for shared-state writes when available. Readback verifies the result but does
 not replace protection against overwriting a concurrent change.
@@ -226,28 +235,75 @@ checks do not replace these trials. Clearly distinguish fixture/mock evidence fr
 integration behavior and enforced permissions. Do not create an exhaustive provider/platform
 matrix; the entry agreement identifies actual scope, access and obtainable evidence.
 
-## Step 7 Astra Entry Gate
+## Step 07 Adoption And Migration
 
-Before designing or editing Astra prompts, read the
-[complete 15-source register](astra-refactor-reading-list.md) and complete its entry checklist.
-Record unavailable sources rather than silently omitting them. Do not analyze those sources
-during earlier stages. Context, cost, and feedback findings also feed steps 10-11, subject to
-[the post-pilot decision](#decision-after-step-09).
+Finish the complete model-neutral baseline before prompt optimization: reusable prompts,
+standards and skills plus a working onboarding/update path. Apply the implemented semantics
+from 03-06 and strict version/capability handling; do not make adoption depend on stage 08's
+model recommendations or refined prompt version.
 
-After the reading gate, reuse the small general scenarios from
-[stage 06](#stage-06-acceptance-evidence) to evaluate context selection, scope compliance,
-responses to missing permissions/evidence and correct handoff. Code quality or prompt length
-alone is not enough. The model/runtime, candidate and versioning contract is in
-[Model Routing And Prompt Versions](#model-routing-and-prompt-versions). Full pilots remain
-in step 09; this stage does not substitute for them.
+Include an update of an existing project with locally adapted standards in acceptance, alongside
+fresh adoption. Distinguish local knowledge, deliberate settings, useful extensions and actual
+conflicts with the new contract. Before overwriting, present the proposed changes and conflicts;
+preserve permission limits, commands, architecture, required CI and project knowledge. A new
+preset does not automatically invalidate them.
+
+Implement the minimal Git-backed prompt identification and pinning described in
+[Model Routing And Prompt Versions](#model-routing-and-prompt-versions). Pin the general baseline
+and record effective instructions and existing routing/runtime settings. `modelRouting: inherit`
+remains sufficient; explicit routes already authorized by task/runtime policy remain possible.
+Do not invent a model catalog, model-specific prompt editions or a prompt-management service.
+
+Keep the declared target state separate from migration actually performed and verified.
+New manifest fields, configuration activation and migration belong here, once the implemented
+03-06 semantics and this stage's validation are ready. Record remaining work rather than treating
+a changed label as completed adoption. Validate fresh adoption and existing-project updates on
+controlled examples or agreed copies. Updating a real project requires separate authorization;
+select no concrete repository or change its configuration during this planning update.
+Command materialization uses the existing
+[cross-platform design scope](#cross-platform-scripts-design-scope).
+
+Acceptance must leave a versioned, usable general baseline and verified adoption/update evidence
+within the agreed environment. Model-neutral instructions do not prove every client, LLM or
+integration is supported. Keep actual runtime/tool prerequisites and unavailable coverage explicit.
+Freeze this baseline for the later 08/09 comparisons; no deferred-source analysis happens in 07.
+
+## Step 08 Shared Prompt Refinement And Model Evaluation
+
+Use Astra to propose improvements to the complete stage 07 prompt set, including adoption and
+migration instructions. Improved by Astra does not mean intended only for Astra. The result is
+a new version of the same model-neutral set; do not introduce model-specific prompt forks.
+Keep model, reasoning effort and allowed dispatch choices in separate runtime/routing policy.
+
+### Step 08 Research Entry Gate
+
+At agreed stage 08 entry, read the
+[complete 15-source register](astra-refactor-reading-list.md) and complete its entry checklist
+before research-driven refinement. Record unavailable sources rather than silently omitting them.
+Do not analyze those sources during earlier stages. Context, cost, and feedback findings also
+feed steps 10-11, subject to [the post-pilot decision](#decision-after-step-09).
+
+After the gate, reuse the small general scenarios from
+[stage 06](#stage-06-acceptance-evidence) and stage 07 adoption/update checks. Evaluate context
+selection, scope compliance, missing permissions/evidence and correct handoff, not only code
+quality or prompt length. Compare the baseline and proposed shared version on the same tasks
+across selected available LLMs before promoting cross-model improvement claims. Preserve the
+original baseline; an Astra-authored edit alone is not evidence of improvement. Disclose any
+unavailable model or untested generalization rather than declaring universal compatibility.
+
+Evaluate model/effort and routing candidates separately where practical, following
+[Model Routing And Prompt Versions](#model-routing-and-prompt-versions). Recommendations must
+fit actual runtime capabilities and may not silently change project pins or settings.
+Full end-to-end pilots remain in 09; this stage does not substitute for them.
 
 ## Model Routing And Prompt Versions
 
-This section describes the planned framework capability; our actual delegate policy above
-already applies to this refactor. The
-initial catalog covers the GPT-5.6 family and GPT-6 Astra. Verify exact runtime model IDs,
-available reasoning efforts, account access, and dispatch capabilities during step 7 before
-turning candidate settings into supported presets.
+This section separates stage 07 baseline versioning from stage 08 model/routing evaluation;
+our actual delegate policy above already applies to this refactor. The initial evaluation
+catalog covers the GPT-5.6 family and GPT-6 Astra. Verify exact runtime model IDs, available
+reasoning efforts, account access and dispatch capabilities during step 08 before turning
+candidate settings into supported recommendations. These candidates do not define which LLMs
+may consume the general prompt set; broader compatibility requires its own evidence.
 
 User-provided starting examples to evaluate:
 
@@ -271,52 +327,40 @@ Dispatch must use capabilities actually exposed by the runtime. Prompt text alon
 switch a model. Record requested and observed model/effort separately; if actual settings are
 not observable, mark them unknown. This also applies when a child inherits its parent's model.
 
-Versioning proposal:
+Minimal versioning delivered in 07, extended only when evaluation requires it:
 
-- Give each maintained prompt a stable ID, immutable version, and content hash. Prefer
-  Git-backed versions and release records over adding a separate prompt-management service.
-- Version routing policies and suggested presets independently from prompt contents; pin the
-  selected versions in each adopting project and resolve them for each run.
-- Record a manifest of the effective prompt composition: shared instructions, relevant
-  project/skill instructions, model-specific adaptations, and safe references to variable
-  context. One template hash does not identify all instructions the agent received.
+- Give each maintained prompt a stable ID, immutable version/reference and content hash. Use
+  existing Git objects and release records rather than a separate prompt-management service.
+- Pin the general prompt baseline during adoption. Record inherited runtime selection and any
+  existing explicitly allowed routing policy independently; tuned presets are not prerequisites.
+  Version later routing recommendations separately from prompt contents and adopt them explicitly.
+- Identify effective prompt composition with safe references to shared instructions, relevant
+  project/skill instructions and variable context. Record client/tool prerequisites separately;
+  one template hash does not identify all instructions the agent received.
 - Mark opaque or unavailable instruction layers explicitly. Central reports should retain
   safe version/hash references by default, not raw private instructions or task payloads.
-- Keep shared rules canonical. Add model-specific prompt variants only when evaluations show
-  a reason for them, rather than copying the full instruction set for every model.
+- Keep shared rules canonical and prompt content model-neutral in every revision. Do not create
+  per-model copies or adaptations; model/effort selection remains an independent setting.
 
-For step 07 evaluation and later feedback experiments, compare a bounded set of justified
-prompt/model/routing candidates. Where practical separate prompt changes from model or routing
-changes so effects remain attributable. Apply the outcome/cost criteria from the
-[pilot contract](#step-09-pilot-and-comparison); prompt variants follow the versioning rule above.
-Publish improved recommendations with evidence, configured
-promotion rules, and rollback; do not silently replace project pins or rewrite a policy in
-the middle of a run. Escalations already allowed by the active policy remain possible.
-
-## Step 08 Adoption And Migration
-
-Include an update of an existing project with locally adapted standards in acceptance, alongside
-fresh adoption. Distinguish local knowledge, deliberate settings, useful extensions and actual
-conflicts with the new contract. Before overwriting, present the proposed changes and conflicts;
-preserve permission limits, commands, architecture, required CI and project knowledge. A new
-preset does not automatically invalidate them.
-
-Keep the declared target state separate from migration actually performed and verified.
-New manifest fields, configuration activation and migration belong here, after the preceding
-semantics are ready; record remaining work rather than treating a changed label as completed
-adoption. Validate on controlled examples or agreed copies. Updating a real project requires separate authorization;
-select no concrete repository or change its configuration during this planning update.
-Command materialization uses the existing
-[cross-platform design scope](#cross-platform-scripts-design-scope).
+For step 08 evaluation and later feedback experiments, compare a bounded set of justified
+shared-prompt versions and model/routing candidates. Where practical separate prompt changes
+from model or routing changes so effects remain attributable. Apply the outcome/cost criteria
+from the [pilot contract](#step-09-pilot-and-comparison). Publish improved recommendations with
+evidence, configured promotion rules, and rollback; do not silently replace project pins or
+rewrite a policy in the middle of a run. Escalations already allowed by the active policy remain
+possible. A general prompt improvement does not require redoing adoption; use an authorized
+version update that preserves local decisions and records the actual refreshed content.
 
 ## Step 09 Pilot And Comparison
 
 Include a small project and a larger team scenario with locally modified standards. Select
 specific environments and access at stage entry. Pin compared revisions, settings, tasks and
-acceptance criteria, including before/after migration. Evaluate correctness, boundary violations,
-rework, human involvement, elapsed time, available usage data, agreement with required checks
-and whether another developer can take over the work. Include failed attempts and coordination/
-delegation overhead. Word counts are not tokens, time or savings; disclose unavailable measures.
+acceptance criteria, including before/after migration. Compare the frozen general baseline from
+07 with the shared version refined in 08, retaining comparable tasks and separating routing
+changes where practical. Evaluate correctness, boundary violations, rework, human involvement,
+elapsed time, available usage data, agreement with required checks and whether another developer
+can take over the work. Include failed attempts and coordination/delegation overhead. Word counts
+are not tokens, time or savings; disclose unavailable measures.
 
 ### Decision After Step 09
 

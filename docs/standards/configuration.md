@@ -1,9 +1,9 @@
 # Core And Configuration Contract
 
 Design revision: 1, prepared in refactor step 02. **Design contract, not an active runtime or
-adoption feature.** Existing adoption instructions, manifests and validators remain unchanged.
+adoption feature.** The planning update does not activate new manifest fields or validators.
 Do not add the section below to target repositories until the owning stages implement its
-semantics and step 8 provides explicit adoption/version handling.
+semantics and step 07 provides explicit adoption/version handling under plan revision 1.4.
 
 ## Core That Presets Cannot Disable
 
@@ -56,7 +56,7 @@ there is no preset inheritance, deep-merge language or per-feature rule engine.
 | `documentation` | `essential`, `standard` | Minimum useful coverage or explicit module/boundary documentation; see [documentation bundles](documentation.md#documentation-bundles). Neither is a per-task reading list. |
 | `workflow` | `local`, `pull-request` | Default delivery endpoint for authorized work. PR mode prepares a PR, not an automatic merge. Execution: step 6. |
 | `review` | `adaptive`, `independent` | Scope review according to risk; `independent` additionally requires independent review. No fixed reviewer count. Execution: step 6. |
-| `modelRouting` | `inherit` | Preserve the runtime/client's model selection; this section does not change it. Configured routes and catalog evaluation: steps 6-7. |
+| `modelRouting` | `inherit` | Preserve the runtime/client's model selection. Stage 06 governs explicit task/runtime routes; 07 can adopt this inherited baseline without waiting for model/routing evaluation in 08. |
 
 Trackers, code hosts and platforms remain independent existing choices. A preset does not
 silently select Jira, GitHub, PowerShell or a model. Simultaneous tracker routing is designed
@@ -66,7 +66,9 @@ owning stages rather than represented by placeholder flags.
 
 The initial planned configured-model catalog remains the GPT-5.6 family (including Sol, Terra
 and Luna) plus GPT-6 Astra. Exact IDs, supported efforts and measured route recommendations
-are verified in step 7. This design does not advertise them as active routing capabilities.
+are verified in step 08. They are not prerequisites for stage 07's general prompt baseline.
+Reusable prompt content stays model-neutral; runtime/routing settings select models and effort.
+This design does not advertise evaluated routes or additional clients as active capabilities.
 
 ## Two Presets, Then Explicit Choices
 
@@ -117,10 +119,14 @@ legacy audit checks that `schemaVersion` exists, but does not validate its value
 reject unknown extra fields. Therefore neither a v2 marker nor a successful legacy audit would
 prove support for this section. See [the existing audit](../templates/adoption-audit.mjs).
 
-Only explicit migration in step 8 may materialize these choices in an adopted repository,
-after the required semantics in steps 3-7 and strict version/capability handling are available.
-Existing adoptees continue using their existing policy until then. Do not run two overlapping
-configurations or change existing fields merely to match one example.
+Only explicit migration in step 07 may materialize these choices in an adopted repository,
+after the required semantics in steps 03-06 and strict version/capability handling are available.
+Stage 07 also supplies minimal Git-backed version pins for the model-neutral prompt baseline;
+`modelRouting: inherit` and existing authorized task/runtime routes do not depend on stage 08.
+The later refinement/evaluation stage versions improvements and recommendations separately;
+it must not silently replace an adopter's prompt pin or model selection.
+Existing adoptees continue using their existing policy until authorized migration. Do not run
+two overlapping configurations or change existing fields merely to match one example.
 
 Changing architecture/configuration selects a target; it does not refactor code. Adoption must
 record remaining migration work and verify it before claiming compliance. Existing provenance
