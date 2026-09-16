@@ -18,6 +18,12 @@ This is the active internal refactor plan. It is not an adoption template. The r
   design remains a proposal until accepted.
 - Support Jira and/or Azure DevOps through MCP integrations where suitable; keep teams without
   either provider supported.
+- Add configurable routing of work to models and reasoning efforts, with VibeRails suggested
+  presets and improvements informed by the self-feedback loop. Initial model scope is the
+  GPT-5.6 family, including Sol, Terra, and Luna, plus GPT-6 Astra.
+- Version prompts and routing policies so session outcomes can be attributed to the exact
+  instructions and selection rules used. Model/effort examples are candidates to evaluate,
+  not established cost or quality rankings.
 - Treat central session reporting and the self-feedback loop as major final stages of the core
   refactor, not as incidental skill notes.
 - Add reusable Azure Pipelines and GitHub Actions CI/CD profiles after the core refactor and
@@ -40,17 +46,17 @@ implementation stages, provider setup, deployments, or backlog writes.
 
 | Step | Area | Intended outcome |
 |---|---|---|
-| 1 | Audit and baseline | Locate duplicated rules, conflicting instructions, unnecessary work, and representative task costs; define comparable quality and completion measures. |
-| 2 | Small core and configuration | Separate minimum rules from optional modules; define presets, overrides, platform needs, and one effective configuration used by all workflows. |
+| 1 | Audit and baseline | Locate duplicated rules, conflicting instructions, unnecessary work, and representative task costs; include model/effort and prompt identity in comparable quality and completion measures. |
+| 2 | Small core and configuration | Separate minimum rules from optional modules; define presets, overrides, platform needs, the supported model catalog, and configurable routing by role/task with bounded agent choice. |
 | 3 | Architecture variants | Specify minimal and extended Clean Architecture, including per-project or per-area selection and migration boundaries. |
 | 4 | Verification responsibility | Define small local checks, full PR verification, targeted failure recovery, and behavior when CI is absent or unavailable. |
-| 5 | Documentation and context | Reduce mandatory reading and duplicated reports; route agents only to active, relevant rules. |
-| 6 | Workflows, skills, and integrations | Make task lifecycle independent of tracker and transport; align implementation, review, E2E, and delegation with configuration. |
-| 7 | GPT-6 Astra prompt optimization | Read and assess every registered source, then revise and evaluate instructions. See the mandatory entry gate below. |
-| 8 | Adoption and migration | Provide a short onboarding path, preserve project knowledge, materialize selected commands, and distinguish desired configuration from completed migrations. |
-| 9 | Pilot and comparison | Exercise small and larger projects; compare cost, correctness, rework, and agreement between agents and CI. |
-| 10 | Central session reporting | Collect reliable session outcomes, measured usage, attempts, errors, and verified workarounds across projects with low reporting overhead. |
-| 11 | Closed self-feedback loop | Group recurring failures, validate improvements, release changes, make relevant fixes retrievable, and measure whether outcomes improve. |
+| 5 | Documentation and context | Reduce mandatory reading and duplicated reports; inventory prompt components and their composition, and load only active, relevant rules. |
+| 6 | Workflows, skills, and integrations | Make task lifecycle independent of tracker and transport; apply routing to supported dispatch operations, including selection, escalation, fallback, and traceable delegation. |
+| 7 | GPT-6 Astra prompt optimization | Read and assess every registered source, then revise, version, and evaluate prompts with routing candidates for Astra and the supported GPT-5.6 family. See the mandatory entry gate below. |
+| 8 | Adoption and migration | Provide a short onboarding path, preserve project knowledge, select and pin prompt/routing versions, materialize commands, and distinguish desired configuration from completed migrations. |
+| 9 | Pilot and comparison | Exercise small and larger projects; compare model/effort/prompt/routing combinations by total task cost, correctness, rework, and agreement between agents and CI. |
+| 10 | Central session reporting | Collect outcomes, measured usage, requested/actual models and efforts, prompt/routing versions, attempts, errors, and verified workarounds with low overhead. |
+| 11 | Closed self-feedback loop | Group recurring failures, evaluate prompt and routing improvements, release versioned changes with rollback, retrieve applicable fixes, and measure whether outcomes improve. |
 | 12 | CI/CD provider packages | Add optional Azure Pipelines and GitHub Actions adapters/templates; begin with PR verification, then selected deployment scenarios. |
 | 13 | Optional lightweight kanban | Reassess existing no-tracker options before building a small board using the shared task contract. |
 | 14 | Additional languages and frameworks | Extend architecture, command, verification, and documentation profiles after the earlier stages are proven. |
@@ -65,6 +71,56 @@ Before designing or editing Astra prompts, read the
 [complete 15-source register](astra-refactor-reading-list.md) and complete its entry checklist.
 Record unavailable sources rather than silently omitting them. Do not analyze those sources
 during earlier stages. Context, cost, and feedback findings also feed steps 10-11.
+
+## Model Routing And Prompt Versions
+
+This is a planned capability, not a change to the models used by the current session. The
+initial catalog covers the GPT-5.6 family and GPT-6 Astra. Verify exact runtime model IDs,
+available reasoning efforts, account access, and dispatch capabilities during step 7 before
+turning candidate settings into supported presets.
+
+User-provided starting examples to evaluate:
+
+| Work | Candidate routing |
+|---|---|
+| Planning | GPT-6 Astra with xHigh reasoning |
+| Implementation | Agent selects from an allowed pool such as GPT-5.6 Sol, Luna with Max reasoning, or Terra with Max reasoning. Sol's effort remains configurable. |
+| Review, investigation, and other roles | Separate configurable routes, selected and evaluated during detailed design. |
+
+Keep model and reasoning effort as separate settings. Route by role and task needs, including
+complexity, ambiguity, impact, required capabilities, and budget. These examples do not assert
+that a particular model or reasoning level is always cheaper or more effective.
+
+Configuration should resolve authorized run overrides, then task/area settings, project
+settings, and the selected versioned VibeRails preset, subject to higher-priority instructions
+and actual runtime capabilities. Agents may choose only within the allowed model/effort pool.
+Define bounded retries, escalation, fallback, and the evidence needed for a change of route.
+Report unavailable routes instead of silently substituting disallowed models or efforts.
+
+Dispatch must use capabilities actually exposed by the runtime. Prompt text alone does not
+switch a model. Record requested and observed model/effort separately; if actual settings are
+not observable, mark them unknown. This also applies when a child inherits its parent's model.
+
+Versioning proposal:
+
+- Give each maintained prompt a stable ID, immutable version, and content hash. Prefer
+  Git-backed versions and release records over adding a separate prompt-management service.
+- Version routing policies and suggested presets independently from prompt contents; pin the
+  selected versions in each adopting project and resolve them for each run.
+- Record a manifest of the effective prompt composition: shared instructions, relevant
+  project/skill instructions, model-specific adaptations, and safe references to variable
+  context. One template hash does not identify all instructions the agent received.
+- Mark opaque or unavailable instruction layers explicitly. Central reports should retain
+  safe version/hash references by default, not raw private instructions or task payloads.
+- Keep shared rules canonical. Add model-specific prompt variants only when evaluations show
+  a reason for them, rather than copying the full instruction set for every model.
+
+The feedback loop evaluates versioned candidate prompts and routing policies on comparable
+tasks. Measure completion, correctness, rework, total usage/cost, and latency, including failed
+attempts and delegation overhead. Separate prompt and routing changes where practical so
+their effects remain attributable. Publish improved recommendations with evidence, configured
+promotion rules, and rollback; do not silently replace project pins or rewrite a policy in
+the middle of a run. Escalations already allowed by the active policy remain possible.
 
 ## Cross-Platform Scripts: Design Scope
 
@@ -165,13 +221,17 @@ needs; do not expand the supported stack during the core refactor.
   counts. Attribute parent/subagent usage and resumed work without double counting.
 - Capture a compact execution summary, relevant framework version/configuration, repeated
   attempts, sanitized errors, proposed causes, and evidence for verified workarounds.
+- Include prompt IDs/versions, effective composition references, routing-policy versions,
+  selection reasons, and requested/observed model and effort for each attempt. Link parent,
+  subagent, retry, and resumed execution records without double counting their usage.
 - Keep collection cheap and recoverable when the central service is unavailable. Choose the
   storage and retention model during detailed design; avoid concurrent edits to one shared
   Markdown inbox as the ingestion protocol.
 - Group related incidents, separate hypotheses from validated fixes, and prioritize by
   recurrence, cost, and outcome impact.
 - Route improvements through review and verification, then compare later sessions to confirm
-  benefit. Retrieve only relevant, applicable learnings during normal work.
+  benefit. Include prompt and routing candidates, preserve project pins, and retain previous
+  versions for rollback. Retrieve only relevant, applicable learnings during normal work.
 - Measure the feedback system's own overhead and keep product backlogs independent from
   framework telemetry.
 
