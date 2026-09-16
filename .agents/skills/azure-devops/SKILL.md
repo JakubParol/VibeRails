@@ -1,6 +1,6 @@
 ---
 name: azure-devops
-description: Work with Azure DevOps Boards and Azure Repos through a connected Azure DevOps MCP integration. Use when Codex needs to inspect, create, update, comment on, link, transition, or clean up work items; inspect or update pull requests; link work items to PRs; publish review comments or votes; prepare completion; diagnose MCP capability or authorization failures; or record a verified reusable Azure DevOps workflow correction.
+description: Inspect or change Azure Boards work items and Azure Repos pull requests through connected MCP. Use for a selected Azure DevOps operation or its failure; not for unrelated GitHub, Jira, or local work.
 ---
 
 # Azure DevOps

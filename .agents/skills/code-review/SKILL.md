@@ -1,167 +1,94 @@
 ---
 name: code-review
-description: Orchestrate repository code reviews for local branches and pull requests. Use for review, code review, PR review, current PR review, pre-PR review, multi-agent review, independent agent review, review loop, or review-and-fix requests in adopting repositories. Supports local branch mode, GitHub PR local-diff mode, and Azure DevOps PR mode, including generic specialist routing for apps, services, packages, infrastructure, docs, tests, scripts, and .agents assets.
+description: Review a local diff or pull request for actionable defects. Use for code review or an explicit review-and-fix task; a PR link selects the mode, not publication or merge authority.
 ---
 
 # Code Review
 
-## Overview
+Review the changed scope with evidence-backed findings. Default to read-only work; implement
+fixes only under review-and-fix authority. Match coverage and independence to risk and target
+policy, not a fixed reviewer fleet.
 
-Use this skill to run a structured repository review with coverage matched to the actual change.
-It supports three modes:
+## Select One Mode
 
-- Local branch mode: no PR URL is provided. Review the current branch and local changes
-  read-only by default. Apply fixes only when the user explicitly asks for review-and-fix or
-  approves proposed fixes, then run the relevant gates and repeat the focused loop.
-- GitHub PR local-diff mode: a GitHub PR URL is provided. Fetch and review the PR diff locally
-  or with read-only GitHub metadata. Keep findings local unless a repository-specific GitHub
-  publishing workflow is later added.
-- Azure DevOps PR mode: an Azure DevOps PR URL selects the Azure DevOps procedure. Review the PR
-  as a reviewer and run proportionate passes. Publish findings or cast a vote only when the
-  current request explicitly authorizes normal PR review output and the mode conditions permit
-  it. If MCP confirms self-review, or cannot establish reviewer/author identity, keep the
-  outcome local.
+| Review source | Read before reviewing | Publication boundary |
+|---|---|---|
+| Local branch | [Local mode](references/local-branch-mode.md) | Keep results local; protect unrelated edits. |
+| GitHub PR | [GitHub mode](references/github-pr-mode.md) | Read-only metadata/diff; publishing needs an explicit target profile and task authority. |
+| Azure DevOps PR | [Azure mode](references/pr-mode.md) | MCP only; publication also needs confirmed non-self-review identity and the required operation/anchor. |
 
-This skill is reusable across repositories. It must adapt to the current repository instead of
-assuming a specific product topology. Match reviewer independence and specialist coverage to
-scope, risk, repository policy, and the value of another perspective; do not require a stock
-pair or fleet.
+An unsupported host requires a target profile or verified source/target refs before selecting
+local mode. A URL routes the task; it does not authorize writes. Missing remote metadata limits
+what can be claimed even when a local diff is readable. Azure identity/publication conditions
+apply to Azure mode, not to GitHub or local review.
 
-## Context, Staffing, And Authorization
+## Resolve Target Rules
 
-Follow the target repository's context router and its documentation index before selecting
-reviewers. If the target has adopted VibeRails, resolve lifecycle, authorization, handoff,
-evidence, routing, and operation rules through that target index. The links below are
-source-pack maintainer/reference defaults for reviewing this repository; they are not target
-paths or a replacement for target customization:
-[task lifecycle](../../../docs/standards/change-protocol.md#task-lifecycle),
-[authorization and delivery](../../../docs/standards/change-protocol.md#authorization-and-delivery),
-[handoff and acceptance](../../../docs/standards/change-protocol.md#handoff-and-acceptance),
-[evidence validity](../../../docs/standards/quality-gate.md#evidence-validity),
-[delegation and runtime routing](../../../docs/standards/agent-workflow.md#delegation-and-runtime-routing),
-and [operation readiness and recovery](../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery).
-For a native repository, use its applicable `AGENTS.md`, review, delivery, and verification
-rules instead; do not require missing VibeRails files.
+Follow applicable root/path `AGENTS.md` and the target's context router/index. Read rules for
+changed paths and affected boundaries; reuse unchanged context. In an adopted target, resolve
+its local lifecycle, evidence and dispatch owners. Native repositories use their own equivalent
+rules and do not need missing VibeRails files.
 
-Read [agent-authorization.md](references/agent-authorization.md) before dispatching. Independent
-review is required only when the user, repository policy, delivery gate, or change risk calls for
-it. When it is not required and proportionate local review is sufficient, continue locally
-without asking the user to opt out of agents. If an independent pass is needed but has no standing
-authorization, ask only for that dispatch. An unavailable or declined independent pass is a
-reported limitation when it was required or already agreed.
-
-Keep already authorized review, verification, and publishing actions in scope; do not ask again
-for the same action. A link, available tool, profile, or skill does not grant implementation or
-write authority. Reviewers do not fix or publish unless separately authorized. A repository may
-explicitly set reviewers to static-only. Otherwise, a reviewer may run the target's selected,
-focused checks when they are needed to assess the review, unless target rules or task scope
-expressly exclude execution.
-
-## Guardrails
-
-- Start from the repository root and follow root `AGENTS.md` before reviewing or editing.
-- Inspect `git status --short --branch` before changing files, switching branches, committing,
-  pushing, or posting comments.
-- Protect unrelated user work. Never revert, stash, stage, commit, or overwrite unrelated
-  changes without explicit approval.
-- In PR mode, do not push fixes, update PR metadata, resolve threads, complete the PR, or merge
-  without explicit user approval. A PR URL, profile, configuration, or link chooses a procedure;
-  it does not authorize inline comments or reviewer votes. Use those writes only when the current
-  request explicitly covers normal PR review output (a named workflow may cover several
-  operations) and target policy permits it. Azure DevOps publication additionally requires
-  MCP-confirmed non-self-review; unknown identity keeps that provider's result local.
-- In local branch mode, do not make fixes unless the user asked for review-and-fix or approved
-  proposed fixes.
-- Review only changed code for diff-based findings. Mention pre-existing code only when it is
-  necessary to explain a changed-line issue.
-- Do not weaken lint, type, test, security, import-boundary, or quality-gate rules.
-- Never expose secrets, tokens, raw customer data, raw personal data, PII, raw OCR text,
-  prompts, credentials, request bodies, headers, or authorization values in findings, comments,
-  agent prompts, or prompt drafts. Redact sensitive diff excerpts before sending them to review
-  agents.
+These source-pack defaults are references, not target permission or a replacement for local
+customization: [lifecycle/authority](../../../docs/standards/change-protocol.md),
+[evidence](../../../docs/standards/quality-gate.md#evidence-validity),
+[dispatch](../../../docs/standards/agent-workflow.md#delegation-and-runtime-routing), and
+[provider recovery](../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery).
+Read their relevant sections only when no target owner supplies the needed rule.
 
 ## Workflow
 
-1. Detect the mode:
-   - Azure DevOps PR URL: read [Azure DevOps PR mode](references/pr-mode.md).
-   - GitHub PR URL: read [GitHub PR local-diff mode](references/github-pr-mode.md).
-   - Other PR URL: obtain the provider profile or confirm source/target refs before using local
-     branch mode.
-   - No PR URL: read [local branch mode](references/local-branch-mode.md).
-2. Load the applicable target rules, then resolve review-agent authority with
-   [agent-authorization.md](references/agent-authorization.md).
-3. Establish the review boundary: base/source and target refs, changed paths, the current review
-   head, and any existing review or test evidence with the revision it actually covers. A stale
-   `reviewedSHA` cannot cover a newer head.
-4. Build the inventory. Local mode includes relevant committed, staged, unstaged, and untracked
-   work; PR mode includes only PR changes.
-5. Route review lenses and specialists with [area-routing.md](references/area-routing.md).
-   Select only the number and expertise that the scope and required independence justify.
-6. Give each independent reviewer a bounded scope, relevant rules, the exact diff/revision,
-   any permitted focused check, and the required output. Do not give one reviewer another
-   reviewer's conclusions before it finishes.
-7. Aggregate with [output.md](references/output.md): retain independent attribution in the
-   existing review record, triage once, and classify actionable findings with
-   [severity-and-comments.md](references/severity-and-comments.md).
-8. In local mode, stay read-only unless review-and-fix authority exists. Run only focused checks
-   selected by the task or target policy, including a check needed to resolve an actionable
-   finding unless static-only is explicit. A successful process with zero executed cases, a
-   stale report, or skipped coverage is not test PASS. In review-and-fix mode, repeat the
-   focused review/fix/check loop until clean, blocked, a user decision is needed, or five
-   cycles complete.
-9. In PR mode, follow the URL-selected reference for MCP capability discovery and self-review
-   status. Publish findings or a vote only when the current request explicitly covers normal PR
-   review output, target policy permits it, and MCP confirms the required capability and
-   non-self-review. Re-read current PR state before publishing. A missing MCP capability keeps
-   that outcome local; it does not permit a wrapper, CLI, REST/API, or another write.
+1. Establish source/target refs, current reviewed SHA, changed paths and existing review/check
+   evidence. Local inventory includes committed, staged, unstaged and relevant untracked changes;
+   PR inventory contains only that PR's changes. Inspect working-tree state before any mutation.
+2. Select necessary coverage with [area routing](references/area-routing.md). Before a dispatch
+   or independence decision read [agent authorization](references/agent-authorization.md).
+   Required independent review must be authorized and actually available; self-review does not
+   replace it. An explicit task exception is reported, not disguised as independent coverage.
+3. Inspect changed behavior and surrounding contracts. Findings concern changed lines; cite
+   unchanged code only to explain the introduced defect. Run a needed, authorized focused check
+   unless target policy is static-only. Full gates retain their target CI ownership.
+4. Triage with [severity](references/severity-and-comments.md) and [output](references/output.md):
+   deduplicate issues, verify evidence and retain independent attribution. Say "No findings"
+   only after review, with material coverage limits. A green test is not a completed review.
+5. In authorized review-and-fix work, fix actionable issues and check the affected delta. Reuse
+   unaffected evidence; stop when clean, blocked, a decision is needed, or five cycles finish.
+6. Before handoff or authorized publication, re-read the current head/state. An older SHA needs
+   the missing delta review, not a relabeled result. Test PASS requires fresh, actually executed
+   relevant cases; zero, stale, all-skipped or missing evidence is not PASS.
+7. Follow only the selected mode's publishing rules. Without authority/capability, return local
+   findings and the exact missing step. For Azure, unknown/matching actor identity prevents
+   comments, substitute summaries and votes. Missing MCP never permits CLI, REST or wrappers.
 
-## Required Agent Prompts
+Carry forward already granted authority. Review alone does not authorize fixes, push, PR edits,
+thread resolution or merge. Protect unrelated work; never stash, discard or include it without
+approval. Preserve quality and security checks. If blocked, identify the concrete rule or missing
+capability rather than inventing an additional approval ceremony.
 
-Every review agent prompt must include:
+## Delegate Packet
 
-- mode and source of truth: local branch diff or PR URL;
-- assigned responsibility and owned path scope;
-- exact changed files or sanitized diff snippets, reviewed revision, and current-head boundary;
-- required docs from [area-routing.md](references/area-routing.md);
-- whether review is static-only or which focused check is permitted and needed;
-- instruction not to reproduce secrets, raw personal data, PII, raw customer data, raw OCR
-  text, prompts, credentials, request bodies, headers, or authorization values;
-- instruction to review changed lines only unless a surrounding unchanged line explains a
-  changed-line issue;
-- instruction to produce evidence-backed findings with path and line references;
-- instruction to report "No findings" when there are no actionable issues;
-- severity scale from [severity-and-comments.md](references/severity-and-comments.md).
+When delegation is permitted, provide the mode, exact revision and owned paths, applicable local
+rules, needed sanitized diff/context, allowed focused checks or static-only constraint, and
+requested output: actionable findings with severity, path/line and concrete impact, or no findings.
+Use supported model/effort settings under the target's routing policy and disclose unobserved
+settings. Keep reviewers' conclusions independent until triage. Delegation grants no mutation
+or publication authority beyond the actual task.
 
-For an Azure DevOps PR, use only the active MCP capabilities discovered through the target
-profile. The source-pack [`azure-devops`](../azure-devops/SKILL.md) link is maintainer
-reference, not a wrapper, CLI, or REST/API fallback. Read-only MCP discovery is allowed; review
-output writes follow the PR mode rules above.
+Protect secrets, credentials, identity data, customer/OCR payloads, private prompts, request
+bodies and headers. Redact sensitive excerpts before reports or delegation. Authorized public
+or synthetic instruction snippets may be reviewed; never substitute real private payloads.
 
-For GitHub PRs, keep review findings local unless the adopting repository explicitly documents
-a GitHub review publishing profile. Do not use Azure DevOps MCP operations for GitHub URLs.
+## Conditional References
 
-## References And Read When
+The selected mode supplies operational detail. [LEARNINGS.md](LEARNINGS.md) is historical
+knowledge: read only for a directly relevant recurring gap, reverify it, and record improvements
+only through an authorized learning workflow. History is not current permission.
 
-Skill and target-repository instructions are applicable rules. Mode references are operational
-detail: read only the one selected by the review source, then the references needed for the next
-decision. Historical knowledge is neither a rule nor an authority grant.
-
-| Reference | Read when |
-|---|---|
-| [agent authorization](references/agent-authorization.md) | Deciding whether an independent reviewer is required or permitted. |
-| [local branch mode](references/local-branch-mode.md) | No PR URL is provided. |
-| [GitHub PR mode](references/github-pr-mode.md) | A GitHub PR URL is provided. |
-| [Azure DevOps PR mode](references/pr-mode.md) | An Azure DevOps PR URL is provided and active MCP capabilities must be checked. |
-| [area routing](references/area-routing.md) | Selecting coverage from changed paths. |
-| [severity and comments](references/severity-and-comments.md) | Triaging findings or preparing an authorized Azure DevOps inline comment. |
-| [output](references/output.md) | Recording evidence or handing off a review result. |
-| [LEARNINGS.md](LEARNINGS.md) | A directly relevant, verified recurring gap needs historical context. It does not replace current rules or grant authority. |
-
-When a review exposes a verified, reusable improvement to this skill, record it only through the
-repository's authorized learning workflow. Do not record one-off issues, unverified workarounds,
-or content from a real diff or finding.
+For Azure operations, [the provider skill](../azure-devops/SKILL.md) is a source-pack reference
+for actual connected MCP capabilities, never an alternate transport. GitHub does not use Azure
+tools, identity checks or reviewer votes.
 
 ## Navigation
 
-- Source-pack maintainer navigation: [skills index](../README.md) and
-  [repository docs](../../../docs/INDEX.md).
+- [Skills index](../README.md)
+- [Repository docs](../../../docs/INDEX.md)

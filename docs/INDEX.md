@@ -19,6 +19,9 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 05 context](refactor/steps/05-context.md) | Approved context routing, documentation bundles and concrete task evidence. |
 | [Stage 06 workflows](refactor/steps/06-workflows.md) | Approved neutral cleanup, workflow/integration behavior and bounded evidence. |
 | [Stage 07 adoption](refactor/steps/07-adoption.md) | Agreed general adoption/update baseline, solo execution, tests and handoff. |
+| [Stage 08 prompts](refactor/steps/08-prompts.md) | Authorized shared-instruction refinement, evidence and model limits. |
+| [Stage 08 research](refactor/research-08.md) | Disposition of all 15 sources and actual runtime capability limits. |
+| [Stage 08 comparison](refactor/prompt-evaluation-08.md) | Component fingerprints, semantic scenarios and explicit measurement limits. |
 | [Stage 05 context comparison](refactor/context-proof-05.md) | Before/after D/B/R context selection, correctness checks and honest measurement limits. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
 | [00-04 retrospective review](refactor/review-00-04.md) | User-requested correctness/completeness review before documentation/context work. |
@@ -26,12 +29,11 @@ This index is the entry point for all standards and templates in this repository
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
-| [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for step 08 shared-prompt refinement and model evaluation, with supporting context, cost, and feedback-loop material. |
+| [Astra refactor reading list](astra-refactor-reading-list.md) | Original 15-source register, stage 08 assessment and explicitly unavailable material. |
 
-Stage 07 first completes the model-neutral adoption baseline. At agreed stage 08 entry, read
-the register and assess every listed source before research-driven refinement of the shared
-prompt set. Until then, keep sources recorded without reviewing their content. This register
-is internal VibeRails refactor material, not an adoption template.
+Stage 07 provides the frozen model-neutral baseline. The stage 08 assessment records all
+15 source attempts and unavailable material; original descriptions remain research leads.
+The register and evidence are internal refactor records, not adoption templates.
 
 ## Standards
 

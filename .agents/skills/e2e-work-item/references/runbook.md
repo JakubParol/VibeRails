@@ -134,7 +134,7 @@ boundaries explicit:
 | Push | A request that includes push. |
 | Create a draft PR | PR delivery authority that includes the necessary push. |
 | Publish or mark ready | A request that includes that PR action. |
-| Merge | An explicit merge instruction after current evidence is read back. |
+| Merge | Explicit task-scoped merge authority plus readback of current acceptance/review/CI evidence; carry forward advance authority without asking again. |
 | Tracker write | A clear workflow request plus the selected profile's documented MCP operation and any target-local gate. |
 
 A link, available tool, configured profile, or authenticated account grants none of these.

@@ -53,7 +53,11 @@ without asking again for each routine step. A bare link or available tool author
 | Merge/complete | Requires explicit merge authorization plus current acceptance/review/verification evidence. |
 
 For example, "implement and open a draft PR" covers the necessary implementation, push and
-draft creation, not marking it ready or merging. An explicitly selected team variant may stop
+draft creation, not marking it ready or merging. An explicit advance instruction to merge after
+specified acceptance and verification criteria is merge authority for that scope; verify those
+criteria and the current head before acting. It does not authorize unrelated changes, bypassed
+checks or a later stage. Do not ask again for unchanged authority already granted.
+An explicitly selected team variant may stop
 at draft PR with a human responsible for publication and merge. This is optional, not the
 universal workflow. Use existing task/repository settings; add no new manifest fields or future
 configuration activation merely to select the delivery endpoint.
