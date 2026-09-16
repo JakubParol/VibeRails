@@ -5,15 +5,16 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 01 - audit and baseline, scope discussion only.
+- Active stage: 01 - audit and baseline, scope `audit-1` approved.
 - Branch: `codex/refactor-01-audit`; PR target: `main`.
 - Accepted base: `e19acf6af12976caef7a2053485a4fc39b95738e`, verified locally and on GitHub.
 - Preparation PR: [#2](https://github.com/JakubParol/VibeRails/pull/2), merged by the repository
   owner on 2026-09-16 at 07:57:32 UTC. Reviewed source head: `81eb17872257d83d7494a45051dee1edb886a575`.
-- Next action: discuss the proposed scope in the stage 01 card and wait for the user's agreement
-  before dispatching audit work. No stage 01 audit, refactor implementation, or PR publication yet.
-- Blocker: none identified; stage 01 scope agreement is intentionally pending.
-- Live-agent check: all available prior delegates are completed; no ongoing work to resume.
+- Next action: run the two bounded read-only audit assignments, measure the baseline, verify
+  findings, and prepare the audit report for focused review and a stage PR.
+- Blocker: none identified. User approved `audit-1` with `tak` on 2026-09-16.
+- Delegation: context inventory on Luna/high; workflow/verification inventory on Terra/high.
+  Parent owns measurement, triage and all coordination/report edits.
 - Verification: PR #2 has no check runs; its merged tree matches the reviewed source tree.
   This is source/evidence reconciliation, not a new CI or runtime test result.
 
@@ -22,7 +23,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | ID | Stage | State | Record |
 |---|---|---|---|
 | 00 | Controlled plan and startup | Done | [Preparation card](steps/00-plan-preparation.md) |
-| 01 | Audit and baseline | Discussion | [Audit card](steps/01-audit.md) |
+| 01 | Audit and baseline | In progress | [Audit card](steps/01-audit.md) |
 | 02 | Core and configuration | Planned | Create on stage entry. |
 | 03 | Architecture variants | Planned | Create on stage entry. |
 | 04 | Local/CI verification | Planned | Create on stage entry. |
@@ -39,10 +40,10 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stage 00 is reconciled and stage 01's branch already exists. Do not recreate it or rerun the
-preparation reviews. Recheck actual Git/PR state if resuming later, read the audit card, and
-recover whether its scope was agreed after this snapshot. Without such agreement, remain in
-discussion. Preserve the step 7 source gate and reuse prior verification while inputs are valid.
+Stage 00 is reconciled; stage 01's branch and scope agreement already exist. Do not recreate
+the branch or ask for the same scope approval. Read the card and check live agents/artifacts
+before duplicating work. Preserve the step 7 source gate, keep framework edits out of this audit,
+and wait for audit acceptance plus explicit merge authorization before stage Done.
 
 ## Navigation
 

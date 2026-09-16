@@ -1,13 +1,13 @@
 # Stage 01 - Audit And Baseline
 
-## Proposed Goal
+## Goal
 
 Identify where current VibeRails consumes unnecessary context or work, and establish a small,
 honest baseline for later comparisons. Produce evidence and priorities before redesigning it.
 
-## Scope Proposal
+## Agreed Scope
 
-Scope revision: `audit-1`. Not yet approved for execution.
+Scope revision: `audit-1`, approved on 2026-09-16.
 
 - Inspect this repository's standards, templates, skills and relevant tooling for duplication,
   conflicting instructions, unconditional architecture/process requirements, repeated checks,
@@ -25,7 +25,7 @@ Out of scope: implementing framework changes; adopting into other repositories; 
 or provider configuration; opening external trackers; Astra source analysis or model benchmarking;
 building telemetry/CI/kanban; running paid experiment batches.
 
-## Proposed Acceptance Criteria
+## Acceptance Criteria
 
 - A compact audit report has concrete file/line evidence for material findings and separates
   confirmed current behavior from recommendations and unverified assumptions.
@@ -42,15 +42,21 @@ building telemetry/CI/kanban; running paid experiment batches.
 - Entry date: 2026-09-16. The resume instruction authorizes state reconstruction, a new stage
   branch, checkpointing and discussion under the approved operating loop.
 - The owner merged the overall preparation plan; this does not approve stage 01 execution.
-- No approval of `audit-1` is recorded yet. Do not dispatch audit agents or start the audit
-  until the user agrees. Record the agreement here before work.
+- The parent presented the stage 01 audit scope and asked whether the user approved it. The
+  user's reply was `tak` on 2026-09-16. This approves `audit-1` as recorded above, including
+  bounded delegation, audit documentation, focused verification, commits and a stage PR.
+- User acceptance of the completed audit and explicit merge authorization remain separate.
 
-## Proposed Delegation
+## Delegation
 
-Use a small number of bounded agents only after agreement. A lighter model can inventory
-repetition/context; a stronger model can examine interacting workflow and verification rules.
-Parent records actual model/effort, scope and reason when dispatching, checks evidence, and
-owns prioritization and integration. No agents have been assigned to this stage yet.
+| Assignment | Requested model / effort | Reason | Boundary |
+|---|---|---|---|
+| Context/duplication inventory | GPT-5.6 Luna / high | Bounded reading-route and repeated-rule comparison | Read-only; evidence with file/line references, no external research or gate runs. |
+| Workflow/verification overhead | GPT-5.6 Terra / high | Cross-document rules and skill interactions need deeper comparison | Read-only; distinguish shipped defaults from task overrides, no gate runs or implementation. |
+| Measurement, live CI evidence, triage and integration | Parent | Keep method and priorities consistent | Own all report/status edits, verify claims, preserve source SHA and measurement limits. |
+
+Record outcomes and any escalation after the work. Runtime-observed model/effort and usage are
+not supplied by the spawn acknowledgement; do not treat requested settings as measured cost.
 
 ## Verification And Delivery
 
