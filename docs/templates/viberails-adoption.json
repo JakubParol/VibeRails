@@ -4,7 +4,7 @@
   "viberails": {
     "sourcePath": "<local-path-used-for-adoption-or-null>",
     "sourceRemote": "<remote-url-or-null>",
-    "sourceRef": "<commit-tag-or-branch>",
+    "sourceRef": "<immutable-40-character-source-commit>",
     "packVersion": "<version-from-changelog>"
   },
   "target": {
@@ -14,7 +14,9 @@
     "prTargetBranch": "<branch-for-adoption-and-follow-up-prs>",
     "prPolicy": {
       "draftByDefault": true,
-      "allowedWriteOperations": ["<create-pr|edit-description|comment|none>"],
+      "allowedWriteOperations": [
+        "<create-pr|edit-description|comment|none>"
+      ],
       "reviewPublishing": "<local-only|provider-comments|target-local-profile>",
       "notes": "<code-hosting-pr-policy>"
     },
@@ -23,9 +25,13 @@
       "canonicalCommand": "<quality-gate-command>",
       "pathToScopeMap": [
         {
-          "paths": ["<path-prefix-or-glob>"],
+          "paths": [
+            "<path-prefix-or-glob>"
+          ],
           "scope": "<frontend|backend|infra|docs|repo>",
-          "commands": ["<command>"],
+          "commands": [
+            "<command>"
+          ],
           "workingDirectory": "<relative-working-directory>",
           "requiredBeforePr": true
         }
@@ -33,10 +39,14 @@
     },
     "projectProfiles": [
       {
-        "paths": ["."],
+        "paths": [
+          "."
+        ],
         "documentationRoot": ".",
         "profile": "<nextjs-frontend-only|nextjs-full-stack|nextjs-python-fastapi|python-cli|python-worker|shared-package|infrastructure|dapr-distributed-app|documented-exception>",
-        "standards": ["<standard-file>"],
+        "standards": [
+          "<standard-file>"
+        ],
         "qualityGateScope": "<scope>",
         "exception": null
       }
@@ -123,7 +133,7 @@
     "mode": "<none|user-scope|vendored>",
     "selectedSkills": [],
     "sourcePath": "<skills-source-path-or-null>",
-    "sourceRef": "<commit-tag-or-branch-or-null>",
+    "sourceRef": "<immutable-source-commit-or-null>",
     "targetPath": "<vendored-target-path-or-null>",
     "duplicateNamePolicy": "Never keep the same skill name in both Codex user scope and target repository scope.",
     "decisionReason": "<why-skills-are-not-used-installed-or-vendored>"
@@ -170,11 +180,17 @@
         "reviewOwner": null
       }
     },
-    "labels": ["viberails-self-improve"],
-    "providerLabels": ["<azure-devops|jira|git|gh>"],
+    "labels": [
+      "viberails-self-improve"
+    ],
+    "providerLabels": [
+      "<azure-devops|jira|git|gh>"
+    ],
     "dedupe": {
       "queryTemplate": null,
-      "matchFields": ["fingerprint"],
+      "matchFields": [
+        "fingerprint"
+      ],
       "statusScope": "open",
       "manualFallback": "List open self-improve tickets and match exact fingerprint first, then provider, command family, and error class."
     },
@@ -196,7 +212,7 @@
     {
       "sourcePath": "<viberails-source-path>",
       "targetPath": "<target-path>",
-      "sourceRef": "<commit-tag-or-branch>",
+      "sourceRef": "<immutable-40-character-source-commit>",
       "mode": "<created|merged|refreshed|skipped>",
       "scope": "<adoption-scope>",
       "reason": "<why-this-file-was-copied-or-skipped>"
@@ -211,5 +227,23 @@
       "owner": "unknown",
       "neededBefore": "Agents can create or comment self-improve tickets."
     }
-  ]
+  ],
+  "configuration": {
+    "version": 1,
+    "initializedFrom": "<light|standard>",
+    "architecture": "<minimal|layered>",
+    "verification": "<local-focused|ci-first>",
+    "documentation": "<essential|standard>",
+    "workflow": "<local|pull-request>",
+    "review": "<adaptive|independent>",
+    "modelRouting": "inherit"
+  },
+  "promptBaseline": {
+    "version": 1,
+    "components": [],
+    "unobserved": [
+      "Runtime/system instructions",
+      "Dynamic task, code, tool and retrieved context"
+    ]
+  }
 }

@@ -41,6 +41,26 @@ These tests create temporary miniature repositories, including fixtures for full
 they do not run the aggregate gate against this checkout. Documentation-only edits do not require
 rerunning unchanged behavior tests.
 
+## Adoption And Migration Checks
+
+When adoption behavior changes, use the focused suite:
+
+```bash
+node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs
+```
+
+The [configuration/pin regressions](tests/adoption.test.mjs) and
+[controlled adoption/update examples](tests/adoption-refresh.test.mjs) use
+[synthetic target builders](tests/adoption-fixtures.mjs), real temporary files, native Python
+stdlib tests and local Git. They never run commands taken from a manifest or contact providers.
+They exercise structure, preservation and conflicts, not autonomous agent adherence, Windows
+runtime behavior or real adopter integration. Existing validator coverage still belongs in CI.
+
+The optional source-owned auditor lives in [docs/templates/adoption-audit.mjs](../docs/templates/adoption-audit.mjs)
+with its [internal modules](../docs/templates/adoption-audit/README.md). Its read-only
+[fingerprint helper](../docs/templates/adoption-pins.mjs) emits a candidate only; it does not
+approve edits or repair stale pins automatically.
+
 ## Optional Denylist Scope
 
 `source-leak-denylist.txt` is empty by default apart from an optional neutral comment.

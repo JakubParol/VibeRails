@@ -10,6 +10,35 @@ This repository adopted VibeRails standards from:
 | Pack version | `<version>` |
 | Adopted at | `<date/time>` |
 
+## Configuration And Instruction Baseline
+
+Mirror the effective configuration choices from the manifest; remove this table only for a
+legacy/unselected adoption, explicitly stating that limit. Do not infer settings from the preset.
+
+| Field | Actual value |
+|---|---|
+| initializedFrom | `<light or standard>` |
+| architecture | `<minimal or layered>` |
+| verification | `<local-focused or ci-first>` |
+| documentation | `<essential or standard>` |
+| workflow | `<local or pull-request>` |
+| review | `<adaptive or independent>` |
+| modelRouting | `inherit` |
+
+Instruction identities, immutable refs and actual file digests belong in `promptBaseline` in
+`.viberails/adoption.json`, not a duplicate hash table here. Summarize captured scope and
+unobserved layers. General prompt content does not prove support for every LLM/client.
+
+## Migration And Readiness
+
+| Scope | Verified evidence | Remaining work or capability gap | Owner / next action |
+|---|---|---|---|
+| `<adoption or migration scope>` | `<actual command/result or none>` | `<remaining work or none>` | `<owner/action or none>` |
+
+A selected configuration is a target policy, not proof of code migration. Structural audit,
+local behavior checks, live integration and required CI are separate evidence. Keep unresolved
+items in the existing manifest open questions and this preservation/readiness record.
+
 ## Preflight Evidence
 
 | Evidence | Summary |

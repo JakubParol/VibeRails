@@ -61,6 +61,12 @@ Open the target repository in Codex first, then provide the standards repository
 in that prompt. The agent records the target repository root during preflight instead of
 guessing it from the prompt text.
 
+Stage 07 provides an agent-guided general baseline: explicit light/standard choices, preserved
+local knowledge and immutable instruction pins. Adoption is not a model-specific prompt fork or
+a runtime loader. New shared-prompt versions use the same reviewed refresh path. See the
+[configuration contract](docs/standards/configuration.md) and
+[refresh procedure](docs/standards/adoption.md#existing-project-refresh).
+
 ## How To Use This Repository
 
 Use the [adoption standard](docs/standards/adoption.md) for the workflow, preservation rules,
@@ -126,7 +132,7 @@ documented sub-area:
 - `adopt-standards-prompt.md` - prompt for applying these standards to another repository.
 - `viberails-adoption.md` - human-readable adoption record for target repositories.
 - `viberails-adoption.json` - machine-readable adoption manifest template.
-- `adoption-audit.mjs` - optional target-side audit script to copy into adopted repositories.
+- `adoption-audit.mjs`, its helper directory, `adoption-state.mjs` and `adoption-pins.mjs` - optional read-only adoption checks and instruction fingerprints.
 - `project-README.md` - copy to project root as `README.md`.
 - `project-AGENTS.md` - copy to project root as `AGENTS.md`.
 - `project-docs-INDEX.md` - copy to project root as `docs/INDEX.md`.

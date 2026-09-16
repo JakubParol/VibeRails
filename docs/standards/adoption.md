@@ -24,6 +24,19 @@ Current support is Codex-first:
 Integration profiles document what the target repository must decide and record. They do not
 imply automation, credentials, live service access, or a required provider.
 
+## Short Onboarding
+
+Use [the shared adoption prompt](../templates/adopt-standards-prompt.md). Inspect first, suggest
+the closer light/standard preset and confirm only unresolved consequential choices. The fields
+below are the agent's evidence checklist, not a questionnaire the user must fill in. No tracker,
+code host or optional skills need to be invented. Use existing commands and document missing
+capabilities instead of installing tools or creating provider accounts.
+
+For a first adoption, initialize the complete [configuration](configuration.md) explicitly.
+For a refresh, retain current values; `initializedFrom` records history, not inheritance.
+A partial/unknown configuration is an error, not permission to choose defaults. A legacy project
+can remain unselected; do not claim it has adopted the new configuration/pin contract.
+
 ## Required Inputs
 
 Before editing the target repository, identify or ask for:
@@ -62,10 +75,15 @@ docs, config files, and user confirmation.
    Ask before recording an uncertain profile. Use `unsupported-provider` when a provider exists
    but VibeRails has no first-class profile; use `none` only when the target intentionally has no
    provider.
-6. Copy required standards into the target repository `docs/standards/`.
+6. Copy the relevant standards into `docs/standards/`, including `configuration.md` for the
+   selected contract. Resolve each copied link: use a target-local counterpart, include the
+   genuinely required reference, or use an immutable source URL for optional examples. Remove
+   irrelevant source-pack navigation, not applicable rules. Never copy internal refactor records
+   or make the target depend on links to a local VibeRails checkout.
 7. Create or update root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-8. Create `.viberails/adoption.json` from the manifest template, including the final copied
-   file list and any unresolved adoption decisions.
+8. Create or merge `.viberails/adoption.json` with explicit configuration, immutable source
+   references, the actual copied file list and unresolved adoption/migration decisions.
+   The template contains placeholders, not a ready default manifest. Preserve unrelated fields.
 9. Create `docs/viberails-adoption.md` from the human-readable adoption template, mirroring
    the manifest decisions for humans.
 10. In monorepos, create a documentation root for each standalone app, service, worker, mobile
@@ -83,8 +101,11 @@ docs, config files, and user confirmation.
     service, worker, package, or infrastructure area.
 16. Record the adopted pack version from the VibeRails `CHANGELOG.md` in the target
     `docs/INDEX.md`.
-17. Run the documentation audit checklist.
-18. Report intentional exceptions and unresolved gaps.
+17. After reviewing changes, record the [prompt baseline](adoption-manifest.md#prompt-baseline),
+    then run the minimum adoption audit and documentation checklist. Unknown runtime context
+    remains explicitly unobserved; the baseline does not choose a model or effort.
+18. Report verified scope, intentional exceptions and remaining migration/capability gaps.
+    Do not call the whole project compliant merely because its documentation passes.
 
 ## Target Preflight Evidence
 
@@ -148,6 +169,37 @@ Preservation report shape:
 | `AGENTS.md` |  |  |  |
 | `docs/INDEX.md` |  |  |  |
 
+## Existing Project Refresh
+
+Use the same adoption workflow, not a second migration system. Before changes:
+
+1. Read the current manifest, instruction pins, local decisions and approved new source commit.
+   Verify the requested source in Git; a branch/tag alone is not an immutable pin. Check the
+   prior `copiedFiles` refs per file, not only the latest top-level ref.
+2. Compare the prior source, actual local file and requested source. Classify unchanged files,
+   source-only changes, local-only changes, changes on both sides and missing prior evidence.
+   A pin mismatch is a review input, not an instruction to overwrite or repin it.
+3. Show the proposed changes/conflicts before overwriting. Keep unchanged and locally customized
+   files unless the scoped update is understood and authorized. Use ordinary diff/three-way merge
+   tools; do not invent a general merge engine. Without a reliable prior source, preserve the
+   local file and ask only for the affected decision.
+4. Merge relevant source improvements while retaining local warnings, actual commands, stricter
+   CI/permission boundaries and architecture decisions. An unresolved conflict stays unchanged
+   with an owner/next action in existing `openQuestions` and the human preservation report.
+5. Update only the records of actual changes. Keep unchanged per-file refs, settings and pins.
+   Refresh the latest source/adoption time only for actual adoption changes; an unchanged second
+   run is a no-op. Do not refresh source refs or fingerprints to conceal a failed merge.
+6. Snapshot only after authorized reconciliation; verify structure, current digests, navigation
+   and protected sections, then the smallest relevant native behavior checks. Preserve existing
+   CI identities and use CI for required broad checks. Record incomplete code migration and
+   unavailable live capabilities separately from document adoption.
+
+The same explicit version-update path promotes later shared-prompt improvements without
+re-running onboarding or silently changing model selection. For rollback use the target's
+normal reviewed Git change to restore the matching instruction files AND their manifest pins;
+never move only the version label or discard unrelated work. Missing source history is an
+explicit refresh limitation, not permission to reconstruct or guess prior instructions.
+
 ## Self-Improve Completion
 
 Adoption may finish with `selfImprove.enabled: false` only when the adoption record includes
@@ -168,7 +220,7 @@ Copy standards that apply to the target repository:
 
 | Target | Standards |
 |---|---|
-| Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `adoption.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
+| Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `configuration.md`, `adoption.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
 | Any code repo | `architecture.md`, `coding.md`, `stack-profiles.md` |
 | Next.js | `frontend.md` |
 | Python FastAPI | `backend.md`, `backend-testing.md` |
@@ -215,10 +267,19 @@ Before reporting adoption complete:
 7. Exclude generated and dependency folders from documentation graph checks:
    `.git`, `.venv`, `venv`, `node_modules`, `.next`, `dist`, `build`, `coverage`,
    `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `.turbo`, `.nx`, `bin`, and `obj`.
-8. If an audit script was copied from `docs/templates/adoption-audit.mjs`, run it from the
-   target repository root with `node <path-to-script>` or pass the target root explicitly as
-   the first argument.
-9. Report every audit check that was not automated and why.
+8. Optionally run the source-owned Node audit with the target root argument, or copy
+   `adoption-audit.mjs`, its `adoption-audit/` helper directory, `adoption-state.mjs` and
+   `adoption-pins.mjs` together into target tooling.
+   Run `node <path-to-adoption-audit.mjs> <target-root>`. The bundle has no third-party dependency,
+   runs no recorded commands and writes nothing. It is a maintenance tool, not a project runtime
+   dependency. Do not install Node solely to adopt a Python project; use available equivalent
+   native checks and explicitly report any unautomated coverage.
+9. Check exact manifest/configuration/pin versions, current instruction digests and unresolved
+   questions. Audit exit zero means structural checks passed only; its output names whether
+   configuration is selected or legacy/unselected. It does not prove architecture compliance,
+   completed code migration, live MCP access, external skill contents or required CI.
+10. Report every check not automated and the exact remaining action. Preserve the source commit
+    and actual adopted content for later comparison; no model optimization is part of adoption.
 
 ## Navigation
 

@@ -3,6 +3,20 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.4.0 - General Baseline (pending acceptance)
+
+- Complete agent-guided adoption and refresh with explicit version-1 configuration; legacy
+  manifests remain unselected. No implicit presets, runtime loader or model-specific prompt fork.
+- Optional read-only configuration/version and instruction-pin audit, preserving existing
+  manifest/document checks. Unsupported versions and changed instruction bytes cannot pass.
+- Stable source/path identities, immutable Git refs and actual adopted-byte fingerprints;
+  local decisions, partial-refresh provenance and unobserved runtime context stay explicit.
+- Controlled fresh and multi-root update evidence, preserved native commands and small regression
+  tests. Structural checks do not claim code compliance, live provider access or all-client support.
+
+The stage PR source commit identifies this candidate; acceptance and a confirmed merge freeze
+its baseline for later comparisons. No release tag is created by this entry.
+
 ## 0.3.0 - 2026-07-05
 
 - Generic adoption contract: Codex-first, process-neutral adoption across Windows, Linux, and

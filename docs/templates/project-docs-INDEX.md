@@ -42,6 +42,7 @@ Link to the repository-level standards instead of duplicating them inside this p
 | [Agent workflow](<relative-path-to-repo>/docs/standards/agent-workflow.md) | How agents load context, edit, verify, and report work. |
 | [Adoption](<relative-path-to-repo>/docs/standards/adoption.md) | How agents apply this standards pack to another repository. |
 | [Adoption manifest](<relative-path-to-repo>/docs/standards/adoption-manifest.md) | Required `.viberails/adoption.json` fields for adopted repositories. |
+| [Configuration](<relative-path-to-repo>/docs/standards/configuration.md) | Explicit policy choices, compatibility and instruction pins. |
 | [Change protocol](<relative-path-to-repo>/docs/standards/change-protocol.md) | Required branch, commit, push, PR, and review-loop protocol for AI agents. |
 | [Documentation](<relative-path-to-repo>/docs/standards/documentation.md) | Documentation structure, indexes, and navigation rules. |
 | [Documentation audit](<relative-path-to-repo>/docs/standards/documentation-audit.md) | Checklist for verifying documentation coverage and navigation. |

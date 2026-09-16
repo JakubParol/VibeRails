@@ -12,7 +12,7 @@ tokens, raw API responses, or private identity payloads.
 
 | Field | Purpose |
 |---|---|
-| `schemaVersion` | Manifest schema version. Start with `1`. |
+| `schemaVersion` | Supported manifest schema version: numeric `1`. Unknown versions are rejected. |
 | `adoptedAt` | ISO 8601 timestamp for the adoption or last adoption refresh. |
 | `viberails.sourcePath` | Local path used during adoption when available. |
 | `viberails.sourceRemote` | Remote URL for the VibeRails source when available. |
@@ -35,7 +35,9 @@ tokens, raw API responses, or private identity payloads.
 | `agentSkills` | Codex skill-linking decision: none, user-scope, or vendored pinned copy. |
 | `auth` | Non-secret read/write auth documents or commands for selected integrations. |
 | `selfImprove` | Ticket sink and dedupe rules for reusable agent/tooling failures. |
-| `copiedFiles` | Standards and templates copied into the target repository. |
+| `copiedFiles` | Standards and templates actually created, merged, refreshed or intentionally skipped; immutable source refs for the selected configuration. |
+| `configuration` | Optional complete version-1 choices from [configuration.md](configuration.md); absent preserves legacy policy, not an implicit preset. |
+| `promptBaseline` | Required with selected configuration; versioned, read-only fingerprints of maintained instructions below. |
 | `exceptions` | Intentional deviations from VibeRails defaults. |
 | `openQuestions` | Decisions that still need a human answer. |
 
@@ -57,7 +59,7 @@ Keep the v1 field shapes. `canonicalCommand` remains the aggregate/full command 
 it is not an instruction to execute the full gate locally. Target docs distinguish focused
 local commands from CI commands and required statuses. Do not silently relabel an existing
 aggregate command as focused, flip flags, or migrate adopted manifests; reconcile actual
-behavior under an authorized adoption refresh. Automated configuration migration remains step 07.
+behavior under an authorized adoption refresh. Configuration changes follow the explicit [refresh procedure](adoption.md#existing-project-refresh).
 
 `copiedFiles` items:
 
@@ -77,7 +79,7 @@ behavior under an authorized adoption refresh. Automated configuration migration
 | `paths` | Path prefixes owned by this project, service, worker, package, or infrastructure area. |
 | `documentationRoot` | Directory containing that area's `README.md`, `AGENTS.md`, and `docs/INDEX.md`. |
 | `profile` | Stack profile or documented exception for this area. |
-| `standards` | Standards that apply to this area. |
+| `standards` | Existing target-relative standard files; a bare filename denotes `docs/standards/<name>` at the repository root. |
 | `qualityGateScope` | Scope name used in `target.qualityGate.pathToScopeMap`. |
 | `exception` | Exception details or `null` when a standard profile fits. |
 
@@ -117,7 +119,7 @@ behavior under an authorized adoption refresh. Automated configuration migration
 | `mode` | `none`, `user-scope`, or `vendored`. |
 | `selectedSkills` | Skill names installed or vendored for this target; empty only when `mode` is `none`. |
 | `sourcePath` | VibeRails skill source path or `null`. |
-| `sourceRef` | Commit, tag, or branch for selected skills; required unless `mode` is `none`. |
+| `sourceRef` | Immutable source commit for selected configuration; legacy unselected records may retain tags/branches. Required unless `mode` is `none`. |
 | `targetPath` | Vendored target path; required when `mode` is `vendored`. |
 | `duplicateNamePolicy` | Rule that prevents the same skill name from existing in both user and repository scope. |
 | `decisionReason` | Why this repository uses no skills, user-scope skills, or vendored skills. |
@@ -225,6 +227,55 @@ For a local file sink, record at least:
 If the repository stores these details in another target-local document, the manifest may link
 to that document, but the link must be specific enough for an agent to run dedupe before
 creating a duplicate.
+
+## Prompt Baseline
+
+`promptBaseline` is an instruction receipt in the existing manifest, not a second operational
+configuration or a runtime prompt loader. Version 1 contains only these fields:
+
+| Field | Meaning |
+|---|---|
+| `version` | Numeric `1`; unsupported versions and unknown fields are rejected. |
+| `components` | Nonempty array of the instruction records below. |
+| `unobserved` | Nonempty descriptions of unobserved layers, such as runtime/system instructions and dynamic task/code/tool context. No raw payloads. |
+
+Each component contains exactly `id`, `path`, `version`, `sha256`:
+
+- `path` is a target-relative regular file, with forward slashes and no traversal or symlinks.
+- `sha256` is the SHA-256 of the actual adopted bytes, including local edits. It is not proof
+  that the bytes equal a pristine upstream file or that the instructions were followed.
+- For a file in `copiedFiles`, `id` is `viberails:<sourcePath>@<targetPath>` and `version` is that
+  record's immutable 40-character Git source commit. Local adaptation does not change provenance;
+  the actual digest distinguishes it. Keep one current copy record per target path.
+- For a project-owned file without a copy record, `id` is `project:<path>` and `version` is
+  `sha256:<digest>`. This identifies uncommitted adopted bytes without inventing a tested Git SHA.
+
+A path-based identity stays stable while its path/mapping stays stable; a deliberate rename is
+an explicit identity change reviewed in the same adoption diff. No separate prompt-ID registry
+is needed. Partial refreshes retain unchanged per-file source refs; the latest source examined
+must not be assigned to files that were never refreshed.
+
+The maintained inventory includes each recorded project's root trio, local README/AGENTS, standards
+under documentation roots, copied Markdown except the human adoption receipt, and local vendored
+skill Markdown/metadata. It excludes generated/dependency folders. The human receipt is excluded
+to avoid self-referential hashes; it is still audited for placeholders and manifest mirrors.
+Additional task-specific context is not claimed as captured. User-scope skill contents remain
+outside this local audit; retain their immutable `agentSkills.sourceRef`, use a pinned source
+checkout, and disclose external content as unobserved rather than claiming symlink pinning.
+
+Run the optional, read-only [fingerprint helper](../templates/adoption-pins.mjs) after reviewing
+adoption changes. It emits a candidate object, never writes files, updates pins automatically,
+executes recorded commands or calls providers:
+
+```bash
+node <source>/docs/templates/adoption-pins.mjs snapshot <target>
+```
+
+Review the candidate and explicitly record it as `promptBaseline`. A later digest mismatch
+requires inspecting the changed instructions; never regenerate pins just to make a failing audit
+green. The optional audit checks schema, identity, completeness and current bytes, not historical
+source availability or real runtime composition. Source refs are verified against Git at adoption.
+Keep content model-neutral and model/effort choices in the existing task/runtime policy.
 
 ## Open Question Taxonomy
 

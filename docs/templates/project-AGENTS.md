@@ -8,6 +8,13 @@ Follow `agent-workflow.md` from the owning standards path, resolved through `doc
 It is the single context router, including parent/child instructions and task-specific reading.
 List only additional project requirements here: `<none unless needed>`.
 
+## Adopted Configuration
+
+When selected, `.viberails/adoption.json` owns explicit configuration and instruction pins.
+Follow `configuration.md` and the canonical router; do not duplicate its values here.
+Absent configuration preserves the project's existing policy. Unknown/partial choices require
+reconciliation, not defaulting. Record only project-specific differences below.
+
 ## Project Context
 
 Describe the project purpose, main applications, services, and bounded contexts.
@@ -29,7 +36,7 @@ Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
 
 ## Architecture Rules
 
-- Architecture variant: `<explicit minimal or layered; preserve legacy policy when unselected>`.
+- Architecture variant: use selected configuration or the existing explicit decision when unselected.
 - Follow the owning `architecture.md`; record only local boundaries or exceptions here.
 - Local architecture decisions: `<links or none>`.
 
@@ -52,7 +59,7 @@ and handoff through the change protocol; a preferred endpoint does not authorize
 ## Local Documentation Rule
 
 Follow `documentation.md` for structure and `agent-workflow.md` for selecting local context.
-Documentation bundle: `<explicit essential or standard; preserve existing policy when unselected>`.
+Documentation bundle: use selected configuration, preserving the existing policy when unselected.
 Do not delete useful existing docs to fit a lighter bundle. Local documentation differences:
 `<none unless needed>`.
 
