@@ -81,7 +81,10 @@ not to add a new generic framework rule or wording-only test.
 ## Verification And Delivery
 
 Branch: `codex/refactor-01-audit`, based on accepted main
-`e19acf6af12976caef7a2053485a4fc39b95738e`. No stage PR published yet.
+`e19acf6af12976caef7a2053485a4fc39b95738e`.
+Published draft: [PR #3](https://github.com/JakubParol/VibeRails/pull/3).
+Reviewed report commit: `efe94974341d47d8b87968efa3e97ea734cad846`. Publication-only checkpoint
+updates are checked separately; resolve the current PR head before reusing final-head evidence.
 The first checkpoint closed stage 00, and commit `fbeaeb0` recorded the user's audit approval.
 Independent report review and its focused correction pass are complete. Passed checks:
 reproduction of all baseline table counts; changed-document links/anchors, source-generic text,

@@ -7,11 +7,12 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - Active stage: 01 - audit and baseline, scope `audit-1` approved.
 - Branch: `codex/refactor-01-audit`; PR target: `main`.
+- Audit PR: [#3 - overhead audit and baseline](https://github.com/JakubParol/VibeRails/pull/3), draft.
 - Accepted base: `e19acf6af12976caef7a2053485a4fc39b95738e`, verified locally and on GitHub.
 - Preparation PR: [#2](https://github.com/JakubParol/VibeRails/pull/2), merged by the repository
   owner on 2026-09-16 at 07:57:32 UTC. Reviewed source head: `81eb17872257d83d7494a45051dee1edb886a575`.
-- Next action: publish the reviewed audit report/baseline as a stage PR, then wait for user
-  acceptance of the result and explicit merge authorization.
+- Next action: wait for user acceptance of the audit report/baseline and explicit authorization
+  to merge PR #3. Stage 02 is not started.
 - Blocker: none identified. User approved `audit-1` with `tak` on 2026-09-16.
 - Delegation: Luna/high and Terra/high audits completed; Sol/high report review and focused
   recheck completed. Parent verified evidence/counts and fixed two over-broad source summaries.
