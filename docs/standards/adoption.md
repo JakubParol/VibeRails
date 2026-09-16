@@ -191,7 +191,7 @@ At the end of adoption, the target repository must have:
 - project profiles for the root and standalone monorepo areas
 - auth setup documented without secrets
 - documentation roots for standalone monorepo projects
-- local folder `README.md` files for significant folders
+- significant-folder coverage required by the selected [documentation bundle](documentation.md#documentation-bundles), preserving legacy coverage when unselected
 - documented quality gates with a path-to-scope map
 - no orphan Markdown files
 - a summary of gaps that need user decisions

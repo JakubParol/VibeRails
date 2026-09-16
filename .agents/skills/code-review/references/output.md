@@ -1,7 +1,9 @@
 # Review Output
 
-Use the target change protocol's `Final Report` rule for the common user handoff. This reference
-adds review-specific evidence and preserves provider publishing restrictions. Keep detailed
+Use the target's reporting policy for the common handoff (`change-protocol.md#final-report` in
+VibeRails projects). Without one, give the review outcome, evidence/limits and any needed next
+decision; do not require a new target document. This reference adds review-specific evidence
+and preserves provider publishing restrictions. Keep detailed
 review/triage evidence in the existing task or review record; do not create a second report.
 Never include secrets, credential-bearing URLs, private payloads or raw prompts in any output.
 

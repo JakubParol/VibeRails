@@ -78,6 +78,12 @@ preserved the local PowerShell/coverage constraints and passed the focused doc c
 selected the relevant backend/review rules and explicitly identified missing runtime/diff
 inputs. Their outcomes are selection evidence, not backend implementation or a real PR review.
 
+Independent review (Sol/high) identified three P2 consistency gaps: legacy local-README
+requirements conflicting with essential coverage, a documentation reviewer row still requiring
+the audit for routine edits, and optional skills assuming the target already has a VibeRails
+router. Parent aligned the specific consumers and restored a compact native-context/reporting
+fallback. Verification and scope limits remain unchanged; focused re-review is pending.
+
 ## Prompt Component Inventory And Composition
 
 | Component | Context owner / when used |

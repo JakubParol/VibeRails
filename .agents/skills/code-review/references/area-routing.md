@@ -5,10 +5,10 @@ to add. Agents must read the listed docs themselves before producing findings.
 
 ## Baseline For Every Agent
 
-Follow the target repository's `agent-workflow.md`, located through its applicable instructions
-and documentation index. It is the context router for parent/child/local instructions and
-changed-path rules; do not maintain a second mandatory baseline here. Reuse unchanged context
-already supplied, and read the relevant source before producing a finding.
+Use the target context resolved by [the skill workflow](../SKILL.md#workflow), including its
+native-context fallback for repositories without VibeRails. The target router owns parent/local
+instructions and changed-path rules; do not maintain a second mandatory baseline here. Reuse
+unchanged context already supplied, and read relevant source before producing a finding.
 
 Missing optional docs alone are not a defect. Report missing required context when it prevents
 a supported review decision; do not silently invent the target's rules.
@@ -46,7 +46,7 @@ backend/API, worker, and shared package specialist prompt, and the
 | `workers/**`, `jobs/**`, `queues/**`, `functions/**` | Worker specialist | Backend standards; nearest worker docs | Async execution, retries, idempotency, scheduling, queue semantics, observability, tests |
 | `packages/**`, `libs/**`, `shared/**` | Shared package specialist | Coding and architecture standards; nearest package docs | Reuse boundaries, dependency direction, public package contracts, avoiding dumping-ground utilities |
 | `infra/**`, `infrastructure/**`, `deployments/**`, `.azuredevops/**`, `.github/workflows/**`, `pipelines/**`, `docker*`, `compose*.yml`, `*.bicep`, `*.tf` | Infrastructure specialist | Infrastructure docs, deployment docs, quality gate docs, nearest README/AGENTS | Pipeline safety, environment separation, identities, permissions, networking, secrets, deployment blast radius, no apply/production writes without approval |
-| `docs/**`, `README.md`, `AGENTS.md`, child `README.md`, child `AGENTS.md`, child `docs/INDEX.md` | Documentation specialist | Documentation standards, documentation audit, nearest parent docs | Required docs hierarchy, navigation, no orphaned docs, concise reusable standards, no duplicate sources of truth |
+| `docs/**`, `README.md`, `AGENTS.md`, child `README.md`, child `AGENTS.md`, child `docs/INDEX.md` | Documentation specialist | Task-relevant documentation rules/local context from the router; audit only for adoption or structural/navigation changes that need it | Required docs hierarchy, navigation, no orphaned docs, concise reusable standards, no duplicate sources of truth |
 | `.agents/**` | Agent workflow specialist | `.agents/README.md`, `.agents/skills/README.md`, relevant sibling skill docs, skill-creator `SKILL.md` if available, documentation standards | Repository agent assets, skill metadata, progressive disclosure, local skill conventions, navigation, no secrets in agent assets |
 | `scripts/**`, `tools/**`, `bin/**` | Tooling specialist | Tooling README if present, quality gate docs, stack standards for touched commands | Shell/PowerShell safety, gate integrity, CI/local parity, no hidden warnings, no destructive defaults |
 | `tests/**`, `test/**`, `__tests__/**`, `*.spec.*`, `*.test.*` | Test specialist | Stack standards for the touched test area; backend-testing or frontend standards when present | Behavior coverage, fixture integrity, deterministic tests, no weak assertions, no production monkey-patching |

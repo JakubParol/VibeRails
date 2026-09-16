@@ -21,8 +21,9 @@ Canonical workflow for `e2e-work-item` runs.
 
 Run a start audit before changing Azure Boards or Git state:
 
-1. Follow the target's `agent-workflow.md` context router and applicable project instructions.
-   For this operation, identify the work-item scope, protected work, authorization, branch
+1. Follow the target's `agent-workflow.md` router when present. Otherwise use applicable AGENTS
+   instructions and native docs/commands for the actual work-item paths; this optional skill
+   does not require VibeRails adoption. Identify scope, protected work, authorization, branch
    setup and required handoff verification before mutation.
 2. Load `azure-devops` and resolve ADO context.
 3. Read the work item and comments:
@@ -89,7 +90,7 @@ blocker and report the current work item state.
 
 ## Minimal Context Loading
 
-Use the canonical router to select rules for the candidate paths. This workflow adds the work
+Use the context policy resolved in Start Audit for the candidate paths. This workflow adds the work
 item title, description, acceptance criteria, comments, relations and existing linked work as
 sources of scope. Search for the affected area, then read its local docs/source before editing.
 Reuse verified decisions on resume. Missing context blocks the decision that depends on it;
@@ -232,7 +233,8 @@ asked for that or the current repository instructions already authorize it.
 
 ## Blocker Report
 
-Use the target change protocol's final-report rule and the existing task record. Preserve the
+Use the target's reporting policy and existing task record; without a documented policy, give
+the outcome, evidence/limits and needed decision rather than requiring new documents. Preserve the
 work item/current state, relevant child states, branch/last commit, local or tracker mutations,
 verification limits and exact blocker with the smallest needed decision. The record supports
 recovery; the user needs the blocker and next action, not the same packet at every phase.
@@ -242,7 +244,7 @@ the work item verified in `Code Review`; no state-transition or finish requireme
 
 ## Final Report
 
-Follow the target's canonical final-report rule. Add the work-item link and verified final
+Follow the target's reporting policy (or the compact fallback above). Add the work-item link and verified final
 state, relevant child outcomes and any required provider action/status. Keep the plan-to-commit
 trace in the existing task/commit record; link it instead of copying every commit into the final
 message. Include unresolved exceptions and requested push/PR status when applicable. Do not

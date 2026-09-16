@@ -76,8 +76,9 @@ exception before final reporting.
    - Other PR URL present: ask for the provider profile or fall back to local branch mode only
      after the user confirms the intended source/target refs.
    - No PR URL: use [local branch mode](references/local-branch-mode.md).
-2. Follow the target repository's canonical `agent-workflow.md` context router, including
-   applicable local instructions and changed-path standards.
+2. Follow the target repository's `agent-workflow.md` router when present. Otherwise use its
+   applicable AGENTS instructions, native docs, changed-path context and actual verification
+   commands. Using this optional skill does not require adopting VibeRails or creating its docs.
 3. Resolve review-agent authorization with
    [agent-authorization.md](references/agent-authorization.md).
 4. Build the changed-path inventory:
