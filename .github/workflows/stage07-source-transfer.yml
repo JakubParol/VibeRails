@@ -1,0 +1,27 @@
+name: Stage 07 Source Transfer
+
+on:
+  push:
+    branches: [codex/refactor-07-adoption]
+    paths: [.github/workflows/stage07-source-transfer.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 418980e59b77327cbc63a3aa67728bba6bb09523
+          persist-credentials: false
+      - name: Archive tracked source only
+        run: git archive --format=tar HEAD > "$RUNNER_TEMP/viberails-base.tar"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage07-base-418980e
+          path: ${{ runner.temp }}/viberails-base.tar
+          retention-days: 1
+          if-no-files-found: error
