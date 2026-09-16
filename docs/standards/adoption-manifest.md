@@ -157,14 +157,14 @@ Required fields:
 |---|---|
 | `enabled` | `true` when a ticket sink is configured. |
 | `tracker` | `azure-devops`, `jira`, `custom-ticket-sink`, `local-file-sink`, or `none`. |
-| `sink` | Provider-specific tracker coordinates and create/comment command references. |
+| `sink` | Provider-specific coordinates and operation references; Azure DevOps/Jira use MCP only. |
 | `labels` | Base labels/tags used for all self-improve tickets. |
 | `providerLabels` | Provider/tool labels such as `azure-devops`, `jira`, `git`, or `gh`. |
 | `dedupe` | Query template, exact-match rule, status scope, and manual fallback. |
 | `commentTemplate` | Required fields for comments on existing tickets. |
 | `auth` | Read/write auth checks, env var names, connector names, and missing-auth behavior. |
 | `writeApprovalPolicy` | Whether agents may create/comment after user approval or must only prepare local bodies. |
-| `alternateClients` | Same-provider fallback connectors or wrappers for self-improve sink failures. |
+| `alternateClients` | Already-authorized same-provider client references; Azure DevOps/Jira entries may name MCP connections only, never command wrappers or raw API clients. |
 | `disabledReason` | Required when `enabled` is `false` unless an open question records the missing decision. |
 
 If the self-improve sink is not configured during adoption, set `enabled` to `false` and add an
@@ -173,6 +173,18 @@ until the sink and dedupe rule are configured.
 
 ## Provider Sink Shape
 
+Keep the existing v1 field names and types. For Azure DevOps/Jira, `queryCommand`, `createCommand`
+and `commentCommand` are legacy-named fields containing references to connected MCP operations
+or the target documentation that identifies them. They are not shell commands to execute.
+Resolve the required operation against current MCP metadata and task authority before use.
+An old command/wrapper value is an unsupported legacy binding: report the affected operation
+and needed authorized refresh rather than executing it or silently migrating the manifest.
+
+The existing adoption audit checks required fields and nonempty values, not live MCP capability,
+authentication or permission. A passing structural audit cannot validate a legacy command as an
+allowed transport. Check capabilities before using a binding or claiming operational readiness;
+unavailable evidence may remain an explicit adoption gap. Add no new schema/format here.
+
 For Azure DevOps, record at least:
 
 - organization URL
@@ -180,9 +192,9 @@ For Azure DevOps, record at least:
 - work item type
 - area path or explicit `null`
 - iteration policy
-- query command or WIQL link
-- create command or wrapper reference
-- comment command or wrapper reference
+- MCP query-operation reference and required query input
+- MCP create-operation reference
+- MCP comment-operation reference
 
 For Jira, record at least:
 
@@ -190,9 +202,9 @@ For Jira, record at least:
 - project key
 - issue type
 - component or explicit `null`
-- query command or JQL template
-- create command or connector reference
-- comment command or connector reference
+- MCP search-operation reference and required JQL input
+- MCP create-operation reference
+- MCP comment-operation reference
 
 For a custom ticket sink, record at least:
 

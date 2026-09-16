@@ -1,117 +1,98 @@
 ---
 name: e2e-work-item
-description: Run an autonomous end-to-end implementation from an Azure Boards work item. Use when the user invokes an [E2E] prompt with an Azure Boards work item URL or ID, asks to run a slash goal from a Task or User Story, resumes an E2E work-item run, or wants Codex to assign the work item, move it to In Progress, create or reuse a branch, create coarse Codex-sized child Tasks for User Stories, implement the scope with commits per plan step, run final guard rails, and move the work item to Code Review.
+description: Run an authorized end-to-end implementation from a user brief, an existing task record, or a selected tracker. Use for an implementation run or resume through a verified handoff, not for a tracker lookup or planning-only request.
 ---
 
-# E2E Work Item
+# E2E Task Implementation
 
-## Overview
+Use this skill for one bounded implementation task from an agreed brief, an existing local task
+record, or a selected tracker item. It coordinates the common task lifecycle while keeping the
+tracker, code host, CI provider, and transport separate.
 
-Use this skill for one agent-owned implementation run driven by one Azure Boards work item. The
-run exits only with a precise blocker or with implementation commits complete, required local
-handoff checks passed, CI coverage/result explicitly recorded, and the work item in `Code Review`.
-Code Review handoff is not a claim that pending PR verification or merge acceptance is complete.
+An implementation handoff can be complete while feature acceptance and merge remain pending.
+Resume from current task, branch, working-tree, provider, and evidence state. Do not replay work
+or overwrite unrelated changes.
 
-This is an agent skill, not a rigid script. Resume from the actual state of the work item,
-branch, commits, and working tree. Do not replay completed steps or overwrite unrelated work.
+## Read When
 
-For any real E2E run, read
-[references/runbook.md](references/runbook.md) after this file. The runbook is the canonical
-workflow for start audit, work item state, child Tasks, implementation commits, guard rails,
-finish state, and reports.
+For an actual E2E implementation run, read [the common runbook](references/runbook.md).
 
-## Companion Skills
+Read additional material only for the selected situation:
 
-Before Azure DevOps reads or writes, load and follow
-[`azure-devops`](../azure-devops/SKILL.md). Use its wrappers for work item
-writes and comments.
+| Situation | Read when |
+|---|---|
+| Azure Boards work item | The target selected Azure DevOps work tracking and its current MCP metadata exposes a needed Boards operation. Read [Azure Boards Work Item Binding](references/azure-devops-work-items.md). |
+| Azure Boards User Story | The selected item is a User Story and the implementation plan is ready. Read [Azure Boards User Story Child Tasks](references/user-story-child-tasks.md). |
+| Jira work item | The selected Jira MCP connection exposes an authorized operation needed for this task. Read the target-local profile and that operation's metadata. |
+| No tracker | The task starts from a user brief or existing local task record. Stay in the common runbook; do not create a tracker or task record merely to run the task. |
+| Review | The user requests a review or the target requires one before handoff. Read the [source-pack code-review reference](../code-review/SKILL.md). |
+| Historical skill knowledge | A directly relevant recurring issue needs comparison with [LEARNINGS.md](LEARNINGS.md). Treat it as history, reverify it, and never infer current rules or write authority from it. |
 
-Use `code-review` only when the user explicitly asks for a review pass or the current
-repository policy requires it before Code Review.
+Do not load a provider reference just because a link, tool, account, or optional skill exists.
+Those are routing clues, not instruction or write authority.
 
-## Trigger Parsing
+## Context And Dispatch
 
-Accept these inputs:
+Resolve the target's current context router from its own documentation index, then follow its
+selected rules and read only the references required for the next decision. The source-pack
+[VibeRails agent workflow reference](../../../docs/standards/agent-workflow.md) is a reusable
+default, not target authority or a reason to load the whole source pack.
 
-- `[E2E]-<Azure Boards work item URL>`
-- `[E2E]-<work item ID>`
-- natural language that clearly asks to run or resume an E2E work-item implementation.
+Read the native fallback in the runbook when the target documentation index does not resolve an
+applicable context router. It is bounded to applicable AGENTS instructions, the owning README or
+docs index, task-path context, relevant quality commands, and current repository state.
 
-Extract the work item ID, organization, and project from the URL when possible. If the ID or
-project cannot be resolved from the prompt, Azure DevOps defaults, environment variables, or
-the current Azure Repos remote, stop with a blocker.
+For delegation, use the target's canonical routing policy and actual runtime dispatch
+capabilities. Request model and reasoning settings through the available dispatch mechanism;
+record requested settings and observed settings separately. If runtime settings cannot be
+observed, record them as unknown rather than inferring them from a catalog, inherited context, or
+prompt text.
 
-When invoked from a slash goal, treat the goal as: implement the work item and move it to
-`Code Review`. Do not mark the goal complete before that state is verified.
+## Authority And Handoff
 
-## Approved Scope
+The target's own change protocol, resolved from its documentation index, owns implementation,
+push, PR publication, and merge authority. The source-pack
+[change protocol reference](../../../docs/standards/change-protocol.md#authorization-and-delivery)
+is a reusable default, not target permission. A clear workflow request can authorize several
+named operations. A task link, provider profile, available tool, or connection does not
+authorize any operation by itself.
 
-The `[E2E]` invocation is explicit approval for these writes only:
+Keep these actions distinct:
 
-- assign the requested work item to the authenticated Azure DevOps user;
-- move the requested work item to `In Progress`;
-- create and link coarse child `Task` work items when the requested item is a `User Story`;
-- assign those child Tasks;
-- move child Tasks through `In Progress` and `Done`;
-- move the requested work item to `Code Review` after final guard rails pass.
+- implementation changes follow the agreed task scope;
+- push needs authorization to push;
+- creating a draft PR needs delivery authority that covers its push, while publication needs
+  its own PR operation authority;
+- merge needs an explicit merge instruction after current handoff evidence is read back.
 
-Ask before any other Azure Boards mutation, destructive action, PR operation, push, merge, or
-release action.
+A team may choose a draft handoff: prepare the authorized branch, commits, evidence, and an
+authorized draft PR when applicable, then stop for a human to publish or merge. Do not treat a
+draft, a reviewed branch, or a tracker state as publication, acceptance, or merge.
 
-## Core Workflow
+Use the target's handoff and evidence rules. When a target has no local owner, use the runbook
+fallback with the source-pack [handoff reference](../../../docs/standards/change-protocol.md#handoff-and-acceptance)
+and [evidence reference](../../../docs/standards/quality-gate.md#evidence-validity).
 
-Follow [references/runbook.md](references/runbook.md) in this order:
+## Boundaries
 
-1. [Start Audit](references/runbook.md#start-audit)
-2. [Work Item Ownership And State](references/runbook.md#work-item-ownership-and-state)
-3. [Minimal Context Loading](references/runbook.md#minimal-context-loading)
-4. [Branch Setup](references/runbook.md#branch-setup)
-5. [Planning](references/runbook.md#planning)
-6. [User Story Child Tasks](references/runbook.md#user-story-child-tasks)
-7. [Implementation Loop](references/runbook.md#implementation-loop)
-8. [Final Guard Rails](references/runbook.md#final-guard-rails)
-9. [Finish](references/runbook.md#finish)
-10. [Blocker Report](references/runbook.md#blocker-report) or
-    [Final Report](references/runbook.md#final-report)
-
-## Non-Negotiable Invariants
-
-- Read repository-mandated context before changing Azure Boards or Git state.
-- Stop before mutation when the start audit finds a blocker.
-- Preserve required verification: focused local checks before handoff and full PR checks in CI.
-  Full local gates require explicit user request; missing CI is not that request or a PASS.
-- Do not create child Tasks for a requested `Task`.
-- Do not create additional child Tasks when a `User Story` already has children; adapt to the
-  existing child Tasks or stop with a blocker.
-- Do not move a requested `Task` to `Done` unless the user explicitly requests a different
-  Task-state policy.
-- Do not push, open a PR, complete a PR, merge, or change PR metadata unless the user
-  explicitly asked for that or repository instructions already authorize it.
-- Do not mark a slash goal complete until the requested work item is verified in `Code Review`.
-
-## Failure Learning
-
-When an E2E run uncovers a reusable improvement to this skill (runbook gap, state-flow pitfall,
-planning rule) with a verified fix, append a structured entry to [LEARNINGS.md](LEARNINGS.md)
-using the format documented there. These files reach sessions through a user-scope junction,
-so entries land in the standards repository working tree. Author durable patches only with
-user approval on a standards-repository branch. Project-specific process facts go to the
-adopting repository docs instead.
+- Do not add a universal runner, adapter, tracker, manifest field, or orchestration service.
+- For Azure DevOps and Jira, use only the selected provider's actual MCP operations and metadata.
+  A missing MCP operation blocks its dependent step; do not route through a non-MCP path or a
+  raw-provider-payload workaround.
+- Keep provider-specific tools and state mappings in their conditional references.
+- Preserve the target's stricter state-transition, branch, verification, and reporting rules.
 
 ## References
 
-- [references/runbook.md](references/runbook.md) - canonical E2E work item implementation
-  workflow.
-- [references/user-story-child-tasks.md](references/user-story-child-tasks.md) - child Task
-  sizing, creation, and state flow; load only for User Story runs.
-- [LEARNINGS.md](LEARNINGS.md) - mid-task learnings inbox; consolidated into durable updates
-  in the standards repository.
-- [../azure-devops/SKILL.md](../azure-devops/SKILL.md) - Azure Boards and
-  Azure Repos wrappers and safety rules.
-- [../code-review/SKILL.md](../code-review/SKILL.md) - review workflow when
-  explicitly requested or locally required.
+- [Common E2E runbook](references/runbook.md)
+- [Azure Boards Work Item Binding](references/azure-devops-work-items.md)
+- [Azure Boards User Story Child Tasks](references/user-story-child-tasks.md)
+- [Source-pack change protocol reference](../../../docs/standards/change-protocol.md#task-lifecycle)
+- [Source-pack agent workflow reference](../../../docs/standards/agent-workflow.md#delegation-and-runtime-routing)
+- [Source-pack integration profile reference](../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery)
+- [Source-pack quality-gate reference](../../../docs/standards/quality-gate.md#evidence-validity)
 
 ## Navigation
 
-- Skills index: [../README.md](../README.md)
-- Repository docs: [../../../docs/INDEX.md](../../../docs/INDEX.md)
+- [Source-pack skills index](../README.md)
+- [Source-pack repository docs](../../../docs/INDEX.md)

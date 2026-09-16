@@ -20,6 +20,44 @@ When instructions conflict, state the conflict and ask a focused question before
 End completed work with the result. If work remains, state the next action or the decision
 needed; do not manufacture a question or another status report merely to close a message.
 
+## Task Lifecycle
+
+Use one task scope and proof path regardless of tracker, code host or transport:
+
+| Phase | Required result |
+|---|---|
+| Understand | Requested outcome, acceptance criteria, owning paths and authorized delivery boundary. A ticket/link supplies context, not permission by itself. |
+| Prepare | Safe checkout, applicable local rules, actual required capabilities and the smallest useful verification path. |
+| Implement | Scoped changes and meaningful evidence, preserving unrelated work. |
+| Review and verify | Required review coverage and valid evidence for the changed revision; disclose dependent work still blocked. |
+| Handoff | Actual local/PR/tracker state and remaining owner actions, using the checks below. Agent completion is not feature acceptance or merge. |
+
+With no tracker, the user brief and the existing task/branch/PR record are enough. Do not create
+an external issue, new board or mandatory task-file format. Record durable scope/evidence only
+where a recipient or resume requires it. Provider profiles map this lifecycle to native states
+and operations; a native `Done` label does not replace the project's acceptance requirements.
+
+## Authorization And Delivery
+
+Resolve authority from the actual task and applicable instructions, separately from capability.
+Configuration/profile allow-lists limit available actions but do not grant write permission.
+A clear named workflow request may cover several actions; carry that authorization forward
+without asking again for each routine step. A bare link or available tool authorizes no mutation.
+
+| Action | Boundary |
+|---|---|
+| Implementation/local commits | Stay within the agreed repository/task and its commit policy. This alone does not authorize remote writes. |
+| Push | Requires covered remote/branch scope; do not include unrelated changes. |
+| Create draft PR | Requires PR delivery authority, including the needed push. Creating a draft does not authorize publication or merge. |
+| Publish/mark ready, comments or votes | Require the selected workflow's explicit operation authority; do not infer it from PR existence or tool access. |
+| Merge/complete | Requires explicit merge authorization plus current acceptance/review/verification evidence. |
+
+For example, "implement and open a draft PR" covers the necessary implementation, push and
+draft creation, not marking it ready or merging. An explicitly selected team variant may stop
+at draft PR with a human responsible for publication and merge. This is optional, not the
+universal workflow. Use existing task/repository settings; add no new manifest fields or future
+configuration activation merely to select the delivery endpoint.
+
 ## Start Of Work
 
 Before changing files, agents must:
@@ -57,7 +95,8 @@ If there are uncommitted changes that the agent did not create in the current ta
 - do not stash them without explicit approval
 - do not commit them into the task branch unless the user explicitly asks
 
-Ask the user how to proceed. Valid options include:
+If these changes prevent safe progress, ask how to proceed. Otherwise continue independent
+authorized work without moving or mixing them. Options when a decision is needed include:
 
 - continue on the current branch
 - commit the existing work first
@@ -117,7 +156,7 @@ quietly drifting.
 Agents should make ordinary implementation decisions from existing code, project standards, and
 local patterns.
 
-Agents must ask before deciding on:
+Ask when the following decisions or actions are unresolved or not already authorized:
 
 - product behavior not specified by the user or docs
 - public API contracts
@@ -176,14 +215,10 @@ Before reporting that implementation is done, agents must:
 3. Confirm the working tree does not contain accidental unrelated changes.
 4. Summarize what changed and what verification ran.
 
-If the user already asked for a push or PR, continue to the push and PR steps. Otherwise, ask:
-
-```text
-The work is done locally. Do you want to inspect it first, or should I push the branch and open a PR?
-```
-
-Do not push or open a PR without explicit permission, unless the user's initial request already
-asked for an end-to-end PR flow.
+Continue through the already-authorized delivery endpoint from
+[Authorization And Delivery](#authorization-and-delivery). If only local work is authorized,
+report the local result; ask about a further operation only when it is needed to finish the
+requested outcome. Do not invent a mandatory push/PR question for every completed local task.
 
 ## Push And Pull Request
 
@@ -201,15 +236,12 @@ the user the exact branch name and PR creation details.
 
 ## Review Loop
 
-After opening a PR, agents must request independent review using the best available mechanism.
-Use review mechanisms in this priority order:
-
-- review sub-agent when the environment supports sub-agents
-- code review tool or review skill
-- PR checks or static analysis
-
-If sub-agents or review tools are unavailable, state the fallback and run the strongest local
-review available.
+Choose review depth and staffing from changed scope, risk and the project's independence
+requirements. Reuse valid review completed before PR creation; opening a PR or starting review
+does not require a new fleet or invalidate green checks. If required independent review is
+unavailable, report the missing coverage; static analysis alone is not independent review.
+A project may explicitly select static-only review. Otherwise a reviewer may run a necessary,
+authorized focused check, following [evidence validity](quality-gate.md#evidence-validity).
 
 For each review cycle:
 
@@ -217,7 +249,8 @@ For each review cycle:
 2. Fix valid issues.
 3. Commit fixes.
 4. Re-run the affected local check/case and obtain required current-revision CI evidence.
-5. Request review again.
+5. Review the affected fix/delta and any newly exposed risk. Preserve unaffected coverage; do
+   not repeat an unchanged full review merely because another cycle started.
 
 Stop the loop only when there are no actionable findings, or when the same task has gone
 through five review cycles. After five cycles, escalate to the user with:
@@ -225,6 +258,25 @@ through five review cycles. After five cycles, escalate to the user with:
 - remaining findings
 - what was already tried
 - the recommended next step
+
+## Handoff And Acceptance
+
+Before handoff, verify repository identity, source/target branches, actual PR state and current
+head. Record the commit reviewed, covered paths/changes and current test/CI evidence using
+[quality-gate.md](quality-gate.md#evidence-validity). An older reviewed SHA is not a review of a
+new head: inspect the delta and obtain the missing review, without discarding unaffected work.
+Do not treat successful tests as a substitute for review or acceptance.
+
+For draft PR delivery, inspect the provider's actual CI trigger/run path. If required CI does
+not run on drafts, record the missing coverage and the authorized next owner/action; do not
+mark ready or change branch policies merely to obtain green checks. Agent-task completion at
+an agreed local/draft endpoint may be a valid handoff, while feature acceptance/merge remains
+pending. A required handoff check cannot be silently waived to fit that endpoint.
+
+Before an authorized merge, recheck the approved head and required evidence. Use provider
+revision/expected-head protection when supported; a stale head or newly changed scope returns
+the affected work to review/acceptance. Report provider limitations without claiming a readback
+is an atomic concurrency guard. Confirm the actual merged state before calling it merged.
 
 ## Final Report
 

@@ -107,6 +107,10 @@ in the target's quality-gate document. Missing CI is a limitation, not an automa
 
 ## Self-Improve Ticket Sink
 
+For Azure DevOps/Jira, record MCP operation references in the existing legacy-named command
+fields, following `adoption-manifest.md#provider-sink-shape`. No schema change is implied.
+Record MCP capability/access evidence separately; a structural audit alone cannot prove it.
+
 Reusable agent/tooling failures are reported here:
 
 | Field | Value |
@@ -122,7 +126,7 @@ Reusable agent/tooling failures are reported here:
 | Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |
 | Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
 | Write approval policy | `<when agents may create or comment self-improve tickets>` |
-| Alternate clients | `<same-provider fallback connectors or wrappers, or none>` |
+| Alternate clients | `<authorized MCP connections for Azure DevOps/Jira, or none; other sink profiles use their explicit client policy>` |
 | Disabled reason | `<required when enabled is false unless recorded as an open question>` |
 
 If auth or write approval is missing, agents prepare the ticket body locally and report the

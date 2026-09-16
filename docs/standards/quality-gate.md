@@ -110,9 +110,31 @@ If no documented local commands exist, propose the smallest useful ones from exi
 Implement them only within authorized scope or agree a documented exception. Do not present an
 ad-hoc check as the official complete gate.
 
+## Evidence Validity
+
+Inspect the actual result, not only the process exit code or a green-looking filename. For a
+claimed test pass, establish the tested revision/inputs, selected scope, fresh run/report,
+executed case count and failures/skips from the existing tool's trustworthy output. Missing or
+stale reports, zero executed cases and all-skipped runs are not passed tests, even if the
+process exits zero. Distinguish an intentionally inapplicable test category from a passed suite.
+Documentation-only changes do not need invented application tests.
+
+Use native summaries/logs or existing reports; JUnit is not mandatory. If a tool cannot supply
+the needed evidence, state the specific coverage gap. Add a small adapter only for a demonstrated
+need within authorized scope, not a new runner or universal report schema. Keep code tests,
+controlled agent scenarios, integration simulations and live/provider-enforced operations
+separate; fixture success cannot prove remote authorization, concurrency or platform behavior.
+
+Retain green evidence while its relevant inputs remain unchanged. Review starting is not
+invalidation. After a fix, identify which checks or review coverage were affected and rerun only
+those locally. A new commit still needs the project's required current-revision CI; a previous
+report must not be relabeled with the new head. Tests and review may cover different revisions
+only with an explicit, verified account of the unchanged scope and separately checked delta.
+
 ## CI Evidence And Failure Recovery
 
-Record source head, actually tested revision, run/check link, outcome and coverage. PR workflows
+Apply [evidence validity](#evidence-validity) and record source head, actually tested revision,
+run/check link, outcome and coverage. PR workflows
 may test a merge revision different from the source head; report both rather than calling them
 the same SHA. Before relying on CI, verify it still covers the current change.
 

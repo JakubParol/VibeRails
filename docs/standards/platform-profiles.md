@@ -22,11 +22,9 @@ and macOS adopting repositories.
   requires it.
 - Do not require POSIX shell for adoption on Windows unless the target repository already
   requires it.
-- Some optional provider skills can require a specific shell even when the target repository
-  prefers another shell. Record that as a tool prerequisite, not as the target repository's
-  script platform. For example, the bundled Azure DevOps wrappers currently require
-  PowerShell; a POSIX-shell repository may still choose Azure profiles if it records `pwsh` as
-  an optional workflow prerequisite or supplies target-local POSIX wrappers.
+- Azure DevOps and Jira workflows use MCP, independently of the project's script platform.
+  Do not require PowerShell or provide CLI/REST wrappers for those integrations. A missing
+  MCP connection/operation is a capability gap, not a shell prerequisite to work around.
 
 ## Recommended Command Shape
 

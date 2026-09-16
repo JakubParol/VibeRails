@@ -205,6 +205,11 @@ Before reporting adoption complete:
 3. Verify all Markdown files are reachable from `README.md`, `AGENTS.md`, or a `docs/INDEX.md`.
 4. Verify relative Markdown links and anchors.
 5. Parse `.viberails/adoption.json`.
+   Its legacy Azure DevOps/Jira `*Command` fields must resolve to MCP operation references;
+   see [provider sink semantics](adoption-manifest.md#provider-sink-shape). Confirm required
+   operations in current MCP metadata under actual task authority. The structural audit does
+   not perform this live check; record unavailable evidence as a gap rather than treating nonempty
+   text as operational support. This does not require live provider writes to complete document adoption.
 6. Confirm `docs/viberails-adoption.md` mirrors the manifest's selected profiles, auth checks,
    quality gate, and self-improve sink.
 7. Exclude generated and dependency folders from documentation graph checks:

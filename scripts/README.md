@@ -41,6 +41,15 @@ These tests create temporary miniature repositories, including fixtures for full
 they do not run the aggregate gate against this checkout. Documentation-only edits do not require
 rerunning unchanged behavior tests.
 
+## Optional Denylist Scope
+
+`source-leak-denylist.txt` is empty by default apart from an optional neutral comment.
+The existing validator can match explicitly supplied literal patterns; an empty list cannot
+detect particular project names or unknown names. Local-path checks and other validation
+remain active. A green result is not evidence that all confidential information was detected.
+Regression fixtures use only synthetic values. The PowerShell reader supports the same empty/
+comment filtering by static inspection; this is not executed PowerShell or platform-parity proof.
+
 ## PR Verification
 
 [Repository CI](../.github/README.md) runs the regression suite, full Node validation and the

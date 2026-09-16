@@ -205,6 +205,44 @@ test("focused validation applies text checks only to the selected file", () => {
   );
 });
 
+test("empty and comment-only denylists accept ordinary selected text", () => {
+  for (const denylist of ["", "# Optional synthetic patterns\n\n  # Another comment\n"]) {
+    withFixture(
+      {
+        "README.md": "# Root\n",
+        "scripts/source-leak-denylist.txt": denylist,
+        "docs/selected.md": "# Selected\nSyntheticFixtureMarker\n",
+      },
+      (root) => {
+        const result = runValidator(root, ["--files", "docs/selected.md"]);
+        assert.equal(result.status, 0, commandOutput(result));
+      },
+    );
+  }
+});
+
+test("local path detection remains active with an empty denylist", () => {
+  const syntheticPaths = [
+    ["", "Users", "fixture-user", "sample"].join("/"),
+    ["", "home", "fixture-user", "sample"].join("/"),
+    ["C:", "Users", "fixture-user", "sample"].join("\\"),
+  ];
+  for (const syntheticPath of syntheticPaths) {
+    withFixture(
+      {
+        "README.md": "# Root\n",
+        "scripts/source-leak-denylist.txt": "",
+        "docs/selected.md": `# Selected\n${syntheticPath}\n`,
+      },
+      (root) => {
+        const result = runValidator(root, ["--files", "docs/selected.md"]);
+        assert.equal(result.status, 1, commandOutput(result));
+        assert.match(commandOutput(result), /contains a local absolute path/);
+      },
+    );
+  }
+});
+
 test("focused skill metadata only checks affected skills", () => {
   withFixture(
     {

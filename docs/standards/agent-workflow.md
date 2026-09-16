@@ -32,7 +32,7 @@ index, not from an optional skill's installation directory.
 | Select/run verification | Actual target commands plus the [quality gate](quality-gate.md) responsibility split and applicable scope/coverage. Missing CI never implies PASS or permission for a full local gate. |
 | Review | The applicable review skill/mode, changed paths and the same task rules that govern those paths. Load only relevant specialist/checklist sections; review does not turn every linked workflow into an active one. |
 | Adopt/restructure documentation | [Adoption](adoption.md), selected [documentation bundle](documentation.md#documentation-bundles), [audit](documentation-audit.md) and actual target profiles. An ordinary edit does not trigger adoption. |
-| Use a provider or optional skill | Its entrypoint and the reference for the selected operation; auth, publishing and safety requirements remain applicable. Load troubleshooting only for the relevant failure. |
+| Use a provider or optional skill | Its entrypoint and references whose explicit "Read when" conditions match the selected operation; auth, publishing and safety requirements remain applicable. Load troubleshooting only for the relevant failure. |
 
 ## Context Budget Rule
 
@@ -49,6 +49,33 @@ another document links back to it.
 For delegated work, give the bounded task, owned paths, relevant decisions and evidence already
 known. The delegate still follows applicable local instructions and inspects the source needed
 to judge its assignment. Do not attach every previous agent report or the full task history.
+
+## Delegation And Runtime Routing
+
+Read when delegating or resuming delegated work. Use the explicit allowed model/effort routes
+from the current task/runtime instructions; the future manifest configuration is not active.
+Without a route override, retain the runtime/client default and existing project constraints.
+Inspect dispatch capabilities actually available now. Instructions naming a model do not switch
+it. Select an allowed route suited to the bounded task and pass model/effort through supported
+runtime arguments. If only inheritance is supported, report that constraint rather than claim
+a model switch.
+
+Give a delegate owned paths, intended result, applicable decisions and needed evidence. Label
+applicable rules separately from reference knowledge or historical outcomes; link large logs
+only when the delegate needs them. Reuse unchanged context. Record the task/route reason,
+requested model and effort, dispatch outcome and returned evidence in the existing task record.
+Observed model/effort and usage are separate facts; mark them unknown when not exposed.
+
+If a requested route or capability is unavailable, block only the dependent operation. Use an
+alternative only when it is already allowed and preserves required independence and capability;
+otherwise report the missing choice. Do not silently downgrade, invent model support or install
+another runtime. Before a bounded retry/escalation, distinguish insufficient reasoning from
+missing context, unclear scope or a tool failure. Carry forward useful work and the concrete gap.
+Choose among allowed routes; do not restart blindly or treat a more expensive model as proof
+of a correct result. The parent checks the actual output before accepting it.
+
+This operational contract adds no model recommendation catalog, benchmark or new manifest
+field. Model evaluation stays in the planned model stage; adoption/migration remains separate.
 
 ## Folder Context Rule
 

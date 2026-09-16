@@ -43,6 +43,11 @@ records project-specific deltas:
 - Branch naming: `<repository convention, if any>`
 - Commit convention: `<repository convention, if any>`
 - Other deviations from the change protocol: `<none by default>`
+- Preferred agent handoff: `<local result | draft PR | project-specific workflow>`.
+- Handoff owner and required evidence: `<existing team policy or task-specific agreement>`.
+
+These preferences are not new manifest fields or write permission. Resolve actual task authority
+and handoff through the change protocol; a preferred endpoint does not authorize reaching it.
 
 ## Local Documentation Rule
 
