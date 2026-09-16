@@ -1,6 +1,6 @@
 # Refactor Startup Prompt
 
-Prompt ID: `viberails.refactor.resume`. Version: `1.0`. Coordination prompt, not an Astra
+Prompt ID: `viberails.refactor.resume`. Version: `1.1`. Coordination prompt, not an Astra
 optimization artifact or permission to bypass agreement/merge gates. Copy the block below.
 This project-specific prompt uses Polish with ASCII transliteration for repository compatibility.
 
@@ -29,7 +29,7 @@ Sam sprawdz rezultaty, wykonaj male adekwatne kontrole lokalne i wymagane sprawd
 Pelna weryfikacja nalezy glownie do CI; jego brak nie oznacza sukcesu ani zgody na pelny
 lokalny gate. Dowody wiaz z konkretnym SHA. Pokaz wynik i sposob jego przetestowania.
 Done dopiero po moim odbiorze, wyraznej zgodzie na merge i potwierdzonym scaleniu.
-Potem omow kolejny etap i poczekaj na uzgodnienie jego zakresu.
+Before advancing, follow the operating loop and continuation gates in docs/refactor-plan.md.
 
 Zapisuj checkpointy po uzgodnieniach, przy delegowaniu, przyjeciu wynikow, zmianie blokady
 i przed przerwa. Decyzje i dowody utrwalaj w repo, nie tylko w rozmowie. Wszystkie 15
