@@ -11,11 +11,18 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Base: PR #13 merge `418980e59b77327cbc63a3aa67728bba6bb09523`.
   Branch: `codex/refactor-07-adoption`; active [scope and evidence](steps/07-adoption.md).
 - Stage 06 and its closeout are accepted/merged; earlier records remain unchanged.
-- Implementation and solo review are complete locally; 16/16 scoped adoption/update tests pass.
-  The candidate includes strict configuration and instruction pins, legacy compatibility,
-  preservation/refresh guidance and isolated fresh/multi-root behavior evidence.
-- Next action: publish and verify the current-head PR, then await user acceptance. The final
-  source/tested revision and CI outcome belong in that PR. Defer all 15 source contents to 08.
+- Delivery: ready [PR #14](https://github.com/JakubParol/VibeRails/pull/14). Implementation and
+  solo review are complete; 16/16 scoped adoption/update tests pass locally. The implementation
+  tree published through GitHub exactly matches the tested local tree; temporary transfer
+  workflow is removed from the delivery.
+- [PR Verification run 35114630181](https://github.com/JakubParol/VibeRails/actions/runs/35114630181)
+  passed on source `3ba892f3f70c1faadd4207a8e5612a0eee51f695`, tested merge
+  `1a216ae63205fce6b37c10376758e13e73d1958c`: 12 validator and 16 adoption tests, zero skipped,
+  full documentation/skill validation and both architecture examples. The handoff documentation
+  delta receives its own final-head CI; the PR records that latest result and exact revisions.
+- Next action: await user acceptance of PR #14 and a separate explicit merge instruction.
+  Stage 07 is not Done; candidate 0.4.0 is not an accepted baseline yet. Defer all 15 source
+  contents to 08. No follow-up implementation or merge is authorized by this handoff.
 - Closeout after a later explicit merge instruction: update the closing documents locally,
   commit/push on this branch, check final-head CI, then merge and confirm remote main.
 
@@ -30,7 +37,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Done | [Workflow card](steps/06-workflows.md) |
-| 07 | Adoption and migration | Verification | [Adoption card](steps/07-adoption.md) |
+| 07 | Adoption and migration | Awaiting acceptance | [Adoption card](steps/07-adoption.md) |
 | 08 | Shared prompt refinement and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 09 | Pilot and comparison | Planned | Create on stage entry. |
 | 10 | Central session reporting | Planned | Create on stage entry. |

@@ -50,7 +50,7 @@ Branch: `codex/refactor-07-adoption`. No open PR existed at entry.
 Local Node 22/POSIX is available, but local Git network access fails DNS. The GitHub connector
 owns remote operations. A temporary, branch-only source-transfer workflow exported tracked files
 from that exact base (no Git history/credentials); its downloaded tree matched Git tree
-`9f3a6f5fb56f61ef2359037dbf51290a6d70b656`. Remove that transfer workflow before delivery.
+`9f3a6f5fb56f61ef2359037dbf51290a6d70b656`. The transfer workflow is removed from the delivery.
 Local snapshot commits are not remote source revisions. No independent agent or measured model
 usage is claimed. The parent owns all implementation, semantic review, verification and handoff.
 
@@ -108,6 +108,22 @@ No independent agents, live adopter migration, Azure/Jira operations, Windows/Po
 model measurements, package installation or deferred research were performed. Equivalent native
 verification remains possible when the optional Node audit is unavailable; that limitation must
 be disclosed rather than converted into a complete-gate claim.
+
+## PR Verification And Published Handoff
+
+Published as ready [PR #14](https://github.com/JakubParol/VibeRails/pull/14), implementation source
+`3ba892f3f70c1faadd4207a8e5612a0eee51f695`. The source tree
+`fea574e43bbdd0e4ed1a985cdee95760c1e76e5d` exactly matches the locally tested files and modes.
+Remote publication uses GitHub Git objects because local Git network access is unavailable;
+the original pinned source and normal remote parent chain are preserved, without force push.
+The temporary source-transfer workflow is absent from the PR diff and final tree.
+
+[PR Verification run 35114630181](https://github.com/JakubParol/VibeRails/actions/runs/35114630181)
+passed on that source, actually testing merge `1a216ae63205fce6b37c10376758e13e73d1958c`.
+Read-back job logs confirm 12/12 validator tests and 16/16 adoption tests, zero skipped,
+full document/skill validation and both architecture examples. The publication checkpoint
+changes only this card and STATUS; focused document checks cover it and final-head CI is
+recorded in PR #14 rather than relabeling the earlier run. Acceptance and merge remain pending.
 
 ## Acceptance Walkthrough
 
