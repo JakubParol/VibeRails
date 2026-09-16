@@ -56,7 +56,11 @@ workstream grouping. Inherit area and iteration only after the selected profile 
 available values.
 
 Work-item creation is non-idempotent. Use an authorized Azure DevOps MCP operation with a
-task-specific fingerprint or marker. When the child needs rich text, acceptance criteria, or
+task-specific fingerprint or marker. Before creating any child, confirm that required creation
+fields and the parent relation can be supplied through available, authorized MCP operations,
+including required revision protection. Read the parent and its revision first. If the required
+relation operation is unavailable, block before creation rather than create an orphan.
+When the child needs rich text, acceptance criteria, or
 another post-create field, choose an MCP operation that supports required create fields directly,
 or a path that observes the created revision before a guarded follow-up MCP update. Do not default
 to a compound MCP create that writes rich text after creation without that guard. If no safe MCP
@@ -68,8 +72,11 @@ retry creation at most once only after absence is proved.
 
 Linking the child changes shared parent state. Use an already authorized revision-capable Azure
 DevOps MCP relation update that protects the immediately observed parent revision. Do not link
-when the selected MCP operation lacks that precondition. When no such operation is available,
-leave the child unlinked and report the User Story transition as blocked.
+when the selected MCP operation lacks that precondition. Re-read the parent revision immediately
+before a separate link write. If an otherwise supported operation fails after creation, report
+the actual child identity and incomplete relation, reconcile remote state before retrying, and
+name the authorized cleanup or manual next action. Do not create another child or delete the
+existing one without the required authority.
 
 ## Child Task State Flow
 

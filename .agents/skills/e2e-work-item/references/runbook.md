@@ -87,9 +87,9 @@ unobservable setting remains unknown.
 ## Provider Readiness
 
 Before an external read or write, resolve the selected target-owned integration profile through
-its documentation index and inspect its current MCP connection and operation metadata. For Azure
-DevOps and Jira, use MCP only. Do not fall back to a non-MCP path or a raw provider payload when
-an MCP operation is absent. The linked
+its documentation index and inspect the available client/operation metadata. Azure DevOps and
+Jira use MCP only; other code hosts retain their explicitly selected path. Do not fall back to
+a non-MCP path or a raw provider payload when an Azure DevOps/Jira MCP operation is absent. The linked
 [source-pack integration profile reference](../../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery)
 is a default when the target has no local profile, not authority for an external operation.
 
@@ -104,11 +104,12 @@ as proof that nothing happened.
 
 Use a provider revision or version precondition for shared writes when the selected MCP operation
 offers one. Readback verifies the saved outcome; it does not replace concurrency protection.
-When no allowed revision-capable MCP operation exists, leave the shared state unchanged and report
-the dependent operation as unavailable.
+When the provider/task requires revision protection and no allowed MCP operation exposes it,
+leave that shared state unchanged and report the dependent operation as unavailable. Do not
+claim atomic protection for operations whose provider does not offer it.
 
 For Jira, use a transition, comment, or other operation only when the selected MCP connection
-exposes it and the target-local profile authorizes it. If it does not, state the exact missing
+exposes it and the current task authorizes it within target policy. Otherwise state the exact missing
 MCP operation and prepare the allowed local handoff or manual step.
 
 For Azure Boards, read [Azure Boards Work Item Binding](azure-devops-work-items.md). For any

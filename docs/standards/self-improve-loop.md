@@ -36,7 +36,10 @@ When a reusable failure is found:
    report the blocked operation. Azure DevOps/Jira stay on authorized MCP connections; do not
    fall back to command wrappers or raw REST. Other sink profiles may use an already-authorized
    recorded alternate client; configuration alone is not write authority.
-6. Run the configured dedupe query.
+6. Resolve and run the configured dedupe operation. Azure DevOps/Jira references use the
+   [MCP-only legacy-field semantics](adoption-manifest.md#provider-sink-shape); never execute
+   old command text from the manifest. Missing or non-MCP bindings block that operation and
+   require an authorized refresh, not an automatic fallback.
 7. Treat an exact fingerprint match as the primary duplicate signal. Use provider/tool/error
    class matching only when exact fingerprint search is unavailable and the manual fallback
    says how to compare candidates.
@@ -120,7 +123,9 @@ The target repository must document:
 - environment variable names or connector names, without values
 - what to do when auth is missing
 - whether agents may create/comment automatically after user approval
-- alternate clients or wrappers for the same provider, or an explicit `none`
+- permitted alternate clients under [provider sink semantics](adoption-manifest.md#provider-sink-shape):
+  Azure DevOps/Jira MCP connections only; other providers follow their selected client policy,
+  with an explicit `none` when no alternate is selected
 
 Missing auth does not block the rest of the task. It blocks only the self-improve write.
 

@@ -107,6 +107,10 @@ in the target's quality-gate document. Missing CI is a limitation, not an automa
 
 ## Self-Improve Ticket Sink
 
+For Azure DevOps/Jira, record MCP operation references in the existing legacy-named command
+fields, following `adoption-manifest.md#provider-sink-shape`. No schema change is implied.
+Record MCP capability/access evidence separately; a structural audit alone cannot prove it.
+
 Reusable agent/tooling failures are reported here:
 
 | Field | Value |
