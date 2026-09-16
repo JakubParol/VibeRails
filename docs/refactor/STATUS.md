@@ -5,23 +5,21 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active checkpoint: completed retrospective review of stages 00-04, before stage 05.
-- Branch: `codex/refactor-review-00-04`; reviewed accepted base:
-  `80c866b045b9eba567321acde9a614ed434d6b30`.
-- Last accepted delivery: [PR #6](https://github.com/JakubParol/VibeRails/pull/6), owner-merged
-  at `2026-09-16T10:25:30Z` from `5a56500da0955e8cd4b056e549674ca1ebcfdd8b`.
-  User confirmed `Zmergowane` and requested this review. Source/merge trees are identical.
-- Next action: present the completed review and its single P3 Next.js wording clarification;
-  agree any edit and then discuss stage 05. No stage 05 scope or implementation is approved.
-- Active record: [00-04 retrospective review](review-00-04.md).
-- Delegation: all three read-only reviews completed. No P1/P2 findings; one proposed architecture
-  checklist finding was narrowed to P3 ambiguous wording after parent triage and reviewer agreement.
-- Verification: all five source/merge pairs have identical trees and belong to reviewed main.
-  Final PR #6 run `35084686183` passed; [merged-main run 35084903602](https://github.com/JakubParol/VibeRails/actions/runs/35084903602)
-  passed all steps on source/tested `80c866b`. All baseline counts and 15 retained URLs matched.
-  No full local gate, unchanged behavior-suite rerun or deferred research was performed.
-- Delivery: local documentation checkpoint only; carry it into the next agreed branch/PR.
-  The P3 framework wording itself has not been changed under this review-only request.
+- Active work: authorized P3 Next.js composition wording fix after the completed 00-04 review.
+- Branch: `codex/fix-nextjs-composition`; accepted base:
+  `80c866b045b9eba567321acde9a614ed434d6b30`. The two review checkpoint commits are carried here.
+- Authorization: user said `To zrob szybki fix branch i zmergujmy ta poprawke` on 2026-09-16,
+  approving the described narrow correction and merge after verification. No stage 05 work is approved.
+- Next action: reconcile this branch's PR and current-head CI, then finish the authorized merge
+  if still pending. Once merged, record closeout with the next agreed stage checkpoint and discuss
+  05; its implementation still needs scope agreement.
+- Active record: [00-04 review and fix follow-up](review-00-04.md#authorized-fix-follow-up).
+- Delegation: architecture reviewer (Sol/high) confirmed the changed sentence closes R1 without
+  a new contradiction. The full retrospective is complete and must not be repeated.
+- Verification: focused changed-document and whitespace checks passed. Final PR #6 and merged-main
+  run `35084903602` cover unchanged implementation; this fix's current PR CI is the merge gate.
+- Delivery: one wording correction plus the existing review/closeout record; no new behavior,
+  examples, checker, rule or future-stage implementation. User merge authorization is recorded.
 - The completed 00-02 review checkpoint is now included in merged PR #5; no separate PR needed.
 
 ## Stage Register
@@ -46,8 +44,8 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-04 are merged and their retrospective review is complete. Recover the recorded P3
-and next action rather than repeating the audit. Keep local checks focused
+Stages 00-04 are merged and their retrospective review is complete. Finish/reconcile the
+authorized P3 fix delivery before discussing 05; do not repeat the audit. Keep local checks focused
 and preserve the stage 7 research and stage 12 reusable CI/CD boundaries.
 
 ## Navigation

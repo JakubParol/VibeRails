@@ -109,6 +109,29 @@ documentation checkpoint and carry it into the next agreed delivery branch/PR, a
 00-02 retrospective. Do not create an extra implementation stage or mandatory review-only PR.
 Current lifecycle and next action belong in [STATUS](STATUS.md).
 
+## Authorized Fix Follow-Up
+
+On 2026-09-16 the user said `To zrob szybki fix branch i zmergujmy ta poprawke`, authorizing
+R1's described wording correction and merge after verification. New branch:
+`codex/fix-nextjs-composition`, from accepted main `80c866b045b9eba567321acde9a614ed434d6b30`.
+It carries the two completed retrospective checkpoint commits as the next agreed delivery.
+
+Scope: clarify that outer composition injects the client/repository contract into application
+behavior, and that the Next.js route/server action receives the bound application operation.
+No executable examples, architecture policy, validators or future-stage work are changed.
+Acceptance: the sentence agrees with the canonical boundary, focused documentation checks
+pass, the existing architecture reviewer confirms the correction, and current-head CI passes
+before the explicitly authorized merge. Requested review model/effort: Sol/high, reusing context.
+
+Focused re-review confirmed R1 closed with no new contradiction against the canonical
+architecture/backend boundary. Changed-document validation and whitespace checks passed;
+unchanged executable snippets were not rerun locally. The PR workflow will provide the full
+current-revision evidence before merge. Requested/observed usage remains unmeasured.
+
+The retrospective findings above describe the reviewed base; R1 is corrected by this follow-up.
+Final source, tested revision, CI result and merge identity belong to the resulting PR/check
+record. Reconcile it on resume rather than assuming a pre-merge snapshot proves completion.
+
 ## Navigation
 
 - [Refactor plan](../refactor-plan.md)

@@ -127,10 +127,11 @@ receives it through framework DI. Transport schemas and the global error handler
 API edge. They validate/decode input and map `InvalidTitle` to the agreed HTTP response; neither
 snippet implements or tests that HTTP layer.
 
-In Next.js full stack, a route handler/server action plays the presentation role and invokes
-application behavior with an injected client/repository contract. In frontend-only work, use
-the existing API client/hooks instead of duplicating the backend domain. Never pass non-serializable
-service objects through a server/client component boundary. See [frontend.md](../standards/frontend.md).
+In Next.js full stack, outer composition injects the client/repository contract into application
+behavior; the route handler/server action receives and invokes the bound application operation.
+In frontend-only work, use the existing API client/hooks instead of duplicating the backend domain.
+Never pass non-serializable service objects through a server/client component boundary. See
+[frontend.md](../standards/frontend.md).
 
 ## Focused Behavior Check
 
