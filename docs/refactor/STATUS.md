@@ -5,28 +5,29 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 01 - audit and baseline, scope `audit-1` approved.
-- Branch: `codex/refactor-01-audit`; PR target: `main`.
-- Audit PR: [#3 - overhead audit and baseline](https://github.com/JakubParol/VibeRails/pull/3), draft.
-- Accepted base: `e19acf6af12976caef7a2053485a4fc39b95738e`, verified locally and on GitHub.
-- Preparation PR: [#2](https://github.com/JakubParol/VibeRails/pull/2), merged by the repository
-  owner on 2026-09-16 at 07:57:32 UTC. Reviewed source head: `81eb17872257d83d7494a45051dee1edb886a575`.
-- Next action: wait for user acceptance of the audit report/baseline and explicit authorization
-  to merge PR #3. Stage 02 is not started.
-- Blocker: none identified. User approved `audit-1` with `tak` on 2026-09-16.
-- Delegation: Luna/high and Terra/high audits completed; Sol/high report review and focused
-  recheck completed. Parent verified evidence/counts and fixed two over-broad source summaries.
-- Artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
-- Verification: zero GitHub Actions workflows/check-runs/commit statuses at accepted main;
-  no green CI claim. Source-pack rules and scripts were not modified or executed.
+- Active stage: 02 - small core and configuration, scope `configuration-1` approved.
+- Branch: `codex/refactor-02-configuration`; PR target: `main`.
+- Stage PR: [#4 - core and configuration design](https://github.com/JakubParol/VibeRails/pull/4), draft.
+- Accepted base: `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`, verified locally and on GitHub.
+- Audit PR: [#3](https://github.com/JakubParol/VibeRails/pull/3), owner-merged at
+  `2026-09-16T08:24:30Z`; user confirmed `Zmergowane. Dalej`.
+- Next action: wait for user acceptance of the configuration design and explicit authorization
+  to merge PR #4. Step 03 has not started.
+- Blocker: none identified; user approved `configuration-1` with `ok` on 2026-09-16.
+- Delegation: Terra/high and Sol/high design advice complete; independent Sol/high review
+  reported no findings. Parent chose additive manifest ownership and materialized preset values.
+- Artifacts: [contract](../standards/configuration.md) and [examples](configuration-examples.md).
+- Audit artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
+- Verification: focused document/example checks and independent review passed. No runtime,
+  migration or full-gate test was run; inspect PR #4's current checks rather than assuming green CI.
 
 ## Stage Register
 
 | ID | Stage | State | Record |
 |---|---|---|---|
 | 00 | Controlled plan and startup | Done | [Preparation card](steps/00-plan-preparation.md) |
-| 01 | Audit and baseline | Awaiting acceptance | [Audit card](steps/01-audit.md) |
-| 02 | Core and configuration | Planned | Create on stage entry. |
+| 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
+| 02 | Core and configuration | Awaiting acceptance | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Planned | Create on stage entry. |
 | 04 | Local/CI verification | Planned | Create on stage entry. |
 | 05 | Documentation and context | Planned | Create on stage entry. |
@@ -42,10 +43,10 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stage 00 is reconciled; stage 01's branch and scope agreement already exist. Do not recreate
-the branch or ask for the same scope approval. Read the card and check live agents/artifacts
-before duplicating work. Preserve the step 7 source gate, keep framework edits out of this audit,
-and wait for audit acceptance plus explicit merge authorization before stage Done.
+Stages 00-01 are reconciled; stage 02's branch and agreement exist. Do not repeat the audit,
+recreate the branch or ask again for the same scope. Recover actual delegate/artifact state
+before continuing. Keep the step 7 source gate and do not implement later architecture,
+verification, routing or integration mechanisms early.
 
 ## Navigation
 

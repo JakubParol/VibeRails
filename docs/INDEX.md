@@ -13,6 +13,9 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 01 audit](refactor/steps/01-audit.md) | Approved audit scope, evidence, delegation and delivery record. |
 | [Stage 01 findings](refactor/audit-01.md) | Prioritized overhead findings, source evidence, preserved guards and later pilot scenarios. |
 | [Stage 01 baseline](refactor/baseline-01.md) | Reproducible selected-file measurements and explicit limits of cost inference. |
+| [Stage 02 configuration](refactor/steps/02-configuration.md) | Approved small-core/configuration scope, decisions and delivery evidence. |
+| [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |
+| [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for refactor step 7: GPT-6 Astra prompt optimization, with supporting context, cost, and feedback-loop material. |

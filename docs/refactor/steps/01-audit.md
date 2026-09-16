@@ -82,7 +82,7 @@ not to add a new generic framework rule or wording-only test.
 
 Branch: `codex/refactor-01-audit`, based on accepted main
 `e19acf6af12976caef7a2053485a4fc39b95738e`.
-Published draft: [PR #3](https://github.com/JakubParol/VibeRails/pull/3).
+Published for review as draft: [PR #3](https://github.com/JakubParol/VibeRails/pull/3).
 Reviewed report commit: `efe94974341d47d8b87968efa3e97ea734cad846`. Publication-only checkpoint
 updates are checked separately; resolve the current PR head before reusing final-head evidence.
 The first checkpoint closed stage 00, and commit `fbeaeb0` recorded the user's audit approval.
@@ -97,8 +97,19 @@ will be recorded in the stage PR. Current state and next action belong in [STATU
 
 ## Acceptance And Merge Evidence
 
-The user approved execution of `audit-1`, not the completed report. Report acceptance and an
-explicit merge instruction are pending; do not mark stage Done or start stage 02 yet.
+On 2026-09-16 the user said `Zmergowane. Dalej`. GitHub confirms the owner merged
+[PR #3](https://github.com/JakubParol/VibeRails/pull/3) at `2026-09-16T08:24:30Z`:
+
+- Reviewed/published source head: `f253f7d84359d6a7160c725a2774575fed9d4758`.
+- Merge commit and refreshed main: `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`.
+- Source head is an ancestor of main; the source-to-merge tree diff is empty.
+- PR check-runs are empty. Existing focused checks and independent review apply to unchanged
+  content; no new runtime test or green CI result is claimed for the merge SHA.
+- Prior audit agents are completed; no live workers are affected by the branch transition.
+
+The user's confirmation and owner merge action close the report's acceptance/merge gate.
+Stage 02 still needs its own scope discussion. Its first documentation commit records this
+closeout and the next discussion checkpoint.
 
 ## Navigation
 
