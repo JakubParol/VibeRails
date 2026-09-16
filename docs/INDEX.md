@@ -10,6 +10,9 @@ This index is the entry point for all standards and templates in this repository
 | [Current refactor status](refactor/STATUS.md) | Sole progress register and exact resume action; reconcile with Git/PR state. |
 | [Refactor record structure](refactor/README.md) | Lightweight card fields, lifecycle meanings, and record navigation. |
 | [Stage 00 preparation](refactor/steps/00-plan-preparation.md) | Scope agreement, independent reviews, verification and preparation PR evidence. |
+| [Stage 01 audit](refactor/steps/01-audit.md) | Approved audit scope, evidence, delegation and delivery record. |
+| [Stage 01 findings](refactor/audit-01.md) | Prioritized overhead findings, source evidence, preserved guards and later pilot scenarios. |
+| [Stage 01 baseline](refactor/baseline-01.md) | Reproducible selected-file measurements and explicit limits of cost inference. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for refactor step 7: GPT-6 Astra prompt optimization, with supporting context, cost, and feedback-loop material. |
