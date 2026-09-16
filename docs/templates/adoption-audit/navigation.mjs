@@ -74,6 +74,8 @@ export function createNavigationChecks(context, values = {}) {
   }
 
   function auditMarkdown(markdownFiles) {
+    // Canonicalize both sides: system parent aliases must not look like an escape.
+    const physicalRoot = fs.existsSync(repoRoot) ? fs.realpathSync(repoRoot) : repoRoot;
     const anchorCache = new Map();
     const linkGraph = new Map(markdownFiles.map((file) => [fs.realpathSync(file), []]));
     const linkPattern = /\[[^\]]+\]\(([^)]+)\)/g;
@@ -109,7 +111,7 @@ export function createNavigationChecks(context, values = {}) {
         }
 
         const targetRealPath = fs.realpathSync(resolved.targetPath);
-        const relative = path.relative(repoRoot, targetRealPath);
+        const relative = path.relative(physicalRoot, targetRealPath);
         if (relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
           fail(`${sourceRelativePath} has a link outside the target repository.`);
           continue;

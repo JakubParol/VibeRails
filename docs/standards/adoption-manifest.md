@@ -255,9 +255,12 @@ an explicit identity change reviewed in the same adoption diff. No separate prom
 is needed. Partial refreshes retain unchanged per-file source refs; the latest source examined
 must not be assigned to files that were never refreshed.
 
-The maintained inventory includes each recorded project's root trio, local README/AGENTS, standards
-under documentation roots, copied Markdown except the human adoption receipt, and local vendored
-skill Markdown/metadata. It excludes generated/dependency folders. The human receipt is excluded
+The maintained inventory includes each recorded project's root trio, local README/AGENTS,
+explicitly configured standard paths even outside `docs/standards`, standards under documentation
+roots, copied Markdown except the human adoption receipt, and local vendored skill Markdown/metadata.
+Every selected vendored skill must have a regular `<targetPath>/<name>/SKILL.md`; missing
+entrypoints, duplicate/path-like names and symlinks inside the vendored tree fail validation
+instead of disappearing from the snapshot. It excludes generated/dependency folders. The human receipt is excluded
 to avoid self-referential hashes; it is still audited for placeholders and manifest mirrors.
 Additional task-specific context is not claimed as captured. User-scope skill contents remain
 outside this local audit; retain their immutable `agentSkills.sourceRef`, use a pinned source

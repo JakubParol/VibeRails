@@ -1,5 +1,5 @@
 // Small explicit configuration contract. No commands, external services or writes are executed.
-import { checkBaseline, isCommit, isRecord, localPath } from "./adoption-pins.mjs";
+import { checkBaseline, isCommit, isRecord, localPath, vendoredSkillPaths } from "./adoption-pins.mjs";
 
 const fields = Object.freeze({
   version: [1],
@@ -92,7 +92,10 @@ export function checkAdoptionState(root, manifest) {
   }
   if (selected && ["user-scope", "vendored"].includes(manifest.agentSkills?.mode)
     && !isCommit(manifest.agentSkills.sourceRef)) errors.push("selected skills require an immutable source ref");
-  if (manifest.agentSkills?.mode === "vendored") checkPath(manifest.agentSkills.targetPath, "agentSkills.targetPath", true);
+  if (manifest.agentSkills?.mode === "vendored") {
+    try { vendoredSkillPaths(root, manifest.agentSkills); }
+    catch { errors.push("agentSkills vendored selection must resolve to distinct safe SKILL.md files"); }
+  }
   if (!errors.length && Object.hasOwn(manifest, "promptBaseline")) errors.push(...checkBaseline(root, manifest));
   return {
     errors, mode: selected ? "selected" : "legacy/unselected",

@@ -45,7 +45,7 @@ jobs:
 
       - name: Adoption and migration regressions
         id: adoption
-        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs
+        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
 
       - name: Pinned controlled pilot
         id: pilot
@@ -110,3 +110,32 @@ jobs:
             echo 'Skipped, cancelled, missing and failed checks are not passed verification.'
             echo 'Open the failed step for details. No PowerShell, live HTTP or database validation is claimed.'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  adoption-portability:
+    name: Adoption portability (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Record environment and revision
+        run: |
+          git rev-parse HEAD
+          node --version
+          python3 --version
+      - name: Adoption, refresh and instruction-boundary regressions
+        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
