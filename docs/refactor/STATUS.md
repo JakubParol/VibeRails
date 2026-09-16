@@ -5,33 +5,23 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 05 - documentation and context; approved scope `context-2`.
-- Branch: `codex/refactor-05-context`; accepted base:
-  `e9cc17dbe0f5f5ef1bca4d29500f435f2feaf4a6`.
-- Last delivery: [PR #7](https://github.com/JakubParol/VibeRails/pull/7) is merged; R1 from the
-  completed 00-04 review is closed. Source/merge trees match and PR/main CI passed.
-- Scope agreement: user's stage 05 instruction on 2026-09-16 defines one context owner,
-  essential/standard bundles, less duplicate reporting and a concrete task demonstration;
-  follow-up requires before/after for all three existing baseline scenarios D/B/R, including
-  rule-selection correctness, with no arbitrary percentage target or new measurement system.
-- Current delivery: draft [PR #8](https://github.com/JakubParol/VibeRails/pull/8), content source
-  `a895280ec581c2d3901da72c3f7d0d0be815e6cd`. Its first CI run passed; reconcile the final head/check
-  after this publication checkpoint rather than reusing an older result blindly.
-- Next action: verify the publication checkpoint's current PR check, then await user acceptance
-  and explicit stage 05 merge authorization. Stage 06 remains unstarted.
-- Active record: [stage 05 card](steps/05-context.md).
-- Delegation: advice and separate before/after Luna/max exercises completed. Sol/high found
-  and rechecked three P2 policy issues; no policy findings remain. Parent verified corrected
-  artifacts and D/B/R rule coverage; Sol/high reproduced the figures and independently confirmed
-  the completed comparison with no remaining findings.
-- Evidence: [D/B/R comparison](context-proof-05.md) records the same successful D edit/check,
-  retained B/R obligations, fewer selected sections and increased fixed whole-file counts.
-  These are source-word proxies, not token/runtime savings. No full local gate or future-stage
-  research is authorized.
-- CI: [run 35091265820](https://github.com/JakubParol/VibeRails/actions/runs/35091265820) passed on
-  source `a895280`, tested merge `27b7d15`; full revisions are in the stage card. Final-head
-  publication evidence belongs to PR #8's current check and description.
-- No stage 05 result acceptance or merge authorization is recorded.
+- Completed stage: 05 - documentation and context, scope `context-2`.
+- User accepted the result and explicitly requested completion/merge on 2026-09-16:
+  `Oznacz jako zakonczone i merguj`.
+- Delivery: [PR #8](https://github.com/JakubParol/VibeRails/pull/8) merged at
+  `2026-09-16T11:40:51Z`, source `25bbc59673e84c00b40d370e3052cc3557473327`, merge
+  `ab335f18b1e69b819f65c3a4408dce9b36b9a949`. Source and merge trees are identical.
+- Final [PR CI run 35091401210](https://github.com/JakubParol/VibeRails/actions/runs/35091401210)
+  passed on source `25bbc59673e84c00b40d370e3052cc3557473327`, tested merge
+  `ea6354833ba471c5d2dcb24bda923f548a08497d`.
+- Evidence: [stage 05 card](steps/05-context.md) and [D/B/R comparison](context-proof-05.md).
+  Independent policy and evidence reviews are complete with no remaining actionable findings.
+  Counts are source-word proxies with disclosed limits, not measured token/runtime savings.
+- Closeout branch: `codex/refactor-05-closeout`, created from the confirmed merge solely to
+  publish this requested Done record. Reconcile its PR if publication is still pending; this
+  bookkeeping delivery does not create a new implementation stage or another closeout loop.
+- Next action: discuss and agree stage 06 scope before implementation. Stage 06 is unstarted.
+  Preserve the deferred stage 07 research and stage 08 activation boundaries.
 
 ## Stage Register
 
@@ -42,7 +32,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
 | 04 | Local/CI verification | Done | [Verification card](steps/04-verification.md) |
-| 05 | Documentation and context | Awaiting acceptance | [Context card](steps/05-context.md) |
+| 05 | Documentation and context | Done | [Context card](steps/05-context.md) |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |
 | 08 | Adoption and migration | Planned | Create on stage entry. |
@@ -55,9 +45,9 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-04 and the P3 follow-up are merged. Stage 05 has explicit scope approval and its own
-branch. Recover its actual artifacts/delegates rather than repeating completed audits. Preserve
-local constraints, focused verification and the stage 07/08 activation boundaries.
+Stages 00-05 are accepted and merged. Reconcile the closeout record with actual Git/PR state,
+then discuss stage 06. Do not repeat completed D/B/R exercises or reviews, infer token savings,
+start implementation without scope agreement, or open the deferred Astra sources early.
 
 ## Navigation
 
