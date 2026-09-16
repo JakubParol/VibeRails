@@ -15,6 +15,7 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 01 baseline](refactor/baseline-01.md) | Reproducible selected-file measurements and explicit limits of cost inference. |
 | [Stage 02 configuration](refactor/steps/02-configuration.md) | Approved small-core/configuration scope, decisions and delivery evidence. |
 | [Stage 03 architecture](refactor/steps/03-architecture.md) | Approved architecture variants, examples, verification and delivery evidence. |
+| [Stage 04 verification](refactor/steps/04-verification.md) | Approved local/CI responsibility, implementation, tests and delivery evidence. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
 | [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
@@ -79,6 +80,7 @@ This register is internal VibeRails refactor material, not an adoption template.
 | Document | Purpose |
 |---|---|
 | [../scripts/README.md](../scripts/README.md) | Repository maintenance and validation commands. |
+| [../.github/README.md](../.github/README.md) | Repository PR Verification coverage, evidence and limitations. |
 | [../ROADMAP.md](../ROADMAP.md) | Internal historical roadmap for the 2026 optimization effort; not an adoption template. |
 | [../CHANGELOG.md](../CHANGELOG.md) | Versioned changes to the standards pack. |
 

@@ -4,7 +4,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { validateMarkdownNavigation } from "./validation-markdown.mjs";
+
 const repoRoot = path.resolve(path.join(path.dirname(fileURLToPath(import.meta.url)), ".."));
+const repoRealPath = fs.realpathSync(repoRoot);
 const failures = [];
 const excludedDirectories = new Set([
   ".git",
@@ -30,6 +33,14 @@ function addFailure(message) {
 
 function toRepoPath(filePath) {
   return path.relative(repoRoot, filePath).split(path.sep).join("/");
+}
+
+function isInsideDirectory(directory, candidate) {
+  const relativePath = path.relative(directory, candidate);
+  return relativePath !== ""
+    && relativePath !== ".."
+    && !relativePath.startsWith(`..${path.sep}`)
+    && !path.isAbsolute(relativePath);
 }
 
 function walkFiles(directory) {
@@ -73,6 +84,88 @@ function isCheckedTextFile(file) {
   return path.basename(file) === "LICENSE" || /\.(md|mjs|sh|ps1|json|ya?ml|gitattributes)$/i.test(file);
 }
 
+function parseArguments(argumentsList) {
+  if (argumentsList.length === 0 || (argumentsList.length === 1 && argumentsList[0] === "--all")) {
+    return { mode: "full" };
+  }
+
+  if (argumentsList[0] === "--files") {
+    const fileArguments = argumentsList.slice(1);
+    if (fileArguments.length === 0) {
+      addFailure("--files requires one or more repository-relative text file paths.");
+      return null;
+    }
+
+    const optionArgument = fileArguments.find((argument) => argument.startsWith("-"));
+    if (optionArgument) {
+      addFailure(`--files does not accept option '${optionArgument}'.`);
+      return null;
+    }
+
+    return { mode: "focused", fileArguments };
+  }
+
+  if (argumentsList.includes("--all")) {
+    addFailure("--all cannot be combined with other arguments.");
+    return null;
+  }
+
+  addFailure(`Unknown argument '${argumentsList[0]}'. Use --all or --files <file...>.`);
+  return null;
+}
+
+function resolveFocusedFiles(fileArguments) {
+  const selectedFiles = new Map();
+
+  for (const fileArgument of fileArguments) {
+    if (path.isAbsolute(fileArgument) || path.win32.isAbsolute(fileArgument)) {
+      addFailure(`Focused path '${fileArgument}' must be repository-relative.`);
+      continue;
+    }
+
+    const candidatePath = path.resolve(repoRoot, fileArgument);
+    if (!isInsideDirectory(repoRoot, candidatePath)) {
+      addFailure(`Focused path '${fileArgument}' is outside the repository.`);
+      continue;
+    }
+
+    let fileStats;
+    try {
+      fileStats = fs.statSync(candidatePath);
+    } catch {
+      addFailure(`Focused path '${fileArgument}' does not exist.`);
+      continue;
+    }
+
+    if (!fileStats.isFile()) {
+      addFailure(`Focused path '${fileArgument}' must be a regular file.`);
+      continue;
+    }
+
+    let realPath;
+    try {
+      realPath = fs.realpathSync(candidatePath);
+    } catch {
+      addFailure(`Focused path '${fileArgument}' could not be resolved.`);
+      continue;
+    }
+
+    if (!isInsideDirectory(repoRealPath, realPath)) {
+      addFailure(`Focused path '${fileArgument}' resolves outside the repository.`);
+      continue;
+    }
+
+    if (!isCheckedTextFile(candidatePath)) {
+      addFailure(`Focused path '${fileArgument}' is not a supported text file.`);
+      continue;
+    }
+
+    selectedFiles.set(realPath, candidatePath);
+  }
+
+  return [...selectedFiles.values()];
+}
+
 function testLineEndingsAndTrailingWhitespace(files) {
   const checked = files.filter(isCheckedTextFile);
 
@@ -113,188 +206,36 @@ function testAsciiFiles(files) {
   }
 }
 
-function convertToMarkdownAnchor(heading) {
-  return heading
-    .trim()
-    .toLowerCase()
-    .replace(/[^A-Za-z0-9_\s-]/g, "")
-    .replace(/\s/g, "-");
-}
+function getAffectedSkillNames(files) {
+  const skillNames = new Set();
 
-function getMarkdownAnchors(filePath) {
-  const anchors = new Set();
-  let insideFence = false;
-
-  for (const line of readText(filePath).split(/\r?\n/)) {
-    if (/^\s*(```|~~~)/.test(line)) {
-      insideFence = !insideFence;
+  for (const file of files) {
+    const pathSegments = toRepoPath(file).split("/");
+    if (pathSegments[0] !== ".agents" || pathSegments[1] !== "skills" || pathSegments.length < 4) {
       continue;
     }
 
-    if (insideFence) {
-      continue;
-    }
-
-    const heading = line.match(/^#{1,6}\s+(.+?)\s*$/);
-    if (heading) {
-      anchors.add(convertToMarkdownAnchor(heading[1]));
+    const skillDirectory = path.join(repoRoot, ".agents", "skills", pathSegments[2]);
+    if (fs.existsSync(skillDirectory) && fs.statSync(skillDirectory).isDirectory()) {
+      skillNames.add(pathSegments[2]);
     }
   }
 
-  return anchors;
+  return skillNames;
 }
 
-function resolveMarkdownTarget(sourceFile, target) {
-  const [rawPathPart, ...anchorParts] = target.split("#");
-  const pathPart = rawPathPart.trim().replace(/^<|>$/g, "");
-  const anchorPart = anchorParts.join("#").trim();
-
-  if (!pathPart) {
-    return {
-      targetPath: sourceFile,
-      anchorPart,
-      exists: true,
-    };
-  }
-
-  if (/^[a-zA-Z]+:/.test(pathPart)) {
-    return {
-      targetPath: null,
-      anchorPart,
-      exists: true,
-      external: true,
-    };
-  }
-
-  const resolvedPath = path.resolve(path.dirname(sourceFile), pathPart);
-  return {
-    targetPath: resolvedPath,
-    anchorPart,
-    exists: fs.existsSync(resolvedPath),
-  };
-}
-
-function isAllowedTemplateCopyLink(sourceRelativePath, target) {
-  const allowedTargetsByTemplate = new Map([
-    ["docs/templates/project-docs-INDEX.md", new Set(["../README.md", "../AGENTS.md"])],
-    ["docs/templates/viberails-adoption.md", new Set(["INDEX.md"])],
-  ]);
-
-  if (sourceRelativePath === "docs/templates/project-docs-INDEX.md") {
-    if (target === "<relative-path-to-repo>/docs/viberails-adoption.md"
-      || target === "<relative-path-to-repo>/docs/INDEX.md") {
-      return true;
-    }
-    const standardsPrefix = "<relative-path-to-repo>/docs/standards/";
-    if (target.startsWith(standardsPrefix)) {
-      const targetSuffix = target.slice(standardsPrefix.length);
-      return targetSuffix.endsWith(".md")
-        && !targetSuffix.includes("/")
-        && fs.existsSync(path.join(repoRoot, "docs", "standards", targetSuffix));
-    }
-  }
-
-  return allowedTargetsByTemplate.get(sourceRelativePath)?.has(target) ?? false;
-}
-
-function testMarkdownLinks(markdownFiles) {
-  const anchorCache = new Map();
-  const linkGraph = new Map(markdownFiles.map((file) => [fs.realpathSync(file), []]));
-  const linkPattern = /\[[^\]]+\]\(([^)]+)\)/g;
-
-  for (const sourceFile of markdownFiles) {
-    const sourceRealPath = fs.realpathSync(sourceFile);
-    const sourceRelativePath = toRepoPath(sourceFile);
-    const text = readText(sourceFile);
-    let match;
-
-    while ((match = linkPattern.exec(text)) !== null) {
-      const target = match[1].trim();
-      if (!target || /^(https?:|mailto:)/i.test(target)) {
-        continue;
-      }
-      if (isAllowedTemplateCopyLink(sourceRelativePath, target)) {
-        continue;
-      }
-
-      const resolved = resolveMarkdownTarget(sourceFile, target);
-      if (resolved.external) {
-        continue;
-      }
-
-      if (!resolved.exists) {
-        addFailure(`${sourceRelativePath} has missing link target '${target}'.`);
-        continue;
-      }
-
-      const targetRealPath = fs.realpathSync(resolved.targetPath);
-      if (targetRealPath.endsWith(".md")) {
-        linkGraph.get(sourceRealPath).push(targetRealPath);
-      }
-
-      if (resolved.anchorPart && targetRealPath.endsWith(".md")) {
-        if (!anchorCache.has(targetRealPath)) {
-          anchorCache.set(targetRealPath, getMarkdownAnchors(targetRealPath));
-        }
-
-        if (!anchorCache.get(targetRealPath).has(resolved.anchorPart.toLowerCase())) {
-          addFailure(
-            `${sourceRelativePath} links to missing anchor '#${resolved.anchorPart}' in '${toRepoPath(targetRealPath)}'.`,
-          );
-        }
-      }
-    }
-  }
-
-  return linkGraph;
-}
-
-function testOrphanMarkdownFiles(markdownFiles, linkGraph) {
-  const rootReadme = path.join(repoRoot, "README.md");
-
-  if (!fs.existsSync(rootReadme)) {
-    addFailure("Repository root README.md is missing.");
-    return;
-  }
-
-  const reachable = new Set();
-  const queue = [fs.realpathSync(rootReadme)];
-
-  while (queue.length > 0) {
-    const current = queue.shift();
-    if (reachable.has(current)) {
-      continue;
-    }
-
-    reachable.add(current);
-    for (const linked of linkGraph.get(current) ?? []) {
-      if (!reachable.has(linked)) {
-        queue.push(linked);
-      }
-    }
-  }
-
-  for (const file of markdownFiles) {
-    const realPath = fs.realpathSync(file);
-    if (!reachable.has(realPath)) {
-      addFailure(`${toRepoPath(file)} is an orphan: not reachable from README.md through Markdown links.`);
-    }
-  }
-}
-
-function testSkillMetadata() {
+function testSkillMetadata(skillNames = null) {
   const skillsRoot = path.join(repoRoot, ".agents", "skills");
 
   if (!fs.existsSync(skillsRoot)) {
     return;
   }
 
-  for (const entry of fs.readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!entry.isDirectory()) {
-      continue;
-    }
+  const namesToCheck = skillNames ?? fs.readdirSync(skillsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
 
-    const skillName = entry.name;
+  for (const skillName of namesToCheck) {
     const skillDirectory = path.join(skillsRoot, skillName);
     const skillFile = path.join(skillDirectory, "SKILL.md");
 
@@ -346,7 +287,7 @@ function testSkillMetadata() {
   }
 }
 
-function testAgentAssetsAreGeneric() {
+function testAgentAssetsAreGeneric(files) {
   const forbiddenPatterns = readDenylist();
   const forbiddenRegexes = [
     /\/Users\/[A-Za-z0-9._-]+\//,
@@ -359,7 +300,7 @@ function testAgentAssetsAreGeneric() {
     "scripts/source-leak-denylist.txt",
   ]);
 
-  for (const file of walkFiles(repoRoot)) {
+  for (const file of files) {
     const relativePath = toRepoPath(file);
     if (allowlistedFiles.has(relativePath)) {
       continue;
@@ -384,23 +325,48 @@ function testAgentAssetsAreGeneric() {
   }
 }
 
-const files = walkFiles(repoRoot);
+const options = parseArguments(process.argv.slice(2));
+const files = options?.mode === "focused"
+  ? resolveFocusedFiles(options.fileArguments)
+  : options?.mode === "full"
+    ? walkFiles(repoRoot)
+    : [];
 const markdownFiles = files.filter((file) => file.endsWith(".md"));
+const affectedSkillNames = options?.mode === "focused" ? getAffectedSkillNames(files) : null;
 
-testLineEndingsAndTrailingWhitespace(files);
-testNoBom(files);
-testAsciiFiles(files);
-const markdownLinkGraph = testMarkdownLinks(markdownFiles);
-testOrphanMarkdownFiles(markdownFiles, markdownLinkGraph);
-testSkillMetadata();
-testAgentAssetsAreGeneric();
+if (options) {
+  testLineEndingsAndTrailingWhitespace(files);
+  testNoBom(files);
+  testAsciiFiles(files);
+  for (const failure of validateMarkdownNavigation({
+    markdownFiles,
+    repoRoot,
+    checkOrphans: options.mode === "full",
+  })) {
+    addFailure(failure);
+  }
+  testSkillMetadata(affectedSkillNames);
+  testAgentAssetsAreGeneric(files);
+}
 
 if (failures.length > 0) {
   for (const failure of failures.sort()) {
     console.log(`FAIL: ${failure}`);
   }
-  console.log(`VibeRails validation failed with ${failures.length} issue(s).`);
+  if (options?.mode === "focused") {
+    console.log(
+      `VibeRails focused validation failed with ${failures.length} issue(s) across ${files.length} selected file(s); repository-wide reachability and orphan checks were not run.`,
+    );
+  } else {
+    console.log(`VibeRails validation failed with ${failures.length} issue(s).`);
+  }
   process.exit(1);
 }
 
-console.log("VibeRails validation passed.");
+if (options?.mode === "focused") {
+  console.log(
+    `VibeRails focused validation passed for ${files.length} selected file(s): ${markdownFiles.length} Markdown file(s), ${affectedSkillNames.size} affected skill(s); repository-wide reachability and orphan checks were not run.`,
+  );
+} else {
+  console.log("VibeRails validation passed.");
+}

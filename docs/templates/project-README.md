@@ -101,18 +101,16 @@ Required standards:
 
 ## Quality Gate
 
-Document the exact commands agents and humans must run before submitting code. Use
-`quality-gate.md` and the selected stack profile as defaults, then replace placeholders with
-real repository commands.
+Document focused local commands separately from PR Verification. Use `quality-gate.md` and
+stack CI defaults, replacing placeholders with real commands, working directories and check names.
+Local work uses changed-file checks and the smallest relevant behavior test; broad types,
+suites and builds belong to CI unless the user explicitly requests a full local run.
 
 ```bash
-# format or auto-fix
+# focused local checks and affected behavior case
 
-# lint
-
-# type check
-
-# test
-
-# build
+# full PR verification command / required check name
 ```
+
+Report missing/pending CI honestly and preserve required checks. Record the verified revision
+and run link; reuse valid evidence and rerun only affected local checks after a fix.

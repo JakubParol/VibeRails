@@ -24,9 +24,10 @@ Rules:
 
 - Linting must finish with zero warnings and zero errors.
 - Tests required for the touched area must pass.
-- Type checking is mandatory for typed languages.
+- Type checking remains required for typed languages; broad type checks run in PR CI.
 - Do not hide issues with suppression comments or weakened config.
-- If the quality gate is missing, stop and report a blocker.
+- If commands or CI are missing, report the coverage gap and follow the quality-gate standard;
+  do not automatically run a full local substitute or claim all verification passed.
 
 ## Git Workflow
 

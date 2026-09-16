@@ -192,31 +192,35 @@ blocker. Include the last successful commit and the exact next decision needed.
 
 ## Final Guard Rails
 
-After all implementation plan items are committed, run the scoped quality gate. The local gate
-proves the changed scope; the PR pipeline proves the whole repository.
+After implementation commits, run the documented focused local handoff checks. Full types,
+suites, builds and aggregate gates belong to PR Verification. This does not waive a required
+check; report its result at the point where it can actually run.
 
 1. Read the documented quality gate commands and the path-to-scope map from repository docs.
 2. Determine the changed scopes from the branch diff:
 
-   ```powershell
+   ```bash
    git diff --name-only "<base-ref>...HEAD"
    ```
 
-3. Run the documented gate once for each changed scope only, for example
-   `.\scripts\lint.ps1 -Service api`. Do not run the full repository gate by default.
-4. Run the full repository gate only when the change is cross-cutting (shared tooling,
-   lockfiles, shared packages, or the gate script itself), when the repository documents no
-   scoped commands, or when the user explicitly asks for it.
-5. Fix failures in focused commits.
-6. Rerun the affected scoped gates after every fix cycle.
-7. Continue until green or until five guard-rail fix cycles have failed to reach green.
+3. Run changed-file format/lint and the smallest meaningful behavior checks for the change,
+   using actual target commands. A scope flag does not prove that a script is a focused check.
+4. Run a full local gate only when the user explicitly requests it. Cross-cutting changes,
+   missing scoped commands and unavailable CI do not automatically authorize one.
+5. Fix failures in focused commits and rerun only the affected local check/case. Preserve
+   unchanged green evidence; escalate scope only for a concrete changed risk.
+6. After an authorized PR is available, read required CI results for its source/tested revision.
+   Record the run link, outcome and relevant failure details. Missing/pending CI is not green.
+7. Stop repeated unsuccessful fix attempts after the existing five-cycle limit and report the
+   unresolved check. Do not repeat unrelated suites or lower verification requirements.
 
 If a final guard-rail failure belongs to a child Task already marked `Done`, move that Task
 back to `In Progress` before applying the fix, then move it to `Done` again after the fix
 commit and focused check.
 
-If no documented quality gate exists, stop with a blocker. Do not invent an unofficial gate and
-call the work complete.
+If commands or CI are missing, report the uncovered requirement and next action; continue
+independent work. Agree any required-check exception explicitly. Do not invent a complete-gate
+claim or automatically compensate with a full local run.
 
 ## Finish
 
@@ -226,9 +230,14 @@ Only finish successfully when all of these are true:
   text;
 - all task changes are committed;
 - for User Story runs, every child Task used by this run is verified in `Done`;
-- required guard rails are green;
+- required local handoff checks have passed, with CI state/coverage explicitly recorded;
+- any CI result required by the target's handoff policy is available for the current revision;
 - `git status --short --branch` shows no accidental unrelated changes;
 - the work item is moved to `Code Review` and verified there.
+
+When creating a PR is outside this invocation's authorization, record PR CI as pending rather
+than publishing without consent or claiming complete verification. Preserve existing work-item
+transition policy; Code Review handoff is not merge readiness or overall acceptance.
 
 Move the work item with the Azure DevOps wrapper:
 

@@ -61,8 +61,9 @@ after explicit authorization. Defer Astra research until its stage 7 gate.
 3. Update indexes and navigation links.
 4. Check for broken relative links.
 5. Validate skill metadata when `.agents/skills/` changes.
-6. Run `node scripts/validate.mjs`; also run `.\scripts\validate.ps1` when PowerShell is
-   available.
+6. Run focused changed-file checks and relevant behavior tests from [scripts/README.md](scripts/README.md).
+   Full repository validation belongs to PR Verification; local full gates require an explicit
+   user request. Never run `lint.ps1`; other PowerShell execution requires an explicit request.
 7. Report any intentional exception or unresolved ambiguity.
 
 ## Navigation

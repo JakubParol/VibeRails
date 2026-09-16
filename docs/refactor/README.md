@@ -40,6 +40,7 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [01 - Audit and baseline](steps/01-audit.md)
 - [02 - Small core and configuration](steps/02-configuration.md)
 - [03 - Architecture variants](steps/03-architecture.md)
+- [04 - Local/CI verification](steps/04-verification.md)
 - [Retrospective review of 00-02](review-00-02.md)
 - [Configuration design](../standards/configuration.md) and [worked examples](configuration-examples.md)
 - [Audit findings](audit-01.md) and [reproducible baseline](baseline-01.md)

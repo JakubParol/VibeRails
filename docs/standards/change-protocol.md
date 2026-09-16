@@ -174,8 +174,8 @@ that exception.
 
 Before reporting that implementation is done, agents must:
 
-1. Run the documented quality gate for the changed scopes, following the gate responsibility
-   split in [quality-gate.md](quality-gate.md). The full repository run belongs to CI.
+1. Run the documented focused local checks, following [quality-gate.md](quality-gate.md).
+   The full repository run belongs to CI; before PR creation its result may still be pending.
 2. Confirm all task changes are committed, unless the user asked for uncommitted changes.
 3. Confirm the working tree does not contain accidental unrelated changes.
 4. Summarize what changed and what verification ran.
@@ -195,7 +195,8 @@ When the user authorizes a push or PR, agents must:
 
 1. Confirm all task changes are committed.
 2. Sync with the base branch according to repository rules.
-3. Re-run required verification after sync if the code changed.
+3. Re-run affected local checks after sync if their inputs changed; obtain required CI evidence
+   for the resulting revision after publication rather than reusing a stale run.
 4. Push the task branch.
 5. Open a PR with a clear title, summary, verification notes, and any known limitations.
 
@@ -219,7 +220,7 @@ For each review cycle:
 1. Read the review findings.
 2. Fix valid issues.
 3. Commit fixes.
-4. Re-run relevant verification.
+4. Re-run the affected local check/case and obtain required current-revision CI evidence.
 5. Request review again.
 
 Stop the loop only when there are no actionable findings, or when the same task has gone
@@ -237,6 +238,7 @@ Final reports must include:
 - commits made
 - verification run
 - verification not run and why
+- source/tested revision and run link for CI evidence, or its explicit pending/unavailable state
 - PR link or branch name when applicable
 - unresolved blockers or follow-up questions
 

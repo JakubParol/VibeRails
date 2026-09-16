@@ -71,13 +71,13 @@ loading:
 
 ## Verification
 
-For code changes, follow [quality-gate.md](quality-gate.md): run the documented gate for the
-changed scopes only, using the repository's path-to-scope map. The local gate proves the
-changed scope; CI proves the whole repository. During implementation, prefer cheap focused
-checks over full runs.
+Follow [quality-gate.md](quality-gate.md): run changed-file checks and the smallest meaningful
+behavior cases locally. Broad type checks, full suites, builds and aggregate gates belong to
+PR Verification. A full local gate requires an explicit user request, including for shared
+tooling or missing/unavailable CI. Preserve green evidence while its inputs remain valid.
 
-If the documented quality gate is missing, stop and report the blocker instead of inventing
-an unofficial verification path.
+If commands or CI are missing, report the uncovered requirement and next action; continue
+independent work. Do not invent a complete-gate claim or silently expand local execution.
 
 ## Reporting
 

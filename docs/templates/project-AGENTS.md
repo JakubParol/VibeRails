@@ -82,26 +82,28 @@ feature or module folders.
 
 ## Quality Gate
 
-Follow `quality-gate.md`: the local gate proves the changed scope, CI proves the whole
-repository. Run the scoped commands for changed scopes before reporting completion; run the
-full gate only for cross-cutting changes or on explicit request.
+Follow `quality-gate.md`: locally run changed-file format/lint and the smallest meaningful
+behavior checks. Broad types, full suites, builds and aggregate gates belong to PR CI. A full
+local run requires an explicit user request, including for cross-cutting work or unavailable CI.
+Preserve required checks and reuse green evidence while its inputs remain valid.
 
 Path-to-scope map (keep aligned with CI change detection):
 
-| Path prefix | Scope | Working directory | Gate command | Platform/canonical command | CI check |
+| Path prefix | Scope | Working directory | Focused local command | Platform | Required CI check |
 |---|---|---|---|---|---|
 | `<services/api/**>` | `<api>` | `<services/api>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
 | `<apps/web/**>` | `<web>` | `<apps/web>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
-| `<shared tooling, lockfiles>` | all | `<repo root>` | `<full gate command>` | `<posix|powershell|both>` | `<ci check>` |
+| `<shared tooling, lockfiles>` | shared | `<repo root>` | `<small relevant regression>` | `<posix|powershell|both>` | `<full required coverage>` |
 
 ```bash
-# scoped gate for one changed scope
+# changed-file checks and the smallest relevant behavior case
 
-# full gate - cross-cutting changes only
+# full command belongs to CI; local execution only on explicit request
 ```
 
-If these commands do not exist, stop and report a blocker unless this file documents an
-approved replacement.
+If commands or CI are unavailable, report missing coverage and the next action. Continue
+independent work, but never report missing/pending verification as PASS or automatically expand
+to a full local run. Record any required-check exception explicitly.
 
 ## Safety Rules
 

@@ -16,9 +16,16 @@ Test doubles are allowed through ports. Monkey-patching production internals is 
 
 ## Database Integration Tests
 
-When persistence correctness matters, use real PostgreSQL via Testcontainers.
+When persistence correctness matters, test the real production database technology through
+the production repository/session path. Use relevant migrations and isolated data. Unit/service
+doubles through ports do not establish infrastructure correctness.
 
-Default session flow:
+For projects using PostgreSQL, PostgreSQL via Testcontainers is the default example below.
+Do not use SQLite or an in-memory substitute as evidence for production PostgreSQL behavior.
+If the production engine is different, use that engine and its real adapter; do not force a
+second database into a small project merely to follow this example.
+
+PostgreSQL example session flow:
 
 ```text
 Session start -> PostgreSQL container -> migrations to head
@@ -28,15 +35,15 @@ Session end   -> destroy container
 
 Rules:
 
-- PostgreSQL only for backend integration tests.
-- No SQLite, aiosqlite, or in-memory database substitutes.
+- Match the production engine and behavior relevant to the test; do not substitute a different
+  engine or an in-memory double and call it database-integration evidence.
 - Tests use the same repository and session path as production.
 - Seed through SQL helpers or repository setup, not unrelated API calls.
 - Each test starts from a clean database state.
 
 ## Fixture Pattern
 
-Recommended root fixtures:
+Recommended root fixtures for the PostgreSQL example:
 
 | Fixture | Scope | Purpose |
 |---|---|---|
@@ -45,7 +52,7 @@ Recommended root fixtures:
 | `_reset_database` | function | Truncate all tables before each test. |
 | `restore_schema` | function | Rebuild schema after tests that modify DDL. |
 
-Recommended support helpers:
+Recommended PostgreSQL support helpers:
 
 | Helper | Use |
 |---|---|
@@ -54,7 +61,7 @@ Recommended support helpers:
 | `execute_query(url, sql, params)` | Execute one query and return rows. |
 | `truncate_all_tables(url, table_names)` | Fast cleanup with cascade and identity restart. |
 
-## Test Layout
+## PostgreSQL Example Test Layout
 
 ```text
 tests/
@@ -83,7 +90,7 @@ def test_create_entity(client) -> None:
     assert response.json()["data"]["name"] == "Example"
 ```
 
-DB side-effect assertion:
+PostgreSQL DB side-effect assertion:
 
 ```python
 def test_create_entity_writes_audit_event(client, database_url) -> None:
@@ -99,7 +106,8 @@ def test_create_entity_writes_audit_event(client, database_url) -> None:
     assert row is not None
 ```
 
-Tests that modify schema must request `restore_schema`:
+Tests that modify schema must restore it using the production engine's fixture or isolation
+mechanism. In this PostgreSQL example, request `restore_schema`:
 
 ```python
 def test_rollback_when_audit_table_is_missing(client, database_url, restore_schema) -> None:
@@ -132,8 +140,8 @@ Many tests are welcome; meaningless tests are defects. Every new test must pass 
 - One behavior per test.
 - Multiple assertions are fine when they describe one behavior.
 - No test depends on state from a previous test.
-- Use `%s` placeholders for PostgreSQL query parameters.
-- Pass query params as lists unless the local helper documents another convention.
+- In the PostgreSQL helpers shown above, use `%s` placeholders and pass parameters as lists
+  unless the local helper documents another convention. Other engines use their native binding.
 - API assertions must respect the response envelope.
 - Avoid sleeping in tests. Prefer deterministic synchronization or direct state checks.
 
