@@ -52,6 +52,17 @@ commit object matched the base exactly. A temporary source-transfer workflow exi
 branch history and is removed from the final diff. Local commits and remote GitHub publication
 must retain byte/mode-identical trees and normal ancestry; no credentials are exported.
 
+## Platform Failure And Correction
+
+The first three-platform PR run `35125710938` passed Linux and Windows. macOS executed
+24 adoption cases: 11 passed and 13 failed. Its navigation audit compared physical link paths
+with a logical repository root, so a system parent alias made valid local links appear external.
+This is a product defect, not a skipped platform or a test to weaken. A ninth focused regression
+reproduced the same failure locally through an aliased parent directory. Canonicalizing both
+sides of the boundary comparison makes that case pass while a genuinely external link still
+fails. Existing instruction symlink rejection remains unchanged. Final-head CI must verify the
+correction on all three runners; the PR retains both the failure and final results.
+
 ## Original Acceptance Still To Exercise
 
 | Requirement | Evidence currently available | Evidence still required |

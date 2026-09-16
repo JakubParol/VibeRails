@@ -118,3 +118,23 @@ test("snapshot and audit work on a target path containing spaces", () => {
     assert.equal(read(root, ".viberails/adoption.json"), before);
   } finally { fs.rmSync(parent, { recursive: true, force: true }); }
 });
+
+test("a physical parent alias keeps local links inside the root and external links outside", () => {
+  const parent = fs.mkdtempSync(path.join(os.tmpdir(), "viberails-alias-"));
+  const physical = path.join(parent, "physical");
+  const root = path.join(physical, "target");
+  const alias = path.join(parent, "visible");
+  fs.mkdirSync(root, { recursive: true });
+  try {
+    const manifest = createTarget(root);
+    fs.symlinkSync(physical, alias, "junction");
+    const aliasedRoot = path.join(alias, "target");
+    passes(audit(aliasedRoot));
+    write(physical, "outside.md", "# Outside the target\n");
+    write(root, "docs/INDEX.md", read(root, "docs/INDEX.md") + "[Outside](../../outside.md)\n");
+    save(root, manifest, { snapshot: true });
+    const result = audit(aliasedRoot);
+    fails(result);
+    assert.match(result.output, /link outside the target repository/);
+  } finally { fs.rmSync(parent, { recursive: true, force: true }); }
+});

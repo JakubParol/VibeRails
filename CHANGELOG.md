@@ -9,6 +9,8 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
   changes cannot pass with stale instruction pins.
 - Validate selected vendored skill entrypoints and reject duplicate/path-like selections and
   symlinked vendored content instead of silently omitting it from the snapshot.
+- Resolve repository-root aliases before checking link containment; legitimate local links
+  stay local while external links still fail.
 - Add focused negative regressions and platform-scoped adoption checks. Earlier frozen
   comparison revisions remain unchanged; this entry makes no model-performance claim.
 

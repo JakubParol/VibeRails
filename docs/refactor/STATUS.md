@@ -19,7 +19,8 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   remaining criteria and a concrete runtime handoff. No new numbered stage is introduced.
 - The instruction inventory now includes custom standard paths and checks actual vendored
   entrypoints/content. Eight focused regressions pass locally, versus five failures before
-  the fix. Linux plus separate Windows/macOS CI jobs own final-head platform results.
+  the fix. The first macOS run exposed a root-alias navigation bug; a ninth regression
+  reproduces it and verifies the correction locally. All three final-head CI jobs must pass.
 - Required evidence still outstanding: actual baseline/candidate runs on multiple permitted
   models, observed effort/usage where available, real task traces and independent continuation
   from repository-only handoff. No live MCP or PowerShell parity is claimed.
