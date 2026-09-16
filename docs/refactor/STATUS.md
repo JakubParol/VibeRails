@@ -10,11 +10,12 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Accepted base: `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`, verified locally and on GitHub.
 - Audit PR: [#3](https://github.com/JakubParol/VibeRails/pull/3), owner-merged at
   `2026-09-16T08:24:30Z`; user confirmed `Zmergowane. Dalej`.
-- Next action: prepare the minimal core/configuration design and concrete examples, resolve
-  manifest ownership/compatibility, then independently review before publishing a stage PR.
+- Next action: publish the reviewed configuration contract/examples, then wait for user
+  acceptance of the result and an explicit merge decision. Step 03 has not started.
 - Blocker: none identified; user approved `configuration-1` with `ok` on 2026-09-16.
-- Delegation: Terra/high for minimal contract, Sol/high for compatibility; parent owns synthesis
-  and all edits. No runtime configuration engine or later-stage implementation is authorized.
+- Delegation: Terra/high and Sol/high design advice complete; independent Sol/high review
+  reported no findings. Parent chose additive manifest ownership and materialized preset values.
+- Artifacts: [contract](../standards/configuration.md) and [examples](configuration-examples.md).
 - Audit artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
 - Verification: the merged tree equals the audited PR head `f253f7d`; reuse valid prior evidence.
   PR #3 has no check runs. All prior agents are completed; no green CI or new runtime test claimed.
@@ -25,7 +26,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 |---|---|---|---|
 | 00 | Controlled plan and startup | Done | [Preparation card](steps/00-plan-preparation.md) |
 | 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
-| 02 | Core and configuration | In progress | [Configuration card](steps/02-configuration.md) |
+| 02 | Core and configuration | Awaiting acceptance | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Planned | Create on stage entry. |
 | 04 | Local/CI verification | Planned | Create on stage entry. |
 | 05 | Documentation and context | Planned | Create on stage entry. |

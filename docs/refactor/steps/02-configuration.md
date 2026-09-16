@@ -61,16 +61,50 @@ analysis (7), automatic adoption migrations (8), telemetry/CI/CD/kanban and new 
 | Minimal configuration contract | GPT-5.6 Terra / high | Compare simple shapes and presets across independent dimensions | Read-only design advice, no code/runtime implementation or external research. |
 | Adoption compatibility and single-source review | GPT-5.6 Sol / high | Existing manifest mixes current policy and historical evidence | Read-only assessment of ownership/migration traps and honest stage boundary. |
 | Synthesis, examples and focused verification | Parent | Keep one coherent design and simple deliverables | Own edits, validate examples and claims, preserve all stage gates. |
+| Independent contract review | GPT-5.6 Sol / high | Check cross-document ownership, examples and legacy compatibility without authoring the design | Read-only focused review; no broad gates or external research. |
 
-Requested settings are not observed runtime settings or measured usage. Record outcomes and
-any escalation after the work; no cost ranking is inferred.
+Both advice assignments completed; parent resolved their different storage recommendations
+as recorded below. Independent contract review reported No findings and separately confirmed
+the example/preset consistency and focused document checks. No escalation was needed.
+Requested settings are not observed runtime settings or measured usage; no cost ranking is inferred.
+
+## Design Decisions And Artifacts
+
+- [Canonical core/configuration design](../../standards/configuration.md) is a design contract,
+  explicitly not active adoption behavior. [Examples](../configuration-examples.md) are resolved
+  excerpts, not complete or copy-ready manifests.
+- Parent chose one optional `configuration` namespace in existing `.viberails/adoption.json`.
+  Terra proposed a separate config/current-choice file; Sol identified that v1 already owns
+  current profiles, commands and auth. Reusing that authority avoids an overlapping migration
+  and leaves provenance/history in their existing fields.
+- Presets initialize fully explicit values; `initializedFrom` is provenance only. No inheritance
+  DSL, new runner, duplicate provider settings, or per-dimension capability flags.
+- Missing configuration remains legacy/unselected. The legacy audit ignores unknown fields
+  and does not validate the root schemaVersion value, so a passing legacy audit is not proof
+  of this contract's compatibility or activation. Migration/version handling stays in step 8.
+- Light/standard choices are independent from tracker, platform and model selection. Model
+  routing remains inherit pending steps 6-7; exact architecture/check bundles stay in 3-5.
+- Existing templates, validators and adoption instructions are unchanged. Examples are checked
+  for syntax and agreement with the design, not tested against a nonexistent resolver.
 
 ## Delivery And Verification
 
 Branch: `codex/refactor-02-configuration`, created from accepted main
 `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`. No stage PR yet.
-This initial checkpoint closes stage 01 and records a proposal, not a completed configuration
-design. Current state and next action belong in [STATUS](../STATUS.md).
+The initial checkpoint closed stage 01. Commit `2625c31` recorded approval of configuration-1.
+Passed: focused Markdown links/anchors, ASCII/LF/whitespace and generic-text checks; parsing both
+JSON excerpts; exact example agreement with the canonical preset table; reuse of existing
+profile enums; `git diff --check`; and confirmation that legacy manifest/templates/audit,
+adoption instructions, scripts and skills were unchanged. Independent review found no issues.
+
+These are design/example checks, not runtime enforcement, migration or end-to-end adoption tests.
+No full gate, build, PowerShell or external-source analysis was run. Final report revision and
+PR check metadata will be recorded at publication. Current state belongs in [STATUS](../STATUS.md).
+
+## Acceptance And Merge Evidence
+
+User approved work on `configuration-1`; acceptance of the resulting design and an explicit
+merge instruction remain pending. Do not mark Done or start step 03 before that gate closes.
 
 ## Navigation
 
