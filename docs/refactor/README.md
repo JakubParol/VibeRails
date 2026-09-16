@@ -15,7 +15,9 @@ Reconcile with actual Git/PR/CI before acting. Read other cards only for depende
 
 A blocker is an additional fact, not completion. Implementation requires recorded scope agreement.
 Acceptance and explicit merge authorization can be in one message; acceptance alone does not
-authorize merge. An optional stage may be `Skipped by user` with a recorded decision.
+authorize merge. Follow the [operating loop](../refactor-plan.md#operating-loop): commit the
+closing STATUS/card before merge so the resulting remote main includes Done. A closeout
+prepared in an open PR still has pending merge; do not report completion until merge is verified. An optional stage may be `Skipped by user` with a recorded decision.
 
 ## Stage Card Fields
 

@@ -152,12 +152,28 @@ passed all steps for source `4cbb2445b59e8e8b5e67beb799f08c523f6369ad`, tested m
 `28617812f512f9be2dd86a7a68b1ea7a61b2a0ad`: 12/12 validator tests, full documentation/skill
 validation and both architecture examples. Parent read back step outcomes and source/tested
 revision evidence. The publication checkpoint is checked separately; resolve the final PR head
-and its check before relying on the result. User acceptance and merge are not yet authorized.
+and its check before relying on the result. Acceptance and merge were pending at publication;
+their later completion is recorded below.
 
 Acceptance: inspect the deleted Azure wrapper paths, MCP-only integration/skill guidance and
 the controlled-behavior table above. The denylist is intentionally empty by default; synthetic
 matching and local-path checks remain. Real Azure/Jira access/permission/concurrency is not
 proved by these fixtures. The current PR/check record owns final-head CI and exact revisions.
+
+## Acceptance And Merge Evidence
+
+On 2026-09-16 the user accepted the delivered stage and explicitly requested completion and
+merge. Parent verified the approved head and current successful CI, then merged PR #11 at
+`2026-09-16T13:32:02Z`:
+
+- Approved source: `c5c760407bfa67c392a9d7039b528ec4d7d147c8`.
+- Final [PR run 35102061602](https://github.com/JakubParol/VibeRails/actions/runs/35102061602):
+  all required steps passed, tested merge `989149deb722a88612caee94c4a57ee836eccb75`.
+- Actual merge: `f68ff16e805453d6d4dbcce7dde72a8c28001538`; source/merge trees are identical.
+- The initial Done record was kept locally after merge. The user explicitly corrected this:
+  publish it now, and always commit closing STATUS/card changes before merging future stages.
+  The documentation repair on `codex/refactor-06-closeout` implements that correction without
+  changing delivered behavior or evidence. Stage 07 has not started.
 
 ## Navigation
 

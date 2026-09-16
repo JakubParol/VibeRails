@@ -1,9 +1,9 @@
 # VibeRails Refactor Plan
 
-Plan revision: 1.2, updated on 2026-09-16.
-Revision 1.2 records the stage 06 decision to use MCP for Azure DevOps/Jira and remove command
-wrappers. The 1.1 scope refinements and post-pilot decision remain; accepted 00-05 scope and
-evidence are preserved. Stage authorization is recorded separately in STATUS and the stage card.
+Plan revision: 1.3, updated on 2026-09-16.
+Revision 1.3 requires stage-closeout documents in the stage PR before merge. MCP-only Azure
+DevOps/Jira integration, earlier scope refinements and the post-pilot decision remain unchanged.
+Stage authorization is recorded separately in STATUS and the stage card.
 Live progress belongs only in [STATUS](refactor/STATUS.md).
 
 This is the active internal refactor plan. It is not an adoption template. The root
@@ -73,13 +73,18 @@ one user message can provide both. The current stage's authorization is recorded
 6. **Verify and correct.** Run focused checks, obtain proportionate independent review, and
    resolve actionable findings. Preserve green evidence while its inputs remain valid. Publish
    the PR, explain results and limitations, and give the user a simple acceptance walkthrough.
-7. **Accept and merge.** Wait for user acceptance and explicit merge authorization. Read back
-   the approved PR head and required checks before merge. Changed behavior/scope after acceptance
-   returns to acceptance. Missing required evidence is reported, never silently waived.
-8. **Close and introduce the next stage.** Confirm the actual merge and record source/merge
-   revisions without claiming an untested merge SHA was tested. Only then is the stage Done.
-   Introduce the next stage and wait for its agreement before implementation, except after
-   step 09: apply the [pilot decision gate](#decision-after-step-09) before further stage work.
+7. **Accept, commit closeout, then merge.** After user acceptance and explicit merge
+   authorization, first update STATUS and the stage card with acceptance, completed scope and
+   evidence, preparing the Done record for the resulting main. Commit and push those records
+   on the same stage PR before merging. While the PR is open, clearly record that merge is
+   pending; a prepared Done row is not evidence of a completed merge. Run focused document
+   checks and verify required CI against this final head, then merge only that head. Changed
+   behavior/scope after acceptance returns to acceptance; missing evidence is never waived.
+8. **Confirm and introduce the next stage.** Read back the actual merge and verify that remote
+   main includes the closeout record. Only then report the stage complete. Final source/tested
+   and merge SHAs may be recorded in the PR/report; do not add another commit merely to cite a
+   commit's own SHA. Introduce the next stage and wait for agreement, except after step 09:
+   apply the [pilot decision gate](#decision-after-step-09) before further stage work.
 
 Default delivery unit: one stage branch and PR. Agree splits before implementing a large
 stage; all agreed deliveries must be accepted and merged before stage Done. Routine work within
@@ -101,12 +106,11 @@ projects still select their own supported script platforms.
 - Parent checkpoints after agreement, before dispatch, after accepted results, when a decision
   or blocker changes, and before pausing/ending. Persist useful agent results, not tool logs.
   Agent IDs are lookup aids, never the only durable record.
-- After merge, when the [operating loop](#operating-loop) and its continuation gates permit
-  next-stage work, the first documentation commit on that branch records the previous stage as
-  Done and the next as Discussion. This does not authorize next-stage implementation.
-  Publish that checkpoint with the next stage PR; until then it is a durable local commit.
-  If no further stage follows, use one closing-docs branch/PR; closing it does not create another
-  stage or an endless bookkeeping loop.
+- On a user's stage-merge instruction, the [operating loop](#operating-loop) requires the
+  closing STATUS/card commit before merge in that same delivery. Never defer the Done record
+  to the next stage or leave it only locally. If an earlier merge omitted it, repair the remote
+  record promptly through the authorized documentation delivery; this is recovery, not a new
+  stage or a recurring checkpoint PR chain.
 - A published snapshot may lag a merge. Reconcile against Git/PR evidence before acting. Never
   infer acceptance from silence or elapsed time. Read only relevant completed decisions on resume.
 - Optional stages may be explicitly `Skipped by user`, with the decision recorded. Skipped is
