@@ -5,28 +5,25 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Current Checkpoint
 
-- Active stage: 01 - audit and baseline, scope `audit-1` approved.
-- Branch: `codex/refactor-01-audit`; PR target: `main`.
-- Audit PR: [#3 - overhead audit and baseline](https://github.com/JakubParol/VibeRails/pull/3), draft.
-- Accepted base: `e19acf6af12976caef7a2053485a4fc39b95738e`, verified locally and on GitHub.
-- Preparation PR: [#2](https://github.com/JakubParol/VibeRails/pull/2), merged by the repository
-  owner on 2026-09-16 at 07:57:32 UTC. Reviewed source head: `81eb17872257d83d7494a45051dee1edb886a575`.
-- Next action: wait for user acceptance of the audit report/baseline and explicit authorization
-  to merge PR #3. Stage 02 is not started.
-- Blocker: none identified. User approved `audit-1` with `tak` on 2026-09-16.
-- Delegation: Luna/high and Terra/high audits completed; Sol/high report review and focused
-  recheck completed. Parent verified evidence/counts and fixed two over-broad source summaries.
-- Artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
-- Verification: zero GitHub Actions workflows/check-runs/commit statuses at accepted main;
-  no green CI claim. Source-pack rules and scripts were not modified or executed.
+- Active stage: 02 - small core and configuration, scope discussion only.
+- Branch: `codex/refactor-02-configuration`; PR target: `main`.
+- Accepted base: `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`, verified locally and on GitHub.
+- Audit PR: [#3](https://github.com/JakubParol/VibeRails/pull/3), owner-merged at
+  `2026-09-16T08:24:30Z`; user confirmed `Zmergowane. Dalej`.
+- Next action: discuss the stage 02 proposal and agree its scope before configuration design
+  assignments or implementation. No stage 02 PR or active assignment exists yet.
+- Blocker: none identified; stage 02 scope agreement is pending.
+- Audit artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
+- Verification: the merged tree equals the audited PR head `f253f7d`; reuse valid prior evidence.
+  PR #3 has no check runs. All prior agents are completed; no green CI or new runtime test claimed.
 
 ## Stage Register
 
 | ID | Stage | State | Record |
 |---|---|---|---|
 | 00 | Controlled plan and startup | Done | [Preparation card](steps/00-plan-preparation.md) |
-| 01 | Audit and baseline | Awaiting acceptance | [Audit card](steps/01-audit.md) |
-| 02 | Core and configuration | Planned | Create on stage entry. |
+| 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
+| 02 | Core and configuration | Discussion | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Planned | Create on stage entry. |
 | 04 | Local/CI verification | Planned | Create on stage entry. |
 | 05 | Documentation and context | Planned | Create on stage entry. |
@@ -42,10 +39,10 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stage 00 is reconciled; stage 01's branch and scope agreement already exist. Do not recreate
-the branch or ask for the same scope approval. Read the card and check live agents/artifacts
-before duplicating work. Preserve the step 7 source gate, keep framework edits out of this audit,
-and wait for audit acceptance plus explicit merge authorization before stage Done.
+Stages 00-01 are reconciled and stage 02's branch already exists. Do not repeat the audit or
+recreate the branch. Read the configuration card and recover any agreement newer than this
+snapshot. Until its scope is agreed, remain in discussion. Keep the step 7 source gate and
+do not implement later architecture, verification, routing or integration mechanisms early.
 
 ## Navigation
 

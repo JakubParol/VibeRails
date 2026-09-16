@@ -38,6 +38,7 @@ speculative edge cases. Do not duplicate chat transcripts.
 
 - [00 - Plan preparation](steps/00-plan-preparation.md)
 - [01 - Audit and baseline](steps/01-audit.md)
+- [02 - Small core and configuration](steps/02-configuration.md)
 - [Audit findings](audit-01.md) and [reproducible baseline](baseline-01.md)
 - [Source comparison and candidate refinements](inspiration-review.md)
 - [Startup prompt](start.md)
