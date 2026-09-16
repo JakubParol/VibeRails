@@ -17,11 +17,27 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Evidence: [stage 05 card](steps/05-context.md) and [D/B/R comparison](context-proof-05.md).
   Independent policy and evidence reviews are complete with no remaining actionable findings.
   Counts are source-word proxies with disclosed limits, not measured token/runtime savings.
-- Closeout branch: `codex/refactor-05-closeout`, created from the confirmed merge solely to
-  publish this requested Done record. Reconcile its PR if publication is still pending; this
-  bookkeeping delivery does not create a new implementation stage or another closeout loop.
-- Next action: discuss and agree stage 06 scope before implementation. Stage 06 is unstarted.
-  Preserve the deferred stage 07 research and stage 08 activation boundaries.
+- The Done record is also merged: [PR #9](https://github.com/JakubParol/VibeRails/pull/9), source
+  `96562e4164cd67f681144823bd75f63750b0381d`, merge/accepted base
+  `aaa8004b088435ec5159856a1de5ee9626fcb945`.
+- Active delivery: planning-only revision 1.1 on `codex/refactor-plan-06-09`, based on that
+  accepted main. Scope: refine 06-09 and the post-09 decision in the existing plan, this
+  checkpoint and the necessary startup-prompt gate reference. Documentation checks, commit,
+  push, PR and merge are authorized after review and
+  successful current-head CI; no standards, skills, scripts, configuration or integration edits.
+- Delegation: one bounded independent review, requested Sol/high, for coverage and consistency
+  of the new planning diff. Parent owns edits, Git/PR and SHA-bound evidence; usage is unknown.
+  Review identified a conflicting generic next-stage instruction; checkpoint/resume paths now
+  defer to the plan's continuation gates. Focused re-review is complete with no findings.
+- Checks: focused validation of the three changed documents and whitespace checks passed.
+  Completed stage records and runtime files are unchanged; current-head CI remains a merge
+  prerequisite, recorded with its actual tested revision in the PR.
+- Next action after confirmed merge: the user's separate review of these planning changes,
+  then agreement on 06 scope. If this documentation delivery is still pending, finish only its
+  authorized PR first. Stage 06 is neither started nor approved; do not create future-stage
+  cards or a checkpoint PR chain.
+- Final source/tested revision, CI and merge result belong in this delivery's PR/report;
+  the documentation need not cite its own commit. Completed stage evidence above stays valid.
 
 ## Stage Register
 
@@ -45,9 +61,11 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 ## Resume Reminder
 
-Stages 00-05 are accepted and merged. Reconcile the closeout record with actual Git/PR state,
-then discuss stage 06. Do not repeat completed D/B/R exercises or reviews, infer token savings,
-start implementation without scope agreement, or open the deferred Astra sources early.
+Stages 00-05 remain Done; their accepted scope and evidence are unchanged. Reconcile the plan
+update's Git/PR result, then stop for the user's separate review before agreeing 06. Do not
+repeat completed audits or D/B/R exercises. Later work follows the plan's explicit
+[post-09 decision gate](../refactor-plan.md#decision-after-step-09); preserve the 07 research
+and 08 configuration/migration boundaries.
 
 ## Navigation
 
