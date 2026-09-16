@@ -1,0 +1,28 @@
+name: Stage 08 Source Transfer
+on:
+  push:
+    branches: [codex/refactor-08-prompts]
+    paths: [.github/workflows/stage08-source-transfer.yml]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: a60dca9638bf12cd84244aedcf5fc8d2a9734baa
+          persist-credentials: false
+      - name: Export tracked files and public commit object
+        shell: bash
+        run: |
+          mkdir -p /tmp/viberails-source
+          git archive --format=tar --output=/tmp/viberails-source/source.tar HEAD
+          git cat-file commit HEAD > /tmp/viberails-source/base.commit
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: stage08-base-a60dca9
+          path: /tmp/viberails-source/
+          retention-days: 1
+          if-no-files-found: error
