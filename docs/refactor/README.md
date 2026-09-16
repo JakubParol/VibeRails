@@ -42,6 +42,7 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [03 - Architecture variants](steps/03-architecture.md)
 - [04 - Local/CI verification](steps/04-verification.md)
 - [Retrospective review of 00-02](review-00-02.md)
+- [Retrospective review of 00-04](review-00-04.md)
 - [Configuration design](../standards/configuration.md) and [worked examples](configuration-examples.md)
 - [Audit findings](audit-01.md) and [reproducible baseline](baseline-01.md)
 - [Source comparison and candidate refinements](inspiration-review.md)

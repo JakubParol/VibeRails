@@ -78,7 +78,7 @@ found two P2 issues: Markdown code handling could hide real broken links, and da
 guidance still contained generic PostgreSQL fixture requirements. Parent accepted both findings;
 Terra owns the small parser regression fix, and parent owns the documentation clarification.
 The same worker also extracts Markdown navigation into one internal module to keep source
-files within the existing 400-line limit; no runner or dependency is introduced. Review will
+files within the existing 400-line limit; no runner or dependency is introduced. Review
 rechecked these changes. Terra returned 10/10 passing regression tests after the extraction/fix;
 both source files are below 400 lines. Sol confirmed the database-policy finding is resolved.
 The independent code reviewer confirmed all three link regressions are fixed, inspected the
@@ -130,8 +130,20 @@ Local evidence for this implementation:
   responsibility for checking the actual result. No repository administration was changed.
 
 The final PR/check record owns exact source and tested revisions; a documentation commit cannot
-cite itself. Reconcile those before reusing evidence or merging. User acceptance and explicit
-merge remain pending; stage 05 is not authorized.
+cite itself. Reconcile those before reusing evidence or merging. At publication, user acceptance and explicit
+merge were pending; the later owner merge is recorded below. Stage 05 is not authorized.
+
+## Acceptance And Merge Evidence
+
+On 2026-09-16 the user confirmed `Zmergowane` and requested a retrospective review of stages
+00-04 before step 05. GitHub confirms the owner merged PR #6 at `2026-09-16T10:25:30Z`:
+
+- Final source: `5a56500da0955e8cd4b056e549674ca1ebcfdd8b`.
+- Merge commit: `80c866b045b9eba567321acde9a614ed434d6b30`.
+- Final [PR run](https://github.com/JakubParol/VibeRails/actions/runs/35084686183) passed on that
+  source, testing merge revision `35ff6bd11fef06d71ff496ee5e752b7af19b6b67`.
+- Source and actual merge trees are identical. The owner merge plus user confirmation closes
+  stage 04; the requested retrospective review does not authorize stage 05 implementation.
 
 ## Acceptance Walkthrough
 

@@ -17,6 +17,7 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 03 architecture](refactor/steps/03-architecture.md) | Approved architecture variants, examples, verification and delivery evidence. |
 | [Stage 04 verification](refactor/steps/04-verification.md) | Approved local/CI responsibility, implementation, tests and delivery evidence. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
+| [00-04 retrospective review](refactor/review-00-04.md) | User-requested correctness/completeness review before documentation/context work. |
 | [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
