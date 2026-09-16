@@ -1,13 +1,13 @@
 # Stage 03 - Architecture Variants
 
-## Proposed Goal
+## Goal
 
 Define `minimal` and `layered` as two sizes of Clean Architecture, preserving the same essential
 responsibility and dependency boundaries while reducing unnecessary structure in small projects.
 
-## Scope Proposal
+## Agreed Scope
 
-Scope revision: `architecture-1`. Awaiting user agreement.
+Scope revision: `architecture-1`, approved on 2026-09-16 after a concise comparison of both variants.
 
 - Define shared invariants: presentation invokes application behavior, not ORM/repositories;
   business rules stay outside transport and IO; dependencies are supplied explicitly; application
@@ -27,7 +27,7 @@ Scope revision: `architecture-1`. Awaiting user agreement.
   what unconfigured legacy adoptees retain. Do not silently reinterpret a configuration field
   as an implemented migration or rewrite other repositories.
 
-Proposed output: canonical variant rules, a short comparison, small concrete examples, and a
+Agreed output: canonical variant rules, a short comparison, small concrete examples, and a
 practical upgrade path. Avoid creating a sample application, generic DI framework or validator
 engine merely to demonstrate the rules.
 
@@ -35,7 +35,7 @@ Out of scope: verification-policy implementation (4), broad documentation cleanu
 or routing engines (6-7), adoption/migration automation (8), telemetry/CI/CD/kanban and new stacks.
 The 15 Astra sources remain deferred.
 
-## Proposed Acceptance Criteria
+## Acceptance Criteria
 
 - Both variants satisfy the endpoint-to-application and inward-dependency constraints; neither
   treats a small project as permission to access ORM from presentation.
@@ -51,10 +51,23 @@ The 15 Astra sources remain deferred.
 
 - Entry date: 2026-09-16. After the completed retrospective review, the user replied `ok` to
   proceeding to the stage 03 discussion.
-- This authorizes branch/checkpoint preparation and discussion, not yet `architecture-1` work.
-- Key proposed decision to confirm: retain application-owned ports/contracts and inward
-  dependencies in both variants; vary physical structure and abstraction weight instead.
-- No architecture implementation/design assignment is dispatched before scope agreement.
+- After asking for a shorter explanation, the user approved the minimal/layered comparison
+  with `ok` on 2026-09-16. This authorizes architecture-1: canonical guidance, examples,
+  focused verification, independent review, commits and a stage PR.
+- Both variants retain application-owned contracts and inward dependencies. Minimal uses
+  simple functions/small classes and argument injection; layered separates meaningful roles
+  into explicit layers. Preset mapping remains light -> minimal, standard -> layered.
+- Result acceptance and explicit merge authorization remain separate closeout requirements.
+
+## Delegation
+
+| Assignment | Requested model / effort | Reason | Boundary |
+|---|---|---|---|
+| Minimal example and comparison | GPT-5.6 Terra / high | Bounded code/example design must preserve dependency inversion without excess scaffolding | Read-only proposal; no files, installations, gates or framework execution. |
+| Canonical guidance consistency | GPT-5.6 Sol / high | Cross-document architectural constraints and legacy defaults need careful reconciliation | Read-only analysis of relevant current standards, no broad redesign. |
+| Standards/examples integration and verification | Parent | One owner for coherent boundaries, selection and evidence | Own edits and focused checks; no adoptee migrations or later-stage implementation. |
+
+Requested model/effort is not measured runtime usage; record outcomes and any escalation later.
 
 ## Delivery And Verification
 
