@@ -2,7 +2,8 @@
 
 ## Goal And Agreed Scope
 
-Scope revision: `context-1`, approved by the user's stage 05 instruction on 2026-09-16.
+Scope revision: `context-2`, approved by the user's stage 05 instruction and baseline follow-up
+on 2026-09-16.
 Make it simpler for an agent to find and retain the information needed for a concrete task.
 Word-count reduction alone is not acceptance evidence.
 
@@ -15,9 +16,13 @@ Word-count reduction alone is not acceptance evidence.
   protected-work checks and the internal refactor checkpoint contract.
 - Inventory relevant prompt components and how they compose, without model-specific tuning,
   changing runtime model selection, a loader engine or a prompt-versioning platform.
-- Demonstrate the effect on a concrete one-instruction correction: inspect the actual route,
-  complete the right edit and focused check, and retain useful evidence with less irrelevant
-  reading/reporting. Use a small isolated task fixture and record limitations honestly.
+- Compare before/after on all three existing baseline scenarios: D (existing documentation
+  correction), B (existing FastAPI behavior change), R (local backend review). Inspect both
+  context volume and correct rule selection/omissions using the existing counting method and
+  scenario definitions. No arbitrary percentage goal or new measurement system.
+- Demonstrate the concrete D instruction correction as well as selection decisions for B/R;
+  preserve useful local rules, verification and outcome evidence. Clearly separate a context
+  exercise from the full runtime/model pilots deferred to 09.
 
 Out of scope: workflow/provider/routing redesign (06), the 15 deferred Astra sources and
 model-specific optimization (07), automated adoption/migration (08), full model/cost pilots
@@ -32,9 +37,10 @@ verification, authorization or user acceptance/merge boundaries.
   selection/legacy boundary; no existing adoptee is silently migrated or stripped of knowledge.
 - Final reporting is proportional to its recipient and decision; required evidence remains
   accessible without repeating an entire phase history or every delegate report.
-- A before/after task exercise produces the correct instruction change, retains local rules
-  and focused verification, and shows the observed reading/reporting difference. Report actual
-  inputs and outputs, not hypothetical token savings or a claimed representative benchmark.
+- A before/after comparison covers D/B/R, checks selected rules against task obligations and
+  discloses omissions or unnecessary reads. The D exercise produces the correct instruction edit
+  and focused verification. Report actual inputs/outputs and context counts, not hypothetical
+  token savings or a claimed representative runtime benchmark. No arbitrary reduction target.
 - Focused documentation/skill checks and independent review pass; actual current-head PR CI
   runs before acceptance. Done still requires user acceptance and explicitly authorized merge.
 
