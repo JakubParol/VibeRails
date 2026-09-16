@@ -55,6 +55,11 @@ Use stable object shapes so automation can audit adoption without parsing prose.
 | `workingDirectory` | Directory where commands run. |
 | `requiredBeforePr` | `true` when these are required focused local commands before PR creation. `false` does not disable CI requirements. |
 
+The map must contain at least one entry. `paths` and `commands` are non-empty arrays of
+concrete strings; patterns are data, not paths to execute or files that must already exist.
+Each project profile's `qualityGateScope` must name a defined map scope. Several entries may
+share a scope. Structural validation does not execute commands or prove their coverage.
+
 Keep the v1 field shapes. `canonicalCommand` remains the aggregate/full command reference;
 it is not an instruction to execute the full gate locally. Target docs distinguish focused
 local commands from CI commands and required statuses. Do not silently relabel an existing
@@ -81,7 +86,12 @@ behavior under an authorized adoption refresh. Configuration changes follow the 
 | `profile` | Stack profile or documented exception for this area. |
 | `standards` | Existing target-relative standard files; a bare filename denotes `docs/standards/<name>` at the repository root. |
 | `qualityGateScope` | Scope name used in `target.qualityGate.pathToScopeMap`. |
-| `exception` | Exception details or `null` when a standard profile fits. |
+| `exception` | Concrete rationale string when `profile` is `documented-exception`; otherwise `null` is allowed. |
+
+An exception must explain why a standard profile does not fit. Empty values, objects and
+absence labels such as `none` are not a rationale. Preserve the applicable rules, commands
+and owner requirements from [stack profiles](stack-profiles.md); the audit checks presence
+and shape, not the quality of the architectural justification.
 
 `target.prPolicy` fields:
 
@@ -227,6 +237,21 @@ For a local file sink, record at least:
 If the repository stores these details in another target-local document, the manifest may link
 to that document, but the link must be specific enough for an agent to run dedupe before
 creating a duplicate.
+
+## Human Configuration Mirror
+
+For selected configuration, keep exactly one `Configuration And Instruction Baseline` section
+in `docs/viberails-adoption.md`, using the two-column table in the
+[human template](../templates/viberails-adoption.md#configuration-and-instruction-baseline).
+Each configuration key, including `version`, has exactly one matching value row. Backticks
+around a key/value are optional. Missing, duplicate or mismatched rows fail the optional audit;
+words elsewhere, comments and fenced examples do not satisfy the mirror. This is a view of the
+manifest, not a second configuration. Legacy/unselected adoption needs no new table.
+
+Earlier selected receipts may need their existing table completed during an authorized refresh.
+Review the manifest against local decisions first, then correct the receipt; the read-only audit
+never rewrites it, changes settings or regenerates pins. The check does not interpret arbitrary
+prose as configuration or prove instruction-following behavior.
 
 ## Prompt Baseline
 

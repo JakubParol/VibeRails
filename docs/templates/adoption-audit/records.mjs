@@ -1,6 +1,7 @@
 // Internal records checks for the optional read-only adoption audit.
 import fs from "node:fs";
 import path from "node:path";
+import { stripFencedBlocks } from "./navigation.mjs";
 
 export function createRecordChecks(context, values = {}) {
   const { repoRoot, fail, readText, excludedDirectories, markdownPlaceholderAuditPaths } = context;
@@ -34,35 +35,41 @@ export function createRecordChecks(context, values = {}) {
     }
   }
 
-  function auditPathToScopeMap(pathToScopeMap) {
-    if (!Array.isArray(pathToScopeMap)) {
+  function requireStringList(items, field) {
+    if (!Array.isArray(items) || items.length === 0) {
+      fail(`${field} must include non-empty concrete strings.`);
       return;
     }
-
-    for (const [index, entry] of pathToScopeMap.entries()) {
-      if (!Array.isArray(entry.paths) || entry.paths.length === 0) {
-        fail(`target.qualityGate.pathToScopeMap[${index}] must include non-empty paths.`);
-      }
-      if (!Array.isArray(entry.commands) || entry.commands.length === 0) {
-        fail(`target.qualityGate.pathToScopeMap[${index}] must include non-empty commands.`);
-      }
-      requireNonPlaceholderString(entry.scope, `target.qualityGate.pathToScopeMap[${index}].scope`);
-      requireNonPlaceholderString(entry.workingDirectory, `target.qualityGate.pathToScopeMap[${index}].workingDirectory`);
-      if (typeof entry.requiredBeforePr !== "boolean") {
-        fail(`target.qualityGate.pathToScopeMap[${index}].requiredBeforePr must be a boolean.`);
-      }
-    }
+    items.forEach((item, index) => requireNonPlaceholderString(item, `${field}[${index}]`));
   }
 
-  function auditProjectProfiles(projectProfiles) {
+  function auditPathToScopeMap(pathToScopeMap) {
+    const scopes = new Set();
+    if (!Array.isArray(pathToScopeMap) || pathToScopeMap.length === 0) {
+      fail("target.qualityGate.pathToScopeMap must be a non-empty array.");
+      return scopes;
+    }
+    for (const [index, entry] of pathToScopeMap.entries()) {
+      const field = `target.qualityGate.pathToScopeMap[${index}]`;
+      requireStringList(entry.paths, `${field}.paths`);
+      requireStringList(entry.commands, `${field}.commands`);
+      requireNonPlaceholderString(entry.scope, `${field}.scope`);
+      if (typeof entry.scope === "string" && entry.scope.trim()) scopes.add(entry.scope);
+      requireNonPlaceholderString(entry.workingDirectory, `${field}.workingDirectory`);
+      if (typeof entry.requiredBeforePr !== "boolean") {
+        fail(`${field}.requiredBeforePr must be a boolean.`);
+      }
+    }
+    return scopes;
+  }
+
+  function auditProjectProfiles(projectProfiles, gateScopes) {
     if (!Array.isArray(projectProfiles)) {
       return;
     }
 
     for (const [index, entry] of projectProfiles.entries()) {
-      if (!Array.isArray(entry.paths) || entry.paths.length === 0) {
-        fail(`target.projectProfiles[${index}] must include non-empty paths.`);
-      }
+      requireStringList(entry.paths, `target.projectProfiles[${index}].paths`);
       requireNonPlaceholderString(entry.documentationRoot, `target.projectProfiles[${index}].documentationRoot`);
       requireEnum(entry.profile, `target.projectProfiles[${index}].profile`, [
         "nextjs-frontend-only",
@@ -79,6 +86,15 @@ export function createRecordChecks(context, values = {}) {
         fail(`target.projectProfiles[${index}] must include non-empty standards.`);
       }
       requireNonPlaceholderString(entry.qualityGateScope, `target.projectProfiles[${index}].qualityGateScope`);
+      if (!gateScopes.has(entry.qualityGateScope)) {
+        fail(`target.projectProfiles[${index}].qualityGateScope must name a defined pathToScopeMap scope.`);
+      }
+      if (entry.profile === "documented-exception") {
+        requireNonPlaceholderString(entry.exception, `target.projectProfiles[${index}].exception`);
+        if (typeof entry.exception === "string" && /^(none|null|n\/a|not applicable)$/i.test(entry.exception.trim())) {
+          fail(`target.projectProfiles[${index}].exception must explain why a standard profile does not fit.`);
+        }
+      }
 
       const documentationRoot = path.resolve(repoRoot, entry.documentationRoot);
       for (const required of ["README.md", "AGENTS.md", "docs/INDEX.md"]) {
@@ -200,6 +216,7 @@ export function createRecordChecks(context, values = {}) {
     }
 
     const reportText = readText(reportPath);
+    auditConfigurationMirror(reportText, manifest.configuration);
     const requiredValues = [];
     addReportValue(requiredValues, manifest.viberails?.sourceRef);
     addReportValue(requiredValues, manifest.viberails?.packVersion);
@@ -228,6 +245,34 @@ export function createRecordChecks(context, values = {}) {
     for (const value of new Set(requiredValues)) {
       if (!reportText.includes(value)) {
         fail(`docs/viberails-adoption.md must mirror manifest value '${value}'.`);
+      }
+    }
+  }
+
+  function auditConfigurationMirror(reportText, configuration) {
+    if (configuration === undefined) return; // Legacy/unselected does not require this table.
+    const visible = stripFencedBlocks(reportText.replace(/<!--[\s\S]*?(?:-->|$)/g, ""));
+    const sections = visible.split(/^##[ \t]+/m).slice(1).filter((section) =>
+      section.split("\n", 1)[0].trim().toLowerCase() === "configuration and instruction baseline");
+    if (sections.length !== 1) {
+      fail("docs/viberails-adoption.md must mirror configuration in one Configuration And Instruction Baseline section.");
+      return;
+    }
+    const rows = new Map();
+    const cell = (value) => value.trim().replace(/^`([^`]*)`$/, "$1");
+    for (const line of sections[0].split("\n").slice(1)) {
+      const columns = line.trim().split("|");
+      if (columns.length !== 4 || columns[0] !== "" || columns[3] !== "") continue;
+      const field = cell(columns[1]);
+      if (Object.hasOwn(configuration, field)) {
+        const entries = rows.get(field) ?? [];
+        entries.push(cell(columns[2])); rows.set(field, entries);
+      }
+    }
+    for (const [field, expected] of Object.entries(configuration)) {
+      const entries = rows.get(field) ?? [];
+      if (entries.length !== 1 || entries[0] !== String(expected)) {
+        fail(`docs/viberails-adoption.md must mirror configuration.${field} in exactly one matching table row.`);
       }
     }
   }

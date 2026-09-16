@@ -121,6 +121,75 @@ final source/tested/merge identities. Leave 08/09 in Verification while their ex
 unperformed, report the remaining dependency and stop before 10. No post-merge checkpoint chain
 or unrelated repository change is needed.
 
+## Audit Correction Agreement
+
+Scope `audit-fixes-1`, authorized on 2026-09-16 by the user instruction
+`Popraw wszystko jednym pr, zmerguj i napisz co dalej`. Fix A-01 through A-04 from the
+00-09 audit in one PR on `codex/refactor-audit-00-09-fixes`, based on merged PR #17
+`ffb80cb224b924aaea0d5baa3d02b53d03459e0b`. This covers implementation, focused tests,
+solo review, commits, push and merge after current-head CI. No extra acceptance question
+is needed; no independent reviewer or model execution is claimed.
+
+Preserve unrelated user-scope skills during install/removal, validate concrete gate-map
+values and referenced scopes, compare the human configuration table by field and value,
+and require a rationale for a documented stack exception. Add failing regressions before
+fixes; retain positive, legacy/unselected and read-only cases. Update existing rule owners,
+templates and direct consumers only. PowerShell installer changes are statically reviewed,
+not executed under this task. No provider wrapper, schema version, administrative setting,
+model service, new-repository mutation or stage 10 work is authorized.
+
+Local source is transferred through a temporary read-only branch workflow because Git DNS
+is unavailable. Its base commit/tree must match Git; the transfer workflow is removed from
+the delivered tree. Closing evidence is committed locally and published in the same PR before
+final-head CI and protected merge. Correction delivery does not close the outstanding 08/09
+runtime criteria. Final source/tested/merge identities belong in the PR record.
+
+### Audit Correction Evidence
+
+The original ten audit probes were rerun against exact base `ffb80cb`: seven undesirable
+outcomes reproduce A-01 through A-04, with three expected controls. The new 21 focused tests
+first produced 4 passes and 17 failures against unchanged product code. After correction all
+21 passed, zero skipped/cancelled: 13 record-consistency cases and 8 POSIX installer cases.
+The changed fixture report renders the existing human-template table with explicit version;
+it is not a second configuration or an automatic migration tool.
+
+- A-01: foreign, broken and other-checkout links remain untouched with a conflict result.
+  Valid owned links remain idempotent; only owned removal succeeds. Source bytes remain intact.
+- A-02: empty maps, invalid string-list entries and undefined project scopes fail. Valid globs
+  and multiple scopes pass without executing command strings.
+- A-03: configuration rows are matched by key/value. Missing, duplicate, wrong, commented or
+  fenced rows fail; unrelated matching words cannot conceal a difference. Legacy absence passes.
+- A-04: a documented exception needs a concrete rationale string. Regular profiles may retain
+  null; empty values and absence labels cannot masquerade as a justified exception.
+
+Local Node/POSIX tests, shell syntax, selected MJS syntax, whitespace and 17-file focused
+validation passed. One direct-consumer actual-standard-copy adoption case passed with its
+native Python checks. No full local gate or unrelated unchanged suite was rerun. The two new
+files are added to existing CI coverage. Implementation run `35131848103` on source
+`b229e3284365193ff948b88db35149225bcaf621`, tested merge
+`252833d52059d79b67946ee960758aa024263f50`, passed all three jobs. Actual logs confirm 38/38
+adoption cases on Linux/Windows/macOS and 8/8 POSIX installer cases on Linux/macOS, with zero
+failed/skipped/cancelled tests. Linux also passed 12 validator cases, 6 frozen pilot cases,
+full documentation/skill validation and both architecture examples. The Windows POSIX step
+is deliberately inapplicable, not a PowerShell test. Installer test roots were canonicalized
+before publication for system parent aliases; all eight targeted cases passed locally again.
+
+Solo semantic/diff review checks preservation, invalid records, receipt interpretation and
+the unchanged provider boundaries. The PowerShell installer has the same fail-closed ownership
+policy by static review only; no `.ps1` execution is claimed. GitHub administration remains
+unchanged. This fixes the four audited defects, not the still-open runtime experiments.
+
+### Audit Correction Closeout
+
+The user-authorized one-PR correction is [PR #18](https://github.com/JakubParol/VibeRails/pull/18).
+All four findings have reproductions, fixes and positive/negative regression evidence. This
+closing record and STATUS are edited/committed locally before publication, followed by CI on
+the actual closing head and expected-head merge. A successful earlier implementation run is
+not relabeled as final-head evidence. Final source/tested/merge identities stay in that PR.
+Once its merge and remote main are verified, this correction delivery is complete; it does
+not close the unperformed 08/09 model and handoff criteria. No additional checkpoint PR,
+release tag, administration change or work on stage 10 follows automatically.
+
 ## Navigation
 
 - [Plan](../refactor-plan.md)

@@ -45,7 +45,11 @@ jobs:
 
       - name: Adoption and migration regressions
         id: adoption
-        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
+        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs scripts/tests/adoption-records.test.mjs
+
+      - name: POSIX skill installer regressions
+        id: installer
+        run: node --test scripts/tests/install-skills.test.mjs
 
       - name: Pinned controlled pilot
         id: pilot
@@ -89,6 +93,7 @@ jobs:
           NODE_RESULT: ${{ steps.node.outcome }}
           TEST_RESULT: ${{ steps.tests.outcome }}
           ADOPTION_RESULT: ${{ steps.adoption.outcome }}
+          INSTALLER_RESULT: ${{ steps.installer.outcome }}
           PILOT_RESULT: ${{ steps.pilot.outcome }}
           VALIDATION_RESULT: ${{ steps.validation.outcome }}
           EXAMPLE_RESULT: ${{ steps.examples.outcome }}
@@ -103,6 +108,7 @@ jobs:
             printf '| Node setup | %s |\n' "$NODE_RESULT"
             printf '| Validator regressions | %s |\n' "$TEST_RESULT"
             printf '| Adoption/update regressions | %s |\n' "$ADOPTION_RESULT"
+            printf '| POSIX installer regressions | %s |\n' "$INSTALLER_RESULT"
             printf '| Pinned controlled pilot | %s |\n' "$PILOT_RESULT"
             printf '| Full documentation/skill gate | %s |\n' "$VALIDATION_RESULT"
             printf '| Architecture examples | %s |\n' "$EXAMPLE_RESULT"
@@ -138,4 +144,7 @@ jobs:
           node --version
           python3 --version
       - name: Adoption, refresh and instruction-boundary regressions
-        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs
+        run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs scripts/tests/adoption-boundaries.test.mjs scripts/tests/adoption-records.test.mjs
+      - name: POSIX skill installer regressions (macOS only)
+        if: runner.os == 'macOS'
+        run: node --test scripts/tests/install-skills.test.mjs

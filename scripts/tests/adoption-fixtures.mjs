@@ -34,7 +34,10 @@ export function report(root, manifest) {
     `Profiles: ${Object.values(manifest.profiles).join(", ")}.`,
     `Skills: ${manifest.agentSkills.mode}; self-improve: ${manifest.selfImprove.enabled}, ${manifest.selfImprove.tracker}.`,
     `Labels: ${manifest.selfImprove.labels.join(", ")}; ${manifest.selfImprove.providerLabels.join(", ")}.`,
-    `Configuration: ${manifest.configuration ? Object.values(manifest.configuration).join(", ") : "legacy/unselected"}.`,
+    "", "## Configuration And Instruction Baseline",
+    ...(manifest.configuration ? ["| Field | Actual value |", "|---|---|",
+      ...Object.entries(manifest.configuration).map(([key, value]) => `| ${key} | \`${value}\` |`)]
+      : ["Configuration is legacy/unselected."]),
     "", "## Preservation", "Local warnings, commands and operations documentation remain owned by the target.",
     "Open questions and remaining code migration are not evidence of completed compliance.",
     "", "## Navigation", "[Index](INDEX.md)", "",

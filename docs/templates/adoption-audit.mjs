@@ -166,8 +166,8 @@ function auditManifest() {
   auditAgentSkillsSection(manifest.agentSkills);
   auditAuthSection(manifest.auth);
   auditSelfImproveSection(manifest.selfImprove, manifest.openQuestions);
-  auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
-  auditProjectProfiles(manifest.target?.projectProfiles);
+  const gateScopes = auditPathToScopeMap(manifest.target?.qualityGate?.pathToScopeMap);
+  auditProjectProfiles(manifest.target?.projectProfiles, gateScopes);
   auditDiscoveredProjectRoots(manifest.target?.projectProfiles);
   auditCopiedFiles(manifest.copiedFiles);
   auditOpenQuestions(manifest.openQuestions);
