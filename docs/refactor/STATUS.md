@@ -7,18 +7,19 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - Active stage: 02 - small core and configuration, scope `configuration-1` approved.
 - Branch: `codex/refactor-02-configuration`; PR target: `main`.
+- Stage PR: [#4 - core and configuration design](https://github.com/JakubParol/VibeRails/pull/4), draft.
 - Accepted base: `0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`, verified locally and on GitHub.
 - Audit PR: [#3](https://github.com/JakubParol/VibeRails/pull/3), owner-merged at
   `2026-09-16T08:24:30Z`; user confirmed `Zmergowane. Dalej`.
-- Next action: publish the reviewed configuration contract/examples, then wait for user
-  acceptance of the result and an explicit merge decision. Step 03 has not started.
+- Next action: wait for user acceptance of the configuration design and explicit authorization
+  to merge PR #4. Step 03 has not started.
 - Blocker: none identified; user approved `configuration-1` with `ok` on 2026-09-16.
 - Delegation: Terra/high and Sol/high design advice complete; independent Sol/high review
   reported no findings. Parent chose additive manifest ownership and materialized preset values.
 - Artifacts: [contract](../standards/configuration.md) and [examples](configuration-examples.md).
 - Audit artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
-- Verification: the merged tree equals the audited PR head `f253f7d`; reuse valid prior evidence.
-  PR #3 has no check runs. All prior agents are completed; no green CI or new runtime test claimed.
+- Verification: focused document/example checks and independent review passed. No runtime,
+  migration or full-gate test was run; inspect PR #4's current checks rather than assuming green CI.
 
 ## Stage Register
 

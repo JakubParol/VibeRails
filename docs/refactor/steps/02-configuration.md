@@ -90,7 +90,10 @@ Requested settings are not observed runtime settings or measured usage; no cost 
 ## Delivery And Verification
 
 Branch: `codex/refactor-02-configuration`, created from accepted main
-`0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`. No stage PR yet.
+`0e1e5509adeb1dbaa42da8c8bf55ce07b433c8f1`.
+Published draft: [PR #4](https://github.com/JakubParol/VibeRails/pull/4).
+Reviewed design commit: `b1939f848cf8bb6b2caa76bc8ab6140925e40207`. Publication-only checkpoint
+updates are checked separately; reconcile final-head evidence in the PR before resuming.
 The initial checkpoint closed stage 01. Commit `2625c31` recorded approval of configuration-1.
 Passed: focused Markdown links/anchors, ASCII/LF/whitespace and generic-text checks; parsing both
 JSON excerpts; exact example agreement with the canonical preset table; reuse of existing
