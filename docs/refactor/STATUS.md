@@ -8,17 +8,22 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Active stage: 04 - local checks and PR verification, approved scope `verification-1`.
 - Branch: `codex/refactor-04-verification`; base: accepted main
   `965bc3c0231d2a90c3c2d563ebc1987759130cf0`.
-- Last delivery: [PR #5](https://github.com/JakubParol/VibeRails/pull/5), owner-merged at
+- Current delivery: draft [PR #6](https://github.com/JakubParol/VibeRails/pull/6), reviewed content
+  `85763c39f0261052d625425eab8ad40912ada16e`; its first PR Verification run passed. Resolve the
+  latest head/check after this publication checkpoint; do not reuse an older run blindly.
+- Previous accepted delivery: [PR #5](https://github.com/JakubParol/VibeRails/pull/5), owner-merged at
   `2026-09-16T09:49:17Z`; user confirmed `Zmergowane - dalej`.
-- Next action: publish the reviewed stage PR and verify its actual current-revision pipeline
-  result, then record the delivery and await user acceptance/explicit merge.
+- Next action: confirm the publication checkpoint's latest PR run, then await user acceptance
+  and explicit merge authorization. No acceptance or merge is recorded yet; do not begin 05.
 - Active record: [stage 04 card](steps/04-verification.md).
 - Scope agreement: user replied `ok` on 2026-09-16 to the local/CI split and real repository CI.
 - Delegation: Terra/max delivered validator/tests; two Sol/high reviews found and then closed
   parser and database-guidance P2 issues. Final reviews have no actionable findings. Parent owns
   integration/publication. No broad local gate is authorized. Measured usage is unavailable.
 - Verification: 10/10 targeted regression tests, 27-file focused validation, workflow YAML and
-  its architecture-example step passed. Actual CI is pending; no CI success is claimed.
+  its architecture-example step passed. [CI run 35084546761](https://github.com/JakubParol/VibeRails/actions/runs/35084546761)
+  passed on source `85763c3`, tested merge `9c27cec`; full exact revisions are in the stage card.
+  Required final-head evidence belongs to PR #6's current check record.
 - The completed 00-02 review checkpoint is now included in merged PR #5; no separate PR needed.
 
 ## Stage Register
@@ -29,7 +34,7 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 01 | Audit and baseline | Done | [Audit card](steps/01-audit.md) |
 | 02 | Core and configuration | Done | [Configuration card](steps/02-configuration.md) |
 | 03 | Architecture variants | Done | [Architecture card](steps/03-architecture.md) |
-| 04 | Local/CI verification | Verification | [Verification card](steps/04-verification.md) |
+| 04 | Local/CI verification | Awaiting acceptance | [Verification card](steps/04-verification.md) |
 | 05 | Documentation and context | Planned | Create on stage entry. |
 | 06 | Workflow and integrations | Planned | Create on stage entry. |
 | 07 | Astra, prompts and model evaluation | Planned | [Deferred sources](../astra-refactor-reading-list.md) |

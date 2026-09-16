@@ -104,9 +104,16 @@ findings. No escalation or measured usage data is available.
 ## Delivery And Verification
 
 Branch: `codex/refactor-04-verification`, based on accepted main
-`965bc3c0231d2a90c3c2d563ebc1987759130cf0`. Independent review and focused local integration
-are complete; publication and the first actual CI run follow this content commit. Current
-lifecycle state is in [STATUS](../STATUS.md).
+`965bc3c0231d2a90c3c2d563ebc1987759130cf0`. Published as draft
+[PR #6](https://github.com/JakubParol/VibeRails/pull/6).
+Reviewed content commit: `85763c39f0261052d625425eab8ad40912ada16e`.
+The first [PR Verification run](https://github.com/JakubParol/VibeRails/actions/runs/35084546761)
+passed at `2026-09-16T10:21:49Z`: source `85763c39f0261052d625425eab8ad40912ada16e`, actual
+tested merge revision `9c27cec0a0dd36aa1acb5d6c12e4aee98d023530`. API readback and relevant job
+logs confirm the regression suite, full documentation/skill gate, architecture examples and
+evidence summary all succeeded. This is CI evidence, not a local full-gate run. Publication
+checkpoint edits are checked separately and trigger another CI run; the PR/check record must
+confirm the final head. Current lifecycle state is in [STATUS](../STATUS.md).
 
 Local evidence for this implementation:
 
@@ -125,6 +132,15 @@ Local evidence for this implementation:
 The final PR/check record owns exact source and tested revisions; a documentation commit cannot
 cite itself. Reconcile those before reusing evidence or merging. User acceptance and explicit
 merge remain pending; stage 05 is not authorized.
+
+## Acceptance Walkthrough
+
+Review the local/CI split in the [canonical standard](../../standards/quality-gate.md) and the
+honest focused-mode coverage in [script instructions](../../../scripts/README.md). On PR #6,
+open the latest `Repository checks` run: confirm its source matches the current PR head and
+the summary records the actual tested revision with successful required steps. The changed
+policy does not require full local gates or treat absent CI as success. Accept and authorize
+merge only after this evidence is satisfactory.
 
 ## Navigation
 
