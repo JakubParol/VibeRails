@@ -70,7 +70,7 @@ without respecting dirty-worktree rules.
 2. Spawn read-only review agents when authorized. If agents are unavailable or blocked by tool
    policy, report the blocker and ask whether to wait or retry.
 3. Aggregate findings.
-4. Present agent-separated findings, orchestrator triage, and expected quality gates.
+4. Present triaged findings, compact review coverage and expected verification per [output.md](output.md).
 5. Run gates only if the user requested verification as part of the read-only review.
 6. Ask whether to fix, ignore, discuss, or stop.
 
@@ -100,14 +100,9 @@ Ask before fixing:
 
 ## Local Mode Output
 
-Local mode final reports must include:
-
-- changed files or areas;
-- fixes made;
-- commits made, if any;
-- verification run;
-- verification not run and why;
-- remaining blockers or user decisions.
+Follow [output.md](output.md) and the target's canonical final-report rule. Keep local findings
+local; include the reviewed scope, any fixes, relevant evidence/limitations and unresolved
+user decisions. Do not copy every delegate or cycle packet into the final response.
 
 ## Navigation
 

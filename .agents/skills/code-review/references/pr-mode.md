@@ -205,7 +205,7 @@ PR mode reports must include:
 
 - PR URL and reviewed source/target branches;
 - self-review status and whether PR publishing was enabled or skipped;
-- agent-separated findings;
+- triaged findings and compact review coverage per [output.md](output.md);
 - inline comments posted, including PR thread IDs when available, or intentionally skipped;
 - approve vote cast when no actionable findings remain, or intentionally skipped;
 - verification checked locally or from PR status;

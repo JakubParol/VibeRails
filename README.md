@@ -63,41 +63,16 @@ guessing it from the prompt text.
 
 ## How To Use This Repository
 
-When working in another repository, give the AI agent access to this repository and ask it to:
-
-1. Read this repository's `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-2. Follow [docs/standards/adoption.md](docs/standards/adoption.md).
-3. Select stack, work tracking, code hosting, platform, and self-improve profiles.
-4. Copy the relevant standards into the target repository's `docs/standards/`.
-5. Create or update the target repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-6. Create `.viberails/adoption.json` and `docs/viberails-adoption.md`.
-7. For monorepos, create a full documentation root for each standalone app, service, worker,
-   mobile app, or package.
-8. Add local `README.md` files to significant feature, module, adapter, and bounded-context
-   folders.
-9. Add folder-level `AGENTS.md` files only where local agent rules differ from the parent.
-10. Do not copy skills into the target project by default. Install them once per machine at the
-   Codex user scope when optional workflows are needed, or vendor a pinned copy only after an
-   explicit repository decision; see [.agents/skills](.agents/skills/README.md).
-11. Update navigation links so agents can drill down from general standards to local context.
-
-The target repository owns its final documentation. This repository provides reusable defaults,
-templates, and structure.
+Use the [adoption standard](docs/standards/adoption.md) for the workflow, preservation rules,
+profile decisions and evidence. The [adoption prompt](docs/templates/adopt-standards-prompt.md)
+starts that operation; ordinary project edits do not run adoption again. The target repository
+owns its final documentation and existing knowledge. This pack supplies reusable defaults.
 
 ## Reading Order
 
-For every project that uses this template, start from broad context and drill down:
-
-1. Root `README.md` - what the project is and how to run it.
-2. Root `AGENTS.md` - rules for AI agents working in the project.
-3. `docs/INDEX.md` - table of contents for project documentation.
-4. `docs/standards/agent-workflow.md` - context loading, planning, editing, verification, and reporting.
-5. `docs/standards/change-protocol.md` - branch, commit, push, PR, and review-loop protocol.
-6. General standards in `docs/standards/`.
-7. Stack-specific standards for the code being changed.
-8. Child project `README.md`, `AGENTS.md`, and `docs/INDEX.md` when working in a monorepo
-   app, service, worker, mobile app, or package.
-9. Nearest folder-level `README.md` or `AGENTS.md` for local context.
+Follow the [canonical context router](docs/standards/agent-workflow.md). The index locates
+relevant rules; it does not require loading the whole pack. Project/folder instructions add
+local constraints, and optional skills add only requirements for the selected operation.
 
 ## Standards
 

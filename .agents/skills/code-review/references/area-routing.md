@@ -5,18 +5,13 @@ to add. Agents must read the listed docs themselves before producing findings.
 
 ## Baseline For Every Agent
 
-Every agent must load these files when they exist:
+Follow the target repository's `agent-workflow.md`, located through its applicable instructions
+and documentation index. It is the context router for parent/child/local instructions and
+changed-path rules; do not maintain a second mandatory baseline here. Reuse unchanged context
+already supplied, and read the relevant source before producing a finding.
 
-- `AGENTS.md`
-- `README.md`
-- `docs/INDEX.md`
-- `docs/standards/agent-workflow.md`
-- `docs/standards/change-protocol.md`
-- `docs/standards/quality-gate.md`
-- nearest folder-level `README.md` or `AGENTS.md` for the changed path
-
-Do not fail a review just because a listed optional document is missing. Missing required
-repository docs can be a finding when the repository's own standards require them.
+Missing optional docs alone are not a defect. Report missing required context when it prevents
+a supported review decision; do not silently invent the target's rules.
 
 Agent 1 - Diff Content Review focuses on changed behavior, bugs, edge cases, readability,
 maintainability, performance, and error handling.
@@ -27,17 +22,11 @@ delivery constraints.
 
 ## Standard Bundles
 
-When assigning a specialist, expand these bundles into concrete paths that exist in the target
-repository:
-
-- Backend standards: `docs/standards/coding.md`, `docs/standards/architecture.md`,
-  `docs/standards/backend.md`, `docs/standards/backend-testing.md`.
-- Frontend standards: `docs/standards/coding.md`, `docs/standards/architecture.md`,
-  `docs/standards/frontend.md`.
-- Documentation standards: `docs/standards/documentation.md`,
-  `docs/standards/documentation-audit.md`.
-- Quality standards: `docs/standards/quality-gate.md` plus repository-specific gate docs when
-  present.
+Resolve task/stack/documentation rules through the target's canonical context router. The
+specialist table below adds review focus and local sources, not another copy of those bundles.
+An orchestrator reads mode, authorization and output instructions needed for its operations;
+a bounded read-only specialist needs its assignment, applicable local/task rules and finding
+criteria, not unrelated publishing or workflow references.
 
 ## Specialist Selection
 
@@ -119,11 +108,10 @@ For PRs touching more than one service, package, or app:
 
 Use documented gates only:
 
-- Read root `README.md`, `AGENTS.md`, `docs/INDEX.md`, and quality-gate docs for commands.
+- Follow the canonical router to the actual target commands and quality-gate coverage.
 - If scripts exist, prefer repository-defined commands such as `lint`, `test`, `typecheck`,
   `format`, or project-specific wrappers.
-- For docs-only changes, use a Markdown/navigation audit appropriate to the repository, for
-  example `rg --files -uu -g "*.md"` plus the local documentation audit standard when present.
+- For docs-only changes, use a Markdown/navigation audit appropriate to the repository, loading the documentation-audit checklist only when adoption or restructuring requires it.
 - For rendered UI behavior changes, include browser/E2E checks only when the repository
   documents them or the task explicitly needs them.
 

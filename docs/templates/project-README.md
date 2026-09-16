@@ -75,22 +75,9 @@ Reference the canonical standards:
 | Standalone repository | `docs/standards/` |
 | Monorepo child project | `<relative-path-to-repo>/docs/standards/` |
 
-Required standards:
-
-- `agent-workflow.md`
-- `adoption.md`
-- `adoption-manifest.md`
-- `change-protocol.md`
-- `documentation.md`
-- `documentation-audit.md`
-- `integration-profiles.md`
-- `platform-profiles.md`
-- `quality-gate.md`
-- `self-improve-loop.md`
-- `stack-profiles.md`
-- `architecture.md`
-- `coding.md`
-- stack-specific standards for this project
+Use `agent-workflow.md` from the owning standards path to select context for the task.
+`docs/INDEX.md` lists available standards; availability is not mandatory reading. Link only
+project-specific setup/architecture facts here instead of repeating shared rules.
 
 ## Documentation
 
@@ -101,16 +88,6 @@ Required standards:
 
 ## Quality Gate
 
-Document focused local commands separately from PR Verification. Use `quality-gate.md` and
-stack CI defaults, replacing placeholders with real commands, working directories and check names.
-Local work uses changed-file checks and the smallest relevant behavior test; broad types,
-suites and builds belong to CI unless the user explicitly requests a full local run.
-
-```bash
-# focused local checks and affected behavior case
-
-# full PR verification command / required check name
-```
-
-Report missing/pending CI honestly and preserve required checks. Record the verified revision
-and run link; reuse valid evidence and rerun only affected local checks after a fix.
+Link the target's quality-gate document for commands, working directories, required CI checks
+and coverage limits. Keep actual quick-start commands here only when they help a reader run the
+project; shared verification policy belongs in `quality-gate.md`.

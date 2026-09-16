@@ -14,11 +14,12 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   essential/standard bundles, less duplicate reporting and a concrete task demonstration;
   follow-up requires before/after for all three existing baseline scenarios D/B/R, including
   rule-selection correctness, with no arbitrary percentage target or new measurement system.
-- Next action: integrate bounded route/reporting advice, implement the agreed documentation
-  changes and run the concrete task exercise, focused review and current-head PR CI.
+- Next action: run the after D/B/R exercise on the integrated documentation, compare rule
+  coverage and context with the before result, then independent review and current-head PR CI.
 - Active record: [stage 05 card](steps/05-context.md).
-- Delegation: Terra/max advises on routing/bundles; Luna/max on report duplication; parent owns
-  integration, task evidence and Git/PR. No full local gate or future-stage research is authorized.
+- Delegation: Terra/max and Luna/max advice completed and integrated. Before exercise Luna/max
+  completed; parent is preparing independent after exercise/review and comparing concrete rules.
+  No full local gate or future-stage research is authorized.
 - No stage 05 result acceptance or merge authorization is recorded.
 
 ## Stage Register

@@ -62,9 +62,38 @@ source/merge trees match. The main check also passed. No previous audit is repea
 | Context route and bundle design advice | GPT-5.6 Terra / max | Reconcile entry points and preserve local/legacy boundaries; read-only bounded proposal. |
 | Reporting duplication advice | GPT-5.6 Luna / max | Identify exact repeated report fields and their real consumers; read-only proposal, no workflow mutation. |
 | Canonical integration and concrete task exercise | Parent | Own shared edits, evidence, Git/PR and scope boundaries; dispatch a narrow exercise/review after preparation. |
+| Before/after D/B/R context exercise | GPT-5.6 Luna / max | Same requested settings and task packet on isolated before/after source copies; D makes a real doc correction, B/R check shared-rule selection only. |
 
 Record actual outcomes and any follow-up below. Requested settings are not observed usage;
 token totals remain unknown unless runtime evidence becomes available.
+
+Advice accepted: Terra confirmed one task router plus documentation-coverage bundles, requiring
+verification for every edit and expansion when a change crosses a contract/consumer boundary.
+Luna separated the user handoff from existing internal/provider evidence; the preservation
+record and real blocker facts remain useful. Parent aligned entry points and report consumers,
+without changing reviewer staffing, cycle limits or provider write authority.
+
+The before exercise (Luna/max, isolated accepted-base copy) corrected the seeded POSIX flag,
+preserved the local PowerShell/coverage constraints and passed the focused doc check. B/R
+selected the relevant backend/review rules and explicitly identified missing runtime/diff
+inputs. Their outcomes are selection evidence, not backend implementation or a real PR review.
+
+## Prompt Component Inventory And Composition
+
+| Component | Context owner / when used |
+|---|---|
+| Client/system/task instructions | External to the pack; applicable authority is preserved, contents/usage are not inferred. |
+| Root and ancestor/local AGENTS | Project constraints and local differences; never replaced by a compact delegate summary. |
+| README and docs indexes | Facts and navigation; read the sections needed to locate/understand the target. |
+| Shared standards | `agent-workflow.md` selects relevant rules; each standard owns its subject. |
+| Task/stack instructions | Actual changed paths and crossed boundaries select architecture, coding and test obligations. |
+| Optional skill entrypoint | Selected operation only; discovery metadata/activation remains unchanged in this stage. |
+| Skill mode/reference | Operation-specific authority, technical details and evidence; do not preload other providers/modes. |
+| Task/delivery record | Agreed scope, decisions, current evidence and recovery needs; reuse rather than copying all history. |
+| Refactor-only plan/status/cards | Internal coordination, excluded from adopter baseline and the isolated context exercise. |
+
+This inventory describes composition/ownership, not a runtime loader, version catalog or new
+telemetry system. Model-specific content/version evaluation stays in 07.
 
 ## Verification And Delivery
 

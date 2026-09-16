@@ -21,11 +21,9 @@ Canonical workflow for `e2e-work-item` runs.
 
 Run a start audit before changing Azure Boards or Git state:
 
-1. Read repository root `AGENTS.md` first, then every Required Reading it names for the current
-   repository. At minimum, when present, read `README.md`, `docs/INDEX.md`,
-   `docs/standards/agent-workflow.md`, `docs/standards/change-protocol.md`, and
-   `docs/standards/quality-gate.md`. Do not skip repository-mandated Required Reading to save
-   tokens; save tokens by loading stack, domain, and source docs only when they are needed.
+1. Follow the target's `agent-workflow.md` context router and applicable project instructions.
+   For this operation, identify the work-item scope, protected work, authorization, branch
+   setup and required handoff verification before mutation.
 2. Load `azure-devops` and resolve ADO context.
 3. Read the work item and comments:
 
@@ -91,32 +89,11 @@ blocker and report the current work item state.
 
 ## Minimal Context Loading
 
-Load context progressively. Do not read the whole repository.
-
-1. Use the work item title, description, acceptance criteria, comments, relations, and existing
-   linked branches or PRs to infer candidate areas.
-2. Search before opening files:
-
-   ```powershell
-   rg --files
-   rg -n "<domain term or symbol>"
-   ```
-
-3. Read nearest relevant `README.md` or `AGENTS.md` files for candidate paths.
-4. Read stack standards only for areas you will edit:
-   - backend/API: `docs/standards/coding.md`, `docs/standards/architecture.md`,
-     `docs/standards/backend.md`, `docs/standards/backend-testing.md`
-   - frontend: `docs/standards/coding.md`, `docs/standards/architecture.md`,
-     `docs/standards/frontend.md`
-   - docs: `docs/standards/documentation.md`
-   - agent assets: `.agents/README.md`, `.agents/skills/README.md`, and the relevant sibling
-     skill docs
-5. Before each implementation step, read only the local docs and source files needed for that
-   step.
-
-If the work item points to an area but the required local docs are missing, decide whether the
-root standards are enough. Stop only when the repository's own rules make the missing docs a
-blocker.
+Use the canonical router to select rules for the candidate paths. This workflow adds the work
+item title, description, acceptance criteria, comments, relations and existing linked work as
+sources of scope. Search for the affected area, then read its local docs/source before editing.
+Reuse verified decisions on resume. Missing context blocks the decision that depends on it;
+the start-audit and state-transition requirements above remain unchanged.
 
 ## Branch Setup
 
@@ -255,31 +232,21 @@ asked for that or the current repository instructions already authorize it.
 
 ## Blocker Report
 
-When blocked, stop the run and report:
+Use the target change protocol's final-report rule and the existing task record. Preserve the
+work item/current state, relevant child states, branch/last commit, local or tracker mutations,
+verification limits and exact blocker with the smallest needed decision. The record supports
+recovery; the user needs the blocker and next action, not the same packet at every phase.
 
-- work item ID and current state;
-- child Task IDs and states when the requested work item is a User Story;
-- branch and last commit, if any;
-- what was already changed locally or in Azure Boards;
-- the exact blocker;
-- the smallest next decision or missing input needed;
-- verification already run and verification not run.
-
-Do not keep looping after the same blocker repeats. The run must end with either a precise
-blocker report or the work item verified in `Code Review`.
+Do not keep looping after the same blocker repeats. The run ends with a precise blocker or
+the work item verified in `Code Review`; no state-transition or finish requirement is waived.
 
 ## Final Report
 
-Successful final reports must include:
-
-- work item ID and final state;
-- child Task IDs and final states when the requested work item is a User Story;
-- branch name;
-- commits made per plan item;
-- required guard rails run and result;
-- files or areas changed;
-- intentional exceptions, if any;
-- push or PR status when explicitly requested.
+Follow the target's canonical final-report rule. Add the work-item link and verified final
+state, relevant child outcomes and any required provider action/status. Keep the plan-to-commit
+trace in the existing task/commit record; link it instead of copying every commit into the final
+message. Include unresolved exceptions and requested push/PR status when applicable. Do not
+create a second report solely to repeat the same evidence.
 
 ## Navigation
 

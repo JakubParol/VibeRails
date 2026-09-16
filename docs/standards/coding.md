@@ -6,13 +6,8 @@ expectations without an explicit exception.
 
 ## Required Reading By Work Type
 
-Follow the context loading order in [agent-workflow.md](agent-workflow.md); it is the single
-canonical reading list. For code changes it resolves to the change protocol, the quality gate,
-the architecture standard, this document, and the stack-specific standard for touched files:
-
-- Backend: [backend.md](backend.md)
-- Backend testing: [backend-testing.md](backend-testing.md)
-- Frontend: [frontend.md](frontend.md)
+Use [agent-workflow.md](agent-workflow.md) to select relevant project, architecture, stack and
+test rules. This document owns coding constraints, not another reading list.
 
 ## Quality Gate
 

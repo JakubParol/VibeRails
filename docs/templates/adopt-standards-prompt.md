@@ -10,12 +10,10 @@ The current working repository is the target repository.
 
 Adopt the standards from VibeRails into this repository.
 
-Follow the standards repository README, AGENTS.md, docs/INDEX.md, adoption standard, adoption
-manifest standard, integration profiles, platform profiles, self-improve loop standard, change
-protocol, documentation standard, stack profiles, documentation audit, and quality gate
-standard.
-Use indexes and headings to route context. Do not load every standard, template, or skill file
-unless the audit result shows that area is in scope.
+Follow applicable project instructions and the source pack's agent-workflow.md context router.
+Use the adoption standard for this operation, including its required source/target metadata,
+profiles, preservation, verification and completion evidence. Resolve relevant standards through
+the target/source indexes; do not turn the whole catalog into a mandatory reading list.
 First run the target preflight from the adoption standard, summarize the evidence, and identify:
 
 - VibeRails source path, remote, source ref, and pack version
@@ -51,7 +49,8 @@ Then:
    the manifest values for humans
 5. create documentation roots for standalone monorepo apps, services, workers, mobile apps,
    and packages
-6. add README.md files to significant feature, module, adapter, and bounded-context folders
+6. document significant folders under the explicitly selected documentation bundle, preserving
+   legacy requirements when unselected and useful existing knowledge in either bundle
 7. add folder AGENTS.md files only when local rules differ from the parent
 8. do not copy `.agents/skills/` entries by default; record whether skills are not used,
    installed at the Codex user scope from the standards repository, or vendored as a pinned copy
@@ -68,7 +67,9 @@ Then:
 When updating existing docs, preserve target-specific project purpose, setup, architecture,
 quality gate, and local warnings. Merge VibeRails rules into those files instead of replacing
 them wholesale. Record preserved sections, changed sections, conflicts, and unresolved
-decisions in `docs/viberails-adoption.md` and `.viberails/adoption.json`.
+decisions in `docs/viberails-adoption.md`. Record applicable decisions, exceptions and open
+questions in the existing `.viberails/adoption.json` fields; do not duplicate the preservation
+table in the manifest or final message.
 
 Do not push or open a PR until you ask me and I approve it.
 ```
