@@ -16,6 +16,8 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 02 configuration](refactor/steps/02-configuration.md) | Approved small-core/configuration scope, decisions and delivery evidence. |
 | [Stage 03 architecture](refactor/steps/03-architecture.md) | Approved architecture variants, examples, verification and delivery evidence. |
 | [Stage 04 verification](refactor/steps/04-verification.md) | Approved local/CI responsibility, implementation, tests and delivery evidence. |
+| [Stage 05 context](refactor/steps/05-context.md) | Approved context routing, documentation bundles and concrete task evidence. |
+| [Stage 05 context comparison](refactor/context-proof-05.md) | Before/after D/B/R context selection, correctness checks and honest measurement limits. |
 | [00-02 retrospective review](refactor/review-00-02.md) | User-requested cross-stage verification before architecture work. |
 | [00-04 retrospective review](refactor/review-00-04.md) | User-requested correctness/completeness review before documentation/context work. |
 | [Core and configuration design](standards/configuration.md) | Step 02 contract, two presets and compatibility boundary; not an active adoption feature. |

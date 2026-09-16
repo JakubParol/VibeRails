@@ -8,20 +8,8 @@ Describe what this folder owns and what it does not own.
 
 ## Required Reading
 
-Before editing this folder, read:
-
-1. project root `AGENTS.md`
-2. project root `docs/INDEX.md`
-3. change protocol from the owning standards path
-4. relevant standards from the owning standards path
-5. nearest app, service, worker, mobile app, or package `AGENTS.md`, if this folder is inside
-   a monorepo child project
-6. nearest app, service, worker, mobile app, or package `docs/INDEX.md`, if present
-7. this folder's `README.md`, if present
-8. this file
-
-The owning standards path is usually `docs/standards/` in a standalone repository and
-`<relative-path-to-repo>/docs/standards/` in a monorepo child project.
+Use the owning project's `agent-workflow.md` via `docs/INDEX.md`; it handles parent and local
+context. Add only reading required specifically for this folder: `<links or none>`.
 
 ## Boundaries
 
@@ -49,10 +37,8 @@ Document the fastest useful tests for this folder and any required integration t
 
 ## Layer Checklists
 
-Optional: when this folder owns endpoints, services, repositories, or tests, copy the matching
-definition-of-done checklists from the owning standards path (`backend.md` Layer Definition Of
-Done, `backend-testing.md` Test Value Rules, or the frontend equivalents) so agents self-verify
-against them right where the code lives. Keep only the checklists that apply to this folder.
+Link the applicable owning checklist (`backend.md`, `backend-testing.md`, or frontend rules)
+when useful. Add only local differences; do not copy a shared checklist into this file.
 
 ## Navigation
 

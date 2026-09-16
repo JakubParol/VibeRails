@@ -3,6 +3,30 @@
 Documentation is part of the project architecture. It gives humans and agents a fast path from
 high-level context to the exact local rules needed for a change.
 
+## Documentation Bundles
+
+Bundles define maintained documentation coverage, not how much an agent reads per task.
+Both use the same [context router](agent-workflow.md). Required local warnings, architecture,
+authorization and verification rules remain applicable even for a one-line change.
+
+| Responsibility | essential | standard |
+|---|---|---|
+| Repository and standalone project roots | README, AGENTS and docs/INDEX, kept concise. | The same roots; add cross-project maps when multiple areas need them. |
+| Setup and verification | Real commands, prerequisites, ownership and known limitations in the root or nearest owning document. | The same facts, with linked operation/runbook detail for independently maintained workflows. |
+| Architecture and contracts | Document non-obvious boundaries/decisions where needed; link canonical rules rather than copy them. | Explicit module/feature ownership and dependency/contract links for significant areas. |
+| Significant folders | Parent/root coverage is enough when it names the folder and preserves all needed facts. Add a local README when the parent cannot explain its non-obvious role or workflow clearly. | A short local README for each significant feature, adapter or shared area; link outward for shared facts. |
+| Local agent rules | Local AGENTS only for constraints that differ from the parent. | The same rule; no empty or repeated AGENTS files. |
+| Extra ADRs, runbooks and reports | Only for a real decision, operation, handoff or required evidence. | The same value test; standard is not permission to generate empty documents or routine-success essays. |
+
+Select a bundle explicitly in the owning project's existing instructions during authorized
+documentation work. Preserve an unselected project's existing policy; the structure below
+remains the legacy/standard default. A small project may choose standard and a large area may
+choose essential if it retains the needed facts. Do not infer the choice from repository size.
+Changing a label neither deletes documents nor proves a migration. Preserve useful existing
+knowledge and navigation; reconcile any removal or relocation before claiming completion.
+The future manifest configuration field remains inactive until the
+[configuration migration boundary](configuration.md#compatibility-and-activation-boundary).
+
 ## Documentation Roots
 
 A documentation root is a folder that can be onboarded, run, deployed, tested, or copied as
@@ -96,7 +120,7 @@ Use as the table of contents:
 | Repository root | `README.md`, `AGENTS.md`, `docs/INDEX.md` |
 | Standalone app, service, worker, mobile app, or package in a monorepo | `README.md`, `AGENTS.md`, `docs/INDEX.md` |
 | Independently versioned or deployable shared library | `README.md`, `AGENTS.md`, `docs/INDEX.md` |
-| Feature module, bounded context, adapter group, or shared internal library | `README.md`; add `AGENTS.md` only for local agent rules |
+| Feature module, bounded context, adapter group, or shared internal library | Standard: local `README.md`. Essential: explicit parent coverage or a local README when needed. AGENTS only for local differences. |
 | Leaf folder covered by parent documentation | No local file required |
 
 When in doubt, treat runnable, deployable, independently testable, or independently copied code
@@ -104,8 +128,8 @@ as a documentation root.
 
 ## Folder Documentation
 
-Every significant non-root folder must be documented with at least `README.md`. A folder is
-significant when it contains:
+Document every significant folder using the selected bundle: a local README in standard, or
+explicit parent coverage where sufficient in essential. A folder is significant when it contains:
 
 - a bounded context, feature module, adapter group, or shared internal library
 - domain rules that are not obvious from filenames
@@ -154,25 +178,15 @@ Agents should read the nearest relevant local document, not every document in th
 
 ## Adoption Checklist
 
-When applying these standards to another repository:
-
-For the full adoption workflow, follow [adoption.md](adoption.md) and verify the result with
-[documentation-audit.md](documentation-audit.md).
-
-1. Create or update the repository root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-2. Copy shared standards into the repository root `docs/standards/`.
-3. In a monorepo, identify every standalone project under folders such as `apps/`,
-   `services/`, `workers/`, or `packages/`.
-4. Give each standalone project its own `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-5. Add `README.md` to every significant feature, module, adapter, or bounded-context folder.
-6. Add folder-level `AGENTS.md` only where local agent rules differ from the parent.
-7. Update every relevant `docs/INDEX.md`, parent `README.md`, and parent `AGENTS.md`.
+[Adoption](adoption.md) owns the copying/preservation workflow;
+[documentation audit](documentation-audit.md) checks the selected coverage. Keep this standard
+as the owner of documentation responsibilities, not another copy of the adoption procedure.
 
 ## When To Create More Docs
 
 Create documentation when:
 
-- a new app, service, worker, mobile app, package, feature module, or bounded context is added
+- a new documentation root is added, or an area needs facts not adequately covered by its parent
 - a non-obvious architectural decision is made
 - setup, deployment, migration, or testing requires specific steps
 - agents need local rules to avoid repeated mistakes

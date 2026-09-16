@@ -41,6 +41,8 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [02 - Small core and configuration](steps/02-configuration.md)
 - [03 - Architecture variants](steps/03-architecture.md)
 - [04 - Local/CI verification](steps/04-verification.md)
+- [05 - Documentation and context](steps/05-context.md)
+- [Stage 05 context comparison](context-proof-05.md)
 - [Retrospective review of 00-02](review-00-02.md)
 - [Retrospective review of 00-04](review-00-04.md)
 - [Configuration design](../standards/configuration.md) and [worked examples](configuration-examples.md)

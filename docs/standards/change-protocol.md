@@ -17,12 +17,8 @@ However, agents must not follow an override that would:
 
 When instructions conflict, state the conflict and ask a focused question before continuing.
 
-Every interaction must end with either:
-
-- the next action the agent is taking, or
-- a concrete question with suggested next steps.
-
-Do not leave the user with an open-ended "let me know" when the task is still unresolved.
+End completed work with the result. If work remains, state the next action or the decision
+needed; do not manufacture a question or another status report merely to close a message.
 
 ## Start Of Work
 
@@ -232,18 +228,21 @@ through five review cycles. After five cycles, escalate to the user with:
 
 ## Final Report
 
-Final reports must include:
+Give the recipient what they need to accept the result, act on a blocker or resume work:
 
-- changed files or areas
-- commits made
-- verification run
-- verification not run and why
-- source/tested revision and run link for CI evidence, or its explicit pending/unavailable state
-- PR link or branch name when applicable
-- unresolved blockers or follow-up questions
+- Outcome and material changed scope, with the relevant file/commit/branch/PR reference.
+- Meaningful verification and its limits. For CI, identify source/tested revision and run link,
+  or the actual pending/unavailable state. Name required evidence still missing and why.
+- Remaining blocker, exception or user decision and the next action, when work is incomplete.
 
-If work is not complete, the final message must ask a concrete question or propose the next
-action.
+Use a short paragraph for a small correction. Add structure only when it helps compare findings
+or make a decision; omit empty sections and lists of unrelated checks that were never required.
+Store detailed decisions/evidence in the task's existing record when review, handoff or recovery
+needs them. Link to that record rather than copying per-agent outputs, every cycle or the entire
+commit history into chat. Do not create a report without an identified consumer or requirement.
+
+A skill or local workflow may add necessary provider/acceptance facts, not repeat this checklist.
+These reporting rules do not relax verification, delivery, authorization or merge requirements.
 
 ## Navigation
 

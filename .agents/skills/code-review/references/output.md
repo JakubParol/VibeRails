@@ -1,168 +1,72 @@
 # Review Output
 
-Use this output structure for user-facing reports. Keep it concise and evidence based.
-
-## Contents
-
-- [Agent Sections](#agent-sections)
-- [Orchestrator Triage](#orchestrator-triage)
-- [Local Fix Report](#local-fix-report)
-- [Review-And-Fix Loop Report](#review-and-fix-loop-report)
-- [PR Comment Publishing](#pr-comment-publishing)
-- [Self-Review Publishing](#self-review-publishing)
-- [Final Report Checklist](#final-report-checklist)
-- [Navigation](#navigation)
-
-Do not include secrets, credential-bearing URLs, raw customer data, raw personal data, PII, raw
-OCR text, or prompt content in reports, PR comments, or loop summaries.
+Use the target's reporting policy for the common handoff (`change-protocol.md#final-report` in
+VibeRails projects). Without one, give the review outcome, evidence/limits and any needed next
+decision; do not require a new target document. This reference adds review-specific evidence
+and preserves provider publishing restrictions. Keep detailed
+review/triage evidence in the existing task or review record; do not create a second report.
+Never include secrets, credential-bearing URLs, private payloads or raw prompts in any output.
 
 ## Agent Sections
 
-Do not merge feedback inside the agent sections. Preserve the independent review result:
-
-```markdown
-## Agent 1 - Diff Content Review
-
-### Findings
-- `P1` Title
-  Evidence: `path/to/file.ext:42`
-  Risk: ...
-  Recommendation: ...
-
-### No Findings
-- State "No findings" only when the agent found no actionable issue.
-
-## Agent 2 - Standards And Infrastructure Review
-
-### Findings
-- ...
-```
-
-For specialists, add a separate section per specialist:
-
-```markdown
-## Specialist - Frontend
-## Specialist - API Service
-## Specialist - Infrastructure
-```
+Preserve each delegate's independent result and attribution before triage. A compact role,
+reviewed scope and outcome record is enough for clean results. Retain concrete findings and
+conflicting evidence so the parent can check them; do not paste every agent packet into chat.
+Use "No findings" only for a completed review with no actionable issue, and name coverage limits.
 
 ## Orchestrator Triage
 
-After the agent sections, add a separate triage section:
-
-```markdown
-## Orchestrator Triage
-
-- Keep: `P1` Finding title - reason.
-- Merge duplicate: Agent 2 and Frontend Specialist both reported the same boundary issue;
-  use Agent 2 wording.
-- Reject: `P3` Finding title - outside diff / not actionable / already covered.
-- Needs user decision: ...
-```
-
-This is the only section where duplicate findings may be merged or rejected.
+The parent verifies findings, merges duplicates and records reasons for rejected or unresolved
+ones. Preserve attribution in the existing review record. Present the recipient with one clear
+finding per issue: severity, location, concrete risk and proposed correction. Include a rejected
+finding in the final response only when its explanation affects the user's decision.
 
 ## Local Fix Report
 
-When fixes were made, report:
-
-```markdown
-## Fixes Applied
-
-- Fixed ...
-- Added/updated tests ...
-
-## Verification
-
-- Ran `.\scripts\lint.ps1 api` - passed.
-- Not run: `<documented e2e command>` - not applicable; no rendered UI behavior changed.
-
-## Remaining
-
-- No remaining actionable findings.
-```
-
-If a fix requires a commit and the user authorized commits, commit only the files belonging to
-that logical step. If no commit was made, state that explicitly.
+Report the material fix and relevant verification/limitations under the canonical final-report
+rule. Include the delivery reference when there is one and disclose uncommitted or incomplete
+work when it matters. Do not invent application tests for a documentation-only correction.
 
 ## Review-And-Fix Loop Report
 
-When running review-and-fix, include one concise status block per cycle:
-
-```markdown
-## Review-And-Fix Loop
-
-### Cycle 1
-- Findings fixed: ...
-- Verification: Ran `...` - passed / failed / not run because ...
-- Rerun review: clean / findings remain.
-- Remaining: no actionable findings / ... blockers or user decisions.
-```
-
-After the last cycle, state whether the loop stopped clean, stopped on remaining findings that
-need a user decision, hit a blocker, or reached the five-cycle limit.
+Keep enough existing checkpoint evidence to resume: cycle, accepted fixes, affected verification,
+focused re-review result and unresolved findings. The final handoff needs the outcome and any
+remaining decision, not a separate user-facing block for every cycle. Preserve the workflow's
+five-cycle limit and say whether the loop is clean, blocked or stopped at that limit.
 
 ## PR Comment Publishing
 
-In PR mode, review findings should be posted as inline PR comments after orchestrator triage when
-`SelfReviewStatus.isSelfReview` is `false`:
+For Azure DevOps PR mode, apply the existing authorization and `SelfReviewStatus` rules before
+publishing triaged inline findings. Retain the reviewed source/target revision, current iteration,
+file/line anchor, posted thread IDs and vote outcome in the existing review/PR record.
+Publishing policy and wording stay in [severity-and-comments.md](severity-and-comments.md).
+If an authorized finding cannot be anchored, report the blocker rather than posting a summary
+substitute. Keep internal agent-source metadata out of PR comments.
 
-```markdown
-## Published PR Comments
-
-- `P1` `path/to/file.ext:42`
-  Thread: <thread-id>
-  Comment: P1: ...
-  Internal source: Diff Content Review finding title.
-```
-
-Keep internal review source metadata outside the PR comment text. If a valid finding cannot be
-anchored inline, report the blocker instead of posting a summary substitute. PR comment wording
-and publishing policy stay in [severity-and-comments.md](severity-and-comments.md).
-
-When no actionable findings remain and `SelfReviewStatus.isSelfReview` is `false`, report the
-approve vote:
-
-```markdown
-## Reviewer Vote
-
-- Cast `approve` on PR <id>.
-```
-
-Ask before fixing findings, pushing commits, updating PR metadata, resolving existing threads,
-completing, or merging the PR.
+When a vote is applicable and permitted, report whether it was actually cast; do not imply
+approval from a local clean result. Fixes, pushes, PR metadata writes, thread resolution,
+completion and merge still need their existing authorization. GitHub local-diff mode retains
+its local-only publishing policy; this reference grants no new write authority.
 
 ## Self-Review Publishing
 
-When `SelfReviewStatus.isSelfReview` is `true`, do not publish PR finding comments, summary
-substitutes, or reviewer votes. Report the local result instead:
-
-```markdown
-## Self-Review Publishing
-
-- Skipped PR comments and reviewer vote because the authenticated Azure DevOps user created PR <id>.
-- Local result: findings reported below / no actionable findings.
-```
+When the Azure DevOps authenticated user created the PR, preserve the prohibition on publishing
+findings, substitute summaries and votes. State that publishing was skipped for self-review and
+provide the local result. Do not repeat provider status for modes where it does not apply.
 
 ## Final Report Checklist
 
-Every final response must include:
+Alongside the canonical outcome/verification/blocker facts, include what the review recipient needs:
 
-- changed files or areas reviewed;
-- review-agent usage: how many, which roles, and whether each returned clean or with findings;
-  if none, identify the explicit user opt-out, missing repository policy, or blocker and state
-  whether a required independent review-agent pass was satisfied;
-- review-and-fix loop outcome, when applicable: cycle count, findings fixed, verification run,
-  rerun review result, and remaining findings or blockers;
-- PR self-review status, when reviewing an Azure DevOps PR;
-- fixes made, if any;
-- commits made, if any;
-- verification run;
-- verification not run and why;
-- inline comments posted, if any;
-- reviewer vote cast, if any;
-- intentional exceptions;
-- unresolved blockers or follow-up questions.
+- Reviewed scope/revision and compact coverage: roles used, result and any missing required
+  independent review or approved exception. Do not hide a missing review behind "No findings".
+- Deduplicated actionable findings, material fixes and final loop outcome when applicable.
+- PR URL, self-review/publishing status, posted comments/thread references and vote only for
+  the provider operation actually performed. Link the existing evidence rather than copy it.
+
+For a small clean local review, a short result with scope and limitations is sufficient. No
+mandatory empty role, cycle, PR, vote or commit sections. Keep internal evidence accessible to
+its actual consumer without requiring a new logging or reporting system.
 
 ## Navigation
 

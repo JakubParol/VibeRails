@@ -10,7 +10,7 @@ complete.
 | Root trio | Repository root has `README.md`, `AGENTS.md`, and `docs/INDEX.md`. |
 | Standards | Required standards are present under `docs/standards/`. |
 | Monorepo roots | Each standalone app, service, worker, mobile app, or package has its own trio. |
-| Folder docs | Significant non-root folders have `README.md`. |
+| Folder docs | Selected bundle coverage is present: local README for significant folders in standard; sufficient explicit parent coverage or a needed local README in essential. |
 | Local agent rules | Folder `AGENTS.md` files exist only where local rules differ from parent rules. |
 | No extra docs folders | Ordinary feature and module folders do not contain `docs/`. |
 | Navigation | Markdown files are reachable from an index, parent README, or parent AGENTS file. |
@@ -40,13 +40,10 @@ Documentation graph checks must skip generated, dependency, and cache folders:
 
 ## Required Report
 
-Report:
-
-- checks that passed
-- missing files created
-- missing files intentionally skipped
-- broken or unknown links
-- user decisions still needed
+Use the [canonical final-report rule](change-protocol.md#final-report). For the documentation
+owner, identify the selected bundle, material coverage/navigation gaps, intentional omissions
+and decisions still needed. Link the existing adoption/audit record for details instead of
+repeating every passed row or creating another report solely for this checklist.
 
 ## Navigation
 

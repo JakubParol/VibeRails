@@ -76,8 +76,9 @@ exception before final reporting.
    - Other PR URL present: ask for the provider profile or fall back to local branch mode only
      after the user confirms the intended source/target refs.
    - No PR URL: use [local branch mode](references/local-branch-mode.md).
-2. Load repository context from root `AGENTS.md`, `README.md`, `docs/INDEX.md`, and required
-   local standards.
+2. Follow the target repository's `agent-workflow.md` router when present. Otherwise use its
+   applicable AGENTS instructions, native docs, changed-path context and actual verification
+   commands. Using this optional skill does not require adopting VibeRails or creating its docs.
 3. Resolve review-agent authorization with
    [agent-authorization.md](references/agent-authorization.md).
 4. Build the changed-path inventory:
@@ -92,8 +93,8 @@ exception before final reporting.
 7. Give each agent only its scope, changed paths, required docs, review rules, and output
    format. Do not give one agent another agent's conclusions before it finishes.
 8. Aggregate results with [output.md](references/output.md):
-   - keep agent sections separate;
-   - remove duplicates only in a separate orchestrator triage section;
+   - preserve independent results and attribution in the existing review record;
+   - triage once and present deduplicated findings with compact review coverage;
    - classify severity with [severity-and-comments.md](references/severity-and-comments.md).
 9. Local mode:
    - stay read-only unless the user asked for review-and-fix or approves proposed fixes;

@@ -53,7 +53,8 @@ docs, config files, and user confirmation.
 ## Adoption Steps
 
 1. Follow the change protocol.
-2. Read this repository's `README.md`, `AGENTS.md`, `docs/INDEX.md`, and required standards.
+2. Select target/source context through [agent-workflow.md](agent-workflow.md); preserve all
+   applicable project instructions and source pack/adoption metadata needed for this operation.
 3. Run the target preflight and save the evidence for the adoption report.
 4. Audit the target repository structure, remotes, existing docs, scripts, CI, and issue
    references.
@@ -69,7 +70,8 @@ docs, config files, and user confirmation.
    the manifest decisions for humans.
 10. In monorepos, create a documentation root for each standalone app, service, worker, mobile
     app, or package.
-11. Add `README.md` to significant feature, module, adapter, and bounded-context folders.
+11. Document significant folders according to the explicitly selected
+    [documentation bundle](documentation.md#documentation-bundles); preserve legacy coverage when unselected.
 12. Add folder-level `AGENTS.md` only where local rules differ from the parent.
 13. Do not copy skills into the target repository by default. Skills are optional Codex assets
     distributed at the Codex user scope from the VibeRails checkout. Vendor a pinned copy into
@@ -120,8 +122,9 @@ unless the user explicitly approves that replacement.
 | Existing local docs | Link and reconcile them; do not duplicate their contents in global standards. |
 | Conflicting instructions | Record the conflict in `docs/viberails-adoption.md` and `openQuestions`; ask before choosing behavior that changes project workflow. |
 
-Every adoption report must summarize which existing sections were preserved, which were
-changed, and which unresolved conflicts remain.
+The preservation record below supports owner review and later migration. Keep it in
+`docs/viberails-adoption.md`; the user handoff links it and surfaces decisions or unresolved
+conflicts instead of repeating the table.
 
 ### Merge Algorithm
 
@@ -155,10 +158,9 @@ repository records a concrete sink and auth checks.
 
 ## Context Discipline
 
-Use indexes and folder lists to route the audit before opening detailed files. Load standards,
-templates, and skills only when the target repository needs that area or the adoption checklist
-cannot be completed without it. For monorepos, inspect one standalone app, service, worker,
-mobile app, or package at a time, then generalize only when the structure is repeated.
+Follow [agent-workflow.md](agent-workflow.md). Adoption additionally needs the source pack's
+provenance and target profile/preservation evidence. In a monorepo inspect standalone roots
+one at a time; do not infer their local constraints merely from repeated folder structure.
 
 ## What To Copy
 
@@ -189,7 +191,7 @@ At the end of adoption, the target repository must have:
 - project profiles for the root and standalone monorepo areas
 - auth setup documented without secrets
 - documentation roots for standalone monorepo projects
-- local folder `README.md` files for significant folders
+- significant-folder coverage required by the selected [documentation bundle](documentation.md#documentation-bundles), preserving legacy coverage when unselected
 - documented quality gates with a path-to-scope map
 - no orphan Markdown files
 - a summary of gaps that need user decisions

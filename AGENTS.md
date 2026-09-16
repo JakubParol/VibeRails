@@ -6,15 +6,11 @@ copied into many projects while keeping projects built in a consistent way.
 
 ## Required Reading
 
-Before changing this repository, read:
-
-1. [README.md](README.md)
-2. [docs/INDEX.md](docs/INDEX.md)
-3. [docs/standards/agent-workflow.md](docs/standards/agent-workflow.md)
-4. [docs/standards/change-protocol.md](docs/standards/change-protocol.md)
-5. [docs/standards/documentation.md](docs/standards/documentation.md)
-
-Read stack-specific standards only when editing that area.
+Use [agent-workflow.md](docs/standards/agent-workflow.md) as the canonical context router.
+This repository's local additions: [README](README.md) explains the pack when needed,
+[docs/INDEX](docs/INDEX.md) locates owning standards/templates, and edits to documentation
+follow the relevant [documentation rules](docs/standards/documentation.md). Preserve the active
+refactor checkpoint rules below when working on that refactor.
 
 ## Active Refactor
 

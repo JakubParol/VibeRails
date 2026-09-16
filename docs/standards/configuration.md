@@ -53,7 +53,7 @@ there is no preset inheritance, deep-merge language or per-feature rule engine.
 | `initializedFrom` | `light`, `standard` | Records the starting preset. It does not compute active settings. |
 | `architecture` | `minimal`, `layered` | Smallest sufficient Clean Architecture or expanded explicit boundaries; both retain the core. [Variant rules](architecture.md#two-variants) define the distinction. |
 | `verification` | `local-focused`, `ci-first` | Small relevant local checks; `ci-first` also expects full PR verification. Neither disables existing required CI or authorizes broad local gates. Detailed policy: step 4. |
-| `documentation` | `essential`, `standard` | Minimum useful project context or fuller module/boundary documentation. Exact bundles: step 5. |
+| `documentation` | `essential`, `standard` | Minimum useful coverage or explicit module/boundary documentation; see [documentation bundles](documentation.md#documentation-bundles). Neither is a per-task reading list. |
 | `workflow` | `local`, `pull-request` | Default delivery endpoint for authorized work. PR mode prepares a PR, not an automatic merge. Execution: step 6. |
 | `review` | `adaptive`, `independent` | Scope review according to risk; `independent` additionally requires independent review. No fixed reviewer count. Execution: step 6. |
 | `modelRouting` | `inherit` | Preserve the runtime/client's model selection; this section does not change it. Configured routes and catalog evaluation: steps 6-7. |

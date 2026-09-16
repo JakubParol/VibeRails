@@ -37,7 +37,7 @@ Reports must include:
 
 - PR URL and reviewed source/target refs;
 - whether review used local git diff, `gh pr diff`, or API metadata;
-- findings grouped by review agent;
+- triaged findings with compact review coverage per [output.md](output.md);
 - verification or limitations;
 - whether publishing was unavailable or intentionally skipped.
 

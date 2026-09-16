@@ -129,7 +129,10 @@ Every app, service, package, bounded context, and complex feature module must do
 - test strategy
 - known integration points
 
-Use folder-level `README.md` for human context and `AGENTS.md` for local agent rules.
+Locate that information according to the selected [documentation bundle](documentation.md#documentation-bundles):
+explicit parent coverage may suffice for essential; standard uses local README coverage for
+significant folders. Preserve required facts in either location and add AGENTS only for local
+rule differences. Unselected projects retain their existing documentation policy.
 
 ## Architecture Decisions
 
