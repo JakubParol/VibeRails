@@ -10,20 +10,21 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Accepted base: `e19acf6af12976caef7a2053485a4fc39b95738e`, verified locally and on GitHub.
 - Preparation PR: [#2](https://github.com/JakubParol/VibeRails/pull/2), merged by the repository
   owner on 2026-09-16 at 07:57:32 UTC. Reviewed source head: `81eb17872257d83d7494a45051dee1edb886a575`.
-- Next action: run the two bounded read-only audit assignments, measure the baseline, verify
-  findings, and prepare the audit report for focused review and a stage PR.
+- Next action: publish the reviewed audit report/baseline as a stage PR, then wait for user
+  acceptance of the result and explicit merge authorization.
 - Blocker: none identified. User approved `audit-1` with `tak` on 2026-09-16.
-- Delegation: context inventory on Luna/high; workflow/verification inventory on Terra/high.
-  Parent owns measurement, triage and all coordination/report edits.
-- Verification: PR #2 has no check runs; its merged tree matches the reviewed source tree.
-  This is source/evidence reconciliation, not a new CI or runtime test result.
+- Delegation: Luna/high and Terra/high audits completed; Sol/high report review and focused
+  recheck completed. Parent verified evidence/counts and fixed two over-broad source summaries.
+- Artifacts: [findings](audit-01.md) and [baseline](baseline-01.md).
+- Verification: zero GitHub Actions workflows/check-runs/commit statuses at accepted main;
+  no green CI claim. Source-pack rules and scripts were not modified or executed.
 
 ## Stage Register
 
 | ID | Stage | State | Record |
 |---|---|---|---|
 | 00 | Controlled plan and startup | Done | [Preparation card](steps/00-plan-preparation.md) |
-| 01 | Audit and baseline | In progress | [Audit card](steps/01-audit.md) |
+| 01 | Audit and baseline | Awaiting acceptance | [Audit card](steps/01-audit.md) |
 | 02 | Core and configuration | Planned | Create on stage entry. |
 | 03 | Architecture variants | Planned | Create on stage entry. |
 | 04 | Local/CI verification | Planned | Create on stage entry. |
