@@ -7,7 +7,8 @@ give the review outcome, evidence/limits and any needed next decision; do not re
 target document. This reference adds review-specific evidence and preserves provider publishing
 restrictions. Keep detailed
 review/triage evidence in the existing task or review record; do not create a second report.
-Never include secrets, credential-bearing URLs, private payloads or raw prompts in any output.
+Never include secrets, credential-bearing URLs, private payloads or private prompts in output.
+Authorized public/synthetic instruction excerpts may be reviewed after sensitive-data checks.
 
 ## Agent Sections
 

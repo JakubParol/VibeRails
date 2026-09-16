@@ -32,7 +32,8 @@ Repeat unchanged adoption as a no-op, not another generated document set or time
 
 Report effective choices, preserved decisions, results and remaining work. Continue only through
 an already-authorized delivery endpoint. Without push/PR authority, stop locally; merge always
-requires explicit authorization and current acceptance/evidence.
+requires explicit authorization and current acceptance/evidence. An advance grant covering
+this scope remains valid after those checks; do not ask again merely because a phase changed.
 ```
 
 ## Navigation

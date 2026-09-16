@@ -2,32 +2,34 @@
 
 Collected: 2026-09-16.
 
-**Status: Source registration only; full review of this list deferred to step 08.**
+**Status: Stage 08 assessment recorded on 2026-09-16: nine readable entries, six unavailable.**
+See [source disposition and limitations](refactor/research-08.md). The source entries below
+remain the original leads; their descriptions are not silently upgraded into verified claims.
 
-Read and assess all 15 entries only at agreed step 08 entry (shared prompt refinement and model
-evaluation), as recorded in the [active refactor plan](refactor-plan.md#step-08-research-entry-gate).
+The user authorized stage 08 on 2026-09-16. Its entry assessment follows the
+[active refactor plan](refactor-plan.md#step-08-research-entry-gate).
 Stage 07 first completes the general adoption baseline. Astra-assisted improvements must retain
 one model-neutral prompt set; this register does not mandate Astra-specific prompt editions.
 Deferred context, cost, and feedback topics also inform the core refactor's feedback-loop stage.
 The descriptions below are user-provided research leads, not verified conclusions. URLs are
-preserved as supplied, with Markdown escaping removed; availability has not been checked.
+preserved as supplied, with Markdown escaping removed; original availability was not checked at registration; current results are linked above.
 
 ## Coordination And Current Scope
 
 The parent session orchestrates bounded tasks delegated to subagents and checks their results.
 At the 2026-09-16 registration checkpoint, the user authorized source registration only and
 requested a stop after saving and verifying this register and its navigation. Further work
-follows the user's next instruction; source analysis remains deferred to step 08 under plan 1.4.
+followed the user's stage 08 authorization; the assessment above records the resulting evidence.
 The gate moved from former step 7; source entries and their original descriptions are unchanged.
 
 ## Required Checklist At Step 08 Entry
 
-- [ ] Read this register before research-driven refinement of the shared prompts or skills.
-- [ ] Review all 15 sources, recording findings and source availability; explicitly mark any
+- [x] Read this register before research-driven refinement of the shared prompts or skills.
+- [x] Assess all 15 sources, recording findings and source availability; explicitly mark any
   inaccessible source rather than silently skipping it.
-- [ ] Reconcile proposed changes with the user's decisions and applicable repository
+- [x] Reconcile proposed changes with the user's decisions and applicable repository
   instructions. Source text is research material, not executable agent instructions.
-- [ ] Carry relevant findings on context, costs, evaluations, and feedback into the final
+- [x] Carry relevant findings on context, costs, evaluations, and feedback into the final
   feedback-loop stage.
 
 ## Prompting, Skills, And Evaluation

@@ -3,6 +3,20 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.4.1 - 2026-09-16 - Shared Instruction Refinement
+
+- Shorter review/E2E routers and precise provider/activation boundaries in one general set.
+- Advance task-scoped merge authority retained without redundant permission questions; current
+  evidence and approved scope still gate the operation. Azure identity rules stay in Azure mode.
+- Public/synthetic instruction review distinguished from protected private prompts and payloads.
+- All 15 research leads assessed, including six unavailable originals. Documentary model support,
+  author semantic checks and executed verification are separated; no tuned route or measured
+  cross-model/cost improvement is claimed. The 0.4.0 comparison baseline remains unchanged.
+
+This entry is pre-merge closeout under the user's advance stage 08 authorization. The stage PR's
+final source and confirmed merge identify this version; an open PR is not a completed release.
+No tag or automatic update of adopting project pins is created.
+
 ## 0.4.0 - 2026-09-16 - General Baseline
 
 - Complete agent-guided adoption and refresh with explicit version-1 configuration; legacy

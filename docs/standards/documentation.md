@@ -204,6 +204,19 @@ Update existing documents first.
 - Put project-specific decisions in project docs, not in the shared template.
 - Mark time-sensitive or version-sensitive docs with a date or version.
 
+## Reusable Instruction Wording
+
+State the outcome, consequential constraints, completion evidence and authorized endpoint.
+Keep shared instructions model-neutral; client/tool prerequisites and model/effort selection
+belong to their own profiles. A skill description names its actual triggering task, not a list
+of adjacent topics. Put branch-specific detail behind a clear condition and one canonical owner.
+
+Remove duplication, not safeguards. For a proposed change compare the same tasks against the
+pinned old and new instructions, including negative activation cases. Separate semantic review,
+scripted checks and observed agent behavior. Shorter text alone does not prove lower cost or
+better results; do not promote a model-specific finding as universal. Preserve prior versions
+and use the authorized adoption refresh path, never silently rewrite project pins.
+
 ## Navigation
 
 - [Documentation index](../INDEX.md)

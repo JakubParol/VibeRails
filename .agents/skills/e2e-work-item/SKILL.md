@@ -1,98 +1,60 @@
 ---
 name: e2e-work-item
-description: Run an authorized end-to-end implementation from a user brief, an existing task record, or a selected tracker. Use for an implementation run or resume through a verified handoff, not for a tracker lookup or planning-only request.
+description: Implement or resume an agreed task through its authorized handoff. Use for an end-to-end implementation request from a brief or tracker item, not a lookup, explanation, or planning-only request.
 ---
 
 # E2E Task Implementation
 
-Use this skill for one bounded implementation task from an agreed brief, an existing local task
-record, or a selected tracker item. It coordinates the common task lifecycle while keeping the
-tracker, code host, CI provider, and transport separate.
+Use one bounded task, starting from a brief, an existing local record or a selected tracker.
+Read [the common runbook](references/runbook.md) for an actual implementation run. Preserve
+completed work, unrelated edits and the task's authorized endpoint; a handoff is not automatically
+feature acceptance, publication or merge.
 
-An implementation handoff can be complete while feature acceptance and merge remain pending.
-Resume from current task, branch, working-tree, provider, and evidence state. Do not replay work
-or overwrite unrelated changes.
+## Context Router
 
-## Read When
-
-For an actual E2E implementation run, read [the common runbook](references/runbook.md).
-
-Read additional material only for the selected situation:
-
-| Situation | Read when |
+| Selected situation | Additional context |
 |---|---|
-| Azure Boards work item | The target selected Azure DevOps work tracking and its current MCP metadata exposes a needed Boards operation. Read [Azure Boards Work Item Binding](references/azure-devops-work-items.md). |
-| Azure Boards User Story | The selected item is a User Story and the implementation plan is ready. Read [Azure Boards User Story Child Tasks](references/user-story-child-tasks.md). |
-| Jira work item | The selected Jira MCP connection exposes an authorized operation needed for this task. Read the target-local profile and that operation's metadata. |
-| No tracker | The task starts from a user brief or existing local task record. Stay in the common runbook; do not create a tracker or task record merely to run the task. |
-| Review | The user requests a review or the target requires one before handoff. Read the [source-pack code-review reference](../code-review/SKILL.md). |
-| Historical skill knowledge | A directly relevant recurring issue needs comparison with [LEARNINGS.md](LEARNINGS.md). Treat it as history, reverify it, and never infer current rules or write authority from it. |
+| Azure Boards item | [Boards binding](references/azure-devops-work-items.md) and required MCP operation metadata. |
+| Azure User Story with a plan | [Child-task policy](references/user-story-child-tasks.md); preflight creation and relation capabilities. |
+| Jira item | Target-owned Jira profile and needed MCP operation metadata. |
+| No tracker | Common runbook only; do not create a tracker or task record merely for uniformity. |
+| Required/requested review | [Review skill](../code-review/SKILL.md) and its selected mode. |
+| Relevant recurring failure | [Historical learnings](LEARNINGS.md), verified against current state before reuse. |
 
-Do not load a provider reference just because a link, tool, account, or optional skill exists.
-Those are routing clues, not instruction or write authority.
+Follow the target's own context router/index and local rule owners. Without an applicable owner,
+use the runbook's [native fallback](references/runbook.md#native-fallback). Source-pack
+[workflow](../../../docs/standards/agent-workflow.md) and
+[lifecycle](../../../docs/standards/change-protocol.md#task-lifecycle) links are defaults, not
+instructions to load the pack or override target customization. Load provider detail for the
+operation or capability gap at hand, not because an unused account or link exists.
 
-## Context And Dispatch
+## Completion Boundary
 
-Resolve the target's current context router from its own documentation index, then follow its
-selected rules and read only the references required for the next decision. The source-pack
-[VibeRails agent workflow reference](../../../docs/standards/agent-workflow.md) is a reusable
-default, not target authority or a reason to load the whole source pack.
+Resolve implementation, commit, push, PR publication, tracker writes and merge authority from
+the task and target policy. A clear workflow request can cover several actions; carry forward
+that authority. A link, configured profile or available tool grants none by itself.
+For a team draft endpoint, leave publication/merge to the named human. For an explicitly
+authorized merge endpoint, verify current acceptance/review/CI evidence before performing it;
+advance authority does not require asking again, but changed scope or head needs reconciliation.
 
-Read the native fallback in the runbook when the target documentation index does not resolve an
-applicable context router. It is bounded to applicable AGENTS instructions, the owning README or
-docs index, task-path context, relevant quality commands, and current repository state.
+Use the runbook's [evidence](references/runbook.md#verification-and-evidence) and
+[handoff](references/runbook.md#handoff) criteria. Complete the authorized work and meaningful
+checks, or report the exact blocked step and remaining owner action. Do not stop at a plan when
+implementation is authorized, invent PASS, or repeat still-valid checks merely to fill a phase.
 
-For delegation, use the target's canonical routing policy and actual runtime dispatch
-capabilities. Request model and reasoning settings through the available dispatch mechanism;
-record requested settings and observed settings separately. If runtime settings cannot be
-observed, record them as unknown rather than inferring them from a catalog, inherited context, or
-prompt text.
+## Runtime Boundaries
 
-## Authority And Handoff
+Use only real dispatch capabilities and the target's allowed model/effort routes. Record
+requested versus observed settings; unobserved settings and usage stay unknown. Missing dispatch
+blocks required delegation, not independent authorized work. No model is selected by prose.
 
-The target's own change protocol, resolved from its documentation index, owns implementation,
-push, PR publication, and merge authority. The source-pack
-[change protocol reference](../../../docs/standards/change-protocol.md#authorization-and-delivery)
-is a reusable default, not target permission. A clear workflow request can authorize several
-named operations. A task link, provider profile, available tool, or connection does not
-authorize any operation by itself.
-
-Keep these actions distinct:
-
-- implementation changes follow the agreed task scope;
-- push needs authorization to push;
-- creating a draft PR needs delivery authority that covers its push, while publication needs
-  its own PR operation authority;
-- merge needs an explicit merge instruction after current handoff evidence is read back.
-
-A team may choose a draft handoff: prepare the authorized branch, commits, evidence, and an
-authorized draft PR when applicable, then stop for a human to publish or merge. Do not treat a
-draft, a reviewed branch, or a tracker state as publication, acceptance, or merge.
-
-Use the target's handoff and evidence rules. When a target has no local owner, use the runbook
-fallback with the source-pack [handoff reference](../../../docs/standards/change-protocol.md#handoff-and-acceptance)
-and [evidence reference](../../../docs/standards/quality-gate.md#evidence-validity).
-
-## Boundaries
-
-- Do not add a universal runner, adapter, tracker, manifest field, or orchestration service.
-- For Azure DevOps and Jira, use only the selected provider's actual MCP operations and metadata.
-  A missing MCP operation blocks its dependent step; do not route through a non-MCP path or a
-  raw-provider-payload workaround.
-- Keep provider-specific tools and state mappings in their conditional references.
-- Preserve the target's stricter state-transition, branch, verification, and reporting rules.
-
-## References
-
-- [Common E2E runbook](references/runbook.md)
-- [Azure Boards Work Item Binding](references/azure-devops-work-items.md)
-- [Azure Boards User Story Child Tasks](references/user-story-child-tasks.md)
-- [Source-pack change protocol reference](../../../docs/standards/change-protocol.md#task-lifecycle)
-- [Source-pack agent workflow reference](../../../docs/standards/agent-workflow.md#delegation-and-runtime-routing)
-- [Source-pack integration profile reference](../../../docs/standards/integration-profiles.md#operation-readiness-and-recovery)
-- [Source-pack quality-gate reference](../../../docs/standards/quality-gate.md#evidence-validity)
+Azure DevOps and Jira use the selected MCP operations only. A missing operation stays a capability
+gap; no wrapper, CLI, REST or alternate-payload workaround. Preserve target transition gates,
+revision protection, safe retries and readback under the conditional binding. Do not add a
+runner, manifest field, tracker or orchestration service to execute this skill.
 
 ## Navigation
 
-- [Source-pack skills index](../README.md)
-- [Source-pack repository docs](../../../docs/INDEX.md)
+- [Common runbook](references/runbook.md)
+- [Skills index](../README.md)
+- [Repository docs](../../../docs/INDEX.md)

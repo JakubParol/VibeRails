@@ -8,11 +8,14 @@ workflow.
 
 1. Load root repository context and this skill.
 2. Confirm the URL host is GitHub before using this reference.
-3. Use `gh pr view` or local git refs for read-only metadata when `gh` is available and
-   authenticated. If `gh` is unavailable, use local branch refs provided by the user.
+3. Use the target's selected read-only GitHub connection or authenticated `gh` for actual PR
+   metadata and diff. Local refs support local inspection but cannot establish current remote
+   PR state. If remote reads are unavailable, report the limited boundary instead of requiring
+   a CLI installation or inventing remote evidence.
 4. Identify source branch, target branch, changed files, latest commits, and the exact source
    commit to record as `reviewedSHA`.
-5. Fetch the source and target refs explicitly when the repository remote permits it:
+5. If local checkout is needed, safe and authorized, fetch exact source/target refs using
+   already available tools. With an existing authenticated gh client, one example is:
 
    ```bash
    git fetch origin <target-branch>
@@ -20,8 +23,9 @@ workflow.
    git diff --name-only origin/<target-branch>...HEAD
    ```
 
-6. If checkout is unsafe because the working tree is dirty, do not stash or overwrite. Review
-   with `gh pr diff` or ask for a clean worktree.
+6. If checkout is unsafe because the working tree is dirty, do not stash or overwrite. Use
+   the selected read-only connection or an available `gh pr diff`; ask for a clean worktree
+   only when local inspection is actually necessary.
 
 ## Review Behavior
 
@@ -35,7 +39,8 @@ workflow.
   zero-case, stale, skipped, cancelled, or absent report is not test PASS.
 - Do not use Azure DevOps wrappers, Azure DevOps self-review checks, or Azure DevOps reviewer
   votes for GitHub PRs.
-- Ask before checking out branches, applying fixes, pushing commits, or posting comments.
+- Ask before branch changes, fixes, pushes or publication only when their required authority
+  is absent. Preserve already-authorized operations and safe working-tree constraints.
 
 ## Output
 

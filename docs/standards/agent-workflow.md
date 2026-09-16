@@ -89,6 +89,19 @@ of a correct result. The parent checks the actual output before accepting it.
 This operational contract adds no model recommendation catalog, benchmark or new manifest
 field. Model evaluation stays in the planned model stage; adoption/migration remains separate.
 
+### Selecting And Evaluating A Route
+
+Match a route to the task's needed capabilities, ambiguity, impact and budget within the
+existing allowed pool. Verify exact model and effort arguments against current runtime metadata;
+a UI preset name is not necessarily an API parameter. If no tuned route has been validated,
+retain inherited selection. Do not turn an external benchmark into a project cost ranking.
+
+Before promoting a route or prompt revision, keep the same task, inputs and acceptance checks,
+change one factor where practical, and include failures, retries and parent review in the result.
+Record versions, requested/observed settings and measured usage in the existing task record.
+Unknown observations stay unknown; unavailable model runs are not passes. Adopters opt into
+versioned recommendations; no silent pin replacement or mid-run policy rewrite.
+
 ## Folder Context Rule
 
 Documentation structure, bundles and local-file requirements belong to
