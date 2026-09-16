@@ -25,11 +25,12 @@ This index is the entry point for all standards and templates in this repository
 | [Configuration examples](refactor/configuration-examples.md) | Small Python and larger Next.js/FastAPI design excerpts with explicit effective choices. |
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
-| [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for refactor step 7: GPT-6 Astra prompt optimization, with supporting context, cost, and feedback-loop material. |
+| [Astra refactor reading list](astra-refactor-reading-list.md) | Deferred source register for step 08 shared-prompt refinement and model evaluation, with supporting context, cost, and feedback-loop material. |
 
-At the start of step 7, read the register and assess every listed source before changing
-Astra prompts. Until that step, keep the sources recorded without reviewing their content.
-This register is internal VibeRails refactor material, not an adoption template.
+Stage 07 first completes the model-neutral adoption baseline. At agreed stage 08 entry, read
+the register and assess every listed source before research-driven refinement of the shared
+prompt set. Until then, keep sources recorded without reviewing their content. This register
+is internal VibeRails refactor material, not an adoption template.
 
 ## Standards
 

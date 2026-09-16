@@ -2,10 +2,12 @@
 
 Collected: 2026-09-16.
 
-**Status: Source registration only; full review of this list deferred to step 7.**
+**Status: Source registration only; full review of this list deferred to step 08.**
 
-Read and assess all 15 entries only when refactor step 7 (GPT-6 Astra prompt optimization)
-begins, as recorded in the [active refactor plan](refactor-plan.md#step-7-astra-entry-gate).
+Read and assess all 15 entries only at agreed step 08 entry (shared prompt refinement and model
+evaluation), as recorded in the [active refactor plan](refactor-plan.md#step-08-research-entry-gate).
+Stage 07 first completes the general adoption baseline. Astra-assisted improvements must retain
+one model-neutral prompt set; this register does not mandate Astra-specific prompt editions.
 Deferred context, cost, and feedback topics also inform the core refactor's feedback-loop stage.
 The descriptions below are user-provided research leads, not verified conclusions. URLs are
 preserved as supplied, with Markdown escaping removed; availability has not been checked.
@@ -15,11 +17,12 @@ preserved as supplied, with Markdown escaping removed; availability has not been
 The parent session orchestrates bounded tasks delegated to subagents and checks their results.
 At the 2026-09-16 registration checkpoint, the user authorized source registration only and
 requested a stop after saving and verifying this register and its navigation. Further work
-follows the user's next instruction; source analysis remains deferred to step 7.
+follows the user's next instruction; source analysis remains deferred to step 08 under plan 1.4.
+The gate moved from former step 7; source entries and their original descriptions are unchanged.
 
-## Required Checklist At Step 7 Entry
+## Required Checklist At Step 08 Entry
 
-- [ ] Read this register before designing or changing Astra prompts or skills.
+- [ ] Read this register before research-driven refinement of the shared prompts or skills.
 - [ ] Review all 15 sources, recording findings and source availability; explicitly mark any
   inaccessible source rather than silently skipping it.
 - [ ] Reconcile proposed changes with the user's decisions and applicable repository

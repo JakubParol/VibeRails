@@ -1,6 +1,6 @@
 # Refactor Startup Prompt
 
-Prompt ID: `viberails.refactor.resume`. Version: `1.2`. Coordination prompt, not an Astra
+Prompt ID: `viberails.refactor.resume`. Version: `1.3`. Coordination prompt, not an Astra
 optimization artifact or permission to bypass agreement/merge gates. Copy the block below.
 This project-specific prompt uses Polish with ASCII transliteration for repository compatibility.
 
@@ -34,8 +34,11 @@ w zdalnym main; nie odkladaj zapisu zamkniecia do nastepnego etapu. Dopiero wted
 Before advancing, follow the operating loop and continuation gates in docs/refactor-plan.md.
 
 Zapisuj checkpointy po uzgodnieniach, przy delegowaniu, przyjeciu wynikow, zmianie blokady
-i przed przerwa. Decyzje i dowody utrwalaj w repo, nie tylko w rozmowie. Wszystkie 15
-materialow Astry analizujemy dopiero w etapie 7. Nie wdrazaj przyszlych etapow z wyprzedzeniem.
+i przed przerwa. Decyzje i dowody utrwalaj w repo, nie tylko w rozmowie. Etap 07 zamyka
+adopcje i migracje ogolnego zestawu. Wszystkie 15 materialow Astry analizujemy dopiero
+po uzgodnionym wejsciu w etap 08. Astra ulepsza wspolny zestaw promptow dla wielu LLM-ow,
+nie tworzy wersji tylko dla siebie. Wybor modelu i effortu pozostaje osobnym ustawieniem.
+Nie wdrazaj przyszlych etapow z wyprzedzeniem; po 09 czekaj na moja decyzje o kontynuacji.
 ```
 
 ## Navigation

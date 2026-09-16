@@ -22,7 +22,8 @@ and its active stage card before acting. Reconcile them with Git/PR evidence. Th
 rules govern the refactor; do not copy them into adopting repositories. Parent owns coordination
 and shared Git operations. Use explicit, appropriate model/effort for bounded delegates. Discuss
 and agree each stage before implementation; Done requires user acceptance and confirmed merge
-after explicit authorization. Defer Astra research until its stage 7 gate.
+after explicit authorization. Defer Astra research until the stage 08 research gate; stage 07
+first delivers the model-neutral adoption baseline.
 
 ## Editing Rules
 
