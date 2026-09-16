@@ -47,6 +47,22 @@ jobs:
         id: adoption
         run: node --test scripts/tests/adoption.test.mjs scripts/tests/adoption-refresh.test.mjs
 
+      - name: Pinned controlled pilot
+        id: pilot
+        run: |
+          baseline=a60dca9638bf12cd84244aedcf5fc8d2a9734baa
+          candidate=d92f6fa34d1809997c2d9629d81ca382d00e9ff2
+          git fetch --no-tags --depth=1 origin "$baseline" "$candidate"
+          pilot_root=$(mktemp -d "$RUNNER_TEMP/viberails-pilot.XXXXXX")
+          trap 'rm -rf "$pilot_root"' EXIT
+          mkdir "$pilot_root/baseline" "$pilot_root/candidate"
+          git archive "$baseline" | tar -x -C "$pilot_root/baseline"
+          git archive "$candidate" | tar -x -C "$pilot_root/candidate"
+          printf 'Pilot baseline: %s\nPilot candidate: %s\n' "$baseline" "$candidate"
+          VIBERAILS_BASELINE_ROOT="$pilot_root/baseline" \
+          VIBERAILS_CANDIDATE_ROOT="$pilot_root/candidate" \
+            node --test scripts/tests/pilot.test.mjs
+
       - name: Full documentation and skill validation
         id: validation
         run: node scripts/validate.mjs --all
@@ -73,6 +89,7 @@ jobs:
           NODE_RESULT: ${{ steps.node.outcome }}
           TEST_RESULT: ${{ steps.tests.outcome }}
           ADOPTION_RESULT: ${{ steps.adoption.outcome }}
+          PILOT_RESULT: ${{ steps.pilot.outcome }}
           VALIDATION_RESULT: ${{ steps.validation.outcome }}
           EXAMPLE_RESULT: ${{ steps.examples.outcome }}
         run: |
@@ -86,6 +103,7 @@ jobs:
             printf '| Node setup | %s |\n' "$NODE_RESULT"
             printf '| Validator regressions | %s |\n' "$TEST_RESULT"
             printf '| Adoption/update regressions | %s |\n' "$ADOPTION_RESULT"
+            printf '| Pinned controlled pilot | %s |\n' "$PILOT_RESULT"
             printf '| Full documentation/skill gate | %s |\n' "$VALIDATION_RESULT"
             printf '| Architecture examples | %s |\n' "$EXAMPLE_RESULT"
             echo

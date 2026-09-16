@@ -19,6 +19,8 @@ This index is the entry point for all standards and templates in this repository
 | [Stage 05 context](refactor/steps/05-context.md) | Approved context routing, documentation bundles and concrete task evidence. |
 | [Stage 06 workflows](refactor/steps/06-workflows.md) | Approved neutral cleanup, workflow/integration behavior and bounded evidence. |
 | [Stage 07 adoption](refactor/steps/07-adoption.md) | Agreed general adoption/update baseline, solo execution, tests and handoff. |
+| [Stage 09 pilot](refactor/steps/09-pilot.md) | Authorized controlled comparison, closing evidence and mandatory stop. |
+| [Stage 09 results](refactor/pilot-09.md) | Pinned small/multi-root scenarios, failures, reproducibility and unproved claims. |
 | [Stage 08 prompts](refactor/steps/08-prompts.md) | Authorized shared-instruction refinement, evidence and model limits. |
 | [Stage 08 research](refactor/research-08.md) | Disposition of all 15 sources and actual runtime capability limits. |
 | [Stage 08 comparison](refactor/prompt-evaluation-08.md) | Component fingerprints, semantic scenarios and explicit measurement limits. |

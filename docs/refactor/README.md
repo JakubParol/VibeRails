@@ -47,6 +47,7 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [06 - Workflows and integrations](steps/06-workflows.md)
 - [07 - Adoption and migration](steps/07-adoption.md)
 - [08 - Shared prompts and model evaluation](steps/08-prompts.md)
+- [09 - Controlled pilot and comparison](steps/09-pilot.md)
 - [Stage 05 context comparison](context-proof-05.md)
 - [Retrospective review of 00-02](review-00-02.md)
 - [Retrospective review of 00-04](review-00-04.md)

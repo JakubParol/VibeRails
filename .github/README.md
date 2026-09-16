@@ -15,6 +15,14 @@ database behavior. It deploys nothing.
 These are VibeRails' own repository checks. Reusable provider CI/CD profiles belong to refactor
 stage 12; adopting repositories should keep their existing relevant verification.
 
+## Pinned Pilot
+
+The pilot step fetches the immutable 0.4.0 and 0.4.1 commits into temporary source snapshots
+without changing the checked-out PR head. Six controlled compatibility cases use those actual
+standards and audit tools, native Python behavior and clean local Git clones. No model API or
+live adopter/provider is called. A fetch or test failure is a failed step, not a skipped pass.
+This is reproducible artifact evidence, not a model-cost or team-productivity benchmark.
+
 ## Navigation
 
 - [Repository README](../README.md)
