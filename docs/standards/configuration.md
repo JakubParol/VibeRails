@@ -42,6 +42,12 @@ Git records changes; a second history database is unnecessary.
 second source of operational settings. Preserve existing values during adoption; do not label
 current v1 profiles/auth/commands as merely historical receipts.
 
+The v1 fields do not express every onboarding answer. Keep those additional decisions as
+explicit target workflow/runtime rules in `AGENTS.md` or its existing linked policy, using
+the [decision mapping](onboarding.md#decision-storage-without-false-equivalences). The human
+record links that owner. This is a project instruction, not another settings registry; never
+encode test cadence as `verification`, automatic review as `review`, or merge as `workflow`.
+
 ## Minimal Section
 
 These are the complete fields for the first design revision. All selections are materialized;
@@ -140,8 +146,9 @@ and copied-file evidence change only when the corresponding adoption/refactor wo
 
 ## Agent-Guided Selection
 
-[Guided Setup](adoption.md#guided-setup) owns the conversation and approval checkpoint. Inspect
-local conventions, propose the closest preset and explain practical consequences, not enum names.
+[Guided Setup](adoption.md#guided-setup) routes to the [onboarding catalog](onboarding-questions.md)
+and [conversation rules](onboarding.md). Inspect local conventions, ask unresolved choices one
+at a time, and translate faithfully into the user's language. Explain practical consequences, not enum names.
 For example, "small explicit boundaries" maps to `minimal`; "prepare changes through PRs" maps
 to `pull-request`. The existing tables above remain the field/value authority.
 
@@ -150,8 +157,10 @@ confirm unresolved material choices before writing. Materialize the complete app
 `initializedFrom` does not recompute them. Keep existing choices during refresh. Never infer a
 tracker or permission from a preset, the source hosting provider or an installed client.
 
-`modelRouting: inherit` needs no model questionnaire. Preserve separately authorized runtime
-routes; ask about delegation or review only for consequential unresolved policy/capability gaps.
+`modelRouting: inherit` does not answer the catalog's separate model/effort question. Preserve
+known authorized routes; otherwise resolve that policy when additional agents may be used,
+then record it in the target's runtime rules within actual capabilities and higher-priority
+constraints. Do not add another manifest value to stand for a route that v1 cannot express.
 Show required CI or independent-review gaps before accepting a setup as ready. Report pending
 integration access through existing auth/open-question/readiness records, not a new configuration
 flag. Do not convert "connect later" into "no tracker" or erase a required setting to pass audit.

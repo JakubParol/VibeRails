@@ -67,6 +67,11 @@ to judge its assignment. Do not attach every previous agent report or the full t
 Read when delegating or resuming delegated work. Use explicit allowed model/effort routes
 from current task/runtime instructions. Adopted `modelRouting: inherit` preserves those choices;
 it does not supply a model catalog or dispatch permission.
+Resolve target rules for coding/testing delegation separately from review staffing and timing.
+The [onboarding decision mapping](onboarding.md#decision-storage-without-false-equivalences)
+records policies not expressible in v1 in target instructions. A solo implementation choice
+does not cancel required additional review. Agent-selected, user-limited and same-as-main
+model/effort policies all stay within actual dispatch capabilities and higher-priority rules.
 Without a route override, retain the runtime/client default and existing project constraints.
 Inspect dispatch capabilities actually available now. Instructions naming a model do not switch
 it. Select an allowed route suited to the bounded task and pass model/effort through supported
@@ -94,8 +99,9 @@ field. Model evaluation stays in the planned model stage; adoption/migration rem
 
 Match a route to the task's needed capabilities, ambiguity, impact and budget within the
 existing allowed pool. Verify exact model and effort arguments against current runtime metadata;
-a UI preset name is not necessarily an API parameter. If no tuned route has been validated,
-retain inherited selection. Do not turn an external benchmark into a project cost ranking.
+a UI preset name is not necessarily an API parameter. Without an explicit authorized selection
+policy or a validated tuned route, retain inherited selection. Do not turn an external benchmark
+into a project cost ranking.
 
 Before promoting a route or prompt revision, keep the same task, inputs and acceptance checks,
 change one factor where practical, and include failures, retries and parent review in the result.

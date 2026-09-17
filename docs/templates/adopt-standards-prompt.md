@@ -8,18 +8,28 @@ The block below is the agent entrypoint, not a form the user must complete.
 ```text
 Adopt or refresh VibeRails in the target repository the user has open. Use the source selected
 by the user or launching README; ask only if it is ambiguous. Resolve the source to one immutable
-Git commit and read its docs/standards/adoption.md, especially Guided Setup. Use that same revision
+Git commit and read its docs/standards/adoption.md, especially Guided Setup, along with
+docs/standards/onboarding.md and docs/standards/onboarding-questions.md. Use that same revision
 for the procedure and copies. Never change the source repository or guess unavailable contents.
 
 Follow applicable target instructions. Inspect its actual documentation, roots, commands, CI and
 existing adoption before editing. Distinguish planned architecture from implemented components.
 Preserve local knowledge, settings, protected work and secrets.
 
-Conduct the guided conversation: recommend relevant standards with reasons, ask unresolved
-questions in small conditional groups, and collect selected provider coordinates without tokens.
+Conduct the guided conversation in the user's language; switch with their own messages unless
+they explicitly request another language. The English bootstrap text does not reset that choice.
+Keep repository instructions in English. Use the canonical catalog, translate it faithfully,
+ask one unresolved applicable question at a time with the real n/X counter, then yield and wait
+for the answer. Announce any count change; silence and accepted question cards are not answers.
+Recommend relevant standards and collect selected provider coordinates without tokens.
 Separate tracker, code host, client MCP setup, optional skill scope and action authority. A user
 must not need manifest field names, source hashes or a custom prompt. Retain existing choices on
 refresh and do not ask again for known answers or already-authorized operations.
+
+Keep future-task Git actions separate from this adoption's Git actions and final setup approval.
+Do not choose personal skills because they are installed. Review timing, review staffing,
+coding/testing delegation, model policy and test cadence are separate decisions. Record choices
+without a matching manifest field as explicit target project rules, never as a different value.
 
 Show the effective choices, files/client settings to change, proposed scoped access checks,
 remaining gaps and delivery endpoint. Obtain approval before edits, installations or login flows.
@@ -43,5 +53,7 @@ endpoint with current evidence. Adoption is not permission to build or run the p
 ## Navigation
 
 - [Guided adoption procedure](../standards/adoption.md#guided-setup)
+- [Canonical questions](../standards/onboarding-questions.md)
+- [Conversation and decision rules](../standards/onboarding.md)
 - [Configuration contract](../standards/configuration.md)
 - [Documentation index](../INDEX.md)

@@ -34,6 +34,13 @@ unobserved layers. General prompt content does not prove support for every LLM/c
 
 ## Migration And Readiness
 
+Link the actual owners of additional onboarding decisions rather than duplicating their values:
+`<AGENTS/workflow policy for Git, review, delegation, model/effort and test cadence>`;
+`<existing design/requirements owner for UI choices or deferrals>`.
+Record this adoption's concrete approved changes and Git actions separately from future-task
+rules, with a reference to the user's actual approval. No recommendation or answered question
+by itself approves the whole setup. Omit private conversation logs from committed records.
+
 | Scope | Verified evidence | Remaining work or capability gap | Owner / next action |
 |---|---|---|---|
 | `<adoption or migration scope>` | `<actual command/result or none>` | `<remaining work or none>` | `<owner/action or none>` |
@@ -161,8 +168,9 @@ Reusable agent/tooling failures are reported here:
 | Alternate clients | `<authorized MCP connections for Azure DevOps/Jira, or none; other sink profiles use their explicit client policy>` |
 | Disabled reason | `<required when enabled is false unless recorded as an open question>` |
 
-If auth or write approval is missing, agents prepare the ticket body locally and report the
-blocker instead of silently skipping the learning.
+For summary-only, record the deliberate disabled reason; report findings briefly without a
+ticket body or missing-sink warning. For selected ticket reporting with missing auth or write
+approval, prepare the scoped proposal locally and report the specific blocker.
 
 ## Copied Standards
 

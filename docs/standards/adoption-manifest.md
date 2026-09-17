@@ -179,8 +179,10 @@ Required fields:
 | `alternateClients` | Already-authorized same-provider client references; Azure DevOps/Jira entries may name MCP connections only, never command wrappers or raw API clients. |
 | `disabledReason` | Required when `enabled` is `false` unless an open question records the missing decision. |
 
-If the self-improve sink is not configured during adoption, set `enabled` to `false` and add an
-open question that names the missing decision. Agents must not run tracker reads or writes
+If summary-only reporting was explicitly chosen, set `enabled` to `false`, record that deliberate
+choice in `disabledReason`, and do not add an unresolved-sink question. If ticket reporting was
+chosen but the sink is not configured, set `enabled` to `false`, retain the intended policy in
+target instructions and add an open question naming the missing decision. Agents must not run tracker reads or writes
 until the sink and dedupe rule are configured.
 
 ## Provider Sink Shape

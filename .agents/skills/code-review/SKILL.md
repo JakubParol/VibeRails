@@ -9,6 +9,11 @@ Review the changed scope with evidence-backed findings. Default to read-only wor
 fixes only under review-and-fix authority. Match coverage and independence to risk and target
 policy, not a fixed reviewer fleet.
 
+Automatic review timing and review staffing are separate target decisions. An on-request
+setting still uses the selected staffing when invoked; an explicit requirement for at least
+one additional agent remains in force. Coding/testing solo mode does not disable additional
+review agents. Performing this review does not schedule a second review of the same work.
+
 ## Select One Mode
 
 | Review source | Read before reviewing | Publication boundary |

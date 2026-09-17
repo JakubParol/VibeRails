@@ -86,7 +86,10 @@ assignee and state through MCP. If a target process does not expose the required
 state, inspect its MCP metadata and stop instead of guessing a substitute.
 
 Move a child Task to Done only when all mapped plan items are committed and focused evidence for
-that workstream passes. Use the same safe MCP update and read back the final state. If a later
+that workstream passes. With after-story test cadence, a progress commit does not satisfy this
+condition: leave verification-dependent completion pending while proceeding to the next child,
+then close the covered children after the final checks. Do not rerun tests after each child just
+to update its status or claim an unverified task is Done. Use the same safe MCP update and read back the final state. If a later
 fix changes a completed workstream, return the child Task to In Progress through a safe
 authorized MCP transition, make and verify the fix, then verify Done again.
 

@@ -150,10 +150,23 @@ For each plan item:
 1. Confirm the item still fits the task source and current authority.
 2. Load only the local context needed for that item.
 3. Implement the change and any meaningful focused test or documentation update.
-4. Run focused local evidence when it materially reduces the changed risk.
-5. Commit only the coherent task files when commits are part of the authorized workflow.
+4. Follow the target's selected test cadence. For after-story testing, write tests with the
+   code and defer routine execution until all story tasks are implemented; preserve small
+   defect-reproduction/fix checks and mandatory safeguards. For per-task testing, run that
+   task's focused evidence before committing/pushing.
+5. Commit only coherent task files under the selected Git policy. With after-story cadence,
+   this step allows earlier progress checkpoints only: hold the last item's commit (or the
+   single task's commit) until the final checks below. Do not create an empty follow-up commit
+   to make an already-committed change appear tested before its final commit.
 6. Update the selected tracker only through its conditional binding and only after its required
    evidence and safe write rules are satisfied.
+
+After all story tasks (or the single requested task), run the focused evidence covering the
+whole change, fix failures and check corrections before the final commit/push. Earlier commits
+and pushes only save progress; keep verification-dependent tracker completion pending until
+the evidence passes. Do not create a PR/merge for each child task. Apply automatic-review timing
+separately from review staffing; after review fixes, check their impact before the final fix
+commit/push. Reuse unaffected green checks and retain required current-revision CI.
 
 Stop for an unresolved product decision, unsafe migration, unavailable protected dependency,
 conflict with unrelated work, or missing authority. State the last safe commit or observed
@@ -163,8 +176,9 @@ state and the smallest decision needed.
 
 Use the target's quality-gate evidence rules, resolved from its documentation index. The linked
 [source-pack evidence reference](../../../../docs/standards/quality-gate.md#evidence-validity)
-is a reusable fallback. Run changed-file format or lint checks and the smallest meaningful
-behavior evidence locally. Full repository suites, builds, and aggregate gates belong to the
+is a reusable fallback; its [test cadence](../../../../docs/standards/quality-gate.md#agent-test-cadence)
+keeps timing separate from coverage. Run changed-file format or lint checks and the smallest
+meaningful behavior evidence locally at the selected boundary. Full repository suites, builds, and aggregate gates belong to the
 actual PR verification path unless the user explicitly requests a full local gate.
 
 Keep evidence tied to the current source head and changed scope. A reviewed commit different

@@ -44,6 +44,11 @@ implementation is authorized, invent PASS, or repeat still-valid checks merely t
 
 ## Runtime Boundaries
 
+Read the target's coding/testing delegation policy separately from review staffing and timing.
+The selected test cadence controls when agent-run evidence is due; progress commits never
+certify verification. Apply these decisions through the common runbook and target rule owners,
+without starting onboarding again or choosing policies from installed skills.
+
 Use only real dispatch capabilities and the target's allowed model/effort routes. Record
 requested versus observed settings; unobserved settings and usage stay unknown. Missing dispatch
 blocks required delegation, not independent authorized work. No model is selected by prose.

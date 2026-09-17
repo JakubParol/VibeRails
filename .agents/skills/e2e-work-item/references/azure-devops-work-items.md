@@ -102,7 +102,9 @@ evidence as unavailable rather than improvising a non-MCP route, provider write,
 
 Before implementation starts, assign the active requested item or mapped child Task and move it
 to In Progress, then verify the saved state. For a User Story, complete a child Task only after
-all mapped plan items are committed and focused evidence for that workstream passes. If a later
+all mapped plan items are committed and focused evidence for that workstream passes. After-story
+test cadence keeps earlier children pending verification while implementation continues; progress
+commits are not tested completion. Close the covered children after final checks. If a later
 fix changes a completed child Task, return it to In Progress through a safe authorized transition
 before the fix, then verify Done again after the new evidence.
 

@@ -16,13 +16,18 @@ Set up VibeRails in the repository I currently have open.
 Source: https://github.com/JakubParol/VibeRails
 
 Read docs/templates/adopt-standards-prompt.md from that source and follow its guided procedure.
-Inspect my project, recommend the relevant standards, and ask me about unresolved configuration
-and integration choices in small groups. Help configure and check the MCP connections I select.
+Inspect my project, then use its canonical onboarding questions, one at a time, with an honest
+question n/X counter. After each question, stop and wait for my answer. Conduct the conversation
+in my language and switch when I do; keep repository instructions in English.
+Recommend relevant standards and help configure and check the MCP connections I select.
 Ask me to approve the setup and delivery plan before changing files or client settings.
 Do not change the source VibeRails repository.
 ```
 
-The agent will explain what it found, guide you through standards, tracker/code-host choices,
+The agent uses the [question catalog](docs/standards/onboarding-questions.md) and
+[conversation rules](docs/standards/onboarding.md), skipping known or irrelevant answers and
+announcing changes to the remaining question count. It will explain what it found, guide you
+through standards, tracker/code-host choices,
 MCP access, optional skills and delivery permissions, then apply the approved plan. Azure Boards,
 Jira and no tracker are supported choices; code hosting is selected separately. Sign in through
 your client's authentication flow, never by pasting tokens into chat. Missing access can be
@@ -81,8 +86,10 @@ These standards guide implementation, not a guarantee of visual quality without 
 
 Versioned Codex skills live in [.agents/skills](.agents/skills/README.md). They capture
 repeatable repository workflows. They are optional agent assets, not part of core adoption.
-Install them once per machine at the Codex user scope only when the user wants these workflows
-available in every repository:
+Choose the skills first, then their scope during onboarding: a pinned project-local copy or
+one user-scope installation available in all Codex projects. Existing working selections are
+reused. The commands below install the **whole pack at user scope**; use them only when that
+complete selection and scope were approved, not for a subset or project-local onboarding:
 
 | Platform | Command |
 |---|---|
@@ -126,6 +133,8 @@ local constraints, and optional skills add only requirements for the selected op
 |---|---|
 | Agent workflow | [docs/standards/agent-workflow.md](docs/standards/agent-workflow.md) |
 | Adoption | [docs/standards/adoption.md](docs/standards/adoption.md) |
+| Onboarding questions | [docs/standards/onboarding-questions.md](docs/standards/onboarding-questions.md) |
+| Onboarding conversation and decisions | [docs/standards/onboarding.md](docs/standards/onboarding.md) |
 | Adoption manifest | [docs/standards/adoption-manifest.md](docs/standards/adoption-manifest.md) |
 | Change protocol | [docs/standards/change-protocol.md](docs/standards/change-protocol.md) |
 | Documentation | [docs/standards/documentation.md](docs/standards/documentation.md) |

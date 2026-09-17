@@ -9,6 +9,11 @@ another applicable local instruction before dispatching. Resolve target standard
 target documentation index. When that index identifies local VibeRails standards, defer
 lifecycle, authority, and handoff to them; a native repository keeps its own equivalent rules.
 
+An explicit target rule requiring at least one additional review agent is an independence and
+staffing requirement even when automatic review is off. Keep it separate from coding/testing
+delegation and apply the actual allowed model/effort policy. Adaptive staffing allows a
+proportionate solo review; it never means skipping requested review.
+
 Determine first whether independent review is required by the user, repository policy, delivery
 gate, or material scope/risk. If it is not required and local review is proportionate, perform
 that review without asking the user to opt out of agents. If independence is required or would
