@@ -3,6 +3,16 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.5.2 - Explicit Onboarding Decisions
+
+- Distinguish observed facts and explicit policy decisions from inferred preferences. First
+  adoption must resolve `minimal` versus `layered`; generic simplicity is not a selection.
+- Account for all 21 catalog topics before approval, with decision sources and reasons for
+  skipped/deferred questions. Preserve valid prior choices on refresh and conditional questions.
+- Keep the existing conversation, adoption record and manifest; no wizard, new schema or
+  automatic changes to adopting repositories. Verification and its limits are recorded in the
+  [onboarding delivery record](docs/refactor/plain-onboarding.md#decision-evidence-correction).
+
 ## 0.5.1 - One-Question Guided Onboarding
 
 - Route the README onboarding prompt to one English catalog of 21 questions, with faithful

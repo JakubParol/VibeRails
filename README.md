@@ -25,8 +25,11 @@ Do not change the source VibeRails repository.
 ```
 
 The agent uses the [question catalog](docs/standards/onboarding-questions.md) and
-[conversation rules](docs/standards/onboarding.md), skipping known or irrelevant answers and
-announcing changes to the remaining question count. It will explain what it found, guide you
+[conversation rules](docs/standards/onboarding.md), reusing explicit decisions and detected
+facts while announcing changes to the remaining question count. Generic preferences such as
+"keep it simple" do not select `minimal` or `layered`. Before approval, it accounts for all
+21 topics, including sources for known choices and reasons for skips or deferrals.
+It will explain what it found, guide you
 through standards, tracker/code-host choices,
 MCP access, optional skills and delivery permissions, then apply the approved plan. Azure Boards,
 Jira and no tracker are supported choices; code hosting is selected separately. Sign in through

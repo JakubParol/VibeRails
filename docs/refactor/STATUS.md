@@ -10,24 +10,27 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 - Web UI standards merged in [PR #20](https://github.com/JakubParol/VibeRails/pull/20),
   main `988d2279be6963a5f848039d8714921383c768fb`, version 0.5.0.
   [Agreement, research and verification](web-ui-standards.md) remain historical evidence.
-- Current delivery: `plain-onboarding-1`, branch `codex/onboarding-plain-questions`, candidate
-  0.5.1. The user authorized the 21-question onboarding correction, commit, push, PR and merge
-  after checks, then required English repository content and user-language conversation.
-  [Scope, scenario checks, review and limits](plain-onboarding.md).
-- The README prompt routes through the shared prompt and adoption to a canonical catalog and
-  conversation rules. Decision mappings, test cadence and skills follow the same contract.
-  Closing records are committed on this branch before publication and final-head CI.
-- While the delivery PR is open, merge remains pending. Require current-head CI and expected-head
-  protection; the PR/report owns final source/tested/merge identities. Confirm remote main before
-  calling this documentation delivery complete. Do not add a post-merge checkpoint PR.
+- Plain-question onboarding 0.5.1 merged in [PR #21](https://github.com/JakubParol/VibeRails/pull/21),
+  main `c91ceb758d3587f904f7037349adb70f06ee9e61`.
+- Current delivery: `onboarding-evidence-1`, branch `codex/onboarding-explicit-decisions`,
+  candidate 0.5.2. The user authorized the diagnosed correction, branch, PR and merge after
+  verification. [Agreement, failure and acceptance](plain-onboarding.md#decision-evidence-correction).
+- Generic simplicity rules must not select the architecture variant. The correction requires
+  sourced decisions and visible coverage of all 21 topics before final approval, preserving
+  valid known choices and conditional skips/deferrals. Implementation, focused document checks,
+  two copy/refresh regressions and independent review are complete with no remaining findings.
+- A controlled two-turn conversation asked architecture, retained the simulated `layered`
+  answer, showed all 21 topics and waited for final approval. The synthetic target stayed
+  unchanged. This is bounded agent evidence, not a real adopter installation or universal proof.
+- Closing records belong in this delivery before final-head CI. Require current-head checks
+  and expected-head merge protection; confirm remote main before calling delivery complete.
 - No adopter, UI package, application, private client setting, schema, provider transport or
   later stage changed. 00-07 remain Done; 08/09 remain Verification for their original missing
-  model/independent-handoff trials. Static scenario review is not a fresh user conversation.
-- Independent review and its corrective delta are complete with no remaining findings; focused
-  checks and the single actual-copy adoption case passed. Fresh-session behavior remains untested.
-- Next action: publish this same delivery, verify final-head
-  CI, complete its authorized merge and read back main. Once merged, report the README entry
-  and the fresh-session walkthrough, then stop. Do not adopt another repository or start stage 10.
+  model/independent-handoff trials. Scripted refresh and static review are not user conversations.
+- Next action: publish this correction, verify all three final-head CI jobs, complete the
+  authorized merge with expected-head protection and read back main. While the PR is open,
+  merge remains pending. Once merged, report the result and stop; do not adopt another
+  repository or start stage 10.
 - Preserve frozen comparisons. Document CI and semantic review do not certify appearance,
   accessibility conformance or performance. Do not add a post-merge checkpoint PR.
 

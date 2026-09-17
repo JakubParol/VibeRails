@@ -40,6 +40,10 @@ Link the actual owners of additional onboarding decisions rather than duplicatin
 Record this adoption's concrete approved changes and Git actions separately from future-task
 rules, with a reference to the user's actual approval. No recommendation or answered question
 by itself approves the whole setup. Omit private conversation logs from committed records.
+Retain a safe reference to the approved [onboarding coverage](../standards/onboarding.md#completeness-before-approval)
+and decision sources in the existing task/adoption record. Link policy owners rather than
+creating a second settings table. Explicitly distinguish selected values from deferred topics
+and unresolved readiness; a generic preference is not selection evidence.
 
 | Scope | Verified evidence | Remaining work or capability gap | Owner / next action |
 |---|---|---|---|

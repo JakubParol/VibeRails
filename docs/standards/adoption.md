@@ -59,7 +59,9 @@ If the source or target is inaccessible, name the missing access; do not fabrica
 Follow the [onboarding rules](onboarding.md) and [canonical questions](onboarding-questions.md).
 Use the user's language, ask one question at a time, display the actual n/X, and yield until
 the user answers. Reuse known answers and skip inapplicable topics; announce any scope/count
-change before the next question. No setup work proceeds during that wait.
+change before the next question. Apply the [decision evidence rules](onboarding.md#decision-evidence)
+before treating a policy as known, including on first adoption into a repository with existing
+instructions. No setup work proceeds during that wait.
 
 Collect a browser link for a selected tracker rather than requiring technical IDs. Resolve
 resource coordinates through existing evidence or scoped reads; a project URL is not an MCP
@@ -73,10 +75,12 @@ access is deferred and preserve any independent learning sink. The
 Before target/client edits, installation or authentication, summarize: chosen source version and
 settings, preserved local decisions, files and client configuration scope to change, selected
 skills, prerequisite costs/risks, proposed resource-limited reads, gaps and the delivery endpoint.
-Use the catalog's final approval question, separately from future-task Git policy and the Git
-actions selected for this adoption. Ask for approval of that plan, not each routine step. A current explicit grant covering it can
-be reused; ask only for missing consequential choices or a changed boundary. Approval of local
-adoption does not imply global configuration, remote writes, product startup or paid services.
+Include the [21-topic coverage check](onboarding.md#completeness-before-approval) and use the
+catalog's final approval question, separately from future-task Git policy and the Git actions
+selected for this adoption. Ask for approval of that plan, not each routine step. A current
+explicit grant covering it can be reused; ask only for missing consequential choices or a
+changed boundary. Approval of local adoption does not imply global configuration, remote
+writes, product startup or paid services.
 
 If conflicts cannot be resolved now, leave those local files unchanged and name the blocked
 portion. Required independent review without an available reviewer is a readiness question, not
