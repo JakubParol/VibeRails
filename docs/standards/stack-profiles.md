@@ -4,6 +4,17 @@ Use the closest stack profile when adopting standards or deciding which document
 gates apply. The command blocks below describe full CI coverage, not a local task checklist.
 Local work follows the focused-check policy in [quality-gate.md](quality-gate.md).
 
+## Web UI Baseline
+
+All web profiles apply [web-ui.md](web-ui.md). React implementations also apply
+[frontend.md](frontend.md): shadcn/ui is the component foundation, styles are component-owned,
+and raw primitive usage cannot bypass it. Adopt the chosen compatible versions rather than
+forcing a new release into an existing app. No application is generated merely by choosing a profile.
+
+Add the project's real focused browser/interaction commands and the required visual evidence
+to its path-to-scope map. Playwright is the default for new browser automation; reuse a suitable
+existing tool. CI owns broad browser/build checks. A green build alone is not visual acceptance.
+
 ## Next.js Frontend Only
 
 Use when Next.js owns UI only and calls an external or separately managed API.
@@ -11,6 +22,7 @@ Use when Next.js owns UI only and calls an external or separately managed API.
 Required standards:
 
 - `frontend.md`
+- `web-ui.md`
 - `architecture.md`
 - `coding.md`
 - `quality-gate.md`
@@ -34,6 +46,7 @@ Use when Next.js owns UI and API routes, route handlers, server actions, or back
 Required standards:
 
 - `frontend.md`
+- `web-ui.md`
 - `architecture.md`
 - `coding.md`
 - `quality-gate.md`
@@ -57,6 +70,7 @@ Use when Next.js owns the frontend and FastAPI owns backend application and API 
 Required standards:
 
 - `frontend.md`
+- `web-ui.md`
 - `backend.md`
 - `backend-testing.md`
 - `architecture.md`

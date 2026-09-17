@@ -3,6 +3,22 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.5.0 - Web UI Quality Contract
+
+- Require project-owned shadcn/ui for React web components, with no raw Radix in feature code;
+  prefer shadcn Base UI for new foundations without auto-migrating existing shadcn internals.
+- Keep styles at their owning components; reserve global CSS for tokens, reset and document base.
+- Add a shared web UI/UX standard for visual direction, composition, responsive/accessibility
+  behavior, data/AI states, restrained motion and actual browser acceptance evidence.
+- Reconcile feature colocation, public boundaries, interactive primitives, compound exports,
+  server reads and the difference between pure-unit and rendered interaction testing.
+- Route adoption, stack profiles, context selection, review and templates to the same owners.
+
+This tightens the earlier optional shadcn and visual-check guidance. Existing adopters keep their
+pinned policy until an authorized refresh; record necessary UI migration rather than claiming
+compliance from new documentation. The delivery PR identifies the verified source and merge.
+No application, package installation, release tag or completed 08/09 runtime evaluation is implied.
+
 ## 0.4.4 - Guided Adoption Onboarding
 
 - Put a ready-to-paste setup prompt before optional skill installation in the root README.
