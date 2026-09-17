@@ -140,10 +140,21 @@ and copied-file evidence change only when the corresponding adoption/refactor wo
 
 ## Agent-Guided Selection
 
-Inspect the target's existing conventions, offer the closer preset and explain consequential
-differences. Confirm only choices that remain material or uncertain; preserve already-authorized
-decisions. Record the resolved fields and show the user a short effective summary plus any
-readiness or migration gaps. Do not make the user fill an exhaustive manifest questionnaire.
+[Guided Setup](adoption.md#guided-setup) owns the conversation and approval checkpoint. Inspect
+local conventions, propose the closest preset and explain practical consequences, not enum names.
+For example, "small explicit boundaries" maps to `minimal`; "prepare changes through PRs" maps
+to `pull-request`. The existing tables above remain the field/value authority.
+
+Show all effective settings in one short proposal, including deviations from the preset, and
+confirm unresolved material choices before writing. Materialize the complete approved values;
+`initializedFrom` does not recompute them. Keep existing choices during refresh. Never infer a
+tracker or permission from a preset, the source hosting provider or an installed client.
+
+`modelRouting: inherit` needs no model questionnaire. Preserve separately authorized runtime
+routes; ask about delegation or review only for consequential unresolved policy/capability gaps.
+Show required CI or independent-review gaps before accepting a setup as ready. Report pending
+integration access through existing auth/open-question/readiness records, not a new configuration
+flag. Do not convert "connect later" into "no tracker" or erase a required setting to pass audit.
 
 The [two worked examples](../refactor/configuration-examples.md) are design excerpts, not
 copy-ready manifests. Their effective values are explicit and existing manifest owners are reused.

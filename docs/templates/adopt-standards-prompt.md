@@ -1,43 +1,47 @@
 # Adopt Or Refresh Standards
 
 Prompt ID: `viberails.adoption`. Version identity: this file's immutable Git source commit and
-actual content hash. This shared prompt is model-neutral; tools and client support remain
-explicit prerequisites. Open the target repository first, then replace the source placeholder.
+actual content hash. Shared wording is model-neutral; client/tool support remains explicit.
+Users start with the [copyable README prompt](../../README.md#start-here---adopt-viberails).
+The block below is the agent entrypoint, not a form the user must complete.
 
 ```text
-Use VibeRails from <source-path-or-url-and-immutable-ref> to adopt or refresh the current repository.
-Follow applicable project instructions and the source adoption standard, located through its index.
+Adopt or refresh VibeRails in the target repository the user has open. Use the source selected
+by the user or launching README; ask only if it is ambiguous. Resolve the source to one immutable
+Git commit and read its docs/standards/adoption.md, especially Guided Setup. Use that same revision
+for the procedure and copies. Never change the source repository or guess unavailable contents.
 
-Inspect existing documentation, manifest, code roots, commands and CI before making changes.
-Preserve local knowledge and unrelated work. Resolve source identity/version and safe target
-coordinates without printing secrets or unsanitized remotes. Explain the proposed changes briefly.
+Follow applicable target instructions. Inspect its actual documentation, roots, commands, CI and
+existing adoption before editing. Distinguish planned architecture from implemented components.
+Preserve local knowledge, settings, protected work and secrets.
 
-For first adoption, suggest light or standard and only ask about material unresolved choices.
-Store complete explicit configuration values; modelRouting remains inherit. For a refresh, retain
-existing choices and compare the prior source, local content and requested source before replacing
-anything. Do not reapply a preset, discard local edits or treat a label change as completed migration.
+Conduct the guided conversation: recommend relevant standards with reasons, ask unresolved
+questions in small conditional groups, and collect selected provider coordinates without tokens.
+Separate tracker, code host, client MCP setup, optional skill scope and action authority. A user
+must not need manifest field names, source hashes or a custom prompt. Retain existing choices on
+refresh and do not ask again for known answers or already-authorized operations.
 
-Copy only relevant rules and needed references, reconcile navigation, and retain project-owned
-commands and required CI. Provider profiles are independent choices; Azure DevOps/Jira use MCP only.
-No tracker or optional skills are required. Do not install tools or skills without covered authority.
+Show the effective choices, files/client settings to change, proposed scoped access checks,
+remaining gaps and delivery endpoint. Obtain approval before edits, installations or login flows.
+An explicit grant already covering this plan remains valid; seek only missing decisions or scope.
+Guide approved MCP setup through the current client's supported mechanisms and official provider
+instructions. Check selected resources through MCP. Record deferred access honestly; Azure DevOps
+and Jira never fall back to provider CLI, raw REST or wrappers. Do not mutate remote data to test
+permissions without separate covered authority.
 
-Maintain the existing adoption manifest and human receipt. Record immutable source refs, actual
-copied/merged files, current instruction fingerprints and unobserved context. Preserve conflicts,
-remaining code migration and missing capabilities as explicit gaps; never repin unexplained drift.
+Execute the approved adoption/refresh procedure. Maintain the existing manifest and human record,
+complete explicit configuration, selected references and reviewed instruction pins. Keep routing
+inherited unless separately authorized at runtime. Never repin unexplained drift, erase conflicts
+or disguise missing required values as a completed setup. An unchanged repeat is a no-op.
 
-Verify the changed documents, configuration, pins and preservation using available native tools
-or the source pack's optional read-only audit. Run only meaningful focused checks; full project
-gates belong to CI. A structural audit is not proof of code compliance, live access or CI success.
-Repeat unchanged adoption as a no-op, not another generated document set or timestamp-only update.
-
-Report effective choices, preserved decisions, results and remaining work. Continue only through
-an already-authorized delivery endpoint. Without push/PR authority, stop locally; merge always
-requires explicit authorization and current acceptance/evidence. An advance grant covering
-this scope remains valid after those checks; do not ask again merely because a phase changed.
+Use focused documentation/adoption checks and existing CI for required broad verification.
+Report actual readiness separately for documents, skills, integrations and delivery; include
+next actions for missing access or migration. Continue only to the approved local/PR/merge
+endpoint with current evidence. Adoption is not permission to build or run the product.
 ```
 
 ## Navigation
 
-- [Adoption procedure](../standards/adoption.md)
+- [Guided adoption procedure](../standards/adoption.md#guided-setup)
 - [Configuration contract](../standards/configuration.md)
 - [Documentation index](../INDEX.md)

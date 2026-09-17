@@ -5,6 +5,40 @@ Standards, guardrails, and documentation templates for AI-assisted software proj
 Pack version: see [CHANGELOG.md](CHANGELOG.md). Adopting repositories record the adopted
 version in their `docs/INDEX.md`.
 
+## Start Here - Adopt VibeRails
+
+Open the repository you want to configure in your coding agent, then paste this prompt.
+Current supported setup is Codex with access to that working tree and the source repository.
+You do not need to choose files, edit a manifest, find a commit hash or install skills first.
+
+```text
+Set up VibeRails in the repository I currently have open.
+Source: https://github.com/JakubParol/VibeRails
+
+Read docs/templates/adopt-standards-prompt.md from that source and follow its guided procedure.
+Inspect my project, recommend the relevant standards, and ask me about unresolved configuration
+and integration choices in small groups. Help configure and check the MCP connections I select.
+Ask me to approve the setup and delivery plan before changing files or client settings.
+Do not change the source VibeRails repository.
+```
+
+The agent will explain what it found, guide you through standards, tracker/code-host choices,
+MCP access, optional skills and delivery permissions, then apply the approved plan. Azure Boards,
+Jira and no tracker are supported choices; code hosting is selected separately. Sign in through
+your client's authentication flow, never by pasting tokens into chat. Missing access can be
+explicitly deferred and stays visible, not reported as a working integration.
+
+At handoff expect selected settings, preserved local decisions, check results, connection gaps
+and the actual local/PR outcome. Starting setup does not authorize application implementation
+or merge. Refreshing an existing adoption preserves its choices rather than repeating onboarding.
+
+Agent entrypoint: [shared adoption prompt](docs/templates/adopt-standards-prompt.md).
+A local checkout or a chosen source ref can be supplied instead; the agent resolves and records
+an immutable source commit before copying. Without source access, it must report that gap, not
+reconstruct the pack from memory. No background service or additional installer is required.
+
+## What VibeRails Provides
+
 This repository is a reusable, process-neutral standards pack for software projects developed
 with AI coding agents. It is meant to be referenced from another repository when a project is
 created or when an existing project needs consistent documentation, agent instructions,
@@ -55,18 +89,11 @@ see [installation ownership](scripts/README.md#skill-installation-ownership) bef
 
 ## Quick Adoption Prompt
 
-To apply these standards to another repository, start with
-[docs/templates/adopt-standards-prompt.md](docs/templates/adopt-standards-prompt.md).
-
-Open the target repository in Codex first, then provide the standards repository path or URL
-in that prompt. The agent records the target repository root during preflight instead of
-guessing it from the prompt text.
-
-Stage 07 provides an agent-guided general baseline: explicit light/standard choices, preserved
-local knowledge and immutable instruction pins. Adoption is not a model-specific prompt fork or
-a runtime loader. New shared-prompt versions use the same reviewed refresh path. See the
-[configuration contract](docs/standards/configuration.md) and
-[refresh procedure](docs/standards/adoption.md#existing-project-refresh).
+Use the copyable [Start Here prompt](#start-here---adopt-viberails) above. The
+[adoption procedure](docs/standards/adoption.md#guided-setup) owns the conversation, approval,
+copying and verification steps; users should not have to write a project-specific prompt.
+Shared instructions remain model-neutral. See the [configuration contract](docs/standards/configuration.md)
+and [refresh procedure](docs/standards/adoption.md#existing-project-refresh) for existing projects.
 
 ## How To Use This Repository
 
@@ -137,7 +164,7 @@ documented sub-area:
 - `project-README.md` - copy to project root as `README.md`.
 - `project-AGENTS.md` - copy to project root as `AGENTS.md`.
 - `project-docs-INDEX.md` - copy to project root as `docs/INDEX.md`.
-- `folder-README.md` - copy to a significant non-root folder as `README.md`.
+- `folder-README.md` - copy into a significant non-root folder as `README.md`.
 - `folder-AGENTS.md` - copy into folders that need local agent rules.
 - `adr.md`, `design-note.md`, `runbook.md`, `api-contract.md`, `quality-gate.md` - copy for
   focused project documentation.

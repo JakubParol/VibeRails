@@ -1,36 +1,26 @@
 # Refactor Status
 
-Checkpoint date: 2026-09-16. This is the sole live documentation register. Reconcile it with
+Checkpoint date: 2026-09-17. This is the sole live documentation register. Reconcile it with
 Git/PR evidence before acting; an actual merge may be newer than the published snapshot.
 
 ## Current Checkpoint
 
-- Audit corrections A-01 through A-04 are implemented and verified in
-  [PR #18](https://github.com/JakubParol/VibeRails/pull/18), scope `audit-fixes-1`, version 0.4.3.
-  The user explicitly authorized all four fixes in one PR and merge after verification.
-  [Agreement, results and limits](verification-08-09.md#audit-correction-agreement).
-- Base: `ffb80cb224b924aaea0d5baa3d02b53d03459e0b`; branch:
-  `codex/refactor-audit-00-09-fixes`. The implementation source
-  `b229e3284365193ff948b88db35149225bcaf621` has passed
-  [run 35131848103](https://github.com/JakubParol/VibeRails/actions/runs/35131848103), testing
-  `252833d52059d79b67946ee960758aa024263f50`. Logs confirm 38 adoption cases on all three
-  systems, 8 POSIX installer cases on Linux/macOS, plus Linux's 12 validator cases,
-  6 frozen pilot cases, full document/skill validation and both architecture examples.
-  Executed tests have zero failures/skips/cancellations; Windows's POSIX step is inapplicable.
-- This same-PR closeout is committed locally before publication and final-head verification.
-  While PR #18 is open, merge is pending; an implemented fix is not a completed merge.
-  The PR/check record owns the closing source/tested/merge identities and final results.
-- After confirmed merge the four audit findings are closed within the tested scope. The
-  PowerShell ownership fix has static review only, not executed parity. Solo review remains
-  explicit. No administration, provider wrapper, unrelated project or model runtime was changed.
-- All 00-09 artifact deliveries are merged. 00-07 remain Done; 08/09 remain Verification
-  until actual cross-model task traces and independent repository-only continuation are obtained.
-- Next action: if PR #18 is open, finish only final-head checks and its authorized merge, then
-  confirm remote main includes closeout. Once merged, report the completed audit corrections
-  and use the bounded runtime handoff for the separately scoped new-repository review.
-  Do not begin 10 or operate on another repository without the next scoped user request.
-- Preserve frozen 0.4.0/0.4.1 evidence. Do not add a post-merge checkpoint PR or replace
-  missing model/handoff evidence with structural test results.
+- A-01 through A-04 were corrected in merged [PR #18](https://github.com/JakubParol/VibeRails/pull/18)
+  at `6960a2d806178ed4ad78fe16c35f2482b0e1966a` (0.4.3). Its recorded CI/retry limits remain intact.
+- Active delivery: README-led guided adoption, scope `guided-onboarding-1`, branch
+  `codex/guided-adoption-onboarding`; [agreement and verification](guided-onboarding.md).
+  The user approved changes, one PR and merge after verification; solo self-review is explicit.
+- Implementation is in progress. Keep setup questions/approval in the adoption standard and
+  MCP setup in integration profiles, with a short copyable README entry. No client/adopter
+  settings, provider writes, runtime, manifest schema or later stage is part of this delivery.
+- Before its scoped automatic merge, commit closing records locally on the same branch,
+  publish, check every required job for that final head and use expected-head protection.
+  An open PR or prepared closeout is not proof of merge. The PR owns exact delivery SHAs/results.
+- All 00-09 artifact deliveries are merged; 00-07 remain Done, 08/09 remain Verification.
+  This onboarding correction does not complete actual cross-model trials or independent handoff.
+- Next action: complete only this delivery's checks/closeout/merge and report the README entry.
+  Stop before stage 10 or changes to another repository. Preserve frozen comparisons and do
+  not create an extra checkpoint PR or replace missing runtime evidence with structural PASS.
 
 ## Stage Register
 

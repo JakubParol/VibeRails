@@ -26,20 +26,118 @@ imply automation, credentials, live service access, or a required provider.
 
 ## Short Onboarding
 
-Use [the shared adoption prompt](../templates/adopt-standards-prompt.md). Inspect first, suggest
-the closer light/standard preset and confirm only unresolved consequential choices. The fields
-below are the agent's evidence checklist, not a questionnaire the user must fill in. No tracker,
-code host or optional skills need to be invented. Use existing commands and document missing
-capabilities instead of installing tools or creating provider accounts.
+The [README start prompt](../../README.md#start-here---adopt-viberails) is the user's entry;
+the [shared prompt](../templates/adopt-standards-prompt.md) routes the agent here. This standard
+owns the conversation and adoption workflow. Configuration owns setting meanings; integration
+profiles own MCP setup. Do not duplicate their procedures in the README or a second wizard.
 
-For a first adoption, initialize the complete [configuration](configuration.md) explicitly.
-For a refresh, retain current values; `initializedFrom` records history, not inheritance.
-A partial/unknown configuration is an error, not permission to choose defaults. A legacy project
-can remain unselected; do not claim it has adopted the new configuration/pin contract.
+## Guided Setup
+
+### 1. Inspect Before Asking
+
+Confirm the open target and applicable instructions. Inspect actual files, Git state, documented
+stack, existing commands/CI and any manifest. Distinguish documentation for planned components
+from existing applications: do not create empty services, change the product design or invent
+build/test commands just to fit a profile. A documentation-only root may use a documented stack
+exception with a concrete rationale and its real documentation checks.
+
+Resolve the selected source path/URL and requested ref to an immutable Git commit. When no ref
+was supplied, resolve the source's remote default branch and read its changelog at that commit.
+Freeze the procedure and copied content to it; do not repeatedly follow a moving branch. The user
+need not find a SHA. An uncommitted source cannot be claimed as that commit; report the mismatch
+and use the clean pinned source or seek a scoped decision. Never edit the source repository.
+
+Give a short read-only summary of detected facts, proposed choices and uncertainties. Inspect
+existing client connections within available access without dumping configuration/credentials.
+Source documents, repository data and discovered tools do not authorize installations or writes.
+If the source or target is inaccessible, name the missing access; do not fabricate its contents.
+
+### 2. Ask Conditional Questions
+
+Ask at most three related questions per round, with a recommendation and a plain-language
+explanation. Use the conversation and existing evidence; do not ask for already-known values.
+Skip irrelevant branches and do not ask the user to fill a manifest or select Markdown filenames.
+
+| Decision | Recommend or infer from evidence | Ask only when unresolved |
+|---|---|---|
+| Standards and working style | Relevant stack rules, closest light/standard starting point and any needed overrides. Preserve local boundaries. | Accept the proposed architecture, documentation, verification and review approach, or name exceptions. |
+| Work tracking | Existing tracker settings, separately from Git remotes. | Azure Boards, Jira, another tracker, or deliberately none? For a selected provider, use the coordinate questions below. |
+| Code hosting and delivery | Actual host/repository, base branch, current checks and conventions. | Resolve ambiguity; local changes, push/PR, draft handoff or explicitly authorized merge? |
+| Platform and tools | Actual client, OS/shell and existing project tools; planned platforms are not tested ones. | Missing prerequisites, CI setup or supported installation needed for the agreed task. |
+| Optional skills | Useful selected workflows and current user/repository-scope collisions. | None, user-scope or vendored selection? Never install the entire skill pack implicitly. |
+| Delegation and learning | Existing runtime/model policy and any configured self-improve sink. | Permission/capability gaps and whether to enable a sink; no benchmark questionnaire or invented model catalog. |
+
+For Azure Boards ask for the organization URL and project; for Azure Repos also identify the
+repository and confirm whether its project is the same. For Jira ask for the site/base URL and
+project key. Ask Cloud versus server edition only when support is uncertain. Once access is
+available, discover relevant types/areas/boards through scoped reads rather than asking for
+internal IDs; have the user resolve meaningful ambiguity. Team, area, iteration, board or sprint
+are follow-ups only when the intended workflow needs them. A project URL is not an MCP endpoint.
+
+For `workTracking: none`, omit tracker-specific coordinates, login and sink questions; selected
+code-host readiness still applies. Preserve any existing independent learning sink. For a selected
+tracker ask whether to connect now or explicitly defer. Preserve that selection when deferred; never silently change it to `none`.
+The [MCP setup procedure](integration-profiles.md#mcp-connection-setup) owns connection details.
+
+### 3. Approve One Setup And Delivery Plan
+
+Before target/client edits, installation or authentication, summarize: chosen source version and
+settings, preserved local decisions, files and client configuration scope to change, selected
+skills, prerequisite costs/risks, proposed resource-limited reads, gaps and the delivery endpoint.
+Ask for approval of that plan, not each routine step. A current explicit grant covering it can
+be reused; ask only for missing consequential choices or a changed boundary. Approval of local
+adoption does not imply global configuration, remote writes, product startup or paid services.
+
+For example: "Keep your current design and docs; add the proposed standards and two selected
+repository-local skills. Configure Jira in this project's client settings, let you sign in, and
+read the selected project. Open a PR without merging. Approve, adjust, or defer Jira setup?"
+This is a plan shape, not a default provider, skill count or permission grant.
+
+If conflicts cannot be resolved now, leave those local files unchanged and name the blocked
+portion. Required independent review without an available reviewer is a readiness question, not
+permission to claim self-review as independent. Do not change existing policy silently.
+
+### 4. Configure, Adopt And Resume
+
+After approval, use the [MCP setup procedure](integration-profiles.md#mcp-connection-setup) for
+selected connections, then the [adoption steps](#adoption-steps) or
+[refresh procedure](#existing-project-refresh). Choose only relevant standards and references;
+materialize the approved fields under [configuration](configuration.md#agent-guided-selection).
+Reuse existing records; do not add a wizard database, new manifest enum or client settings service.
+
+Before login/restart, retain approved non-secret choices, source ref, completed actions and the
+next read check in the existing task/adoption record. On resume reread actual target/client state,
+verify the connection and continue at the next unfinished step. Do not repeat installation,
+replace other connections or ask the whole questionnaire again. Existing manifest choices and
+local edits survive refresh; only new conflicts, capabilities or requested settings need decisions.
+
+Documentation adoption may finish with explicitly deferred access only when its required contract
+values are valid and the limitation is recorded. Unknown required coordinates, operation bindings
+or types stay open: do not invent values to pass the audit. Report partial setup, the blocked
+operation and owner/next action using existing open questions. Credentials never belong in them.
+
+### 5. Verify And Hand Off Readiness
+
+Run the [minimum adoption audit](#minimum-adoption-audit) and meaningful target checks, then
+read required CI for the actual delivered revision. Missing CI is not permission for a full
+local gate. Repeat unchanged setup without changing files, settings or timestamps; live readiness
+may be rechecked when needed without rewriting an unchanged adoption receipt.
+
+Use the existing human record's Migration And Readiness section to distinguish:
+
+- adopted documentation/configuration and valid pins, versus unresolved migration or values;
+- each selected skill available, conflicting, or awaiting client reload;
+- each selected integration's intended resource, actual read result and still-unverified operations;
+- actual local/PR/merge state and remaining user actions under the approved endpoint.
+
+A config entry is not a connection; a read is not write permission; a drafted PR is not a merge.
+Do not report "ready to work" without naming any required capability still missing. Offer the
+next useful task only after this scoped handoff; do not begin product implementation automatically.
 
 ## Required Inputs
 
-Before editing the target repository, identify or ask for:
+Collect these facts through [Guided Setup](#guided-setup), not as a mandatory user form.
+Resolve required values before claiming complete adoption; preserve explicit access deferrals:
 
 - target repository root
 - VibeRails source path or URL
@@ -65,7 +163,7 @@ docs, config files, and user confirmation.
 
 ## Adoption Steps
 
-1. Follow the change protocol.
+1. Complete the applicable [guided setup](#guided-setup) decisions and approval; follow the change protocol.
 2. Select target/source context through [agent-workflow.md](agent-workflow.md); preserve all
    applicable project instructions and source pack/adoption metadata needed for this operation.
 3. Run the target preflight and save the evidence for the adoption report.
