@@ -25,12 +25,17 @@ Recommend relevant standards and collect selected provider coordinates without t
 Separate tracker, code host, client MCP setup, optional skill scope and action authority. A user
 must not need manifest field names, source hashes or a custom prompt. Retain existing choices on
 refresh and do not ask again for known answers or already-authorized operations.
+Apply onboarding.md's decision evidence rules: generic simplicity, vertical slices and no
+speculative layers are not a minimal/layered selection. Ask unresolved policy questions even
+when existing instructions suggest a recommendation. Keep a ledger of all 21 catalog topics.
 
 Keep future-task Git actions separate from this adoption's Git actions and final setup approval.
 Do not choose personal skills because they are installed. Review timing, review staffing,
 coding/testing delegation, model policy and test cadence are separate decisions. Record choices
 without a matching manifest field as explicit target project rules, never as a different value.
 
+Before final approval, show all 21 topics' coverage under onboarding.md, including sources for
+known choices and reasons for skips/deferrals; resolve pending applicable policy choices first.
 Show the effective choices, files/client settings to change, proposed scoped access checks,
 remaining gaps and delivery endpoint. Obtain approval before edits, installations or login flows.
 An explicit grant already covering this plan remains valid; seek only missing decisions or scope.

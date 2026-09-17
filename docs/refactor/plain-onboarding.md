@@ -108,6 +108,38 @@ count changes, preserved answers, corrected summary and no writes before actual 
 After approval, inspect target policy fields/links, relevant skills and actual readiness.
 This walkthrough has not been executed here. Stop after this delivery; no adoption or next stage.
 
+## Decision Evidence Correction
+
+Scope `onboarding-evidence-1`, 2026-09-17, candidate 0.5.2. Base: merged PR #21,
+`c91ceb758d3587f904f7037349adb70f06ee9e61`. Branch: `codex/onboarding-explicit-decisions`.
+After reviewing a real first-adoption conversation, the user authorized the proposed correction,
+branch, PR and merge: "ok, to zrob branch i nanies poprawki i PR i zmerguj".
+This covers the correction and merge after current-head verification; no adopter/client changes
+or later refactor stage are authorized.
+
+The observed failure was an inferred architecture choice: generic vertical-slice/simple-function
+guidance was treated as selected `minimal`, so question 6 was omitted. Other omissions had
+valid explicit policies, detected hosting/access or user-selected UI deferral. The earlier static
+scenarios assumed omitted topics were already resolved and did not test that classification.
+No private adopter content or conversation transcript is copied into this repository.
+
+Plan and acceptance:
+
+- Tighten the canonical evidence rules: ambiguous preferences remain questions; explicit
+  applicable choices survive first adoption/refresh. Do not force repeated or irrelevant questions.
+- Before approval, account for every catalog ID and expose sources/skips/deferrals, with the
+  architecture enum explicit and the final approval still pending until answered.
+- Align README, adoption entrypoints and the existing human record; retain manifest v1 and
+  all existing conditional question and permission boundaries.
+- Check the changed documents and actual-copy adoption fixture. Run a bounded independent
+  conversation trial on a synthetic target with generic simplicity rules, plus a refresh case
+  with an explicit choice. Review the delta; commit closing evidence before final-head PR CI.
+- Merge only after the required checks pass; read back remote main and stop. No post-merge
+  checkpoint commit, real installation, full local gate or universal model-compliance claim.
+
+Implementation and verification are in progress. The trial must distinguish real agent
+responses to simulated user answers from static review and a real user/adopter installation.
+
 ## Navigation
 
 - [Current state](STATUS.md)
