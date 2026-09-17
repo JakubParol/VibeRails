@@ -70,10 +70,25 @@ Focused validation of all nine changed Markdown files passed with the existing N
 in the retained snapshot; refreshing that unmodified dependency to its verified main blob fixed
 the local context, not the product or validator. No application/installer suite was run locally.
 The seven cases above received semantic self-review; no live provider or fresh agent run is claimed.
-Final-head CI remains pending at initial publication; its actual results belong in this PR. The PR/check record owns
-source/tested/merge identities; do not create another PR merely to cite a commit's own SHA.
-08/09 remain Verification for their original model/independent-handoff criteria. After this
-scoped merge, report the README entry and stop before another repository or stage 10.
+[PR #19](https://github.com/JakubParol/VibeRails/pull/19) contains exactly nine scoped Markdown
+files; its published diff and all nine blob identities match the reviewed local content. No
+code, workflow, schema or installer changes are included. Implementation source
+`5c6d46bebe36cd34e15fd6c2f7fe87fdb6ec92fb` passed all three jobs of
+[run 35198162490](https://github.com/JakubParol/VibeRails/actions/runs/35198162490); actual
+step outcomes were read. This is existing repository verification, not fresh-session evidence.
+
+This closing record and STATUS are edited and committed locally before publication in the same
+PR. Their focused document and whitespace checks must pass; the resulting final head must pass
+all current required jobs before the already-authorized merge. Read the actual logs/revisions,
+merge with expected-head protection, and confirm remote main and post-merge checks. The PR/check
+record owns final source/tested/merge identities; no post-merge checkpoint PR is needed. While
+PR #19 remains open this is prepared closeout, not a completed merge.
+
+After confirmed merge the 0.4.4 documentation delivery is closed. 08/09 remain Verification for
+their original model/independent-handoff criteria; this change does not waive them. The next
+runtime acceptance is a fresh session starting with only a target and the README prompt, plus
+actual selected MCP checks under separately scoped authority. It has not been run here. Report
+the README entry and stop before another repository or stage 10.
 
 ## Navigation
 

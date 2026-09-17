@@ -7,18 +7,23 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - A-01 through A-04 were corrected in merged [PR #18](https://github.com/JakubParol/VibeRails/pull/18)
   at `6960a2d806178ed4ad78fe16c35f2482b0e1966a` (0.4.3). Its recorded CI/retry limits remain intact.
-- Active delivery: README-led guided adoption, scope `guided-onboarding-1`, branch
-  `codex/guided-adoption-onboarding`; [agreement and verification](guided-onboarding.md).
+- README-led guided adoption is implemented in [PR #19](https://github.com/JakubParol/VibeRails/pull/19),
+  scope `guided-onboarding-1`, branch `codex/guided-adoption-onboarding`, version 0.4.4.
+  [Agreement and verification](guided-onboarding.md).
   The user approved changes, one PR and merge after verification; solo self-review is explicit.
-- Implementation is in progress. Keep setup questions/approval in the adoption standard and
-  MCP setup in integration profiles, with a short copyable README entry. No client/adopter
-  settings, provider writes, runtime, manifest schema or later stage is part of this delivery.
-- Before its scoped automatic merge, commit closing records locally on the same branch,
-  publish, check every required job for that final head and use expected-head protection.
-  An open PR or prepared closeout is not proof of merge. The PR owns exact delivery SHAs/results.
+- Document changes, focused checks and seven single-agent semantic walkthroughs are complete.
+  Implementation source `5c6d46bebe36cd34e15fd6c2f7fe87fdb6ec92fb` passed all three jobs of
+  [run 35198162490](https://github.com/JakubParol/VibeRails/actions/runs/35198162490).
+  Those outcomes are not evidence of actual MCP login or a fresh independent agent trial.
+- This closeout is committed locally and published in the same PR before final-head CI.
+  While PR #19 is open, merge is pending. Require all current-head jobs and expected-head
+  protection; the PR/check record owns final source/tested/merge identities and actual results.
+  After confirmed merge, this documentation delivery is closed; runtime validation remains open.
+- No adopter/client settings, provider writes, runtime, manifest schema or later stage changed.
 - All 00-09 artifact deliveries are merged; 00-07 remain Done, 08/09 remain Verification.
   This onboarding correction does not complete actual cross-model trials or independent handoff.
-- Next action: complete only this delivery's checks/closeout/merge and report the README entry.
+- Next action: if PR #19 is open, finish final-head verification and its authorized merge.
+  Once merged, report the README entry and stop for the separately scoped adoption trial.
   Stop before stage 10 or changes to another repository. Preserve frozen comparisons and do
   not create an extra checkpoint PR or replace missing runtime evidence with structural PASS.
 
