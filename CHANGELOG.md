@@ -3,6 +3,20 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.4.4 - Guided Adoption Onboarding
+
+- Put a ready-to-paste setup prompt before optional skill installation in the root README.
+- Guide configuration through conditional, small question groups and one scoped approval;
+  preserve existing knowledge and distinguish planned applications from implemented roots.
+- Help configure selected Azure DevOps/Jira MCP connections, guide safe login and verify scoped
+  reads; record deferral and missing capabilities separately from intended provider selection.
+- Resume after login/reload without repeating onboarding. No provider wrappers, new manifest
+  schema, wizard runtime or automatic product implementation is introduced.
+
+This documentation delivery has advance scoped merge authority, subject to final-head checks.
+The delivery PR identifies its actual merge; this entry is not a release tag or evidence of
+live MCP setup, fresh-session success, cross-model improvement or completed 08/09 experiments.
+
 ## 0.4.3 - 2026-09-16 - Audit Corrections
 
 - Preserve unrelated user-scope skill links during installation and removal; replacing another

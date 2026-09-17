@@ -32,6 +32,7 @@ This index is the entry point for all standards and templates in this repository
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Original 15-source register, stage 08 assessment and explicitly unavailable material. |
+| [Guided onboarding delivery](refactor/guided-onboarding.md) | Scope, scenario review and verification limits for the README-led setup path. |
 | [08-09 verification follow-up](refactor/verification-08-09.md) | Reproduced instruction-boundary fixes, platform evidence and original acceptance gaps. |
 
 Stage 07 provides the frozen model-neutral baseline. The stage 08 assessment records all
