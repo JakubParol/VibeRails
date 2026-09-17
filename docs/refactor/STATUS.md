@@ -7,16 +7,24 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - Audit corrections were merged in [PR #18](https://github.com/JakubParol/VibeRails/pull/18);
   guided onboarding in [PR #19](https://github.com/JakubParol/VibeRails/pull/19).
-- Active delivery: web UI standards, scope `web-ui-1`, branch `codex/web-ui-standards`,
-  based on `c9ae8f430ca931e878f438258eebef2123026ad8`. Candidate pack version: 0.5.0.
+- Web UI standards are implemented in [PR #20](https://github.com/JakubParol/VibeRails/pull/20),
+  scope `web-ui-1`, branch `codex/web-ui-standards`, version 0.5.0 after confirmed merge.
   [Agreement, research and verification](web-ui-standards.md).
-- The user approved implementation and merge after verification. Solo execution/self-review
-  remains explicit. Only reusable standards, their direct routes/templates and task records change.
-- Next action: finish focused checks and review, publish one PR, then commit closing records
-  locally and publish them in that same PR before final-head CI and guarded merge.
-- Do not modify an adopting repository, install UI dependencies, generate an app or start stage 10.
-  00-07 remain Done; 08/09 remain Verification. This documentation delivery cannot supply their
-  missing independent model/handoff experiments or prove an application's appearance/accessibility.
+- The user explicitly authorized this implementation and merge after verification. All 14
+  scoped Markdown files passed focused checks; ten semantic scenarios received solo self-review.
+  Implementation source `7ba285e14642534daf091cfe143ab11e29df5a0d` passed all three jobs of
+  [run 35202691806](https://github.com/JakubParol/VibeRails/actions/runs/35202691806).
+- Closing records are edited and committed locally, then published in this same PR before
+  final-head CI. While PR #20 is open, merge remains pending. Require current-head evidence and
+  expected-head protection; the PR owns final source/tested/merge identities and actual results.
+  After confirmed merge, this scoped standards delivery is closed, not the runtime evaluation.
+- No adopter, UI package, application, client setting, schema, provider transport or later stage
+  changed. 00-07 remain Done; 08/09 remain Verification for actual model/independent-handoff proof.
+- Next action: if PR #20 is open, verify final-head CI and complete its authorized merge, then
+  read back remote main. Once merged, report the UI contract and stop for separately scoped
+  adoption and rendered-screen review. Do not start stage 10 or change another repository.
+- Preserve frozen comparisons. Document CI and semantic review do not certify appearance,
+  accessibility conformance or performance. Do not add a post-merge checkpoint PR.
 
 ## Stage Register
 

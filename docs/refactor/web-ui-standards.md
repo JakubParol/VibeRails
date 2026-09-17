@@ -74,17 +74,31 @@ skill. Whitespace checks passed. All 12 existing changed-file baselines match th
 blobs; the two other files are new. Ten semantic cases received self-review, not runtime testing.
 The first local check found four missing links/anchors in the older retained context. Refreshing
 three unchanged source references to verified current blobs resolved those local-context gaps;
-no product guard or test was weakened. Broad verification remains pending until current-head CI.
+no product guard or test was weakened. The published file set and per-file change counts agree
+with the reviewed local diff, and every selected uploaded blob matches its local content.
 
 Local Git network transport is unavailable. A retained source snapshot is used for editing;
 changed existing files are reconciled against immutable main blobs before publication. Only
 scoped changed blobs are applied over the actual remote base tree, preserving other content.
 Local snapshot commits are not remote source SHAs. No transfer workflow, force push or credentials.
 
-Before merge: locally commit closing records, publish in the same PR, inspect final-head CI,
-merge with expected-head protection and read back remote main. The PR owns final source/tested/
-merge identities; no extra checkpoint PR is needed. No rendered UI, WCAG conformance, performance
-improvement, live MCP use or independent 08/09 evidence is claimed by these documentation checks.
+[PR #20](https://github.com/JakubParol/VibeRails/pull/20) contains the 14 scoped Markdown files.
+Implementation source `7ba285e14642534daf091cfe143ab11e29df5a0d` passed all three jobs of
+[run 35202691806](https://github.com/JakubParol/VibeRails/actions/runs/35202691806); their actual
+step results were inspected. This initial run is not evidence for a later closing head.
+
+This closing record and STATUS are edited and committed locally, then published in the same
+PR before final-head CI. Run focused checks for those two documents and inspect final-head job
+logs, checked-out revisions and executed test summaries before the already-authorized merge.
+Merge only the expected reviewed head and read back remote main and post-merge checks. The PR
+owns final source/tested/merge identities and results; no self-referencing commit or extra
+checkpoint PR is needed. While the PR is open, this is prepared closeout, not a completed merge.
+
+After confirmed merge the 0.5.0 standards delivery is closed. The original 08/09 runtime gaps
+remain Verification. No rendered UI, WCAG conformance, performance improvement, live MCP use
+or independent model/handoff evidence is claimed by this documentation work. New visual
+acceptance must be exercised on an actual application under a separate scoped task. Stop before
+another repository or stage 10; do not start product implementation from these new instructions.
 
 ## Navigation
 
