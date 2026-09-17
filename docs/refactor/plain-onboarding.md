@@ -137,8 +137,48 @@ Plan and acceptance:
 - Merge only after the required checks pass; read back remote main and stop. No post-merge
   checkpoint commit, real installation, full local gate or universal model-compliance claim.
 
-Implementation and verification are in progress. The trial must distinguish real agent
-responses to simulated user answers from static review and a real user/adopter installation.
+### Correction Verification
+
+Implemented the evidence classification and all-topic coverage in the canonical onboarding
+rules, with links/reminders in README, adoption, the shared prompt and the human record template.
+No catalog options, schema, code or CI behavior changed.
+
+The independent conversation trial used candidate `62ab9d74f9ac728539d5a235784f6398aa9f3dfd`
+in an isolated read-only source checkout. Its synthetic target was a documentation-only order
+CLI with generic small-slice/plain-function/no-speculative-layer instructions and no adoption.
+The simulated opening supplied explicit decisions for IDs 1-5, 7-9, 13, 15, 19 and 20; tracker,
+skill-installation and UI questions were inapplicable. Only architecture and plan approval
+remained unresolved. This tests evidence classification, not a full 21-answer interview.
+
+| Check | Observed result |
+|---|---|
+| First agent turn | Asked architecture as `1/2`, presented both `minimal` and `layered`, explained that existing simplicity rules fit both, then waited. |
+| Simulated user answer | Selected option 2, `layered`; the parent supplied this answer, not the trial agent. |
+| Second agent turn | Preserved `layered`, showed the concrete plan and all 21 topic IDs with sources or conditional reasons, then asked approval as `2/2`. ID 21 remained pending. |
+| No premature writes | Parent compared all target file names and contents with the three original fixture documents; unchanged, with no adoption files added. No approval or installation followed. |
+| Focused document validation | All eight changed Markdown files passed; the later two-document approval clarification passed its own focused check. `git diff --check` passed. |
+| Actual-copy and refresh regressions | Two selected cases in `adoption-refresh.test.mjs` passed, zero failures/skips: actual standard/bootstrap copies and multi-root refresh preserving explicit settings with an unchanged-repeat no-op. |
+| Independent review | No remaining findings across all eight files and the approval clarification. The latter preserves an existing grant covering the exact plan instead of asking/counting approval again. |
+
+Both bounded delegates requested `gpt-6-astra` / `xhigh`: one for interacting conversation
+decisions, one for independent cross-document review. Dispatch succeeded; observed runtime
+model/effort and usage were not exposed. Parent inspected both actual conversational responses
+and the review. The trial preceded the approval clarification, which changes only the
+already-approved-plan case; its two unanswered-approval turns remain valid evidence. That
+clarification has independent static review, not a separate executed conversation.
+
+Limits: the conversation used simulated user input, one requested route and a synthetic CLI,
+not a real adopter installation, a full GUI/client session, or universal model-compliance proof.
+Refresh evidence is scripted/static, not another agent conversation. The copy fixture generates
+the human adoption report synthetically; its changed template has focused source-link review,
+not direct materialization coverage. The template's links still require normal adaptation to
+target locations. Required broad checks remain in PR Verification.
+
+The user accepted this corrective scope and authorized merge in advance. These closing records
+are committed before publication/final-head CI. Merge remains pending until all three required
+jobs pass for the current PR revision and expected-head merge succeeds. The PR/final report
+owns source/tested/merge identities; read back remote main, then stop without another checkpoint
+commit or changes to an adopter. Original stage 08/09 acceptance gaps remain unchanged.
 
 ## Navigation
 

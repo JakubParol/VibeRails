@@ -105,8 +105,9 @@ and topic, status, selected answer or reason, and source. Cover all 21 IDs; conc
 group IDs only when their status and reason match. Include known choices and why questions
 were skipped or deferred. For architecture name `minimal` or `layered`, not only "simple".
 Use safe source references, not private transcript dumps. This table is a view of the ledger,
-not a second questionnaire or a new configuration file. Question 21 itself remains pending
-until the user approves the concrete plan; include it in n/X as an actual question.
+not a second questionnaire or a new configuration file. If this exact plan still needs approval,
+question 21 remains pending until answered and counts in n/X. An existing explicit approval
+covering the exact plan remains valid: cite it as known and do not count or ask it again.
 
 ## Conditional Questions And Follow-Ups
 

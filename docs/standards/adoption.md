@@ -78,8 +78,9 @@ skills, prerequisite costs/risks, proposed resource-limited reads, gaps and the 
 Include the [21-topic coverage check](onboarding.md#completeness-before-approval) and use the
 catalog's final approval question, separately from future-task Git policy and the Git actions
 selected for this adoption. Ask for approval of that plan, not each routine step. A current
-explicit grant covering it can be reused; ask only for missing consequential choices or a changed boundary. Approval of local
-adoption does not imply global configuration, remote writes, product startup or paid services.
+explicit grant covering it can be reused; ask only for missing consequential choices or a
+changed boundary. Approval of local adoption does not imply global configuration, remote
+writes, product startup or paid services.
 
 If conflicts cannot be resolved now, leave those local files unchanged and name the blocked
 portion. Required independent review without an available reviewer is a readiness question, not

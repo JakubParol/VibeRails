@@ -17,15 +17,19 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
   verification. [Agreement, failure and acceptance](plain-onboarding.md#decision-evidence-correction).
 - Generic simplicity rules must not select the architecture variant. The correction requires
   sourced decisions and visible coverage of all 21 topics before final approval, preserving
-  valid known choices and conditional skips/deferrals. Implementation and verification are
-  in progress; bounded conversation trials and independent review remain pending.
+  valid known choices and conditional skips/deferrals. Implementation, focused document checks,
+  two copy/refresh regressions and independent review are complete with no remaining findings.
+- A controlled two-turn conversation asked architecture, retained the simulated `layered`
+  answer, showed all 21 topics and waited for final approval. The synthetic target stayed
+  unchanged. This is bounded agent evidence, not a real adopter installation or universal proof.
 - Closing records belong in this delivery before final-head CI. Require current-head checks
   and expected-head merge protection; confirm remote main before calling delivery complete.
 - No adopter, UI package, application, private client setting, schema, provider transport or
   later stage changed. 00-07 remain Done; 08/09 remain Verification for their original missing
-  model/independent-handoff trials. Static scenario review is not a fresh user conversation.
-- Next action: complete focused checks, controlled conversation evidence and independent review;
-  publish this correction, verify final-head CI, merge and read back main. Do not adopt another
+  model/independent-handoff trials. Scripted refresh and static review are not user conversations.
+- Next action: publish this correction, verify all three final-head CI jobs, complete the
+  authorized merge with expected-head protection and read back main. While the PR is open,
+  merge remains pending. Once merged, report the result and stop; do not adopt another
   repository or start stage 10.
 - Preserve frozen comparisons. Document CI and semantic review do not certify appearance,
   accessibility conformance or performance. Do not add a post-merge checkpoint PR.
