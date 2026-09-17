@@ -13,7 +13,7 @@ function passes(result) { assert.equal(result.status, 0, result.output); }
 test("fresh actual standard copies and the optional audit bundle work in an isolated target", () => {
   withTarget((root, manifest) => {
     const names = ["agent-workflow", "change-protocol", "documentation", "configuration", "adoption",
-      "adoption-manifest", "documentation-audit", "integration-profiles", "platform-profiles",
+      "onboarding", "onboarding-questions", "adoption-manifest", "documentation-audit", "integration-profiles", "platform-profiles",
       "quality-gate", "self-improve-loop", "architecture", "coding", "stack-profiles"];
     const mapping = new Map(names.map((name) => [`docs/standards/${name}.md`, `docs/standards/${name}.md`]));
     mapping.set("docs/templates/adopt-standards-prompt.md", "docs/adopt-standards.md");

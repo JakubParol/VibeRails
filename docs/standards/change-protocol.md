@@ -41,6 +41,10 @@ and operations; a native `Done` label does not replace the project's acceptance 
 
 Resolve authority from the actual task and applicable instructions, separately from capability.
 Configuration/profile allow-lists limit available actions but do not grant write permission.
+An explicit user-selected standing Git policy can grant actions for future requested work in
+that project; record the actual grant and scope in its workflow rules. A generated default or
+enum alone is not that grant. This adoption's Git actions and its final setup approval are
+separate decisions under [onboarding](onboarding.md).
 A clear named workflow request may cover several actions; carry that authorization forward
 without asking again for each routine step. A bare link or available tool authorizes no mutation.
 
@@ -186,13 +190,21 @@ Agents must:
 
 ## Commit Protocol
 
-Unless the user explicitly asks not to commit, agents must commit after each logical step when:
+Follow the explicitly selected target Git policy, including no commits when that was chosen.
+For legacy projects without such a selection, retain the existing commit-after-logical-step
+default unless the user instructs otherwise. An authorized commit requires:
 
 - the change is coherent and reviewable
 - only files belonging to that step are staged
 - relevant documentation and tests are updated
-- the appropriate focused verification passed, or the verification limitation is explicitly
-  documented
+- the appropriate focused verification passed, or this is an explicitly recorded progress
+  checkpoint under the selected [test cadence](quality-gate.md#agent-test-cadence), with tests
+  still pending; other verification limitations remain explicit
+
+For after-story cadence, early coherent commits/pushes are allowed only under the chosen Git
+actions. Do not repeat all tests after each task, claim untested child tasks verified, or create
+a separate PR/merge per child task. Run the change's final focused tests and check corrections
+before the final commit/push; required CI still follows publication. Required safeguards remain.
 
 Do not mix unrelated work in one commit. Do not commit user-owned changes unless the user
 explicitly asks.
@@ -233,12 +245,19 @@ When the user authorizes a push or PR, agents must:
 3. Re-run affected local checks after sync if their inputs changed; obtain required CI evidence
    for the resulting revision after publication rather than reusing a stale run.
 4. Push the task branch.
-5. Open a PR with a clear title, summary, verification notes, and any known limitations.
+5. Only when PR creation is also authorized, open a PR with a clear title, summary,
+   verification notes, and any known limitations. Push-only delivery stops after the push.
 
 If the platform tools for opening a PR are unavailable, push the branch if authorized and give
 the user the exact branch name and PR creation details.
 
 ## Review Loop
+
+Read the target's automatic-review rule separately from review staffing. Review on request
+does not waive existing required review gates; adaptive staffing does not turn review off.
+An explicit at-least-one-additional-agent rule applies whenever review runs, including on
+request. Coding/testing solo mode does not cancel it. Do not start another review merely
+because a review skill was used to perform the current review.
 
 Choose review depth and staffing from changed scope, risk and the project's independence
 requirements. Reuse valid review completed before PR creation; opening a PR or starting review
@@ -251,8 +270,8 @@ For each review cycle:
 
 1. Read the review findings.
 2. Fix valid issues.
-3. Commit fixes.
-4. Re-run the affected local check/case and obtain required current-revision CI evidence.
+3. Re-run the affected local check/case before the final fix commit and push.
+4. Commit/push under the selected Git policy and obtain required current-revision CI evidence.
 5. Review the affected fix/delta and any newly exposed risk. Preserve unaffected coverage; do
    not repeat an unchanged full review merely because another cycle started.
 

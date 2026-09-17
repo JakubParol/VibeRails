@@ -56,6 +56,24 @@ records project-specific deltas:
 These preferences are not new manifest fields or write permission. Resolve actual task authority
 and handoff through the change protocol; a preferred endpoint does not authorize reaching it.
 
+## Additional Workflow Decisions
+
+During onboarding, fill only the decisions not represented by manifest fields, or link their
+existing project owner. Use the owning `onboarding.md` decision mapping. Do not fill these with
+recommendations before the user answers:
+
+- Future requested work: `<explicitly granted Git actions and scope, including no-commit if chosen>`.
+- Automatic review: `<after implementation/testing or on request; preserve required gates>`.
+- Additional review agents: `<agent choice or at least one; aligned with configuration.review>`.
+- Coding/testing delegation: `<agent choice or solo>`.
+- Additional-agent models/efforts: `<allowed agent choice, user-specified pool, or same as main; actual capability limits>`.
+- Agent test cadence: `<after all story tasks before final commit/push, or before each task; required safeguards and CI remain>`.
+- Deferred decisions: `<existing owner/action, such as UI before the first screen, or none>`.
+
+This section can record an actual standing user grant for requested work; merely filling a
+template cannot grant authority. This adoption's own Git permission and final setup approval
+stay in its task record and do not replace future-task policy.
+
 ## Local Documentation Rule
 
 Follow `documentation.md` for structure and `agent-workflow.md` for selecting local context.

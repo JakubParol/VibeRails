@@ -28,8 +28,10 @@ imply automation, credentials, live service access, or a required provider.
 
 The [README start prompt](../../README.md#start-here---adopt-viberails) is the user's entry;
 the [shared prompt](../templates/adopt-standards-prompt.md) routes the agent here. This standard
-owns the conversation and adoption workflow. Configuration owns setting meanings; integration
-profiles own MCP setup. Do not duplicate their procedures in the README or a second wizard.
+owns the adoption workflow. [Onboarding rules](onboarding.md) own language, the one-question
+wait, truthful progress and decision mapping; the [question catalog](onboarding-questions.md)
+owns the English wording. Configuration owns field meanings; integration profiles own MCP
+setup. Follow this complete route from the README prompt, not a separate questionnaire.
 
 ## Guided Setup
 
@@ -54,45 +56,27 @@ If the source or target is inaccessible, name the missing access; do not fabrica
 
 ### 2. Ask Conditional Questions
 
-Ask at most three related questions per round, with a recommendation and a plain-language
-explanation. Use the conversation and existing evidence; do not ask for already-known values.
-Skip irrelevant branches and do not ask the user to fill a manifest or select Markdown filenames.
+Follow the [onboarding rules](onboarding.md) and [canonical questions](onboarding-questions.md).
+Use the user's language, ask one question at a time, display the actual n/X, and yield until
+the user answers. Reuse known answers and skip inapplicable topics; announce any scope/count
+change before the next question. No setup work proceeds during that wait.
 
-| Decision | Recommend or infer from evidence | Ask only when unresolved |
-|---|---|---|
-| Standards and working style | Relevant stack rules, closest light/standard starting point and any needed overrides. Preserve local boundaries. | Accept the proposed architecture, documentation, verification and review approach, or name exceptions. |
-| Web UI, when planned or present | Existing brand, component library, themes, density and browser checks; [UI direction](web-ui.md#design-direction-before-expansion) and [shadcn boundary](frontend.md#shadcnui-component-boundary). | Confirm unresolved visual direction and supported screens/themes; surface library/style migration instead of silently replacing existing UI. |
-| Work tracking | Existing tracker settings, separately from Git remotes. | Azure Boards, Jira, another tracker, or deliberately none? For a selected provider, use the coordinate questions below. |
-| Code hosting and delivery | Actual host/repository, base branch, current checks and conventions. | Resolve ambiguity; local changes, push/PR, draft handoff or explicitly authorized merge? |
-| Platform and tools | Actual client, OS/shell and existing project tools; planned platforms are not tested ones. | Missing prerequisites, CI setup or supported installation needed for the agreed task. |
-| Optional skills | Useful selected workflows and current user/repository-scope collisions. | None, user-scope or vendored selection? Never install the entire skill pack implicitly. |
-| Delegation and learning | Existing runtime/model policy and any configured self-improve sink. | Permission/capability gaps and whether to enable a sink; no benchmark questionnaire or invented model catalog. |
-
-For Azure Boards ask for the organization URL and project; for Azure Repos also identify the
-repository and confirm whether its project is the same. For Jira ask for the site/base URL and
-project key. Ask Cloud versus server edition only when support is uncertain. Once access is
-available, discover relevant types/areas/boards through scoped reads rather than asking for
-internal IDs; have the user resolve meaningful ambiguity. Team, area, iteration, board or sprint
-are follow-ups only when the intended workflow needs them. A project URL is not an MCP endpoint.
-
-For `workTracking: none`, omit tracker-specific coordinates, login and sink questions; selected
-code-host readiness still applies. Preserve any existing independent learning sink. For a selected
-tracker ask whether to connect now or explicitly defer. Preserve that selection when deferred; never silently change it to `none`.
-The [MCP setup procedure](integration-profiles.md#mcp-connection-setup) owns connection details.
+Collect a browser link for a selected tracker rather than requiring technical IDs. Resolve
+resource coordinates through existing evidence or scoped reads; a project URL is not an MCP
+endpoint. For `workTracking: none`, omit task-tracker coordinates, login and write questions,
+but still resolve the separate improvement-reporting choice. Preserve a selected tracker when
+access is deferred and preserve any independent learning sink. The
+[MCP setup procedure](integration-profiles.md#mcp-connection-setup) owns approved connection work.
 
 ### 3. Approve One Setup And Delivery Plan
 
 Before target/client edits, installation or authentication, summarize: chosen source version and
 settings, preserved local decisions, files and client configuration scope to change, selected
 skills, prerequisite costs/risks, proposed resource-limited reads, gaps and the delivery endpoint.
-Ask for approval of that plan, not each routine step. A current explicit grant covering it can
+Use the catalog's final approval question, separately from future-task Git policy and the Git
+actions selected for this adoption. Ask for approval of that plan, not each routine step. A current explicit grant covering it can
 be reused; ask only for missing consequential choices or a changed boundary. Approval of local
 adoption does not imply global configuration, remote writes, product startup or paid services.
-
-For example: "Keep your current design and docs; add the proposed standards and two selected
-repository-local skills. Configure Jira in this project's client settings, let you sign in, and
-read the selected project. Open a PR without merging. Approve, adjust, or defer Jira setup?"
-This is a plan shape, not a default provider, skill count or permission grant.
 
 If conflicts cannot be resolved now, leave those local files unchanged and name the blocked
 portion. Required independent review without an available reviewer is a readiness question, not
@@ -190,10 +174,10 @@ docs, config files, and user confirmation.
 11. Document significant folders according to the explicitly selected
     [documentation bundle](documentation.md#documentation-bundles); preserve legacy coverage when unselected.
 12. Add folder-level `AGENTS.md` only where local rules differ from the parent.
-13. Do not copy skills into the target repository by default. Skills are optional Codex assets
-    distributed at the Codex user scope from the VibeRails checkout. Vendor a pinned copy into
-    the target `.agents/skills/` only on an explicit repository decision; never keep the same
-    skill name in both scopes. Record the decision in `agentSkills`.
+13. Add only the explicitly selected skills at the chosen scope: a pinned copy in target
+    `.agents/skills/` or one Codex user-scope installation. Reuse working selected installations;
+    preserve unrelated skills and resolve collisions. Never keep the same skill name in both
+    scopes. Record the actual distribution in `agentSkills`; no-skills is a valid choice.
 14. Define quality gates from existing scripts and stack profile defaults, including the
     path-to-scope map required by `quality-gate.md`.
 15. Record `target.projectProfiles[]` for the repository root and every standalone app,
@@ -302,10 +286,11 @@ explicit refresh limitation, not permission to reconstruct or guess prior instru
 ## Self-Improve Completion
 
 Adoption may finish with `selfImprove.enabled: false` only when the adoption record includes
-an open question or explicit decision explaining why. In that state agents prepare local
-self-improve ticket bodies but do not query, create, or comment sink tickets. Adoption is
-complete for documentation purposes, but self-improve writes remain disabled until the target
-repository records a concrete sink and auth checks.
+an open question or explicit decision explaining why. Summary-only is a complete intentional
+choice: describe relevant improvements at handoff without creating ticket bodies or reporting
+a missing sink as an error. For deferred ticket reporting, retain the selected intent and
+missing sink/access as a readiness gap. Neither disabled mode queries or writes sink tickets.
+Use the [self-improve policy](self-improve-loop.md#reporting-policy).
 
 ## Context Discipline
 
@@ -319,7 +304,7 @@ Copy standards that apply to the target repository:
 
 | Target | Standards |
 |---|---|
-| Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `configuration.md`, `adoption.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
+| Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `configuration.md`, `adoption.md`, `onboarding.md`, `onboarding-questions.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
 | Any code repo | `architecture.md`, `coding.md`, `stack-profiles.md` |
 | Web UI, any selected stack | `web-ui.md`; its framework-neutral rules do not create a new supported stack profile. |
 | Next.js / React | `frontend.md`, `web-ui.md` |
@@ -332,9 +317,9 @@ work. Store visual decisions in existing project design docs, not new manifest f
 second token registry. Documentation-only targets may defer the first screen and browser tools;
 copying these rules does not authorize creating applications, installing packages or claiming UI readiness.
 
-Skills are not copied during adoption. Install them once per machine at the Codex user scope
-from the VibeRails checkout only when the user wants those optional workflows. Vendor a pinned
-copy only on explicit decision.
+Skills are optional. Add only the agreed selection and scope under step 13 above; never install
+the entire pack merely because it is available. Keep supporting references usable without a
+runtime dependency on the source checkout and verify the chosen skills honor target policies.
 
 ## Output Requirements
 

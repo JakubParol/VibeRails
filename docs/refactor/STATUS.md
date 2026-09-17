@@ -7,22 +7,27 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 
 - Audit corrections were merged in [PR #18](https://github.com/JakubParol/VibeRails/pull/18);
   guided onboarding in [PR #19](https://github.com/JakubParol/VibeRails/pull/19).
-- Web UI standards are implemented in [PR #20](https://github.com/JakubParol/VibeRails/pull/20),
-  scope `web-ui-1`, branch `codex/web-ui-standards`, version 0.5.0 after confirmed merge.
-  [Agreement, research and verification](web-ui-standards.md).
-- The user explicitly authorized this implementation and merge after verification. All 14
-  scoped Markdown files passed focused checks; ten semantic scenarios received solo self-review.
-  Implementation source `7ba285e14642534daf091cfe143ab11e29df5a0d` passed all three jobs of
-  [run 35202691806](https://github.com/JakubParol/VibeRails/actions/runs/35202691806).
-- Closing records are edited and committed locally, then published in this same PR before
-  final-head CI. While PR #20 is open, merge remains pending. Require current-head evidence and
-  expected-head protection; the PR owns final source/tested/merge identities and actual results.
-  After confirmed merge, this scoped standards delivery is closed, not the runtime evaluation.
-- No adopter, UI package, application, client setting, schema, provider transport or later stage
-  changed. 00-07 remain Done; 08/09 remain Verification for actual model/independent-handoff proof.
-- Next action: if PR #20 is open, verify final-head CI and complete its authorized merge, then
-  read back remote main. Once merged, report the UI contract and stop for separately scoped
-  adoption and rendered-screen review. Do not start stage 10 or change another repository.
+- Web UI standards merged in [PR #20](https://github.com/JakubParol/VibeRails/pull/20),
+  main `988d2279be6963a5f848039d8714921383c768fb`, version 0.5.0.
+  [Agreement, research and verification](web-ui-standards.md) remain historical evidence.
+- Current delivery: `plain-onboarding-1`, branch `codex/onboarding-plain-questions`, candidate
+  0.5.1. The user authorized the 21-question onboarding correction, commit, push, PR and merge
+  after checks, then required English repository content and user-language conversation.
+  [Scope, scenario checks, review and limits](plain-onboarding.md).
+- The README prompt routes through the shared prompt and adoption to a canonical catalog and
+  conversation rules. Decision mappings, test cadence and skills follow the same contract.
+  Closing records are committed on this branch before publication and final-head CI.
+- While the delivery PR is open, merge remains pending. Require current-head CI and expected-head
+  protection; the PR/report owns final source/tested/merge identities. Confirm remote main before
+  calling this documentation delivery complete. Do not add a post-merge checkpoint PR.
+- No adopter, UI package, application, private client setting, schema, provider transport or
+  later stage changed. 00-07 remain Done; 08/09 remain Verification for their original missing
+  model/independent-handoff trials. Static scenario review is not a fresh user conversation.
+- Independent review and its corrective delta are complete with no remaining findings; focused
+  checks and the single actual-copy adoption case passed. Fresh-session behavior remains untested.
+- Next action: publish this same delivery, verify final-head
+  CI, complete its authorized merge and read back main. Once merged, report the README entry
+  and the fresh-session walkthrough, then stop. Do not adopt another repository or start stage 10.
 - Preserve frozen comparisons. Document CI and semantic review do not certify appearance,
   accessibility conformance or performance. Do not add a post-merge checkpoint PR.
 

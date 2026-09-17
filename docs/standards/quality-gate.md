@@ -22,6 +22,29 @@ Broad type checks, full suites, builds and aggregate gates belong to PR Verifica
 - Full CI results remain required wherever the project requires them. Never suppress a failing
   check, lower a threshold, or treat absent/skipped verification as PASS.
 
+## Agent Test Cadence
+
+When explicitly selected during onboarding, follow the target's recorded cadence separately
+from `configuration.verification`, which owns local/CI responsibility rather than frequency:
+
+- **After all tasks in a User Story:** write meaningful tests with each code change, implement
+  the tasks in sequence, then run the focused evidence covering the whole requested change,
+  fix failures and check fixes before its final commit and push. Earlier authorized commits
+  and pushes save progress; they do not certify tested completion. For a single task, use the
+  same rule before that task's final commit/push without inventing subtasks or an empty commit.
+- **Before every task's commit and push:** run that task's relevant focused evidence first.
+  This still does not require the full repository suite after each task.
+
+Both retain small checks needed to reproduce or fix a concrete defect, required safeguards,
+and existing required CI. Required per-commit hooks/checks still run; explain any conflict with
+the selected cadence rather than disabling them. Broad suites/builds remain in PR Verification
+unless explicitly requested locally. Finish agent-run focused tests before the final commit;
+CI that requires a push runs afterward and must pass before verified delivery/merge.
+After review fixes, check the affected behavior before the final fix commit and push, reusing
+unchanged green evidence. Documentation-only changes use document checks, not application tests.
+Unselected projects keep their existing cadence. Test cadence changes neither Git permission
+nor automatic review timing or required review coverage.
+
 ## Path-To-Scope Map
 
 Map changed paths to focused local evidence and CI coverage. A scope name alone does not make

@@ -6,9 +6,24 @@ can fix them once instead of rediscovering them in every adopting repository.
 This first stage is ticket reporting only. Cyclic analysis and scheduled fixing are a later
 workflow.
 
+## Reporting Policy
+
+Follow the selected improvement-reporting choice separately from permission to update ordinary
+work items. **Summary-only** is a complete policy: `selfImprove.enabled: false` with its deliberate
+reason, no sink queries/writes, no mandatory ticket draft, and no repeated missing-sink warning.
+Describe relevant findings briefly at handoff. **Propose and ask** prepares a sanitized proposal
+and waits before creating/commenting. **Automatic** permits scoped creation/commenting only
+under the actual standing user grant, selected sink, dedupe and working access.
+
+The selected provider's `writeApprovalPolicy` for assigned work does not select
+`selfImprove.writeApprovalPolicy`. If proposals or automatic reporting were chosen without a
+usable sink, retain that intent in target rules and record the missing destination/access as an
+open question. Do not create a tracker or copy another project's coordinates. Ordinary task
+fixes stay within that task's authority; improvement proposals normally belong at handoff.
+
 ## What To Report
 
-Create or update a self-improve ticket when an agent hits a reusable failure such as:
+Apply the selected reporting policy when an agent hits a reusable failure such as:
 
 - Azure DevOps/Jira MCP operation selection, query, transition or comment failures
 - Git command, branch, remote, merge, or rebase workflow mistakes
@@ -22,7 +37,8 @@ normal tracker.
 
 ## Required Agent Behavior
 
-When a reusable failure is found:
+When a reusable failure is found, first apply [reporting policy](#reporting-policy). For a
+ticket mode (not summary-only):
 
 1. Sanitize the symptom. Remove secrets, tokens, cookies, private user data, raw customer data,
    and large raw API responses.

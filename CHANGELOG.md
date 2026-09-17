@@ -3,6 +3,21 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.5.1 - One-Question Guided Onboarding
+
+- Route the README onboarding prompt to one English catalog of 21 questions, with faithful
+  conversation-language switching, one question and a real wait, and an honest dynamic n/X.
+- Keep future-task Git policy, adoption Git actions and final approval separate; preserve
+  independent review timing/staffing, delegation, model, skill, tracker and improvement choices.
+- Record decisions unsupported by manifest v1 as explicit target project rules, not substitute
+  enum values. Support after-story testing before the final commit/push while retaining small
+  repair checks, required safeguards and current CI.
+- Preserve existing settings and UI deferrals. No new wizard/configuration engine, installer,
+  client change or adoption into another project is included.
+
+The delivery record distinguishes semantic/document checks from an unperformed fresh-session
+conversation. Stages 08/09 retain their original Verification gaps.
+
 ## 0.5.0 - Web UI Quality Contract
 
 - Require project-owned shadcn/ui for React web components, with no raw Radix in feature code;

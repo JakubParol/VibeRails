@@ -34,6 +34,7 @@ This index is the entry point for all standards and templates in this repository
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Original 15-source register, stage 08 assessment and explicitly unavailable material. |
 | [Web UI standards delivery](refactor/web-ui-standards.md) | Scope, primary-source decisions and evidence limits for the web UI contract. |
 | [Guided onboarding delivery](refactor/guided-onboarding.md) | Scope, scenario review and verification limits for the README-led setup path. |
+| [Plain-question onboarding delivery](refactor/plain-onboarding.md) | English catalog, user-language conversation, conditional counts, decision mapping and delivery evidence. |
 | [08-09 verification follow-up](refactor/verification-08-09.md) | Reproduced instruction-boundary fixes, platform evidence and original acceptance gaps. |
 
 Stage 07 provides the frozen model-neutral baseline. The stage 08 assessment records all
@@ -46,6 +47,8 @@ The register and evidence are internal refactor records, not adoption templates.
 |---|---|
 | [agent-workflow.md](standards/agent-workflow.md) | How AI agents load context, plan work, edit files, verify changes, and report results. |
 | [adoption.md](standards/adoption.md) | How agents apply this standards pack to another repository. |
+| [onboarding-questions.md](standards/onboarding-questions.md) | Canonical English questions, options and recommendations for guided setup. |
+| [onboarding.md](standards/onboarding.md) | User-language conversation, real question counts, conditional questions and faithful decision storage. |
 | [adoption-manifest.md](standards/adoption-manifest.md) | Required `.viberails/adoption.json` fields for adopted repositories. |
 | [change-protocol.md](standards/change-protocol.md) | Required branch, commit, push, PR, and review-loop protocol for AI agents. |
 | [documentation.md](standards/documentation.md) | Required Markdown structure, folder documentation, indexes, and navigation rules. |
