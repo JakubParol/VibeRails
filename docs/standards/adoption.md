@@ -61,6 +61,7 @@ Skip irrelevant branches and do not ask the user to fill a manifest or select Ma
 | Decision | Recommend or infer from evidence | Ask only when unresolved |
 |---|---|---|
 | Standards and working style | Relevant stack rules, closest light/standard starting point and any needed overrides. Preserve local boundaries. | Accept the proposed architecture, documentation, verification and review approach, or name exceptions. |
+| Web UI, when planned or present | Existing brand, component library, themes, density and browser checks; [UI direction](web-ui.md#design-direction-before-expansion) and [shadcn boundary](frontend.md#shadcnui-component-boundary). | Confirm unresolved visual direction and supported screens/themes; surface library/style migration instead of silently replacing existing UI. |
 | Work tracking | Existing tracker settings, separately from Git remotes. | Azure Boards, Jira, another tracker, or deliberately none? For a selected provider, use the coordinate questions below. |
 | Code hosting and delivery | Actual host/repository, base branch, current checks and conventions. | Resolve ambiguity; local changes, push/PR, draft handoff or explicitly authorized merge? |
 | Platform and tools | Actual client, OS/shell and existing project tools; planned platforms are not tested ones. | Missing prerequisites, CI setup or supported installation needed for the agreed task. |
@@ -320,10 +321,16 @@ Copy standards that apply to the target repository:
 |---|---|
 | Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `configuration.md`, `adoption.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
 | Any code repo | `architecture.md`, `coding.md`, `stack-profiles.md` |
-| Next.js | `frontend.md` |
+| Web UI, any selected stack | `web-ui.md`; its framework-neutral rules do not create a new supported stack profile. |
+| Next.js / React | `frontend.md`, `web-ui.md` |
 | Python FastAPI | `backend.md`, `backend-testing.md` |
 
 Do not copy standards that do not apply unless the target repository expects that stack soon.
+For React web adoption, propose the shadcn component/style contract and actual browser proof
+path. Preserve existing libraries until an authorized migration; record conflicts and remaining
+work. Store visual decisions in existing project design docs, not new manifest fields or a
+second token registry. Documentation-only targets may defer the first screen and browser tools;
+copying these rules does not authorize creating applications, installing packages or claiming UI readiness.
 
 Skills are not copied during adoption. Install them once per machine at the Codex user scope
 from the VibeRails checkout only when the user wants those optional workflows. Vendor a pinned

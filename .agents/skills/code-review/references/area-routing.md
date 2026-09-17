@@ -41,7 +41,7 @@ backend/API, worker, and shared package specialist prompt, and the
 
 | Changed path | Specialist | Additional docs to load when present | Focus |
 |---|---|---|---|
-| `apps/**`, `web/**`, `frontend/**`, `src/app/**`, `src/pages/**`, `components/**` | Frontend specialist | Frontend standards; nearest app `AGENTS.md`, `README.md`, `docs/INDEX.md`; package manager scripts | React/Next.js or other UI framework boundaries, client/server split, accessibility, state/data access, forms, error states, browser behavior, frontend tests |
+| `apps/**`, `web/**`, `frontend/**`, `src/app/**`, `src/pages/**`, `components/**` | Frontend specialist | Frontend and web UI/UX standards; existing visual direction; nearest app `AGENTS.md`, `README.md`, `docs/INDEX.md`; package manager scripts | React/Next.js or other UI framework boundaries, shadcn reuse/raw-primitive restrictions, component-owned styles, client/server split, accessibility, states and actual visual/interaction evidence |
 | `services/**`, `api/**`, `backend/**`, `src/api/**`, `server/**` | Backend/API specialist | Backend standards; nearest service `AGENTS.md`, `README.md`, `docs/INDEX.md` | Public API behavior, request/response contracts, auth/authorization, clean architecture layers, persistence, error handling, service tests |
 | `workers/**`, `jobs/**`, `queues/**`, `functions/**` | Worker specialist | Backend standards; nearest worker docs | Async execution, retries, idempotency, scheduling, queue semantics, observability, tests |
 | `packages/**`, `libs/**`, `shared/**` | Shared package specialist | Coding and architecture standards; nearest package docs | Reuse boundaries, dependency direction, public package contracts, avoiding dumping-ground utilities |
@@ -112,8 +112,12 @@ Use documented gates only:
 - If scripts exist, prefer repository-defined commands such as `lint`, `test`, `typecheck`,
   `format`, or project-specific wrappers.
 - For docs-only changes, use a Markdown/navigation audit appropriate to the repository, loading the documentation-audit checklist only when adoption or restructuring requires it.
-- For rendered UI behavior changes, include browser/E2E checks only when the repository
-  documents them or the task explicitly needs them.
+- For rendered UI changes, apply the target web UI standard's visual acceptance using actual
+  screen/interaction evidence at the reviewed revision. A read-only specialist can inspect existing
+  artifacts without launching another suite. Missing browser proof stays unverified, not a claim
+  that code review proves appearance. New tool installation still needs scoped authority.
+- Without adopted web UI rules, follow the native target's documented checks and actual task;
+  do not retroactively impose VibeRails or treat absent optional docs as a defect.
 
 Do not call an area verified if its documented gate was not run or did not pass.
 

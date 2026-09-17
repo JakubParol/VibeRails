@@ -32,6 +32,7 @@ This index is the entry point for all standards and templates in this repository
 | [Refactor startup prompt](refactor/start.md) | Copyable prompt for resuming orchestration without assuming approval. |
 | [Scoped inspiration review](refactor/inspiration-review.md) | Article/code findings, limitations and small candidate refinements. |
 | [Astra refactor reading list](astra-refactor-reading-list.md) | Original 15-source register, stage 08 assessment and explicitly unavailable material. |
+| [Web UI standards delivery](refactor/web-ui-standards.md) | Scope, primary-source decisions and evidence limits for the web UI contract. |
 | [Guided onboarding delivery](refactor/guided-onboarding.md) | Scope, scenario review and verification limits for the README-led setup path. |
 | [08-09 verification follow-up](refactor/verification-08-09.md) | Reproduced instruction-boundary fixes, platform evidence and original acceptance gaps. |
 
@@ -58,7 +59,8 @@ The register and evidence are internal refactor records, not adoption templates.
 | [coding.md](standards/coding.md) | General coding standards shared by all stacks. |
 | [backend.md](standards/backend.md) | Backend standards for Python, FastAPI, persistence, DI, logging, and imports. |
 | [backend-testing.md](standards/backend-testing.md) | Backend test strategy, PostgreSQL integration tests, fixtures, and test rules. |
-| [frontend.md](standards/frontend.md) | Frontend standards for Next.js, React, state, styling, forms, and tests. |
+| [web-ui.md](standards/web-ui.md) | Visual direction, layout, accessible UX, data/AI states and browser acceptance. |
+| [frontend.md](standards/frontend.md) | Next.js/React, shadcn component boundaries, local styles, data and tests. |
 
 ## Templates
 

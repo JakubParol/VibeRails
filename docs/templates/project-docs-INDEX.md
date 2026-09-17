@@ -54,6 +54,16 @@ Link to the repository-level standards instead of duplicating them inside this p
 | [Architecture](<relative-path-to-repo>/docs/standards/architecture.md) | Architecture and dependency rules. |
 | [Coding](<relative-path-to-repo>/docs/standards/coding.md) | General coding rules. |
 
+For a web area, include these selected owners; omit this block for non-web projects:
+
+| Standard | Purpose |
+|---|---|
+| [Web UI and UX](<relative-path-to-repo>/docs/standards/web-ui.md) | Design direction, accessible interaction and browser acceptance. |
+| [Frontend](<relative-path-to-repo>/docs/standards/frontend.md) | React/Next.js and shadcn implementation; include only when applicable. |
+
+Link the existing project design direction and token/component locations under Local Documents.
+Do not duplicate token values or create a design system merely to fill this index.
+
 Replace `<relative-path-to-repo>` with the path from this `docs/INDEX.md` file to the
 repository root. For `apps/web/docs/INDEX.md`, this is `../../..`.
 

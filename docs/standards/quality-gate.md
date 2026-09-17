@@ -30,12 +30,18 @@ an aggregate command cheap; inspect what an existing script actually runs. Examp
 | Changed paths | Focused local evidence | Full PR coverage |
 |---|---|---|
 | API/worker behavior | Changed-file checks and relevant behavior/adapter cases. | Required types, suites, integration and build checks. |
-| Web behavior | Changed-file checks and affected interaction tests. | Required web types, tests and build. |
+| Web behavior | Changed-file checks, affected interactions and [visual acceptance](web-ui.md#visual-acceptance) for rendered changes. | Required web types, tests, build and selected browser/accessibility checks. |
 | Shared tooling/lockfiles | Small relevant regression or smoke test. | Required affected-project/full repository checks. |
 | Markdown only | Changed-document text, links and relevant metadata. | Full documentation/navigation/metadata gate. |
 
 Use the branch diff and any current task edits to select evidence. If the map is missing,
 document a small mapping from existing commands/CI; do not fall back to a full local run.
+
+For rendered UI work, [web-ui.md](web-ui.md#visual-acceptance) owns screen/interaction proof;
+[frontend.md](frontend.md#performance-and-testing) owns stack-specific test choices. Inspect the
+changed UI through a targeted local preview or CI artifact/browser session. This does not
+permit a full local build/suite. Missing browser evidence is unverified visual acceptance, not
+PASS; a documents-only standards change needs no invented app or screenshot.
 
 ## Recommended Gate Script Interface
 

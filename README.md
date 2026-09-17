@@ -65,6 +65,18 @@ The standards are project-agnostic, but currently cover these common setups:
 The standards are intentionally opinionated. Project-specific documents may add detail, but
 they should not weaken the defaults unless the exception is explicit and justified.
 
+## Web UI Quality
+
+React web projects use project-owned shadcn/ui components with component-local styles and
+semantic theme tokens. No raw Radix usage in feature code. New foundations prefer shadcn's
+Base UI option; working shadcn/Radix internals are not automatically migrated.
+
+[Web UI and UX](docs/standards/web-ui.md) defines visual direction, reusable layout patterns,
+responsive/accessibility states and browser acceptance. [Frontend](docs/standards/frontend.md)
+owns Next.js boundaries, component reuse, styling and test selection. Build one polished
+representative screen before expanding; do not add a second design system or decorative stack.
+These standards guide implementation, not a guarantee of visual quality without inspecting it.
+
 ## Agent Skills
 
 Versioned Codex skills live in [.agents/skills](.agents/skills/README.md). They capture
@@ -127,6 +139,7 @@ local constraints, and optional skills add only requirements for the selected op
 | General coding | [docs/standards/coding.md](docs/standards/coding.md) |
 | Backend | [docs/standards/backend.md](docs/standards/backend.md) |
 | Backend testing | [docs/standards/backend-testing.md](docs/standards/backend-testing.md) |
+| Web UI and UX | [docs/standards/web-ui.md](docs/standards/web-ui.md) |
 | Frontend | [docs/standards/frontend.md](docs/standards/frontend.md) |
 
 ## Agent Assets
