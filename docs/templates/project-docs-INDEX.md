@@ -1,33 +1,19 @@
 # Documentation Index
 
-This index is the entry point for documentation in this project root.
-
-When copying this template, replace placeholder paths with relative Markdown links once the
-target paths are known.
+Entry point for documentation in this project root. Replace placeholder paths with relative
+links when copying.
 
 ## Project Docs
 
 | Document | Purpose |
 |---|---|
-| [Project README](../README.md) | Project overview, setup, structure, and quality gate. |
-| [Project agents](../AGENTS.md) | AI agent rules and required reading for this project. |
+| [Project README](../README.md) | Overview, setup, structure and quality gate. |
+| [Project agents](../AGENTS.md) | Agent rules, VibeRails decisions and KIS settings. |
+| [VibeRails adoption](<relative-path-to-repo>/docs/viberails-adoption.md) | Profiles, copied standards, gates, auth and open decisions. |
 
-## Stack Profile
-
-Adopted VibeRails pack version: `<version from CHANGELOG.md>`.
-
-Selected profile: `<Next.js frontend only | Next.js full stack | Next.js + Python FastAPI | Python CLI | Python worker | shared package | infrastructure | Dapr or distributed app | mixed monorepo | documented exception>`
-
-## Adoption Record
-
-| Document | Purpose |
-|---|---|
-| [VibeRails adoption](<relative-path-to-repo>/docs/viberails-adoption.md) | Selected profiles, copied standards, quality gates, auth setup, and unresolved decisions. |
+Adopted VibeRails pack version: `<version from CHANGELOG.md>`. Stack profile: `<profile>`.
 
 ## Local Documents
-
-Add project-specific design notes, ADRs, runbooks, testing guides, and operational documents
-as they are created.
 
 | Document | Purpose |
 |---|---|
@@ -35,37 +21,22 @@ as they are created.
 
 ## Shared Standards
 
-Link to the repository-level standards instead of duplicating them inside this project.
-
 | Standard | Purpose |
 |---|---|
-| [Agent workflow](<relative-path-to-repo>/docs/standards/agent-workflow.md) | How agents load context, edit, verify, and report work. |
-| [Adoption](<relative-path-to-repo>/docs/standards/adoption.md) | How agents apply this standards pack to another repository. |
-| [Adoption manifest](<relative-path-to-repo>/docs/standards/adoption-manifest.md) | Required `.viberails/adoption.json` fields for adopted repositories. |
-| [Configuration](<relative-path-to-repo>/docs/standards/configuration.md) | Explicit policy choices, compatibility and instruction pins. |
-| [Change protocol](<relative-path-to-repo>/docs/standards/change-protocol.md) | Required branch, commit, push, PR, and review-loop protocol for AI agents. |
-| [Documentation](<relative-path-to-repo>/docs/standards/documentation.md) | Documentation structure, indexes, and navigation rules. |
-| [Documentation audit](<relative-path-to-repo>/docs/standards/documentation-audit.md) | Checklist for verifying documentation coverage and navigation. |
-| [Integration profiles](<relative-path-to-repo>/docs/standards/integration-profiles.md) | Azure DevOps, Jira, GitHub, and Azure Repos profile contracts. |
-| [Platform profiles](<relative-path-to-repo>/docs/standards/platform-profiles.md) | PowerShell and POSIX shell profile rules. |
-| [Quality gate](<relative-path-to-repo>/docs/standards/quality-gate.md) | Required verification command standards by project and stack. |
-| [Self-improve loop](<relative-path-to-repo>/docs/standards/self-improve-loop.md) | Ticket-based reporting loop for reusable agent and tooling failures. |
-| [Stack profiles](<relative-path-to-repo>/docs/standards/stack-profiles.md) | Stack-specific standard bundles for Next.js and FastAPI projects. |
-| [Architecture](<relative-path-to-repo>/docs/standards/architecture.md) | Architecture and dependency rules. |
-| [Coding](<relative-path-to-repo>/docs/standards/coding.md) | General coding rules. |
+| [KIS](<relative-path-to-repo>/docs/standards/kis.md) | Keep It Simple rule, KIS review and decision model. |
+| [Agent workflow](<relative-path-to-repo>/docs/standards/agent-workflow.md) | Context routing, adopted choices and delegation. |
+| [Change protocol](<relative-path-to-repo>/docs/standards/change-protocol.md) | Task lifecycle, authorization, Git, review and report. |
+| [Documentation](<relative-path-to-repo>/docs/standards/documentation.md) | Bundles, documentation roots and navigation. |
+| [Quality gate](<relative-path-to-repo>/docs/standards/quality-gate.md) | Local versus CI checks, test cadence and evidence. |
+| [Integration profiles](<relative-path-to-repo>/docs/standards/integration-profiles.md) | Tracker and code-host rules, MCP recovery and auth. |
+| [Self-improve loop](<relative-path-to-repo>/docs/standards/self-improve-loop.md) | Reporting reusable agent and tooling failures. |
+| [Architecture](<relative-path-to-repo>/docs/standards/architecture.md) | Code repos: minimal and layered boundaries. |
+| [Coding](<relative-path-to-repo>/docs/standards/coding.md) | Code repos: general coding rules. |
+| [Stack profiles](<relative-path-to-repo>/docs/standards/stack-profiles.md) | Code repos: stack bundles and CI defaults. |
 
-For a web area, include these selected owners; omit this block for non-web projects:
-
-| Standard | Purpose |
-|---|---|
-| [Web UI and UX](<relative-path-to-repo>/docs/standards/web-ui.md) | Design direction, accessible interaction and browser acceptance. |
-| [Frontend](<relative-path-to-repo>/docs/standards/frontend.md) | React/Next.js and shadcn implementation; include only when applicable. |
-
-Link the existing project design direction and token/component locations under Local Documents.
-Do not duplicate token values or create a design system merely to fill this index.
-
-Replace `<relative-path-to-repo>` with the path from this `docs/INDEX.md` file to the
-repository root. For `apps/web/docs/INDEX.md`, this is `../../..`.
+Add `web-ui.md`, `frontend.md`, `backend.md` and `backend-testing.md` only for those stacks.
+Replace `<relative-path-to-repo>` with the path from this file to the repository root (for
+`apps/web/docs/INDEX.md` it is `../../..`).
 
 ## Navigation
 

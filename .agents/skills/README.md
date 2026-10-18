@@ -15,8 +15,8 @@ into target repositories by default.
 ## Rules
 
 - Keep each skill self-contained with a required `SKILL.md`.
-- Put repeatable commands in `scripts/`.
-- Put detailed, task-specific reference material in `references/`.
+- Put detailed, task-specific reference material in `references/`. Add a `scripts/` folder only
+  for a demonstrated repeated need; provider operations use MCP, never wrapper scripts.
 - Do not place secrets, personal access tokens, generated credentials, or raw customer data in
   skill files.
 - Keep reusable defaults in skills and repository-specific decisions in the adopting

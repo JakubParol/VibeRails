@@ -1,105 +1,58 @@
 # AGENTS.md - <Project Name>
 
-This file is the root instruction file for AI agents working in this project.
+Root instruction file for agents working in this project.
 
-## Required Reading
+## Context
 
-Follow `agent-workflow.md` from the owning standards path, resolved through `docs/INDEX.md`.
-It is the single context router, including parent/child instructions and task-specific reading.
-List only additional project requirements here: `<none unless needed>`.
+Follow `agent-workflow.md` from the owning standards path (see `docs/INDEX.md`); it routes all
+task context. Apply `kis.md`: if a simple solution is enough, keep it simple.
+Additional required reading for this project: `<none unless needed>`.
+
+Project purpose, main applications, services and boundaries: `<short description or link>`.
+Stack profile: `<profile, or see .viberails/adoption.json target.projectProfiles>`.
 
 ## Adopted Configuration
 
-When selected, `.viberails/adoption.json` owns explicit configuration and instruction pins.
-Follow `configuration.md` and the canonical router; do not duplicate its values here.
-Absent configuration preserves the project's existing policy. Unknown/partial choices require
-reconciliation, not defaulting. Record only project-specific differences below.
+`.viberails/adoption.json` holds selected configuration and instruction pins; do not repeat its
+values here. Without `configuration`, the project's existing policy applies. Local architecture
+decisions or exceptions: `<links or none>`.
 
-## Project Context
+## VibeRails Decisions
 
-Describe the project purpose, main applications, services, and bounded contexts.
+Filled from the user's onboarding answers only, never from recommendations:
 
-## Stack Profile
+- Git after a requested task: `<allowed actions and scope, including "nothing">`.
+- Code review: `<automatic or on request>`; staffing `<agent decides or at least one additional agent>`.
+- Additional agents and models: `<allowed with agent choice, user-specified pool, same as main, or solo>`.
+- Test cadence: `<after all story tasks before the final commit/push, or before each task>`.
+- Deferred decisions: `<owner and next action, for example UI direction before the first screen, or none>`.
 
-Select one and keep it aligned with `README.md` and `docs/INDEX.md`:
+These record a standing grant for requested work; filling the template grants nothing.
 
-- Next.js frontend only
-- Next.js full stack
-- Next.js + Python FastAPI
-- Python CLI
-- Python worker
-- shared package
-- infrastructure
-- Dapr or distributed app
-- mixed monorepo: use `.viberails/adoption.json` `target.projectProfiles[]` for per-root profiles
-- documented exception: <profile>
+## KIS
 
-## Architecture Rules
+- Decision model: `<jev | microsoft-decision-1 | none>`; version or deployment `<jev-1.13.0 or deployment name>`.
+- Connection: `<working | not connected yet: next action>`. Credentials stay outside Git.
+- Fallback: the main agent decides when the model is unavailable or unclear.
+- KIS reviewer: `<kis-review skill or none>`, used only for substantial changes with an open
+  simplicity question.
 
-- Architecture variant: use selected configuration or the existing explicit decision when unselected.
-- Follow the owning `architecture.md`; record only local boundaries or exceptions here.
-- Local architecture decisions: `<links or none>`.
+## Change Protocol Deltas
 
-## Change Protocol
+Follow `change-protocol.md`. Project-specific differences only:
 
-Agents must follow `change-protocol.md` from the owning standards path for branch setup,
-commits, push, PR, and review loops. Do not restate those rules here; this section only
-records project-specific deltas:
-
-- Base branch: `<main unless documented otherwise>`
-- Branch naming: `<repository convention, if any>`
-- Commit convention: `<repository convention, if any>`
-- Other deviations from the change protocol: `<none by default>`
-- Preferred agent handoff: `<local result | draft PR | project-specific workflow>`.
-- Handoff owner and required evidence: `<existing team policy or task-specific agreement>`.
-
-These preferences are not new manifest fields or write permission. Resolve actual task authority
-and handoff through the change protocol; a preferred endpoint does not authorize reaching it.
-
-## Additional Workflow Decisions
-
-During onboarding, fill only the decisions not represented by manifest fields, or link their
-existing project owner. Use the owning `onboarding.md` decision mapping. Do not fill these with
-recommendations before the user answers:
-
-- Future requested work: `<explicitly granted Git actions and scope, including no-commit if chosen>`.
-- Automatic review: `<after implementation/testing or on request; preserve required gates>`.
-- Additional review agents: `<agent choice or at least one; aligned with configuration.review>`.
-- Coding/testing delegation: `<agent choice or solo>`.
-- Additional-agent models/efforts: `<allowed agent choice, user-specified pool, or same as main; actual capability limits>`.
-- Agent test cadence: `<after all story tasks before final commit/push, or before each task; required safeguards and CI remain>`.
-- Deferred decisions: `<existing owner/action, such as UI before the first screen, or none>`.
-
-This section can record an actual standing user grant for requested work; merely filling a
-template cannot grant authority. This adoption's own Git permission and final setup approval
-stay in its task record and do not replace future-task policy.
-
-## Local Documentation Rule
-
-Follow `documentation.md` for structure and `agent-workflow.md` for selecting local context.
-Documentation bundle: use selected configuration, preserving the existing policy when unselected.
-Do not delete useful existing docs to fit a lighter bundle. Local documentation differences:
-`<none unless needed>`.
+- Base branch `<main>`; branch naming `<convention>`; commit convention `<convention>`.
+- Preferred handoff and owner: `<local result | draft PR | project workflow>`.
 
 ## Quality Gate
 
-Follow the owning `quality-gate.md` for local/CI responsibility and evidence. Keep only this
-project's actual commands, paths, required CI checks and explicit exceptions below.
+Follow `quality-gate.md`. Actual commands and required CI checks:
 
-Path-to-scope map (keep aligned with CI change detection):
+| Path prefix | Scope | Working directory | Focused local command | Required CI check |
+|---|---|---|---|---|
+| `<services/api/**>` | `<api>` | `<services/api>` | `<scoped command>` | `<ci check>` |
+| `<shared tooling>` | shared | `<repo root>` | `<small regression>` | `<full required coverage>` |
 
-| Path prefix | Scope | Working directory | Focused local command | Platform | Required CI check |
-|---|---|---|---|---|---|
-| `<services/api/**>` | `<api>` | `<services/api>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
-| `<apps/web/**>` | `<web>` | `<apps/web>` | `<scoped command>` | `<posix|powershell|both>` | `<ci check>` |
-| `<shared tooling, lockfiles>` | shared | `<repo root>` | `<small relevant regression>` | `<posix|powershell|both>` | `<full required coverage>` |
+## Local Rules And Hazards
 
-## Safety Rules
-
-Follow the protected-work and authorization rules in the owning `change-protocol.md`.
-Project-specific hazards or additional protections: `<none or links>`.
-
-## Reporting
-
-Follow `change-protocol.md#final-report` from the owning standards path. Add only local handoff
-requirements here: `<recipient, needed evidence, or none>`.
+`<project-specific constraints, warnings and documentation differences, or none>`

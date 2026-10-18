@@ -6,6 +6,7 @@ copied into many projects while keeping projects built in a consistent way.
 
 ## Required Reading
 
+Apply [KIS](docs/standards/kis.md) to every change, including this pack's own documents.
 Use [agent-workflow.md](docs/standards/agent-workflow.md) as the canonical context router.
 This repository's local additions: [README](README.md) explains the pack when needed,
 [docs/INDEX](docs/INDEX.md) locates owning standards/templates, and edits to documentation
