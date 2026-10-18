@@ -1,15 +1,15 @@
 # Backend Standard
 
-This standard applies to Python and FastAPI backend projects. It extends the general
-[coding standard](coding.md) and [architecture standard](architecture.md).
+For Python/FastAPI backends. Extends the [coding standard](coding.md) and
+[architecture standard](architecture.md).
 
 ## Architecture
 
 Use the [selected architecture variant](architecture.md#variant-selection), package by feature,
-and enforce dependencies inward. Both variants preserve the responsibilities below. The current
-layered default remains for legacy adoptees without an explicit variant decision.
+enforce dependencies inward. Both variants keep the responsibilities below. Legacy adoptees without
+an explicit variant keep the layered default.
 
-A minimal feature can use these roles without a separate domain or ports package:
+Minimal feature (no separate domain or ports package):
 
 ```text
 feature/
@@ -19,8 +19,7 @@ feature/
 `-- dependencies.py    # optional location for edge wiring; app wiring may serve small features
 ```
 
-A layered feature may use the following layout. Create only modules with a real responsibility;
-the tree illustrates possible roles, not files to scaffold unconditionally.
+Layered feature (roles, not scaffolding: create only modules with a real responsibility):
 
 ```text
 feature/
@@ -52,46 +51,39 @@ feature/
 
 ## Layer Responsibilities
 
-| Layer | Does | Does not |
-|---|---|---|
-| API | Request validation, schema mapping, DI wiring | Business logic, direct DB access |
-| Application | Use case orchestration, rules, transactions, ports | Import infrastructure, know HTTP |
-| Domain | Invariants, value objects, entity definitions | Import app, API, or infrastructure |
-| Infrastructure | DB queries, HTTP clients, queues, SDKs | Business decisions |
-
+Roles follow [architecture.md](architecture.md#recommended-layers); the API layer is the Interface
+layer: request validation, schema mapping, DI wiring, no business logic or direct DB access.
 Routes never call repositories directly.
 
 ## Layer Definition Of Done
 
-Self-verify every changed file against the checklist for its layer before committing. A miss
-is not a style nit; fix it before the commit.
+Check each changed file against its layer's list before committing; fix any miss first.
 
 Endpoint (router function) is done when:
 
-- it only validates input, maps schemas, and calls an application entry point (function or method);
-- it contains no branching on domain state and computes no derived business values;
-- it takes no repository, session, or SQL dependency;
+- it only validates input, maps schemas and calls an application entry point (function or method);
+- it has no branching on domain state and computes no derived business values;
+- it takes no repository, session or SQL dependency;
 - it maps known failures through the shared exception handler, not per-route try/except.
 
 Application service is done when:
 
-- it orchestrates the use case against ports, not concrete infrastructure;
-- every dependency is supplied through parameters or a constructor from an outer composition root;
-- persistence, HTTP, queue, and SDK calls happen behind ports it depends on;
+- it orchestrates against ports, not concrete infrastructure;
+- every dependency arrives via parameters or a constructor from an outer composition root;
+- persistence, HTTP, queue and SDK calls stay behind ports;
 - expected failures raise typed application/domain errors.
 
 Repository/adapter is done when:
 
-- it implements a port defined in the application layer;
-- its result follows the port contract: plain values/domain/read models, or no value for a
-  write-only operation; never ORM objects or raw driver rows;
-- it contains no business decisions;
+- it implements an application-layer port;
+- it returns what the port contract says: plain values/domain/read models, or an acknowledgement
+  or nothing for a write-only operation; never ORM objects or raw driver rows;
+- it makes no business decisions;
 - raw SQL stays inside it or in module-local SQL helpers.
 
-In minimal, a typed callable is a port and a function can implement it; do not require a class
-or a separate `ports.py` merely to satisfy the checklist. In layered, use explicit named ports
-and modules where they clarify the dependency. Pure rules need not acquire a domain package
-until it owns useful invariants or reuse. Both variants keep ORM models out of application code.
+Variants follow [Two Variants](architecture.md#two-variants): in minimal a typed callable is a
+port and a function can implement it, with no class or separate `ports.py` required. Both variants
+keep ORM models out of application code.
 
 ## Shortcut Examples
 
@@ -106,8 +98,8 @@ async def create_order(payload: OrderIn, repo: OrderRepo = Depends(get_repo)):
     return await repo.save(order)
 ```
 
-Right - this service-class example keeps the rule outside the route. A bound use-case function
-is also valid; the [paired examples](../templates/architecture-variants.md) show both styles:
+Right - the rule lives outside the route. A service class is one valid style; a bound use-case
+function is another ([paired examples](../templates/architecture-variants.md)):
 
 ```python
 @router.post("/orders")
@@ -133,47 +125,37 @@ def __init__(self, orders: OrderRepositoryPort) -> None:
 
 ## Dependency Injection
 
-- Inject through ordinary parameters or constructors. Framework DI may bind the application
-  operation at the interface edge; no generic DI container is required.
-- For layered features, prefer explicit composition roots, commonly `dependencies.py` per
-  feature. Minimal features may share the application's outer wiring location.
-- Wire adapter -> application operation -> route dependency. A route receives the bound use
-  case, not a repository, ORM session or save callback to pass into business code itself.
-- Do not use global service or repository singletons.
-- Do not import concrete infrastructure into application or domain code.
+- Wiring follows [Two Variants](architecture.md#two-variants): ordinary parameters or constructors,
+  no generic DI container. Framework DI may bind the application operation at the interface edge.
+- Wire adapter -> application operation -> route dependency; the route receives the bound use case,
+  never a repository, ORM session or save callback.
+- No global service or repository singletons.
 
 ## Async And IO
 
-- API endpoints, DB access, and external IO are async by default.
+- API endpoints, DB access and external IO are async by default.
 - Blocking or CPU-heavy work runs outside the API request path.
-- External calls must define timeouts.
+- External calls define timeouts.
 
 ## Persistence
 
-- Application depends on repository ports.
-- Infrastructure implements repository ports.
-- Keep persistence implementations cohesive by entity, aggregate or required capability;
-  minimal ports may be fulfilled by functions without a mandatory repository class.
-- Read ports return domain models or documented read values, never ORM objects or raw driver
-  rows. A write port may return an acknowledgement or no value, as its contract specifies.
-- Raw SQL stays in infrastructure.
-- Shared SQL helpers stay inside the module unless multiple modules truly need them.
+Repository cohesion follows [architecture.md](architecture.md#file-and-module-boundaries). Shared
+SQL helpers stay module-local unless multiple modules truly need them.
 
 ## Error Handling
 
-- Use small, typed, framework-neutral application/domain errors; share an exception base where
-  it helps handling, not to create an empty hierarchy.
+- Small, typed, framework-neutral application/domain errors. Share a base only where it helps
+  handling, not to build an empty hierarchy.
 - Errors may carry an application code, safe message and details. HTTP status belongs to the
-  interface handler, not the application error type.
-- Standard error types: not found, validation, business rule, conflict.
-- One global exception handler maps known error types/codes to HTTP status and the API envelope.
-  Preserve existing externally visible status/envelope behavior when relocating this mapping.
-- Do not use per-route try/catch for known application errors.
+  interface handler.
+- Standard types: not found, validation, business rule, conflict.
+- One global handler maps known error types/codes to HTTP status and the API envelope, preserving
+  externally visible status/envelope behavior when relocating the mapping.
 - Unhandled exceptions are logged with context and returned as generic 500 responses.
 
 ## Response Envelope
 
-All public API responses use a standard shape:
+All public API responses use this shape:
 
 ```json
 {
@@ -198,27 +180,23 @@ Collections include pagination metadata when relevant.
 
 ## Logging
 
-- Use structured JSON logging to stdout.
-- No `print()` statements in production code.
-- Include request context when available: request id, correlation id, actor id.
-- Use a shared logging helper instead of ad-hoc dicts.
-- Use `ERROR` for failures requiring attention, `WARNING` for recoverable issues, `INFO`
-  for business events, and `DEBUG` for development-only detail.
+- Structured JSON to stdout through a shared logging helper, not ad-hoc dicts. No `print()` in
+  production code.
+- Include request id, correlation id and actor id when available.
+- `ERROR` failures needing attention, `WARNING` recoverable issues, `INFO` business events, `DEBUG`
+  development-only detail.
 
 ## Import Boundaries
 
-`import-linter` contracts are required for FastAPI projects. Prose rules alone do not stop
-shortcuts; the gate must fail on a wrong import direction.
+`import-linter` contracts are required for FastAPI projects: prose does not stop shortcuts, so the
+gate must fail on a wrong import direction.
 
-Rules:
+- Application never imports infrastructure; domain never imports an outer layer.
+- Features never import another feature's internals; shared code lives in a documented shared
+  package.
 
-- Application cannot import infrastructure.
-- Domain cannot import any outer layer.
-- Feature modules cannot import another feature's internals.
-- Shared code lives in a documented shared package.
-
-For a minimal feature, check the actual flat module names without inventing a domain package.
-Keep wiring outside `application`; indirect imports through wiring also violate this rule.
+Minimal features: check the actual flat module names, with no invented domain package. Keep wiring
+outside `application`; imports through wiring also violate the rule.
 
 ```ini
 [importlinter]
@@ -234,8 +212,8 @@ forbidden_modules =
     app.<feature>.api
 ```
 
-For a layered feature with a domain package, use both the layer rule and the infrastructure
-rule. The fully qualified layer names below do not use a `containers` prefix:
+Layered features with a domain package: layer rule plus infrastructure rule (fully qualified names,
+no `containers` prefix):
 
 ```ini
 [importlinter]
@@ -259,14 +237,14 @@ forbidden_modules =
     app.<feature>.infrastructure
 ```
 
-Adapt contracts to real modules and preserve existing checks. These are contract excerpts,
-not a complete project guard: retain checks for forbidden framework/ORM imports and cross-feature
-internals too. The [forbidden](https://import-linter.readthedocs.io/en/latest/contract_types/forbidden/)
-and [layers](https://import-linter.readthedocs.io/en/v2.11/contract_types/layers/) references explain
-the shown syntax. Selecting a variant does not authorize removing import enforcement.
+Adapt contracts to real modules and keep existing checks. The excerpts are not a full guard: also
+keep checks for forbidden framework/ORM imports and cross-feature internals. Selecting a variant
+never removes import enforcement. Syntax:
+[forbidden](https://import-linter.readthedocs.io/en/latest/contract_types/forbidden/),
+[layers](https://import-linter.readthedocs.io/en/v2.11/contract_types/layers/).
 
-Do not add, widen, or justify `ignore_imports` entries to bypass architecture rules. If an
-import boundary fails, fix the dependency direction or stop and report the blocker.
+Never add, widen or justify `ignore_imports` entries to bypass architecture rules. On a failing
+boundary, fix the dependency direction or stop and report the blocker.
 
 ## Navigation
 
