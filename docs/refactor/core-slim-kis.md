@@ -66,10 +66,43 @@ and an explicit merge decision.
 | Task | Requested model | Reason | Outcome |
 |---|---|---|---|
 | Decision-model web research | Sonnet | Bounded fact gathering | Facts above; availability conflicts recorded. |
-| Slim seven stack standards | Sonnet | Bounded rewrite of disjoint files | Pending. |
+| Slim seven stack standards | Sonnet | Bounded rewrite of disjoint files | 17% shorter; every threshold, example and linked anchor retained. Parent spot-checked and added the UI direction questions. |
+| Onboarding conversation trial | Sonnet | Instruction-following on a synthetic target | Two turns passed; see below. |
 | Independent safeguard review | Opus | Consequential cross-document review | Pending. |
 
-Requested models are not observed usage.
+Requested models are not observed usage; actual model settings and token usage are unknown.
+
+## Measured Results
+
+Whitespace units, same method as baseline 01, `origin/main` versus this branch.
+
+| Measure | Before | After | Target |
+|---|---:|---:|---:|
+| Standards copied to every repo | 21987 | 4017 | <= 7000 |
+| Every repo plus code standards | 24238 | 5860 | - |
+| Scenario D | 6492 | 2499 | <= 2500 |
+| Stack standards (7 files) | 8025 | 6735 | - |
+| Source-only adoption documents | 12143 | 5908 | - |
+| All standards (20 files -> 19) | 30012 | 16660 | - |
+| README / project-AGENTS template | 1555 / 671 | 546 / 364 | - |
+
+Word counts are not tokens, cost or quality. They show what an adopted repository maintains and
+what a small task's shared rules contain.
+
+## Onboarding Trial
+
+Synthetic target: a small Python CLI with a GitHub remote, no tracker or CI, and an `AGENTS.md`
+saying "keep it simple: plain functions, no speculative layers". Source snapshot: commit
+`cc2e47786d44c0388bc081aee175c207d9ac9b01`. The parent played the user in Polish.
+
+| Turn | Observed |
+|---|---|
+| 1 | Replied in Polish after a read-only inspection. Detected GitHub from the remote and skipped topic 5. Stated that the simplicity rule does not choose `minimal` or `layered`. Announced 10 questions, asked only "Pytanie 1/10" (Git) and waited. |
+| 2 | The user answered 1 and volunteered topics 2-4 and 6-10, with Jev to be connected later. The agent announced X changing from 10 to 2, showed every topic with its decision and source, named `minimal`, proposed `python-cli`, `posix-shell` and `local-focused` from evidence, recorded the Jev connection as a gap and asked only "Pytanie 2/2" (approval). |
+
+Target files and the source snapshot were byte-identical afterwards (SHA-256 compared). The agent
+disclosed one read-only `git ls-remote` attempt before approval (no credentials, no change).
+Limits: one requested route, simulated user input, two turns, no real client, MCP or Jev call.
 
 ## Navigation
 
