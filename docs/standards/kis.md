@@ -53,7 +53,9 @@ store a permanent "connected" flag.
 
 Both providers expose the same question types: yes/no probability (`noul`), choice among
 options (`choice`) and ordered score (`score`). Check the vendor documentation at use; versions,
-availability and endpoints change.
+availability and endpoints change. VibeRails ships optional `kis-review` and `typesafe-jev`
+skills; the Jev helper refuses obvious secrets before any request. No Microsoft-Decision-1 helper
+is shipped yet; call its documented API directly.
 
 - Ask only bounded questions with concrete options, for example "Does simpler option A meet
   criteria X? A / B / cannot tell". Always offer an abstain option. Do arithmetic and ordering in

@@ -73,6 +73,8 @@ Versioned Codex skills in [.agents/skills](.agents/skills/README.md) are optiona
 | [azure-devops](.agents/skills/azure-devops/SKILL.md) | Azure Boards work items and Azure Repos PRs through MCP. |
 | [code-review](.agents/skills/code-review/SKILL.md) | Local branch, GitHub PR local-diff and Azure DevOps PR reviews. |
 | [e2e-work-item](.agents/skills/e2e-work-item/SKILL.md) | Authorized task implementation from a brief or a tracker item. |
+| [kis-review](.agents/skills/kis-review/SKILL.md) | Read-only KIS complexity review returning a keep/cut list. |
+| [typesafe-jev](.agents/skills/typesafe-jev/SKILL.md) | TypeSafe Jev typed judgments through a helper that refuses secrets. |
 
 Onboarding selects skills and their scope. The installers below install the **whole pack at
 user scope** (`$CODEX_HOME/skills` or `$HOME/.codex/skills`); use them only for that choice:

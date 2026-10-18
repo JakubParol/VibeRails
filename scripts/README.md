@@ -33,6 +33,16 @@ node --test scripts/tests/install-skills.test.mjs
 CI runs these [installer checks](tests/install-skills.test.mjs) on Linux and macOS only. Windows
 still runs the Node adoption cases below; its inapplicable POSIX step is not PowerShell evidence.
 
+## Decision-Model Helper Checks
+
+The `typesafe-jev` helper has offline [regressions](tests/typesafe-jev.test.mjs): secret refusal,
+malformed requests, missing credentials and unsafe credential files. Every case stops before any
+network request, so they prove no live TypeSafe behavior. Linux CI runs them:
+
+```bash
+node --test scripts/tests/typesafe-jev.test.mjs
+```
+
 ## Local Verification
 
 Use Node with explicit existing repository-relative file paths:

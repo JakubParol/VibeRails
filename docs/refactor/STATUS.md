@@ -12,8 +12,8 @@ before acting; an actual merge may be newer than this snapshot.
 - Branch `claude/core-slim-onboarding-kis`, candidate 0.6.0. Implementation, measurement,
   independent review fixes and the onboarding trial are complete; the PR is published for
   acceptance. Merge is pending until the user accepts and explicitly authorizes it.
-- Optional follow-up: if the user shares the user-scope `kis-review` and `typesafe-jev` skills,
-  generalize them in a separate delivery.
+- The user shared the `kis-review` and `typesafe-jev` skills; their generalized versions are
+  part of this delivery.
 - Next action: verify current-head CI, then wait for user acceptance and an explicit merge
   decision. Before merge, commit the closing record on this branch.
 - 08/09 remain Verification for their original missing model and handoff trials. Do not start

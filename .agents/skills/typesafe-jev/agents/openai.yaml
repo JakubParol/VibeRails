@@ -1,0 +1,4 @@
+interface:
+  display_name: "TypeSafe Jev"
+  short_description: "Narrow typed judgments through TypeSafe Jev"
+  default_prompt: "Use $typesafe-jev to ask one batch of typed questions about this sanitized state and report the answers as advisory evidence."

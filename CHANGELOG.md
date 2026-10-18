@@ -17,6 +17,9 @@ they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgra
 - Onboarding: 11 topics instead of 21, with conditional follow-ups and a new KIS model question;
   UI direction moves to its owner, before the first screen. One question at a time, a real wait,
   an honest n/X and explicit-decision rules are kept.
+- Add optional `kis-review` and `typesafe-jev` skills, generalized from the owner's user-scope
+  skills: a read-only keep/cut complexity review and Jev typed judgments through a helper that
+  refuses secrets before any request (offline regressions in Linux CI).
 - Remove the legacy `scripts/validate.ps1`; Node is the only validator.
 
 Existing adopters keep their copies and pins until an authorized refresh, which may propose

@@ -1,0 +1,4 @@
+interface:
+  display_name: "KIS Review"
+  short_description: "Read-only keep/cut complexity review"
+  default_prompt: "Use $kis-review to review this plan or delta for unnecessary complexity and return a keep/cut list."

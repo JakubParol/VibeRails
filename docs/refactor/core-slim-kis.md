@@ -125,6 +125,24 @@ Target files and the source snapshot were byte-identical afterwards (SHA-256 com
 disclosed one read-only `git ls-remote` attempt before approval (no credentials, no change).
 Limits: one requested route, simulated user input, two turns, no real client, MCP or Jev call.
 
+## KIS Skills
+
+After PR publication the user shared the user-scope `kis-review` and `typesafe-jev` skills and
+the `jev.py` helper, completing decision 1 of the agreed plan inside this delivery. Generalized:
+
+- The personal "all projects" data grant became the project's recorded KIS choice; without it,
+  Jev is never called.
+- The macOS credential path became an optional `TYPESAFE_API_KEY_FILE` (private regular file,
+  POSIX only); the model comes from the request or defaults to `jev-1.13.0`.
+- `kis-review` uses the project's selected decision model as a first pass and reports
+  succeeded, failed or skipped. No Microsoft-Decision-1 helper is shipped; untested code was
+  not added for it.
+
+Evidence: 4/4 offline helper regressions (secret refusal, malformed requests, missing and unsafe
+credentials) stop before any network call; they do not prove live TypeSafe behavior. A user who
+keeps personal skills with the same names will see an installer conflict, never a silent
+replacement.
+
 ## Navigation
 
 - [Current state](STATUS.md)

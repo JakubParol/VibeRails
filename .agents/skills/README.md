@@ -11,6 +11,8 @@ into target repositories by default.
 | [azure-devops](azure-devops/SKILL.md) | Optional Azure DevOps MCP skill for Azure Boards work items, Azure Repos pull requests, comments, cleanup tracking, and reusable Azure DevOps failure fixes. |
 | [code-review](code-review/SKILL.md) | Optional review skill for local branches, GitHub PR local-diff review, and Azure DevOps PR publishing workflows. |
 | [e2e-work-item](e2e-work-item/SKILL.md) | Optional task implementation from a brief or selected tracker, with MCP bindings and a no-tracker path. |
+| [kis-review](kis-review/SKILL.md) | Optional read-only KIS complexity review with a keep/cut list, using the project's decision model as a first pass when selected. |
+| [typesafe-jev](typesafe-jev/SKILL.md) | Optional TypeSafe Jev typed judgments with an offline-tested helper that refuses secrets before any request. |
 
 ## Rules
 
