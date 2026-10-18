@@ -68,7 +68,7 @@ and an explicit merge decision.
 | Decision-model web research | Sonnet | Bounded fact gathering | Facts above; availability conflicts recorded. |
 | Slim seven stack standards | Sonnet | Bounded rewrite of disjoint files | 17% shorter; every threshold, example and linked anchor retained. Parent spot-checked and added the UI direction questions. |
 | Onboarding conversation trial | Sonnet | Instruction-following on a synthetic target | Two turns passed; see below. |
-| Independent safeguard review | Opus | Consequential cross-document review | Pending. |
+| Independent safeguard review | Opus | Consequential cross-document review | 2 P2 and 9 P3 findings plus one older defect; all fixed (below). |
 
 Requested models are not observed usage; actual model settings and token usage are unknown.
 
@@ -78,16 +78,37 @@ Whitespace units, same method as baseline 01, `origin/main` versus this branch.
 
 | Measure | Before | After | Target |
 |---|---:|---:|---:|
-| Standards copied to every repo | 21987 | 4017 | <= 7000 |
-| Every repo plus code standards | 24238 | 5860 | - |
-| Scenario D | 6492 | 2499 | <= 2500 |
+| Standards copied to every repo | 21987 | 4069 | <= 7000 |
+| Scenario D (baseline definition) | 6492 | 2500 | <= 2500 |
+| Scenario D plus `kis.md` (now always routed) | - | 3163 | - |
 | Stack standards (7 files) | 8025 | 6735 | - |
-| Source-only adoption documents | 12143 | 5908 | - |
-| All standards (20 files -> 19) | 30012 | 16660 | - |
-| README / project-AGENTS template | 1555 / 671 | 546 / 364 | - |
+| Source-only adoption documents | 12143 | 6043 | - |
+| All standards (20 files -> 19) | 30012 | 16847 | - |
+| README / project-AGENTS template | 1555 / 671 | 546 / about 390 | - |
+| Questions, typical fresh adoption | about 14 | 10 | <= 10 |
 
 Word counts are not tokens, cost or quality. They show what an adopted repository maintains and
-what a small task's shared rules contain.
+what a small task's shared rules contain. Final figures are after the review fixes.
+
+## Review Disposition
+
+The independent review found no fully lost safeguard. All findings were accepted and fixed:
+
+- P2: manifest values and allow-lists now explicitly grant no action; no recorded KIS choice
+  means `none`, and an available key never selects a model.
+- P3: last-verification date instead of a "connected" flag; the KIS reviewer only when topic 7
+  selects it; documentation added to the explicit-decision rule (ask 4a or 4b alone);
+  restored review rules (on-request timing keeps required gates, missing required review is
+  reported, static-only option); KIS check in the code-review skill; commits follow the selected
+  Git policy and push-only stops; vendor, data and cost disclosure for the decision model; refresh
+  reads the newly approved commit; never mark a draft ready to get checks.
+- Question 10 now folds "Jev now or later" into its options, so the recommended path adds no
+  follow-up (10a remains only for Microsoft-Decision-1).
+- Older defect: the preflight `sed` printed a literal `\1`; fixed and tested.
+
+After the fixes: focused validation of the changed files, 50/50 adoption and validator tests and
+8/8 installer tests passed with zero skipped; `git diff --check` passed. The onboarding trial
+preceded the question 10 change; that change has review and static checks only.
 
 ## Onboarding Trial
 

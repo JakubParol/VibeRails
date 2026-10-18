@@ -41,11 +41,13 @@ verifying and reviewing. Other standards link here instead of restating it.
 
 A project may select a decision model for narrow, typed KIS judgments. The choice is made during
 onboarding and recorded in the project's `AGENTS.md` (KIS section): model, pinned version or
-deployment, connection state and fallback.
+deployment, the last verification (date and check) and fallback. No recorded choice means
+`none`; an available key or deployment never selects a model. Re-check access at use; never
+store a permanent "connected" flag.
 
 | Choice | Provider and access |
 |---|---|
-| `jev` (default) | TypeSafe Jev, `https://api.typesafe.ai/v1/systemone`. API key in `TYPESAFE_API_KEY`. Pin a model such as `jev-1.13.0`. |
+| `jev` (onboarding recommendation) | TypeSafe Jev, `https://api.typesafe.ai/v1/systemone`. API key in `TYPESAFE_API_KEY`. Pin a model such as `jev-1.13.0`. |
 | `microsoft-decision-1` | Microsoft-Decision-1 in Azure Foundry. Needs a subscription and deployment; Entra ID (preferred) or API key. Record the deployment name. |
 | `none` | The main agent decides. |
 
@@ -56,9 +58,9 @@ availability and endpoints change.
 - Ask only bounded questions with concrete options, for example "Does simpler option A meet
   criteria X? A / B / cannot tell". Always offer an abstain option. Do arithmetic and ordering in
   code first. Do not use the model for design, code generation or explanations.
-- Send a small sanitized state: options, criteria and an evidence summary. Never send secrets,
-  credentials, `.env` contents, tokens, personal data or private customer data. Run an available
-  content-check helper first.
+- Send a small sanitized state: options, criteria and an evidence summary. It leaves the project
+  for a third-party service and may cost usage. Never send secrets, credentials, `.env` contents,
+  tokens, personal data or private customer data. Run an available content-check helper first.
 - The answer is advisory. It is not acceptance, permission or proof. Treat confidence as a
   routing signal, not correctness.
 - Record the model, question, answer with probabilities and the chosen action in the existing

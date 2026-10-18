@@ -97,8 +97,11 @@ For an approved Azure DevOps or Jira connection, or the KIS decision model:
 | Jev (KIS) | [TypeSafe docs](https://docs.typesafe.ai/introduction): the user creates a key and exports `TYPESAFE_API_KEY`; optional [agent skill](https://docs.typesafe.ai/agent-skill). |
 | Microsoft-Decision-1 (KIS) | [Foundry how-to](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision): a deployment in the user's Foundry project, Entra ID sign-in preferred. |
 
-Verify a decision model with one synthetic, sanitized `choice` question and record the model
-version or deployment name. Record "not connected yet" honestly; the agent decides meanwhile.
+A KIS decision model is a plain API service, not MCP: the user creates the Jev key (exported as
+`TYPESAFE_API_KEY`) or the Foundry deployment and Entra ID access, outside the conversation and
+Git. Show the vendor, the data that will be sent and possible usage costs before setup. Verify
+with one synthetic, sanitized `choice` question and record the date, model version or deployment
+name. Record "not set up yet" honestly; the agent decides meanwhile.
 
 ## Adoption Steps
 
@@ -128,7 +131,7 @@ Record summaries, never secrets or long raw logs. Never print raw `git remote -v
 | Evidence | POSIX shell | PowerShell |
 |---|---|---|
 | Root, branch, dirty state | `git rev-parse --show-toplevel; git status --short --branch` | Same commands. |
-| Sanitized remotes | `git remote \| while read n; do printf '%s %s\n' "$n" "$(git remote get-url "$n" \| sed -E 's#^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@#\\1#; s#[?#].*$##')"; done` | `git remote \| % { "$_ " + ((git remote get-url $_) -replace '^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@','$1' -replace '[?#].*$','') }` |
+| Sanitized remotes | `git remote \| while read n; do printf '%s %s\n' "$n" "$(git remote get-url "$n" \| sed -E 's#^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@#\1#; s#[?#].*$##')"; done` | `git remote \| % { "$_ " + ((git remote get-url $_) -replace '^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@','$1' -replace '[?#].*$','') }` |
 | Default branch | `git symbolic-ref --short refs/remotes/origin/HEAD` (else `unknown`) | Same command. |
 | Stack, docs, CI | `git ls-files \| grep -E '(package.json\|pyproject.toml\|requirements.txt\|Dockerfile\|README.md\|AGENTS.md\|docs/INDEX.md\|\.github/\|azure-pipelines)'` | `git ls-files \| Select-String -Pattern '(package.json\|pyproject.toml\|README.md\|AGENTS.md\|\.github/\|azure-pipelines)'` |
 

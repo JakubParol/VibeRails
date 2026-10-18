@@ -27,8 +27,8 @@ monorepo. Each root has:
 
 ```text
 project-root/
-|-- README.md      # purpose, structure, setup, architecture overview, links
-|-- AGENTS.md      # scope, constraints, quality gates, local rules, parent context
+|-- README.md      # purpose, setup, structure, architecture
+|-- AGENTS.md      # constraints, quality gates, local rules
 `-- docs/
     `-- INDEX.md   # every document with one sentence; links up and down
 ```

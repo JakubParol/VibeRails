@@ -32,10 +32,11 @@ These record a standing grant for requested work; filling the template grants no
 ## KIS
 
 - Decision model: `<jev | microsoft-decision-1 | none>`; version or deployment `<jev-1.13.0 or deployment name>`.
-- Connection: `<working | not connected yet: next action>`. Credentials stay outside Git.
+- Last verification: `<date and check, or not set up yet: next action>`; re-check at use.
+  Credentials stay outside Git.
 - Fallback: the main agent decides when the model is unavailable or unclear.
-- KIS reviewer: `<kis-review skill or none>`, used only for substantial changes with an open
-  simplicity question.
+- KIS reviewer: `<a skill explicitly selected in onboarding topic 7, or none>`, used only for
+  substantial changes with an open simplicity question.
 
 ## Change Protocol Deltas
 

@@ -15,7 +15,8 @@ commands, working directories and required CI checks.
   every existing required check.
 - After a failure, fix it and rerun only the failing check or smallest case.
 - New behavior needs meaningful tests; documentation-only changes need document checks.
-- Never suppress a failing check, lower a threshold or count absent or skipped checks as passed.
+- Never suppress a failing check, lower a threshold or count absent, skipped, pending or
+  cancelled checks as passed.
 
 ## Agent Test Cadence
 
@@ -31,17 +32,17 @@ existing cadence.
 
 ## Path-To-Scope Map
 
-Map changed paths to focused local evidence and CI coverage, built from existing commands and
-CI. Inspect what a script really runs; a scope name does not make it cheap.
+Map changed paths to focused local evidence and CI coverage from existing commands. Inspect what
+a script really runs; a scope name does not make it cheap.
 
-| Changed paths | Focused local evidence | CI coverage |
+| Changed paths | Focused local evidence | CI |
 |---|---|---|
-| API or worker | Changed-file checks, relevant behavior or adapter cases. | Types, suites, integration, build. |
-| Web | Changed-file checks, affected interactions, [visual acceptance](web-ui.md#visual-acceptance). | Types, tests, build, browser checks. |
-| Shared tooling | A small relevant regression or smoke test. | Affected projects or full repository. |
+| API or worker | Relevant behavior or adapter cases. | Types, suites, integration, build. |
+| Web | Affected interactions, [visual acceptance](web-ui.md#visual-acceptance). | Tests, build, browser checks. |
+| Shared tooling | A small regression or smoke test. | Affected projects or all. |
 | Markdown only | Changed-document text and links. | Full documentation gate. |
 
-A focused command states what it covers and omits; it never prints a whole-repository success.
+A focused command states what it covers and omits, never a whole-repository success.
 
 ## Commands And Platforms
 
@@ -49,7 +50,7 @@ Record `profiles.scriptPlatform` (`powershell`, `posix-shell` or `both`; with `b
 commands equivalent or name the canonical one). Document canonical commands in README, AGENTS
 and the quality-gate document, prefer repository scripts, and never require a shell the project
 does not already use. An optional gate script offers focused selection separately from the full
-run. Azure DevOps and Jira use MCP regardless of shell.
+run.
 
 ## Missing Gate Or CI
 
@@ -69,7 +70,7 @@ relabel an old result with a new head.
 
 Record the source head, tested revision (PR CI often tests a merge commit), run link, outcome and
 coverage. Read the failing step, reproduce the smallest case locally, fix and push; CI reruns the
-full checks. Pending, cancelled, skipped and absent are not passed.
+full checks.
 
 ## Navigation
 

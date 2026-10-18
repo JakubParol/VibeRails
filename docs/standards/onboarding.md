@@ -38,9 +38,10 @@ identifiers such as `minimal`, paths and model names unchanged.
 
 "Keep it simple", vertical slices, plain functions or "no speculative layers" do not choose
 `minimal` or `layered`: both satisfy [KIS](kis.md). Ask topic 4 on first adoption unless the user
-or an existing decision explicitly chose the structure. Apply the same test to review,
-delegation, models, Git, tests, reporting and the KIS model. A refresh keeps explicit adopted
-choices and asks only about new or conflicting topics.
+or an existing decision explicitly chose both structure and documentation; if only one is
+explicit, ask 4a or 4b alone. Apply the same test to documentation, review, delegation, models,
+Git, tests, reporting and the KIS model. A refresh keeps explicit adopted choices and asks only
+about new or conflicting topics.
 
 ## Topic Conditions
 
@@ -55,7 +56,7 @@ choices and asks only about new or conflicting topics.
 | 7 Skills | Selection and scope together. Reuse a working selected installation. For option 3 show concrete differences, then ask 7a. |
 | 8 Tests | Agent test cadence, not CI. |
 | 9 Improvements | Even without a tracker. Summary-only is complete. A ticket mode needs a sink: resolve it or defer it as an open question; never create a tracker. |
-| 10 KIS model | First adoption, unless explicit. 10a only when the chosen model is not already working. "Later" keeps the choice with a readiness gap; the agent decides meanwhile. |
+| 10 KIS model | First adoption, unless explicit. Options 1-2 already say now or later for Jev; 10a only for Microsoft-Decision-1 that is not already working. "Later" keeps the choice with a readiness gap; the agent decides meanwhile. |
 | 11 Approval | After the final summary. Option 1 names this adoption's exact Git actions. An existing explicit grant covering this exact plan counts as approval. "Change something" discusses only that change, then asks approval of the revised summary. |
 
 UI direction (appearance, devices, themes) is not an onboarding topic. Settle it before the
@@ -66,7 +67,8 @@ first screen under [web UI](web-ui.md); preserve existing design materials and r
 Before topic 11 show, in the user's language: every topic with its decision and source (answer,
 recorded decision or detected fact) or why it was skipped or deferred; the structure as
 `minimal` or `layered`; files and client settings to change; installations outside the project;
-proposed access checks; remaining gaps; and this adoption's exact Git actions. Ask any unresolved
+prerequisite costs, risks and any data sent to third-party services; proposed access checks;
+remaining gaps; and this adoption's exact Git actions. Ask any unresolved
 applicable topic first instead of hiding it in the summary.
 
 ## Decision Storage
@@ -85,7 +87,7 @@ it from `docs/viberails-adoption.md`. Never add enum values or a parallel config
 | 7 Skills | `agentSkills`: mode, selected names and an immutable source ref. |
 | 8 Tests | AGENTS.md test cadence. Never `configuration.verification`. |
 | 9 Improvements | `selfImprove`. Summary-only is `enabled: false` with a `disabledReason`. |
-| 10 KIS model | AGENTS.md KIS section: model, pinned version or deployment, connection state, fallback. |
+| 10 KIS model | AGENTS.md KIS section: model, pinned version or deployment, last verification, fallback. A KIS reviewer skill is recorded only when topic 7 selected it. |
 | 11 Approval | The adoption task record only. |
 
 Propose `configuration.verification` from existing CI (`ci-first` when a full PR pipeline exists)

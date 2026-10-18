@@ -46,6 +46,7 @@ connection startup, authorization, or unsupported operation.
   them, report the protected-update gap. Readback confirms state; it does not prevent a lost
   update.
 - Configured, authenticated, resource read verified and write permitted are four different facts.
+  Record the last verification; never store a permanent "connected" flag.
 
 ## Auth
 

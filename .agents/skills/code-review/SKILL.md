@@ -50,9 +50,11 @@ Read their relevant sections only when no target owner supplies the needed rule.
    or independence decision read [agent authorization](references/agent-authorization.md).
    Required independent review must be authorized and actually available; self-review does not
    replace it. An explicit task exception is reported, not disguised as independent coverage.
-3. Inspect changed behavior and surrounding contracts. Findings concern changed lines; cite
-   unchanged code only to explain the introduced defect. Run a needed, authorized focused check
-   unless target policy is static-only. Full gates retain their target CI ownership.
+3. Inspect changed behavior and surrounding contracts, including simplicity under the target's
+   KIS rule (source default: [KIS review](../../../docs/standards/kis.md#kis-review)). Findings
+   concern changed lines; cite unchanged code only to explain the introduced defect. Run a
+   needed, authorized focused check unless target policy is static-only. Full gates retain their
+   target CI ownership.
 4. Triage with [severity](references/severity-and-comments.md) and [output](references/output.md):
    deduplicate issues, verify evidence and retain independent attribution. Say "No findings"
    only after review, with material coverage limits. A green test is not a completed review.

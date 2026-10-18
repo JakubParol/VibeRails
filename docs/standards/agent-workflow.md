@@ -1,7 +1,7 @@
 # Agent Workflow Standard
 
 This is the canonical context router. Project instructions, templates and skills point here and
-add only local or operation-specific rules. A link is a route, not an instruction to read it.
+add only local rules. A link is a route, not an instruction to read it.
 
 ## Context Loading Order
 
@@ -18,9 +18,9 @@ add only local or operation-specific rules. A link is a route, not an instructio
 | Task | Read |
 |---|---|
 | Any change | [KIS](kis.md), the [change protocol](change-protocol.md) sections for the operation, and the verification row. |
-| Documentation | The target document, local constraints and [documentation](documentation.md). |
-| Code or tests | [Coding](coding.md), [architecture](architecture.md), local boundaries and the affected stack standard. |
-| Verification | The project's actual commands and the [quality gate](quality-gate.md). |
+| Documentation | The target document and [documentation](documentation.md). |
+| Code or tests | [Coding](coding.md), [architecture](architecture.md) and the affected stack standard. |
+| Verification | Actual project commands and the [quality gate](quality-gate.md). |
 | Rendered web UI | [Web UI](web-ui.md), plus [frontend](frontend.md) for React/Next.js. |
 | Review | The review skill or mode, the changed paths and the rules that govern them, and [KIS review](kis.md#kis-review). |
 | Provider or skill | Its entrypoint, references whose "Read when" matches the operation, and [integration profiles](integration-profiles.md). |
@@ -48,8 +48,8 @@ No `configuration` means the project keeps its existing (legacy) policy.
   timing, delegation, models, test cadence and the KIS decision model.
 - `promptBaseline` pins the hashes of maintained instruction files. Changing a pinned instruction
   needs a reviewed pin refresh; code-only work never repins.
-- Adoption, refresh and pin procedures live in the VibeRails source recorded in
-  `viberails.sourceRemote` and `viberails.sourceRef`. Read them there when the task needs them.
+- Adoption, refresh and pin procedures live in the VibeRails source (`viberails.sourceRemote`)
+  at the recorded `sourceRef`, or for a refresh at the newly approved commit.
 
 ## Delegation And Runtime Routing
 

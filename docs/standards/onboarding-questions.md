@@ -144,20 +144,22 @@ or instructions; ordinary fixes stay within the requested task.
 
 KIS means Keep It Simple: agents always choose the simplest solution that is enough. A decision
 model can quickly answer narrow questions such as "is the simpler option enough?". Its answer is
-advice; the agent still checks the result. Only short, cleaned-up summaries are sent - never
-secrets or personal data.
+advice; the agent still checks the result. Short, cleaned-up summaries of options and criteria are
+sent to the selected external service, never secrets or personal data. The service may charge
+for usage.
 
-1. **TypeSafe Jev.** Needs an API key from the TypeSafe console.
-2. **Microsoft-Decision-1 (Azure Foundry).** Needs an Azure subscription and a model deployment.
-3. **None - the agent decides on its own.**
+1. **TypeSafe Jev - help me set it up now.** You create an API key in the TypeSafe console
+   yourself; never paste it into the conversation.
+2. **TypeSafe Jev - I will set it up later.** Until then the agent decides on its own.
+3. **Microsoft-Decision-1 (Azure Foundry).** Needs an Azure subscription and a model deployment.
+4. **None - the agent decides on its own.**
 
-**I recommend 1** - it is the simplest to start. Choose 2 if the project already uses Azure
-Foundry.
+**I recommend 1** - it is the simplest to start. Choose 3 if the project already uses Azure
+Foundry. If the selected model already works, nothing needs setting up.
 
-**10a.** (Only for options 1-2 when the model is not already set up.) Should we set it up now?
+**10a.** (Only for option 3 when it is not already set up.) Should we set it up now?
 
-1. **Yes - help me set it up.** (recommended) You create the key or sign in yourself; never paste
-   keys into the conversation.
+1. **Yes - help me set it up.** (recommended) You sign in yourself.
 2. **No - I will set it up later.** Until then the agent decides on its own.
 
 ## 11. May I add VibeRails according to this summary?
