@@ -1,7 +1,7 @@
 # Backend Testing Standard
 
-This standard applies to backend tests. It extends [coding.md](coding.md),
-[architecture.md](architecture.md), and [backend.md](backend.md).
+For backend tests. Extends [coding.md](coding.md), [architecture.md](architecture.md) and
+[backend.md](backend.md).
 
 ## Test Types
 
@@ -16,16 +16,14 @@ Test doubles are allowed through ports. Monkey-patching production internals is 
 
 ## Database Integration Tests
 
-When persistence correctness matters, test the real production database technology through
-the production repository/session path. Use relevant migrations and isolated data. Unit/service
+When persistence correctness matters, test the real production database technology through the
+production repository/session path, with relevant migrations and isolated data. Unit/service
 doubles through ports do not establish infrastructure correctness.
 
-For projects using PostgreSQL, PostgreSQL via Testcontainers is the default example below.
-Do not use SQLite or an in-memory substitute as evidence for production PostgreSQL behavior.
-If the production engine is different, use that engine and its real adapter; do not force a
-second database into a small project merely to follow this example.
-
-PostgreSQL example session flow:
+For PostgreSQL projects, PostgreSQL via Testcontainers is the default example below. Never use
+SQLite or an in-memory substitute as evidence for production PostgreSQL behavior. For another
+production engine, use that engine and its real adapter; do not add a second database to a small
+project just to follow this example.
 
 ```text
 Session start -> PostgreSQL container -> migrations to head
@@ -33,17 +31,12 @@ Each test     -> truncate tables and restart identities
 Session end   -> destroy container
 ```
 
-Rules:
-
-- Match the production engine and behavior relevant to the test; do not substitute a different
-  engine or an in-memory double and call it database-integration evidence.
-- Tests use the same repository and session path as production.
-- Seed through SQL helpers or repository setup, not unrelated API calls.
-- Each test starts from a clean database state.
+Seed through SQL helpers or repository setup, not unrelated API calls; each test starts from a
+clean database.
 
 ## Fixture Pattern
 
-Recommended root fixtures for the PostgreSQL example:
+Recommended root fixtures (PostgreSQL example):
 
 | Fixture | Scope | Purpose |
 |---|---|---|
@@ -52,7 +45,7 @@ Recommended root fixtures for the PostgreSQL example:
 | `_reset_database` | function | Truncate all tables before each test. |
 | `restore_schema` | function | Rebuild schema after tests that modify DDL. |
 
-Recommended PostgreSQL support helpers:
+Recommended support helpers:
 
 | Helper | Use |
 |---|---|
@@ -75,8 +68,8 @@ tests/
     `-- runtime.py
 ```
 
-Feature-level `conftest.py` files may seed baseline data for that feature. Keep test support
-helpers under `tests/support/`.
+Feature-level `conftest.py` may seed that feature's baseline data. Keep support helpers under
+`tests/support/`.
 
 ## Writing Tests
 
@@ -106,8 +99,8 @@ def test_create_entity_writes_audit_event(client, database_url) -> None:
     assert row is not None
 ```
 
-Tests that modify schema must restore it using the production engine's fixture or isolation
-mechanism. In this PostgreSQL example, request `restore_schema`:
+Schema-modifying tests restore the schema through the production engine's fixture or isolation
+mechanism (PostgreSQL example: `restore_schema`):
 
 ```python
 def test_rollback_when_audit_table_is_missing(client, database_url, restore_schema) -> None:
@@ -120,34 +113,33 @@ def test_rollback_when_audit_table_is_missing(client, database_url, restore_sche
     assert response.status_code == 500
 ```
 
-## Test Value Rules
+## Test Rules
 
-Many tests are welcome; meaningless tests are defects. Every new test must pass this bar:
+Many tests are welcome; meaningless tests are defects. Every new test:
 
-- It can fail for a real behavioral reason. If the production code can break without this
-  test failing, the test is not proving anything.
-- No mock-echo assertions: do not assert that a mock was called with the values the test just
-  passed in unless an observable outcome is also asserted.
-- No testing the framework: serialization defaults, ORM basics, or library behavior the
-  project does not own.
-- No duplicate coverage: a new test must prove a behavior no existing test proves.
-- The test name states the behavior and expected outcome, not the method name.
-- Assertions target the response envelope, persisted state, or returned domain values, not
-  internal call order or private attributes.
+- can fail for a real behavioral reason; if production code can break without it failing, it
+  proves nothing;
+- has no mock-echo assertion (a mock called with the values the test just passed in) without an
+  observable outcome also asserted;
+- does not test the framework: serialization defaults, ORM basics, library behavior the project
+  does not own;
+- proves a behavior no existing test proves;
+- is named for the behavior and expected outcome, not the method;
+- asserts the response envelope, persisted state or returned domain values, never internal call
+  order or private attributes.
 
-## Rules
+Also:
 
-- One behavior per test.
-- Multiple assertions are fine when they describe one behavior.
+- One behavior per test; several assertions are fine when they describe it.
 - No test depends on state from a previous test.
-- In the PostgreSQL helpers shown above, use `%s` placeholders and pass parameters as lists
-  unless the local helper documents another convention. Other engines use their native binding.
-- API assertions must respect the response envelope.
-- Avoid sleeping in tests. Prefer deterministic synchronization or direct state checks.
+- PostgreSQL helpers above: `%s` placeholders and list parameters unless the local helper documents
+  another convention; other engines use native binding.
+- API assertions respect the response envelope.
+- No sleeping; use deterministic synchronization or direct state checks.
 
 ## Running Tests
 
-Each project should document exact commands. Recommended defaults:
+Each project documents exact commands. Defaults:
 
 ```bash
 cd services/api

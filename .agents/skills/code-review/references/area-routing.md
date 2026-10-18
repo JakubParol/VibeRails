@@ -111,7 +111,7 @@ Use documented gates only:
 - Follow the canonical router to the actual target commands and quality-gate coverage.
 - If scripts exist, prefer repository-defined commands such as `lint`, `test`, `typecheck`,
   `format`, or project-specific wrappers.
-- For docs-only changes, use a Markdown/navigation audit appropriate to the repository, loading the documentation-audit checklist only when adoption or restructuring requires it.
+- For docs-only changes, use a Markdown/navigation audit appropriate to the repository; use the adoption audit checklist only for adoption or restructuring.
 - For rendered UI changes, apply the target web UI standard's visual acceptance using actual
   screen/interaction evidence at the reviewed revision. A read-only specialist can inspect existing
   artifacts without launching another suite. Missing browser proof stays unverified, not a claim

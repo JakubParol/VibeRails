@@ -61,8 +61,12 @@ speculative edge cases. Do not duplicate chat transcripts.
 - [Audit findings](audit-01.md) and [reproducible baseline](baseline-01.md)
 - [Source comparison and candidate refinements](inspiration-review.md)
 - [Startup prompt](start.md)
-
 - [08-09 verification follow-up](verification-08-09.md)
+- [Stage 08 research](research-08.md) and [prompt comparison](prompt-evaluation-08.md)
+- [Stage 09 pilot results](pilot-09.md)
+- [Guided onboarding](guided-onboarding.md), [web UI standards](web-ui-standards.md) and
+  [plain-question onboarding](plain-onboarding.md) deliveries
+- [Core slimming, onboarding and KIS](core-slim-kis.md) (post-09 decision)
 
 ## Navigation
 

@@ -3,6 +3,29 @@
 All notable changes to the VibeRails standards pack. Adopting repositories record the version
 they adopted in their `docs/INDEX.md` so standard copies can be diffed and upgraded later.
 
+## 0.6.0 - KIS And A Lighter Core
+
+- Add [KIS](docs/standards/kis.md) (Keep It Simple) as the canonical rule for planning,
+  implementation, verification and review, with a KIS review check and an optional decision
+  model: TypeSafe Jev (default), Microsoft-Decision-1 or none. The choice lives in the target
+  `AGENTS.md`; the manifest schema is unchanged.
+- Split runtime rules from the adoption procedure. Adoption, onboarding, the question catalog,
+  the manifest reference and the configuration contract are read from the pinned source and no
+  longer copied into targets. `documentation-audit.md` merges into `adoption.md`,
+  `platform-profiles.md` into `quality-gate.md`.
+- Rewrite the runtime standards as short positive rules, stating shared limits once.
+- Onboarding: 11 topics instead of 21, with conditional follow-ups and a new KIS model question;
+  UI direction moves to its owner, before the first screen. One question at a time, a real wait,
+  an honest n/X and explicit-decision rules are kept.
+- Add optional `kis-review` and `typesafe-jev` skills, generalized from the owner's user-scope
+  skills: a read-only keep/cut complexity review and Jev typed judgments through a helper that
+  refuses secrets before any request (offline regressions in Linux CI).
+- Remove the legacy `scripts/validate.ps1`; Node is the only validator.
+
+Existing adopters keep their copies and pins until an authorized refresh, which may propose
+removing source-only copies. Measurements and limits are in the
+[delivery record](docs/refactor/core-slim-kis.md).
+
 ## 0.5.2 - Explicit Onboarding Decisions
 
 - Distinguish observed facts and explicit policy decisions from inferred preferences. First

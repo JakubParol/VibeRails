@@ -1,21 +1,18 @@
 # VibeRails Adoption
 
-This repository adopted VibeRails standards from:
+Human-readable mirror of `.viberails/adoption.json`. The manifest owns the values.
 
 | Field | Value |
 |---|---|
-| Source path | `<local path or null>` |
 | Source remote | `<sanitized remote URL or null>` |
-| Source ref | `<commit, tag, or branch>` |
+| Source ref | `<immutable commit>` |
 | Pack version | `<version>` |
 | Adopted at | `<date/time>` |
 
 ## Configuration And Instruction Baseline
 
-Mirror the effective configuration choices from the manifest; remove this table only for a
-legacy/unselected adoption, explicitly stating that limit. Do not infer settings from the preset.
-Keep one row per configuration field in this section, including version; the read-only audit
-compares the keyed values, not words elsewhere in this document.
+One row per configuration field, including version. The audit compares these keyed rows with the
+manifest. Remove the table only for a legacy/unselected adoption and say so.
 
 | Field | Actual value |
 |---|---|
@@ -28,161 +25,80 @@ compares the keyed values, not words elsewhere in this document.
 | review | `<adaptive or independent>` |
 | modelRouting | `inherit` |
 
-Instruction identities, immutable refs and actual file digests belong in `promptBaseline` in
-`.viberails/adoption.json`, not a duplicate hash table here. Summarize captured scope and
-unobserved layers. General prompt content does not prove support for every LLM/client.
+Instruction pins live in the manifest `promptBaseline`. Captured scope: `<summary>`.
+Unobserved layers: `<runtime instructions, dynamic context, user-scope skills>`.
+
+## Decisions And Approval
+
+- Decisions without a manifest field: see the VibeRails Decisions and KIS sections in
+  `<link to AGENTS.md>`. UI direction: `<design owner or "before the first screen">`.
+- Approval: `<safe reference to the user's approval of the final summary>`; this adoption's Git
+  actions: `<actions>`. Do not commit conversation transcripts.
 
 ## Migration And Readiness
 
-Link the actual owners of additional onboarding decisions rather than duplicating their values:
-`<AGENTS/workflow policy for Git, review, delegation, model/effort and test cadence>`;
-`<existing design/requirements owner for UI choices or deferrals>`.
-Record this adoption's concrete approved changes and Git actions separately from future-task
-rules, with a reference to the user's actual approval. No recommendation or answered question
-by itself approves the whole setup. Omit private conversation logs from committed records.
-Retain a safe reference to the approved [onboarding coverage](../standards/onboarding.md#completeness-before-approval)
-and decision sources in the existing task/adoption record. Link policy owners rather than
-creating a second settings table. Explicitly distinguish selected values from deferred topics
-and unresolved readiness; a generic preference is not selection evidence.
-
-| Scope | Verified evidence | Remaining work or capability gap | Owner / next action |
+| Scope | Verified evidence | Remaining work or gap | Owner / next action |
 |---|---|---|---|
-| `<adoption or migration scope>` | `<actual command/result or none>` | `<remaining work or none>` | `<owner/action or none>` |
+| `<documents, a skill, an integration, the KIS model, delivery>` | `<actual check and result or none>` | `<gap or none>` | `<owner/action or none>` |
 
-A selected configuration is a target policy, not proof of code migration. Structural audit,
-local behavior checks, live integration and required CI are separate evidence. Keep unresolved
-items in the existing manifest open questions and this preservation/readiness record.
+A selected configuration is a target, not proof of migration. Structural audit, local checks,
+live integrations and CI are separate evidence.
 
 ## Preflight Evidence
 
 | Evidence | Summary |
 |---|---|
-| Repository root | `<command and result summary>` |
-| Branch and dirty state | `<command and result summary>` |
-| Sanitized remotes | `<command and result summary>` |
-| Default branch | `<command and result summary>` |
-| Stack indicators | `<command and result summary>` |
-| Existing docs | `<command and result summary>` |
-| CI and gates | `<command and result summary>` |
+| Root, branch and dirty state | `<result summary>` |
+| Sanitized remotes and default branch | `<result summary>` |
+| Stack, docs and CI | `<result summary>` |
 
-## Target Repository
+## Target And Profiles
 
 | Field | Value |
 |---|---|
-| Repository root | `<target repository root>` |
-| Remote | `<sanitized target remote URL or null>` |
-| Default/base branch | `<branch>` |
+| Default/base branch, PR target | `<branch>`, `<branch or none>` |
 | Branch naming | `<rule>` |
-| PR target | `<branch or none>` |
+| PR policy | Draft `<true or false>`; writes `<create-pr, edit-description, comment, none>`; publishing `<local-only, provider-comments, target-local-profile>` |
+| Agent runtime | `codex` |
+| Stack | `<profile>` |
+| Work tracking | `<profile>`: `<coordinates or none reason>`; read check `<check>`; writes `<policy>` |
+| Code hosting | `<profile>`: `<coordinates or none reason>`; auth check `<check>` |
+| Script platform | `<powershell, posix-shell or both>` |
+| Codex skills | `<none, user-scope or vendored>`: `<names>`; ref `<commit or null>`; reason `<reason>` |
 
-## Pull Request Policy
-
-| Field | Value |
-|---|---|
-| Draft by default | `<true|false>` |
-| Allowed PR write operations | `<create-pr, edit-description, comment, none>` |
-| Review publishing | `<local-only|provider-comments|target-local-profile>` |
-| Notes | `<provider-specific limits or manual steps>` |
-
-## Profiles
-
-| Area | Selected profile | Notes |
-|---|---|---|
-| Agent runtime | `codex` | Codex is the supported runtime for this adoption. |
-| Stack | `<primary profile or summary>` | See project profiles below. |
-| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<notes>` |
-| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<notes>` |
-| Script platform | `<powershell|posix-shell|both>` | `<notes>` |
-
-## Integrations
-
-| Area | Profile | Coordinates | Auth check | Write approval |
-|---|---|---|---|---|
-| Work tracking | `<azure-devops-work-tracking|jira-work-tracking|unsupported-provider|none>` | `<Azure DevOps org/project, Jira site/project key, unsupported provider name, or none reason>` | `<read check or none>` | `<write approval policy or none>` |
-| Code hosting | `<github-code-hosting|azure-repos-code-hosting|unsupported-provider|none>` | `<GitHub owner/repo, Azure Repos org/project/repo, unsupported provider name, or none reason>` | `<auth check or none>` | `<allowed PR write operations or none>` |
-
-| Provider | Required routing details |
-|---|---|
-| Azure DevOps work tracking | `<organization URL, project, Story/Task/Bug/self-improve work item types, area path or none, iteration policy, labels>` |
-| Jira work tracking | `<base URL, project key, Story/Task/Bug/self-improve issue types, component or none, labels>` |
-| GitHub code hosting | `<owner, repository, default branch, PR target branch, branch naming, draft default, allowed write operations>` |
-| Azure Repos code hosting | `<organization URL, project, repository, default branch, PR target branch, branch naming, draft default, allowed write operations>` |
-
-## Project Profiles
-
-| Paths | Documentation root | Profile | Standards | Quality gate scope | Exception |
+| Paths | Documentation root | Profile | Standards | Gate scope | Exception |
 |---|---|---|---|---|---|
-| `.` | `.` | `<profile>` | `<standards>` | `<scope>` | `<exception or none>` |
+| `.` | `.` | `<profile>` | `<standards>` | `<scope>` | `<rationale or none>` |
 
-## Auth
-
-| Area | Read check | Write check | Secret storage |
-|---|---|---|---|
-| Work tracking | `<command or doc link>` | `<command or doc link>` | Outside git. |
-| Code hosting | `<command or doc link>` | `<command or doc link>` | Outside git. |
-
-Do not commit tokens, cookies, generated credentials, raw user profiles, or private identity
-payloads.
-
-## Codex Skills
-
-| Field | Value |
-|---|---|
-| Mode | `<none|user-scope|vendored>` |
-| Selected skills | `<skill names or none>` |
-| Source path | `<skills source path or null>` |
-| Source ref | `<commit, tag, branch, or null>` |
-| Target path | `<vendored target path or null>` |
-| Duplicate-name policy | `Never keep the same skill name in both Codex user scope and target repository scope.` |
-| Decision reason | `<why skills are not used, installed at user scope, or vendored>` |
+Auth: `<where each read/write check is documented>`; secrets stay outside Git.
 
 ## Quality Gate
 
-| Paths | Scope | Commands | Working directory | Required before PR | Notes |
-|---|---|---|---|---|---|
-| `<path prefix or glob>` | `<scope>` | `<commands>` | `<working directory>` | `<yes|no>` | `<notes>` |
+| Paths | Scope | Commands | Working directory | Required before PR |
+|---|---|---|---|---|
+| `<path or glob>` | `<scope>` | `<commands>` | `<directory>` | `<yes or no>` |
 
 Canonical full command (CI): `<command>`.
 
-Document focused local commands in the path map; do not assume an existing aggregate command
-is local merely because it has a scope flag. Record required CI checks and their evidence path
-in the target's quality-gate document. Missing CI is a limitation, not an automatic full-local fallback.
-
 ## Self-Improve Ticket Sink
-
-For Azure DevOps/Jira, record MCP operation references in the existing legacy-named command
-fields, following `adoption-manifest.md#provider-sink-shape`. No schema change is implied.
-Record MCP capability/access evidence separately; a structural audit alone cannot prove it.
-
-Reusable agent/tooling failures are reported here:
 
 | Field | Value |
 |---|---|
-| Enabled | `<true|false>` |
-| Tracker | `<azure-devops|jira|custom-ticket-sink|local-file-sink|none>` |
-| Sink coordinates | `<organization/project, Jira site/project key, or none>` |
-| Issue type | `<issue type or none>` |
-| Labels/tags | `viberails-self-improve`, `<provider/tool labels>` |
-| Dedupe query template | `<query or none>` |
-| Match rule | Exact fingerprint first; fallback by provider, command family, and error class only when configured. |
-| Comment policy | Add sanitized evidence to an existing matching ticket before creating a new one. |
-| Comment template | Include timestamp, repository, fingerprint, platform, provider/tool, command family, sanitized symptom, attempted command, workaround, and safety confirmation. |
-| Missing auth behavior | Prepare the sanitized ticket body locally and report the blocked self-improve write. |
-| Write approval policy | `<when agents may create or comment self-improve tickets>` |
-| Alternate clients | `<authorized MCP connections for Azure DevOps/Jira, or none; other sink profiles use their explicit client policy>` |
-| Disabled reason | `<required when enabled is false unless recorded as an open question>` |
+| Enabled, tracker | `<true or false>`, `<azure-devops, jira, custom-ticket-sink, local-file-sink, none>` |
+| Sink and issue type | `<coordinates and type, or none>` |
+| Labels | `viberails-self-improve`, `<provider/tool labels>` |
+| Dedupe | `<query or none>`; exact fingerprint first |
+| Write approval | `<policy>` |
+| Disabled reason | `<reason when disabled, unless an open question records it>` |
 
-For summary-only, record the deliberate disabled reason; report findings briefly without a
-ticket body or missing-sink warning. For selected ticket reporting with missing auth or write
-approval, prepare the scoped proposal locally and report the specific blocker.
+Azure DevOps/Jira command fields hold MCP operation references
+(`adoption-manifest.md#provider-sink-shape` in the source pack).
 
-## Copied Standards
+## Copied Standards And Preservation
 
-| Target path | Source path | Source ref | Mode | Scope | Reason |
-|---|---|---|---|---|---|
-| `<target path>` | `<source path>` | `<commit, tag, or branch>` | `<created|merged|refreshed|skipped>` | `<scope>` | `<reason>` |
-
-## Preservation Report
+| Target path | Source path | Source ref | Mode | Reason |
+|---|---|---|---|---|
+| `<target path>` | `<source path>` | `<commit>` | `<created, merged, refreshed, skipped>` | `<reason>` |
 
 | File | Preserved sections | Changed sections | Conflicts or follow-up |
 |---|---|---|---|
@@ -190,17 +106,11 @@ approval, prepare the scoped proposal locally and report the specific blocker.
 | `AGENTS.md` |  |  |  |
 | `docs/INDEX.md` |  |  |  |
 
-## Exceptions
+## Exceptions And Open Questions
 
-| Exception | Reason | Owner |
-|---|---|---|
-| `<exception>` | `<reason>` | `<owner>` |
-
-## Open Questions
-
-| Category | Question | Impact | Owner | Needed before |
+| Kind | Item | Impact or reason | Owner | Needed before |
 |---|---|---|---|---|
-| `<provider|auth|quality-gate|documentation|stack-exception|self-improve|workflow>` | `<question>` | `<blocked behavior>` | `<owner>` | `<task or date>` |
+| `<exception or open question category>` | `<item>` | `<impact>` | `<owner>` | `<milestone>` |
 
 ## Navigation
 

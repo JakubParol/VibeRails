@@ -296,7 +296,6 @@ function testAgentAssetsAreGeneric(files) {
   ];
   const allowlistedFiles = new Set([
     "scripts/validate.mjs",
-    "scripts/validate.ps1",
     "scripts/source-leak-denylist.txt",
   ]);
 

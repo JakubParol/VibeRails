@@ -12,11 +12,10 @@ function passes(result) { assert.equal(result.status, 0, result.output); }
 
 test("fresh actual standard copies and the optional audit bundle work in an isolated target", () => {
   withTarget((root, manifest) => {
-    const names = ["agent-workflow", "change-protocol", "documentation", "configuration", "adoption",
-      "onboarding", "onboarding-questions", "adoption-manifest", "documentation-audit", "integration-profiles", "platform-profiles",
-      "quality-gate", "self-improve-loop", "architecture", "coding", "stack-profiles"];
+    // The runtime set from adoption.md "What To Copy"; source-only adoption documents stay pinned URLs.
+    const names = ["kis", "agent-workflow", "change-protocol", "documentation", "quality-gate",
+      "integration-profiles", "self-improve-loop", "architecture", "coding", "stack-profiles"];
     const mapping = new Map(names.map((name) => [`docs/standards/${name}.md`, `docs/standards/${name}.md`]));
-    mapping.set("docs/templates/adopt-standards-prompt.md", "docs/adopt-standards.md");
     for (const name of ["adoption-audit", "adoption-state", "adoption-pins"]) {
       mapping.set(`docs/templates/${name}.mjs`, `tools/viberails/${name}.mjs`);
     }
@@ -43,9 +42,6 @@ test("fresh actual standard copies and the optional audit bundle work in an isol
           // External fetches are deliberately outside this structural fixture's evidence.
           return `[${label}](https://github.com/JakubParol/VibeRails/blob/${acceptedReference}/${absolute}${anchor ? `#${anchor}` : ""})`;
         });
-        if (source.endsWith("adopt-standards-prompt.md")) {
-          text = text.replace("<source-path-or-url-and-immutable-ref>", "the approved pinned source in the adoption record");
-        }
       }
       write(root, destination, text);
       manifest.copiedFiles.push({ sourcePath: source, targetPath: destination, sourceRef, mode: "created", scope: "repo", reason: "Controlled copy of current general standards" });
@@ -61,7 +57,10 @@ test("fresh actual standard copies and the optional audit bundle work in an isol
     passes(run(root, "python3", ["-B", "-m", "unittest", "test_label"]));
     assert.equal(read(root, "AGENTS.md"), protectedRules);
     assert.equal(manifest.configuration.modelRouting, "inherit");
-    assert.ok(manifest.promptBaseline.components.length >= 18);
+    assert.ok(manifest.promptBaseline.components.length >= 13);
+    for (const sourceOnly of ["adoption", "onboarding", "onboarding-questions", "adoption-manifest", "configuration"]) {
+      assert.equal(fs.existsSync(path.join(root, `docs/standards/${sourceOnly}.md`)), false);
+    }
   });
 });
 

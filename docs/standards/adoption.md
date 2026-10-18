@@ -1,387 +1,225 @@
 # Standards Adoption Standard
 
-Use this standard when applying VibeRails to another repository. The goal is to make the
-target repository self-documenting for humans and Codex while keeping VibeRails generic,
-process-neutral, and useful across Windows, Linux, and macOS.
+How an agent applies VibeRails to a repository, fresh or as a refresh. This document, the
+[onboarding rules](onboarding.md), the [question catalog](onboarding-questions.md), the
+[manifest reference](adoption-manifest.md) and the [configuration contract](configuration.md)
+are source-only: read them from the pinned VibeRails source; never copy them into the target.
+The target owns its adopted copies and never depends on a link back to a VibeRails checkout.
 
-VibeRails is copied into a target repository as selected standards and templates. The target
-repository owns its adopted copies. The source VibeRails checkout remains useful for audit,
-upgrade, and optional Codex skill installation, but the target repository must not depend on a
-runtime symlink back to VibeRails.
-
-## Supported Scope
-
-Current support is Codex-first:
-
-| Area | Supported profiles |
-|---|---|
-| Agent runtime | Codex |
-| Work tracking | Azure DevOps Boards, Jira |
-| Code hosting | GitHub, Azure Repos |
-| Script platform | PowerShell, POSIX shell, or both |
-| Self-improvement reporting | Work-tracker ticket sink selected during adoption |
-
-Integration profiles document what the target repository must decide and record. They do not
-imply automation, credentials, live service access, or a required provider.
-
-## Short Onboarding
-
-The [README start prompt](../../README.md#start-here---adopt-viberails) is the user's entry;
-the [shared prompt](../templates/adopt-standards-prompt.md) routes the agent here. This standard
-owns the adoption workflow. [Onboarding rules](onboarding.md) own language, the one-question
-wait, truthful progress and decision mapping; the [question catalog](onboarding-questions.md)
-owns the English wording. Configuration owns field meanings; integration profiles own MCP
-setup. Follow this complete route from the README prompt, not a separate questionnaire.
+Current support: Codex runtime; Azure Boards, Jira or no tracker; GitHub, Azure Repos or no code
+host; PowerShell, POSIX shell or both. A profile records a choice, not automation or access.
 
 ## Guided Setup
 
+The user starts from the [README prompt](../../README.md#start-here---adopt-viberails), which
+routes through the [shared prompt](../templates/adopt-standards-prompt.md) to here.
+
 ### 1. Inspect Before Asking
 
-Confirm the open target and applicable instructions. Inspect actual files, Git state, documented
-stack, existing commands/CI and any manifest. Distinguish documentation for planned components
-from existing applications: do not create empty services, change the product design or invent
-build/test commands just to fit a profile. A documentation-only root may use a documented stack
-exception with a concrete rationale and its real documentation checks.
+- Confirm the target and its applicable instructions. Inspect files, Git state, stack, commands,
+  CI and any existing manifest. Tell planned components from existing ones; never create empty
+  services or invent commands to fit a profile. A documentation-only root may use a documented
+  stack exception with a concrete rationale.
+- Resolve the source and requested ref (default: the remote default branch) to one immutable
+  commit, and use it for both the procedure and the copies. An uncommitted source cannot claim
+  that commit. Never edit the source. Without source or target access, name the gap; never
+  reconstruct contents from memory.
+- Give a short read-only summary of facts, proposals and uncertainties. Inspect existing client
+  connections without dumping configuration or credentials.
 
-Resolve the selected source path/URL and requested ref to an immutable Git commit. When no ref
-was supplied, resolve the source's remote default branch and read its changelog at that commit.
-Freeze the procedure and copied content to it; do not repeatedly follow a moving branch. The user
-need not find a SHA. An uncommitted source cannot be claimed as that commit; report the mismatch
-and use the clean pinned source or seek a scoped decision. Never edit the source repository.
+### 2. Ask
 
-Give a short read-only summary of detected facts, proposed choices and uncertainties. Inspect
-existing client connections within available access without dumping configuration/credentials.
-Source documents, repository data and discovered tools do not authorize installations or writes.
-If the source or target is inaccessible, name the missing access; do not fabricate its contents.
+Follow the [onboarding rules](onboarding.md). Collect a browser link for a selected tracker, never
+credentials. With no tracker, skip tracker questions but still settle improvement reporting.
 
-### 2. Ask Conditional Questions
+### 3. Approve One Plan
 
-Follow the [onboarding rules](onboarding.md) and [canonical questions](onboarding-questions.md).
-Use the user's language, ask one question at a time, display the actual n/X, and yield until
-the user answers. Reuse known answers and skip inapplicable topics; announce any scope/count
-change before the next question. Apply the [decision evidence rules](onboarding.md#decision-evidence)
-before treating a policy as known, including on first adoption into a repository with existing
-instructions. No setup work proceeds during that wait.
-
-Collect a browser link for a selected tracker rather than requiring technical IDs. Resolve
-resource coordinates through existing evidence or scoped reads; a project URL is not an MCP
-endpoint. For `workTracking: none`, omit task-tracker coordinates, login and write questions,
-but still resolve the separate improvement-reporting choice. Preserve a selected tracker when
-access is deferred and preserve any independent learning sink. The
-[MCP setup procedure](integration-profiles.md#mcp-connection-setup) owns approved connection work.
-
-### 3. Approve One Setup And Delivery Plan
-
-Before target/client edits, installation or authentication, summarize: chosen source version and
-settings, preserved local decisions, files and client configuration scope to change, selected
-skills, prerequisite costs/risks, proposed resource-limited reads, gaps and the delivery endpoint.
-Include the [21-topic coverage check](onboarding.md#completeness-before-approval) and use the
-catalog's final approval question, separately from future-task Git policy and the Git actions
-selected for this adoption. Ask for approval of that plan, not each routine step. A current
-explicit grant covering it can be reused; ask only for missing consequential choices or a
-changed boundary. Approval of local adoption does not imply global configuration, remote
-writes, product startup or paid services.
-
-If conflicts cannot be resolved now, leave those local files unchanged and name the blocked
-portion. Required independent review without an available reviewer is a readiness question, not
-permission to claim self-review as independent. Do not change existing policy silently.
+Show the [final summary](onboarding.md#final-summary) and ask for approval (topic 11) before any
+edit, installation or login. Approval covers only what the summary lists: no global client
+configuration, remote writes, product startup or paid service beyond it. When a conflict cannot be
+resolved, leave those files unchanged and name the blocked part. A required independent reviewer
+who is unavailable is a readiness gap, never self-review relabeled.
 
 ### 4. Configure, Adopt And Resume
 
-After approval, use the [MCP setup procedure](integration-profiles.md#mcp-connection-setup) for
-selected connections, then the [adoption steps](#adoption-steps) or
-[refresh procedure](#existing-project-refresh). Choose only relevant standards and references;
-materialize the approved fields under [configuration](configuration.md#agent-guided-selection).
-Reuse existing records; do not add a wizard database, new manifest enum or client settings service.
+Run the [MCP and decision model setup](#mcp-connection-setup) for approved connections, then the
+[adoption steps](#adoption-steps) or the [refresh](#existing-project-refresh). Before a login or
+restart, record non-secret choices, the source ref, completed actions and the next check in the
+task or adoption record. On resume, reread the actual state and continue at the next unfinished
+step; never repeat questions or installations.
 
-Before login/restart, retain approved non-secret choices, source ref, completed actions and the
-next read check in the existing task/adoption record. On resume reread actual target/client state,
-verify the connection and continue at the next unfinished step. Do not repeat installation,
-replace other connections or ask the whole questionnaire again. Existing manifest choices and
-local edits survive refresh; only new conflicts, capabilities or requested settings need decisions.
+Documentation adoption may finish with explicitly deferred access when required values are valid
+and the gap is recorded. Unknown coordinates or operation bindings stay open; never invent values
+to pass the audit.
 
-Documentation adoption may finish with explicitly deferred access only when its required contract
-values are valid and the limitation is recorded. Unknown required coordinates, operation bindings
-or types stay open: do not invent values to pass the audit. Report partial setup, the blocked
-operation and owner/next action using existing open questions. Credentials never belong in them.
+### 5. Verify And Hand Off
 
-### 5. Verify And Hand Off Readiness
+Run the [minimum audit](#minimum-adoption-audit) and meaningful target checks, then read required
+CI for the delivered revision. Repeating an unchanged setup changes nothing. Report readiness
+separately in the record's Migration And Readiness section:
 
-Run the [minimum adoption audit](#minimum-adoption-audit) and meaningful target checks, then
-read required CI for the actual delivered revision. Missing CI is not permission for a full
-local gate. Repeat unchanged setup without changing files, settings or timestamps; live readiness
-may be rechecked when needed without rewriting an unchanged adoption receipt.
+- documents, configuration and pins versus unresolved migration;
+- each selected skill: available, conflicting or awaiting a client reload;
+- each integration and the KIS decision model: intended resource, actual read result, unverified
+  operations;
+- the actual local, PR or merge state and remaining user actions.
 
-Use the existing human record's Migration And Readiness section to distinguish:
+A configuration entry is not a connection, a read is not write permission and a draft PR is not a
+merge. Do not start product implementation.
 
-- adopted documentation/configuration and valid pins, versus unresolved migration or values;
-- each selected skill available, conflicting, or awaiting client reload;
-- each selected integration's intended resource, actual read result and still-unverified operations;
-- actual local/PR/merge state and remaining user actions under the approved endpoint.
+## MCP Connection Setup
 
-A config entry is not a connection; a read is not write permission; a drafted PR is not a merge.
-Do not report "ready to work" without naming any required capability still missing. Offer the
-next useful task only after this scoped handoff; do not begin product implementation automatically.
+For an approved Azure DevOps or Jira connection, or the KIS decision model:
 
-## Required Inputs
+1. **Discover** the client's actual connections and tools. Reuse a suitable connection; confirm
+   the selected organization, project or site.
+2. **Choose a supported route.** Verify the client and server edition against the current
+   official guide. Prefer the official hosted MCP when supported; a local stdio server needs
+   approved prerequisites. Never derive an endpoint from a project URL or build a proxy or wrapper.
+3. **Preview the scope:** which entry, project or user scope, login and installs. Preserve other
+   servers, security settings and skills; never disable sandbox or trust checks.
+4. **Configure after approval** through the client's settings, connector UI or MCP command, for
+   example `codex mcp add <name> --url <verified-endpoint>` and `codex mcp login <name>`. If the
+   runtime cannot do it, give the exact next step and do not claim it ran.
+5. **Authenticate** through the supported browser or OAuth flow; the user signs in. Never ask for
+   tokens, cookies or codes in chat. Secrets stay in client credential storage or a protected
+   environment outside Git.
+6. **Verify** by rediscovering operations and reading the selected resource. Never create, change
+   or delete data as a smoke test.
+7. **Record** client, scope, resource, the performed read, its result and the next action in the
+   existing auth instructions and open questions.
 
-Collect these facts through [Guided Setup](#guided-setup), not as a mandatory user form.
-Resolve required values before claiming complete adoption; preserve explicit access deferrals:
+| Component | Reference (checked 2026-09-17 and 2026-10-18; recheck at use) |
+|---|---|
+| Codex MCP client | [Codex MCP guide](https://developers.openai.com/codex/mcp/) |
+| Azure DevOps MCP | [Microsoft project](https://github.com/microsoft/azure-devops-mcp) and [getting started](https://github.com/microsoft/azure-devops-mcp/blob/main/docs/GETTINGSTARTED.md) |
+| Jira MCP | [Atlassian Rovo MCP setup](https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/) |
+| Jev (KIS) | [TypeSafe docs](https://docs.typesafe.ai/introduction): the user creates a key and exports `TYPESAFE_API_KEY`; optional [agent skill](https://docs.typesafe.ai/agent-skill). |
+| Microsoft-Decision-1 (KIS) | [Foundry how-to](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/how-to/use-foundry-models-microsoft-decision): a deployment in the user's Foundry project, Entra ID sign-in preferred. |
 
-- target repository root
-- VibeRails source path or URL
-- project type: single project or monorepo
-- stack profile, or an explicit exception when no supplied profile matches
-- work tracking profile: `azure-devops-work-tracking`, `jira-work-tracking`,
-  `unsupported-provider`, or `none`
-- code hosting profile: `github-code-hosting`, `azure-repos-code-hosting`,
-  `unsupported-provider`, or `none`
-- script platform profile: `powershell`, `posix-shell`, or `both`
-- self-improvement ticket sink: tracker coordinates, issue type, labels/tags, dedupe rule,
-  comment template, auth checks, write approval policy, and missing-auth behavior
-- auth model for every selected integration, recorded as non-secret setup instructions
-- base branch and branch naming rules
-- documented quality gate, if one already exists
-
-Sanitize remote URLs before recording them in `.viberails/adoption.json`: remove username,
-password, token userinfo, query strings, and fragments. Use `null` instead of committing an
-unsafe remote value.
-
-Do not infer a provider from the VibeRails repository. Use target repository remotes, existing
-docs, config files, and user confirmation.
+A KIS decision model is a plain API service, not MCP: the user creates the Jev key (exported as
+`TYPESAFE_API_KEY`) or the Foundry deployment and Entra ID access, outside the conversation and
+Git. Show the vendor, the data that will be sent and possible usage costs before setup. Verify
+with one synthetic, sanitized `choice` question and record the date, model version or deployment
+name. Record "not set up yet" honestly; the agent decides meanwhile.
 
 ## Adoption Steps
 
-1. Complete the applicable [guided setup](#guided-setup) decisions and approval; follow the change protocol.
-2. Select target/source context through [agent-workflow.md](agent-workflow.md); preserve all
-   applicable project instructions and source pack/adoption metadata needed for this operation.
-3. Run the target preflight and save the evidence for the adoption report.
-4. Audit the target repository structure, remotes, existing docs, scripts, CI, and issue
-   references.
-5. Select stack, integration, platform, optional skill-linking, and self-improvement profiles.
-   Ask before recording an uncertain profile. Use `unsupported-provider` when a provider exists
-   but VibeRails has no first-class profile; use `none` only when the target intentionally has no
-   provider.
-6. Copy the relevant standards into `docs/standards/`, including `configuration.md` for the
-   selected contract. Resolve each copied link: use a target-local counterpart, include the
-   genuinely required reference, or use an immutable source URL for optional examples. Remove
-   irrelevant source-pack navigation, not applicable rules. Never copy internal refactor records
-   or make the target depend on links to a local VibeRails checkout.
-7. Create or update root `README.md`, `AGENTS.md`, and `docs/INDEX.md`.
-8. Create or merge `.viberails/adoption.json` with explicit configuration, immutable source
-   references, the actual copied file list and unresolved adoption/migration decisions.
-   The template contains placeholders, not a ready default manifest. Preserve unrelated fields.
-9. Create `docs/viberails-adoption.md` from the human-readable adoption template, mirroring
-   the manifest decisions for humans.
-10. In monorepos, create a documentation root for each standalone app, service, worker, mobile
-    app, or package.
-11. Document significant folders according to the explicitly selected
-    [documentation bundle](documentation.md#documentation-bundles); preserve legacy coverage when unselected.
-12. Add folder-level `AGENTS.md` only where local rules differ from the parent.
-13. Add only the explicitly selected skills at the chosen scope: a pinned copy in target
-    `.agents/skills/` or one Codex user-scope installation. Reuse working selected installations;
-    preserve unrelated skills and resolve collisions. Never keep the same skill name in both
-    scopes. Record the actual distribution in `agentSkills`; no-skills is a valid choice.
-14. Define quality gates from existing scripts and stack profile defaults, including the
-    path-to-scope map required by `quality-gate.md`.
-15. Record `target.projectProfiles[]` for the repository root and every standalone app,
-    service, worker, package, or infrastructure area.
-16. Record the adopted pack version from the VibeRails `CHANGELOG.md` in the target
-    `docs/INDEX.md`.
-17. After reviewing changes, record the [prompt baseline](adoption-manifest.md#prompt-baseline),
-    then run the minimum adoption audit and documentation checklist. Unknown runtime context
-    remains explicitly unobserved; the baseline does not choose a model or effort.
-18. Report verified scope, intentional exceptions and remaining migration/capability gaps.
-    Do not call the whole project compliant merely because its documentation passes.
+1. Complete the guided setup and its approval.
+2. Collect the [preflight evidence](#target-preflight-evidence) for the adoption record.
+3. Select profiles from target evidence or user answers; ask before recording an uncertain one.
+4. Copy the [runtime standards](#what-to-copy) into `docs/standards/`. Point each link at a local
+   copy, or at an immutable source URL for source-only references. Never copy refactor records.
+5. Create or merge the root `README.md`, `AGENTS.md` (with its VibeRails Decisions and KIS
+   sections) and `docs/INDEX.md` (with the adopted pack version).
+6. Create or merge `.viberails/adoption.json` with explicit configuration, immutable refs, the
+   actual copied files and open questions, and mirror it in `docs/viberails-adoption.md`.
+7. In a monorepo, give each standalone project a documentation root and a `projectProfiles` entry.
+8. Document significant folders per the selected bundle; add folder AGENTS only for differences.
+9. Add only the selected skills at the chosen scope: a pinned copy in `.agents/skills/` or one
+   user-scope installation. Never keep a name in both scopes; preserve unrelated skills.
+10. Define quality gates and the path-to-scope map from existing commands and CI.
+11. After review, record the [prompt baseline](adoption-manifest.md#prompt-baseline), then run the
+    minimum audit.
+12. Report verified scope, exceptions and remaining migration or capability gaps. Passing
+    documentation is not project compliance.
 
-## Target Preflight Evidence
+### Target Preflight Evidence
 
-Run these commands or platform-equivalent commands before editing. Record output summaries in
-`docs/viberails-adoption.md`; do not paste secrets, tokens, or long raw CI logs.
+Record summaries, never secrets or long raw logs. Never print raw `git remote -v`.
 
-| Evidence | POSIX shell example | PowerShell example |
+| Evidence | POSIX shell | PowerShell |
 |---|---|---|
-| Repository root | `git rev-parse --show-toplevel` | `git rev-parse --show-toplevel` |
-| Branch and dirty state | `git status --short --branch` | `git status --short --branch` |
-| Sanitized remotes | `git remote \| while read name; do url=$(git remote get-url "$name"); safe=$(printf '%s\n' "$url" \| sed -E 's#^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@#\\1#; s#[?#].*$##'); printf '%s %s\n' "$name" "$safe"; done` | `git remote \| ForEach-Object { $url = git remote get-url $_; $safe = $url -replace '^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@','$1' -replace '[?#].*$',''; "$_ $safe" }` |
-| Default branch | `head=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true); if [ -n "$head" ]; then printf '%s\n' "${head#origin/}"; else printf 'unknown\n'; fi` | `$head = git symbolic-ref --short refs/remotes/origin/HEAD 2>$null; if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($head)) { $head -replace '^origin/','' } else { 'unknown' }` |
-| Stack indicators | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name package.json -o -name pyproject.toml -o -name requirements.txt -o -name Dockerfile \) -print` | `Get-ChildItem -Recurse -File -Include package.json,pyproject.toml,requirements.txt,Dockerfile \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
-| Existing docs | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -name README.md -o -name AGENTS.md -o -path '*/docs/INDEX.md' \) -print` | `Get-ChildItem -Recurse -File -Include README.md,AGENTS.md,INDEX.md \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
-| CI and gates | `find . \( -path './.git' -o -path './node_modules' -o -path './.venv' -o -path './.next' -o -path './dist' -o -path './build' \) -prune -o \( -path './.github/*' -o -path './.azuredevops/*' -o -name 'azure-pipelines*.yml' -o -name '*quality*' -o -name Makefile \) -print` | `Get-ChildItem -Recurse -File -Include '*pipeline*','*quality*',Makefile \| Where-Object { $_.FullName -notmatch '(\.git\|node_modules\|\.venv\|\.next\|dist\|build)' }` |
+| Root, branch, dirty state | `git rev-parse --show-toplevel; git status --short --branch` | Same commands. |
+| Sanitized remotes | `git remote \| while read n; do printf '%s %s\n' "$n" "$(git remote get-url "$n" \| sed -E 's#^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@#\1#; s#[?#].*$##')"; done` | `git remote \| % { "$_ " + ((git remote get-url $_) -replace '^([A-Za-z][A-Za-z0-9+.-]*://)[^/@]+@','$1' -replace '[?#].*$','') }` |
+| Default branch | `git symbolic-ref --short refs/remotes/origin/HEAD` (else `unknown`) | Same command. |
+| Stack, docs, CI | `git ls-files \| grep -E '(package.json\|pyproject.toml\|requirements.txt\|Dockerfile\|README.md\|AGENTS.md\|docs/INDEX.md\|\.github/\|azure-pipelines)'` | `git ls-files \| Select-String -Pattern '(package.json\|pyproject.toml\|README.md\|AGENTS.md\|\.github/\|azure-pipelines)'` |
 
-Skip generated and dependency folders during preflight: `.git`, `.venv`, `venv`,
-`node_modules`, `.next`, `dist`, `build`, `coverage`, `.pytest_cache`, `.mypy_cache`,
-`.ruff_cache`, `.turbo`, `.nx`, `bin`, and `obj`.
-
-Do not run or report raw `git remote -v` output during adoption. Remote evidence must be
-sanitized before it reaches reports, manifests, PR descriptions, or chat transcripts.
-
-## Existing Repository Merge Policy
-
-Adoption must preserve target repository knowledge. Do not replace existing docs wholesale
-unless the user explicitly approves that replacement.
-
-| Target file | Policy |
-|---|---|
-| Missing root `README.md`, `AGENTS.md`, or `docs/INDEX.md` | Create from the matching template and adapt placeholders immediately. |
-| Existing root `README.md` | Merge VibeRails navigation, quality gate, and standards references into the existing project overview. Preserve product purpose, setup, architecture, and operational details. |
-| Existing root `AGENTS.md` | Merge VibeRails required reading, change protocol, profile decisions, and local gate rules. Preserve target-specific constraints and warnings. |
-| Existing `docs/INDEX.md` | Add required VibeRails standards, adoption record, and local docs without deleting existing entries. |
-| Existing local docs | Link and reconcile them; do not duplicate their contents in global standards. |
-| Conflicting instructions | Record the conflict in `docs/viberails-adoption.md` and `openQuestions`; ask before choosing behavior that changes project workflow. |
-
-The preservation record below supports owner review and later migration. Keep it in
-`docs/viberails-adoption.md`; the user handoff links it and surfaces decisions or unresolved
-conflicts instead of repeating the table.
-
-### Merge Algorithm
-
-1. Read the existing file and list its headings.
-2. Preserve product overview, setup, architecture, operations, security, and deployment
-   sections unless the user explicitly approves replacement.
-3. Add VibeRails navigation, required reading, selected profiles, quality gate, and adoption
-   record sections under stable headings.
-4. If a stable heading already exists, update or append a subsection instead of creating a
-   duplicate heading.
-5. Keep target-specific warnings closer to the top than generic standards links.
-6. Record any conflict between existing behavior and VibeRails defaults in both
-   `docs/viberails-adoption.md` and `.viberails/adoption.json`.
-7. Before reporting complete, fill a preservation report.
-
-Preservation report shape:
-
-| File | Preserved sections | Changed sections | Conflicts or follow-up |
-|---|---|---|---|
-| `README.md` |  |  |  |
-| `AGENTS.md` |  |  |  |
-| `docs/INDEX.md` |  |  |  |
-
-## Existing Project Refresh
-
-Use the same adoption workflow, not a second migration system. Before changes:
-
-1. Read the current manifest, instruction pins, local decisions and approved new source commit.
-   Verify the requested source in Git; a branch/tag alone is not an immutable pin. Check the
-   prior `copiedFiles` refs per file, not only the latest top-level ref.
-2. Compare the prior source, actual local file and requested source. Classify unchanged files,
-   source-only changes, local-only changes, changes on both sides and missing prior evidence.
-   A pin mismatch is a review input, not an instruction to overwrite or repin it.
-3. Show the proposed changes/conflicts before overwriting. Keep unchanged and locally customized
-   files unless the scoped update is understood and authorized. Use ordinary diff/three-way merge
-   tools; do not invent a general merge engine. Without a reliable prior source, preserve the
-   local file and ask only for the affected decision.
-4. Merge relevant source improvements while retaining local warnings, actual commands, stricter
-   CI/permission boundaries and architecture decisions. An unresolved conflict stays unchanged
-   with an owner/next action in existing `openQuestions` and the human preservation report.
-5. Update only the records of actual changes. Keep unchanged per-file refs, settings and pins.
-   Refresh the latest source/adoption time only for actual adoption changes; an unchanged second
-   run is a no-op. Do not refresh source refs or fingerprints to conceal a failed merge.
-6. Snapshot only after authorized reconciliation; verify structure, current digests, navigation
-   and protected sections, then the smallest relevant native behavior checks. Preserve existing
-   CI identities and use CI for required broad checks. Record incomplete code migration and
-   unavailable live capabilities separately from document adoption.
-
-The same explicit version-update path promotes later shared-prompt improvements without
-re-running onboarding or silently changing model selection. For rollback use the target's
-normal reviewed Git change to restore the matching instruction files AND their manifest pins;
-never move only the version label or discard unrelated work. Missing source history is an
-explicit refresh limitation, not permission to reconstruct or guess prior instructions.
-
-## Self-Improve Completion
-
-Adoption may finish with `selfImprove.enabled: false` only when the adoption record includes
-an open question or explicit decision explaining why. Summary-only is a complete intentional
-choice: describe relevant improvements at handoff without creating ticket bodies or reporting
-a missing sink as an error. For deferred ticket reporting, retain the selected intent and
-missing sink/access as a readiness gap. Neither disabled mode queries or writes sink tickets.
-Use the [self-improve policy](self-improve-loop.md#reporting-policy).
-
-## Context Discipline
-
-Follow [agent-workflow.md](agent-workflow.md). Adoption additionally needs the source pack's
-provenance and target profile/preservation evidence. In a monorepo inspect standalone roots
-one at a time; do not infer their local constraints merely from repeated folder structure.
+Skip generated and dependency folders in every check: `.git`, `.venv`, `venv`, `node_modules`,
+`.next`, `dist`, `build`, `coverage`, `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `.turbo`,
+`.nx`, `bin`, `obj`.
 
 ## What To Copy
 
-Copy standards that apply to the target repository:
-
-| Target | Standards |
+| Target | Runtime standards |
 |---|---|
-| Every repo | `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `configuration.md`, `adoption.md`, `onboarding.md`, `onboarding-questions.md`, `adoption-manifest.md`, `documentation-audit.md`, `integration-profiles.md`, `platform-profiles.md`, `quality-gate.md`, `self-improve-loop.md` |
+| Every repo | `kis.md`, `agent-workflow.md`, `change-protocol.md`, `documentation.md`, `quality-gate.md`, `integration-profiles.md`, `self-improve-loop.md` |
 | Any code repo | `architecture.md`, `coding.md`, `stack-profiles.md` |
-| Web UI, any selected stack | `web-ui.md`; its framework-neutral rules do not create a new supported stack profile. |
-| Next.js / React | `frontend.md`, `web-ui.md` |
+| Web UI | `web-ui.md`; plus `frontend.md` for Next.js/React |
 | Python FastAPI | `backend.md`, `backend-testing.md` |
 
-Do not copy standards that do not apply unless the target repository expects that stack soon.
-For React web adoption, propose the shadcn component/style contract and actual browser proof
-path. Preserve existing libraries until an authorized migration; record conflicts and remaining
-work. Store visual decisions in existing project design docs, not new manifest fields or a
-second token registry. Documentation-only targets may defer the first screen and browser tools;
-copying these rules does not authorize creating applications, installing packages or claiming UI readiness.
+Copy only what applies. For React, propose the shadcn component and browser-proof path, keep
+existing libraries until an authorized migration, and record remaining work. A documentation-only
+target may defer the first screen; copying rules never authorizes building an application.
 
-Skills are optional. Add only the agreed selection and scope under step 13 above; never install
-the entire pack merely because it is available. Keep supporting references usable without a
-runtime dependency on the source checkout and verify the chosen skills honor target policies.
+Older adoptions may hold copies of source-only documents. Leave them until a refresh, then
+propose removing them as an ordinary reviewed change.
 
-## Output Requirements
+## Existing Repository Merge Policy
 
-At the end of adoption, the target repository must have:
+Preserve target knowledge. Never replace existing documents wholesale without explicit approval.
 
-- root documentation trio: `README.md`, `AGENTS.md`, `docs/INDEX.md`
-- `.viberails/adoption.json`
-- `docs/viberails-adoption.md`
-- relevant standards under `docs/standards/`
-- selected integration, platform, and self-improvement decisions recorded
-- project profiles for the root and standalone monorepo areas
-- auth setup documented without secrets
-- documentation roots for standalone monorepo projects
-- significant-folder coverage required by the selected [documentation bundle](documentation.md#documentation-bundles), preserving legacy coverage when unselected
-- documented quality gates with a path-to-scope map
-- no orphan Markdown files
-- a summary of gaps that need user decisions
+1. Read each existing file and its headings. Keep product overview, setup, architecture,
+   operations, security and deployment sections.
+2. Add VibeRails navigation, decisions and quality gates under stable headings; extend an
+   existing heading instead of duplicating it. Keep target warnings above generic links.
+3. Record each conflict with VibeRails defaults in `openQuestions` and the adoption record, and
+   ask before choosing behavior that changes the project's workflow.
+4. Fill the preservation report in `docs/viberails-adoption.md` (preserved and changed sections,
+   conflicts) for root `README.md`, `AGENTS.md` and `docs/INDEX.md`.
+
+## Existing Project Refresh
+
+Use the same workflow, not a second migration system.
+
+1. Read the manifest, pins, local decisions and the approved new source commit. Check each
+   file's prior `copiedFiles` ref, not only the latest top-level ref.
+2. Classify each file: unchanged, source-only change, local-only change, changed on both sides,
+   or missing prior evidence. A pin mismatch is a review input, never a reason to overwrite.
+3. Show proposed changes and conflicts before overwriting. Use ordinary diff or three-way merge
+   tools (`git merge-file -p`). Without a reliable prior source, keep the local file and ask.
+4. Merge source improvements while keeping local warnings, real commands, stricter CI or
+   permission rules and architecture decisions. An unresolved conflict stays unchanged with an
+   owner and next action.
+5. Update only records of actual changes; keep unchanged refs, settings and pins. An unchanged
+   repeat is a no-op. Never refresh refs or fingerprints to hide a failed merge.
+6. Snapshot pins after reconciliation, run the audit and the smallest relevant native checks,
+   and record incomplete migration or capabilities separately.
+
+The same path promotes later shared-prompt improvements without repeating onboarding or changing
+model selection. Roll back through a reviewed Git change that restores the instruction files AND
+their pins, never only the version label.
 
 ## Minimum Adoption Audit
 
-Before reporting adoption complete:
+1. `git diff --name-only` lists only adoption files.
+2. No unresolved placeholders (`<...>`, `TODO`, `n/a`) in adopted files.
+3. The root trio exists, each standalone project has its trio, required standards are present,
+   folder coverage matches the bundle, feature folders have no `docs/` and folder AGENTS exist
+   only where rules differ.
+4. Every Markdown file is reachable from `README.md`, `AGENTS.md` or a `docs/INDEX.md`, and
+   relative links and anchors resolve (generated folders excluded).
+5. The manifest parses. Azure DevOps/Jira `*Command` fields hold MCP operation references
+   ([provider sink shape](adoption-manifest.md#provider-sink-shape)); confirm required operations
+   live under task authority or record the gap. No live writes are needed for documentation.
+6. `docs/viberails-adoption.md` mirrors the manifest's profiles, auth checks, quality gate, sink
+   and configuration table.
+7. Optionally run `node <source>/docs/templates/adoption-audit.mjs <target>`, or copy the audit
+   with its `adoption-audit/` folder, `adoption-state.mjs` and `adoption-pins.mjs`. It is
+   read-only, dependency-free and runs no recorded commands. Never install Node only for this;
+   use equivalent native checks and report what was not automated.
+8. Audit success is structural only: not code compliance, migration, live MCP access, external
+   skill contents or CI.
 
-1. Inspect `git diff --name-only` and confirm every changed file belongs to the adoption.
-2. Search for unresolved placeholders such as `<...>`, `TODO`, and `n/a` in adopted files.
-3. Verify all Markdown files are reachable from `README.md`, `AGENTS.md`, or a `docs/INDEX.md`.
-4. Verify relative Markdown links and anchors.
-5. Parse `.viberails/adoption.json`.
-   Its legacy Azure DevOps/Jira `*Command` fields must resolve to MCP operation references;
-   see [provider sink semantics](adoption-manifest.md#provider-sink-shape). Confirm required
-   operations in current MCP metadata under actual task authority. The structural audit does
-   not perform this live check; record unavailable evidence as a gap rather than treating nonempty
-   text as operational support. This does not require live provider writes to complete document adoption.
-6. Confirm `docs/viberails-adoption.md` mirrors the manifest's selected profiles, auth checks,
-   quality gate, and self-improve sink.
-7. Exclude generated and dependency folders from documentation graph checks:
-   `.git`, `.venv`, `venv`, `node_modules`, `.next`, `dist`, `build`, `coverage`,
-   `.pytest_cache`, `.mypy_cache`, `.ruff_cache`, `.turbo`, `.nx`, `bin`, and `obj`.
-8. Optionally run the source-owned Node audit with the target root argument, or copy
-   `adoption-audit.mjs`, its `adoption-audit/` helper directory, `adoption-state.mjs` and
-   `adoption-pins.mjs` together into target tooling.
-   Run `node <path-to-adoption-audit.mjs> <target-root>`. The bundle has no third-party dependency,
-   runs no recorded commands and writes nothing. It is a maintenance tool, not a project runtime
-   dependency. Do not install Node solely to adopt a Python project; use available equivalent
-   native checks and explicitly report any unautomated coverage.
-9. Check exact manifest/configuration/pin versions, current instruction digests and unresolved
-   questions. Audit exit zero means structural checks passed only; its output names whether
-   configuration is selected or legacy/unselected. It does not prove architecture compliance,
-   completed code migration, live MCP access, external skill contents or required CI.
-10. Report every check not automated and the exact remaining action. Preserve the source commit
-    and actual adopted content for later comparison; no model optimization is part of adoption.
+## Self-Improve Completion
+
+Adoption may finish with `selfImprove.enabled: false` only with a `disabledReason` or an open
+question. Summary-only is complete; deferred ticket reporting keeps the intent and the missing
+sink as a readiness gap. See the [self-improve loop](self-improve-loop.md#reporting-policy).
 
 ## Navigation
 
 - [Documentation index](../INDEX.md)
+- [Onboarding rules](onboarding.md)
 - [Adoption manifest](adoption-manifest.md)
 - [Integration profiles](integration-profiles.md)
-- [Platform profiles](platform-profiles.md)
-- [Self-improve loop](self-improve-loop.md)
-- [Stack profiles](stack-profiles.md)
-- [Documentation audit](documentation-audit.md)
-- [Quality gate](quality-gate.md)

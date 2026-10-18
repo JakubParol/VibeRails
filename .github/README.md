@@ -36,6 +36,9 @@ The existing Linux and macOS jobs also run isolated POSIX installer regressions 
 foreign/broken links, other checkouts, relative owned links and safe removal. On Windows that
 step is intentionally inapplicable; no PowerShell script is run or claimed tested.
 
+The Linux job also runs offline regressions for the `typesafe-jev` helper. They stop before any
+network request and make no TypeSafe call.
+
 ## Navigation
 
 - [Repository README](../README.md)

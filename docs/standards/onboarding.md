@@ -1,181 +1,104 @@
 # Guided Onboarding Rules
 
-Use these rules with the [English question catalog](onboarding-questions.md) during
-[guided adoption](adoption.md#guided-setup). The catalog owns question wording and options;
-this document owns conversation behavior, applicability and decision mapping. Catalog approval
-does not select settings for any project. No wizard runtime or new configuration schema is needed.
+Use these rules with the [question catalog](onboarding-questions.md) during
+[guided adoption](adoption.md#guided-setup). The catalog owns wording; this document owns the
+conversation and where each decision is stored. Both stay in the VibeRails source; they are not
+copied into target repositories.
 
 ## Language
 
-Keep VibeRails repository questions, answer options and instructions in English. Conduct the
-conversation in the language the user uses for their own request, unless they explicitly ask
-for another language. An English bootstrap prompt, quoted document or code snippet does not
-override the user's conversational language. If the user switches languages, switch with them
-from the next response; preserve existing answers and progress.
-
-Translate the current question, options, recommendation, counter announcement and summary
-faithfully. Preserve choices, permissions and distinctions; keep identifiers such as `minimal`,
-model names, paths and commands unchanged. Do not create a second translated source catalog or
-translate repository files merely because the conversation is in another language.
+Keep repository files in English. Talk in the language of the user's own messages (an English
+bootstrap prompt or quoted text does not change it) and switch when they switch, keeping answers
+and progress. Translate the question, options, recommendation and summary faithfully; keep
+identifiers such as `minimal`, paths and model names unchanged.
 
 ## One Question And A Real Wait
 
-Inspect the project read-only before asking. Reuse explicit answers and observable facts;
-the source repository, an installed skill or a recommendation is not an answer. Preserve
-existing decisions and constraints. Ask only unresolved, applicable questions under the
-[decision evidence rules](#decision-evidence).
-
-Before the first question say, in the conversation language: "I will ask you X questions,
-one at a time. After each one, I will wait for your answer." Explain that X is the current
-plan and that choices requiring follow-ups can change it, which you will announce before the
-next question. Do not claim that every project needs 21 questions.
-
-Use "Question n/X: [question text]" in the conversation language. Show one question with its
-options and short explanation, then yield the turn. Do not configure, install, ask another
-question or keep working on adoption while waiting. A tool accepting a question card is not a
-user answer. Silence, closing a card, timeout or a preselected recommendation is not consent.
-If a question tool supports fewer choices than the catalog, use a normal message with the
-complete options. Never collapse or preselect an answer to fit the tool.
-
-Resolve unclear answers with one focused question and another wait. A real answer resolves
-only what it explicitly addresses. If the user volunteers several decisions, record all clear
-ones and remove their unasked questions; do not treat assent to one question as assent to others.
+- Inspect the project read-only first. Ask only unresolved, applicable topics.
+- Open with, in the user's language: "I will ask you X questions, one at a time, and wait for
+  each answer. Some answers can add a follow-up; I will tell you when X changes."
+- Show "Question n/X: [question]", its options and the recommendation, then stop and wait. Do no
+  setup work while waiting. An accepted question card, silence, a timeout or a preselected option
+  is not an answer. If a question tool cannot show all options, use a plain message.
+- An answer settles only what it addresses. Record every clear decision the user volunteers and
+  drop those questions. Resolve an unclear answer with one focused follow-up.
+- Counting: n is the number of questions already sent plus one; X is questions sent plus those
+  still planned, follow-ups included. Before the next question, announce any change to X and why.
+  Never renumber questions already sent.
+- A changed answer reopens only the decisions that depend on it and any approval of a different
+  plan.
 
 ## Decision Evidence
 
-First adoption selects project policies even when the repository already has instructions or
-planned architecture. Refresh preserves explicit adopted choices; it does not reopen every
-question. In either case, classify each topic using evidence of the right kind:
-
-| Evidence | What it can resolve |
+| Evidence | What it can settle |
 |---|---|
-| Observable fact, with its read/check | Hosting, existing tools or working access. It does not select a policy or grant writes. |
-| Explicit user answer or applicable recorded decision, with its source and scope | The matching policy, when it unambiguously answers that catalog question and has no unresolved conflict. A prior valid answer need not use the catalog's exact words. |
-| Recommendation, preset, generic preference or inferred similarity | A proposal to explain with the question, never a known answer. |
+| Observable fact (remote, existing CI, a working connection) | Facts such as the code host. Never a policy or a write permission. |
+| Explicit user answer, or a recorded project decision that answers the topic unambiguously | That policy. |
+| Recommendation, preset, generic preference or similarity | Nothing; explain it alongside the question. |
 
-On first adoption, ask question 6 unless the user has already explicitly selected `minimal`
-or `layered` for this target, or an existing explicit decision unambiguously specifies that
-variant's structure. "Keep it simple", vertical slices, plain functions, no speculative DI or
-empty layers, repository size and separate frontend/backend services do not select a variant.
-Both variants can satisfy those constraints. Preserve them and recommend a compatible choice;
-do not silently turn them into `configuration.architecture: minimal`.
+"Keep it simple", vertical slices, plain functions or "no speculative layers" do not choose
+`minimal` or `layered`: both satisfy [KIS](kis.md). Ask topic 4 on first adoption unless the user
+or an existing decision explicitly chose both structure and documentation; if only one is
+explicit, ask 4a or 4b alone. Apply the same test to documentation, review, delegation, models,
+Git, tests, reporting and the KIS model. A refresh keeps explicit adopted choices and asks only
+about new or conflicting topics.
 
-Apply the same distinction to documentation, review, delegation, model, Git, test and reporting
-policies. An existing rule may constrain the options without choosing one. If its meaning or
-scope is ambiguous, keep the topic unresolved and ask the catalog question with that context.
-Do not resolve it merely by presenting an inferred choice as settled in the final summary.
+## Topic Conditions
 
-## Honest Progress
-
-Keep a small conversation ledger covering all 21 catalog IDs in current context or the existing
-authorized task record: status, answer/decision, source or conditional reason, questions actually
-sent, and the ordered remaining questions. Keep unactivated conditional topics visible in the
-ledger without adding them to the current question count. No new persistent file or database is
-required before approval. Mark items known, answered, pending, not applicable or deferred;
-never count known, skipped or deferred items as asked.
-
-- Catalog IDs identify topics, not displayed sequence numbers. Each actual question occurrence
-  counts once, including a clarification, comparison choice or repeated final confirmation.
-- Before sending a question, let A be the number already sent and R the remaining planned
-  question occurrences, including the one about to be sent. Display `n = A + 1`, `X = A + R`.
-  Sending adds one to A and removes one from R. Waiting or receiving an answer adds nothing.
-- Schedule a conditional question only when evidence or an answer makes it applicable.
-  Undecided branches are not silently counted as guaranteed questions. Explain this provisional
-  scope in the opening announcement; X is exact for the current plan, not a final prediction.
-- After every answer, reconcile the remaining list. Before the next question, announce any
-  change to X and its reason, including questions added, removed or deferred. Keep sent history;
-  do not rewrite earlier counters, restart numbering, or count skipped topics as asked.
-- A changed earlier answer invalidates only its dependent decisions and any previous approval
-  of a materially different plan. Reuse unaffected answers, describe the change, and ask only
-  the needed follow-up(s) plus final approval of the revised summary. Count each actual prompt.
-- A pending question is not a completed onboarding. Final approval is an actual question in
-  the remaining list unless a prior explicit approval covers this exact concrete plan. A
-  rejection can extend a previously displayed `X/X`; announce that extension before continuing.
-
-## Completeness Before Approval
-
-Before question 21, reconcile the ledger against every catalog ID. Each applicable policy must
-have an explicit answer or a valid sourced decision. Resolve pending decisions first; do not
-hide them in a shorter question count or ask for blanket approval of inferred defaults.
-Only the conditional rules below permit deferral; record its trigger and next action. Keep
-unresolved integration readiness separate from policy decisions and disclose partial setup.
-
-Show a compact coverage table in the user's language alongside the concrete plan: catalog ID
-and topic, status, selected answer or reason, and source. Cover all 21 IDs; concise rows may
-group IDs only when their status and reason match. Include known choices and why questions
-were skipped or deferred. For architecture name `minimal` or `layered`, not only "simple".
-Use safe source references, not private transcript dumps. This table is a view of the ledger,
-not a second questionnaire or a new configuration file. If this exact plan still needs approval,
-question 21 remains pending until answered and counts in n/X. An existing explicit approval
-covering the exact plan remains valid: cite it as known and do not count or ask it again.
-
-## Conditional Questions And Follow-Ups
-
-These IDs refer to the catalog. Follow-ups use the same one-question/counting/wait rules.
-
-| IDs | When to ask and how to interpret |
+| Topic | When to ask and how to read the answer |
 |---|---|
-| 1 | Future-task Git policy, separate from this adoption. A selected action still needs actual capabilities and required checks. No remote means a requested push/PR is a readiness gap, not permission to create hosting. |
-| 2-3 | Ask separately. Automatic review timing does not select staffing. Staffing applies both to automatic and user-requested review; it does not request review after review. Existing required reviews remain effective. |
-| 4-5 | Coding/testing delegation is separate from review delegation. Ask model/effort policy whenever either can use additional agents and it is unresolved, even if automatic review is off. For a user-specified pool, ask which supported models/efforts before final approval. |
-| 6-7 | Require explicit selections under [decision evidence](#decision-evidence); generic simplicity or concise-writing rules are not variant/bundle choices. Preserve architecture boundaries and useful documentation. These choices concern internal structure and documentation coverage, not creating or merging frontend/backend/AI components. |
-| 8-9 | Ask only if unknown. Do not infer task tracking from the code host, or assume a new project needs no tracker. An unsupported provider remains selected with an explicit capability gap; never migrate it implicitly. |
-| 10 | Ask for a browser link only when the selected tracker/project is unresolved. Discover IDs through scoped reads if available; clarify meaningful ambiguity without requesting credentials. Skip for conversation-only tasks. |
-| 11 | Substitute the selected service name. Ask only if its connection is absent or does not work. This chooses connect now versus later; actual setup waits for the concrete final plan. Deferral retains the tracker. Connection/read permission does not grant writes. |
-| 12 | Use the selected service name. Skip when no task tracker is used or the policy is known. Applies only to that project and requested work; deletion needs separate permission. It does not select self-improvement reporting. |
-| 13 | Choose task/review instructions, not an MCP connection. Show concrete differences for "compare", then ask for the actual selection. Comparison alone authorizes neither use nor installation. Do not adopt personal skills because they are present. Skills do not override answers about review or delegation. |
-| 14 | Ask only when selected skills need adding. Project-only means a pinned copy in that repository; all projects means one Codex user-scope installation, including future projects, not copies in every repository. Reuse a working selected installation; resolve collisions before replacing anything. No-skills skips this question, not review or test policies. |
-| 15 | Select agent test cadence, not CI creation or tests after push. Apply the [test cadence](quality-gate.md#agent-test-cadence) and [progress-commit rules](change-protocol.md#commit-protocol). |
-| 16 | Only for a project with planned/present UI and unresolved appearance. Preserve existing design/materials. Ask for available references for option 1; for option 2 propose one coherent direction and wait for feedback. Neither authorizes screen implementation. |
-| 17-18 | Only for UI with unresolved device/theme requirements and design being settled now. Deferring appearance also defers these questions until before the first screen, preserving any already-known requirements. A custom device set is valid; it does not imply native mobile apps. Both themes require visual/readability proof in both, not just a switch. |
-| 19 | Ask even without a task tracker if reporting policy is unresolved. Summary-only is a complete choice. For ticket proposals/automatic creation, retain that choice and resolve or explicitly defer a concrete sink; never create a tracker/project automatically. Reuse a separately selected sink. Deduplicate and exclude private data; surface proposals at handoff without interrupting every minor task. |
-| 20 | This adoption's Git actions only. The catalog's commit-and-push wording is an example: substitute the actual chosen future-task actions in both question and option 1, naming them explicitly. For no Git actions, ask whether to leave this adoption uncommitted. If the user chooses differently, show the five actions from question 1 as a separately counted follow-up. Keep future-task policy unchanged. Skip only if these adoption actions are already explicit. |
-| 21 | First complete the [coverage check](#completeness-before-approval), then show actual choices, files/settings to change, preserved decisions, deferred items, any installations/settings outside the project, and this adoption's exact Git actions. Ask for approval of that summary. "Change something" means discuss only the requested correction and reapprove the revised plan. Prior question/catalog approval is not setup approval. |
+| 1 Git | Policy for future requested work, separate from this adoption's Git actions (11). Without a remote, push or PR becomes a readiness gap, never permission to create hosting. |
+| 2 Review | Timing and staffing in one answer. Staffing applies to automatic and requested reviews. Existing required reviews stay in force. |
+| 3 Agents and models | Coding/testing delegation and the model policy for every additional agent, reviewers included. Option 2 adds 3a. Writing a model name does not switch models. |
+| 4 Structure and docs | First adoption, unless explicit. Option 3 adds 4a and 4b. It concerns internal structure, not creating or merging services. |
+| 5 Code host | Only without remote or host evidence. |
+| 6 Tracker | When unknown; never inferred from the code host. 6a only if the project is unresolved, 6b only if the connection is absent or broken, 6c only if the write policy is unknown. "Later" keeps the tracker selected. A working read does not grant writes. |
+| 7 Skills | Selection and scope together. Reuse a working selected installation. For option 3 show concrete differences, then ask 7a. |
+| 8 Tests | Agent test cadence, not CI. |
+| 9 Improvements | Even without a tracker. Summary-only is complete. A ticket mode needs a sink: resolve it or defer it as an open question; never create a tracker. |
+| 10 KIS model | First adoption, unless explicit. Options 1-2 already say now or later for Jev; 10a only for Microsoft-Decision-1 that is not already working. "Later" keeps the choice with a readiness gap; the agent decides meanwhile. |
+| 11 Approval | After the final summary. Option 1 names this adoption's exact Git actions. An existing explicit grant covering this exact plan counts as approval. "Change something" discusses only that change, then asks approval of the revised summary. |
 
-Do not add a hidden second questionnaire for technical fields. Infer only observable facts;
-for a material unresolved decision, explain why it matters and add one plainly worded question
-with an announced counter change. Inspect shell, current CI and available tools; do not ask
-the user to choose a preset, write a manifest, find an internal ID or select source files.
+UI direction (appearance, devices, themes) is not an onboarding topic. Settle it before the
+first screen under [web UI](web-ui.md); preserve existing design materials and requirements.
 
-## Decision Storage Without False Equivalences
+## Final Summary
 
-Use existing manifest fields only for their actual [contract meanings](configuration.md).
-For decisions v1 cannot express, place one concise named section in target `AGENTS.md` (or its
-existing linked workflow policy). Link that owner from `docs/viberails-adoption.md`; record any
-deliberate deviation in `exceptions` and unresolved capability in `openQuestions`. Include the
-policy file in reviewed instruction pins. Do not add unknown enum values, a parallel JSON
-configuration or a second authoritative copy of each decision.
+Before topic 11 show, in the user's language: every topic with its decision and source (answer,
+recorded decision or detected fact) or why it was skipped or deferred; the structure as
+`minimal` or `layered`; files and client settings to change; installations outside the project;
+prerequisite costs, risks and any data sent to third-party services; proposed access checks;
+remaining gaps; and this adoption's exact Git actions. Ask any unresolved
+applicable topic first instead of hiding it in the summary.
 
-| Decision | Canonical storage and interpretation |
+## Decision Storage
+
+Use manifest fields only for their meaning in the [manifest reference](adoption-manifest.md).
+Record the other decisions in one "VibeRails Decisions" section of the target `AGENTS.md` and link
+it from `docs/viberails-adoption.md`. Never add enum values or a parallel configuration file.
+
+| Topic | Stored as |
 |---|---|
-| Future-task Git actions (1) | Target workflow policy explicitly lists allowed commit, push, PR and merge actions for requested work. `configuration.workflow` describes only local versus PR delivery: first three choices use `local`, last two `pull-request`. It cannot distinguish no-commit/commit/push or grant merge. An explicit standing user grant recorded in the policy retains its task scope and checks. |
-| Review timing (2) | Target workflow policy: automatic after implementation/testing, or on request, preserving required project gates. No v1 field expresses this; do not map it to `configuration.review`. |
-| Review staffing (3) | `configuration.review: adaptive` for agent choice, `independent` for required additional review, plus an explicit target policy requiring at least one additional agent for option 2. The enum alone does not specify an agent count or automatic timing. |
-| Coding/testing delegation (4) | Target workflow policy explicitly allows bounded agent choice or solo execution, separate from the review policy. |
-| Model and effort (5) | Target runtime policy: agent choice from the allowed available pool, an explicit user pool, or same as main. Keep `modelRouting: inherit` as the v1 compatibility value, not an encoding of these three answers. Reconcile current dispatch support and higher-priority restrictions; record requested versus observable settings and any blocked route. Never claim prose switches a model or invent main-agent settings that are not exposed. |
-| Architecture/documentation (6-7) | `configuration.architecture: minimal/layered`; `configuration.documentation: essential/standard`. Keep all selected fields explicit. `initializedFrom` is initialization provenance only; disclose effective values in the summary. Existing CI determines the proposed verification responsibility, not question 15. |
-| Hosting/tracker/resource/access (8-11) | Existing `profiles`, `integrations` and `auth`, with deferrals in readiness/open questions. Unsupported providers are not `none`; missing credentials are not an absent tracker. |
-| Tracker writes (12) | Selected provider's existing `writeApprovalPolicy`: scoped automatic writes, ask each time, or read-only. This is distinct from `selfImprove.writeApprovalPolicy`. |
-| Skills and scope (13-14) | `agentSkills` selected names/provenance and `mode: none/vendored/user-scope`, matching actual distribution. Preserve private skills; inspect only the relevant sources needed for an authorized comparison. No-skills is valid and retains project rules. |
-| Tests (15) | Target workflow/quality-gate policy records after-story or before-each-task cadence. Neither `local-focused` nor `ci-first` means test frequency. CI and mandatory safeguards stay intact. |
-| UI (16-18) | Existing design/requirements document records direction, devices, themes or the explicit pre-first-screen deferral. No new manifest fields or component-library switch. |
-| Improvements (19) | `selfImprove.enabled: false` with a deliberate reason for summary-only, not an unresolved error. Ticket modes use the selected sink and `writeApprovalPolicy` for ask-first versus scoped automatic creation. If a sink is deferred, keep reporting intent in the target policy and the gap in `openQuestions`; do not fake configured access. |
-| Adoption Git actions (20) | This adoption's task/approval record only; never overwrite future-task rules. |
-| Final approval (21) | Evidence of an actual user response approving the concrete summary; not a manifest boolean or an earlier answer. |
+| 1 Git | AGENTS.md: allowed commit, push, PR and merge actions. `configuration.workflow`: `local` for options 1-3, `pull-request` for 4-5. |
+| 2 Review | AGENTS.md: timing and staffing. `configuration.review`: `adaptive` for agent choice, `independent` for at least one additional agent. |
+| 3 Agents and models | AGENTS.md: delegation and model policy, with actual runtime limits. `modelRouting` stays `inherit`. |
+| 4 Structure and docs | `configuration.architecture` and `configuration.documentation` (`essential` = concise, `standard` = detailed). `initializedFrom`: `light` for option 1, `standard` for option 2, the closer preset for option 3. |
+| 5-6 Host and tracker | `profiles`, `integrations` and `auth`; tracker writes in the provider's `writeApprovalPolicy`; deferrals in `openQuestions`. |
+| 7 Skills | `agentSkills`: mode, selected names and an immutable source ref. |
+| 8 Tests | AGENTS.md test cadence. Never `configuration.verification`. |
+| 9 Improvements | `selfImprove`. Summary-only is `enabled: false` with a `disabledReason`. |
+| 10 KIS model | AGENTS.md KIS section: model, pinned version or deployment, last verification, fallback. A KIS reviewer skill is recorded only when topic 7 selected it. |
+| 11 Approval | The adoption task record only. |
 
-If the chosen skills cannot honor these policies, explain the conflict before approval and
-resolve only the affected choice. Do not install a conflicting workflow and claim it is ready.
-The v1 skill record has one source ref. Personal skills without a verifiable immutable source,
-or a selection from multiple sources that cannot fit that record faithfully, remain an explicit
-provenance limitation in target policy/readiness. Preserve the selection and existing files;
-do not invent a shared VibeRails ref, record `none` for selected skills, or claim complete pins.
-The bundled installers currently install the whole pack at user scope; do not run them for a
-smaller selected set or a project-local choice. Use only the approved selected installation
-path, preserve collisions and disclose any client reload needed.
+Propose `configuration.verification` from existing CI (`ci-first` when a full PR pipeline exists)
+and show it in the summary; approval of the summary confirms it.
+
+Personal skills without an immutable source, or selections from several sources, stay a recorded
+provenance limitation; never invent a VibeRails ref for them. The bundled installers install the
+whole pack at user scope; never run them for a subset or a project-only choice.
 
 ## Navigation
 
 - [Question catalog](onboarding-questions.md)
 - [Adoption](adoption.md)
-- [Configuration](configuration.md)
 - [Documentation index](../INDEX.md)

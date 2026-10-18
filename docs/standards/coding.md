@@ -1,76 +1,64 @@
 # Coding Standard
 
-These standards apply to all code projects unless a project-specific document adds stricter
-rules. Project-specific documents may adapt commands and paths, but not weaken quality
-expectations without an explicit exception.
-
-## Required Reading By Work Type
-
-Use [agent-workflow.md](agent-workflow.md) to select relevant project, architecture, stack and
-test rules. This document owns coding constraints, not another reading list.
+Applies to all code projects. Project documents may adapt commands and paths or add stricter
+rules; weakening quality expectations needs an explicit exception.
+[agent-workflow.md](agent-workflow.md) selects which rules to read; this document owns coding
+constraints only.
 
 ## Quality Gate
 
-Every code project must document a quality gate in its root `AGENTS.md`, `README.md`, or a
-linked quality gate document. Follow [quality-gate.md](quality-gate.md) for required areas and
-stack defaults.
+Document the gate in root `AGENTS.md`, `README.md` or a linked document, per
+[quality-gate.md](quality-gate.md).
 
-Rules:
-
-- Linting must finish with zero warnings and zero errors.
-- Tests required for the touched area must pass.
-- Type checking remains required for typed languages; broad type checks run in PR CI.
-- Do not hide issues with suppression comments or weakened config.
-- If commands or CI are missing, report the coverage gap and follow the quality-gate standard;
-  do not automatically run a full local substitute or claim all verification passed.
+- Lint finishes with zero warnings and zero errors.
+- Tests required for the touched area pass.
+- Typed languages keep type checking; broad type checks run in PR CI.
+- No suppression comments or weakened config to hide issues.
+- Missing commands or CI: see [quality-gate.md](quality-gate.md#missing-gate-or-ci).
 
 ## Git Workflow
 
-Follow [change-protocol.md](change-protocol.md) for branch setup, pull, commit, push, PR, and
-review-loop rules. Do not duplicate local git workflow rules here unless they are stricter than
-the change protocol.
+Follow [change-protocol.md](change-protocol.md) for branch, pull, commit, push, PR and review-loop
+rules; repeat them here only if stricter.
 
 ## Code Quality
 
-- Use explicit types at public boundaries.
-- Use DTOs or schemas for API input and output.
-- Keep internal models separate from external contracts.
-- Name modules by intent, not by vague categories.
-- Keep functions small enough to understand without scrolling through unrelated concerns.
-- Extract shared code only when there are real consumers.
-- Prefer clear duplication over premature abstraction.
+- Explicit types at public boundaries.
+- DTOs or schemas for API input and output; internal models stay separate from external contracts.
+- Name modules by intent, not vague categories.
+- Keep functions small enough to read without scrolling through unrelated concerns.
+- Extract shared code only for real consumers; prefer clear duplication over premature abstraction
+  ([KIS](kis.md)).
 - Make configuration explicit through typed settings objects.
 
 ## File Size And Splitting
 
 - Hard limit: 400 lines per source file unless the project documents a stricter limit.
-- If a file approaches the limit, split by responsibility.
-- Keep a repository implementation cohesive per file; a small function-based port adapter
-  does not need a class merely to satisfy this rule. Follow the selected architecture variant.
-- One service, use case, or component responsibility per file.
-- Group related files into subdirectories when a folder becomes hard to scan.
+- Split by responsibility when a file approaches the limit.
+- One service, use case or component responsibility per file.
+- Repository and adapter cohesion: [architecture.md](architecture.md#file-and-module-boundaries).
+- Group related files into subdirectories when a folder is hard to scan.
 
 ## Error Handling
 
 - Convert expected domain and application failures into typed errors.
-- Do not catch and ignore exceptions silently.
-- Log enough context to debug failures without leaking secrets.
-- External calls must have timeouts.
-- API errors must use a documented response shape.
+- Never catch and silently ignore exceptions.
+- Log enough context to debug without leaking secrets.
+- External calls have timeouts.
+- API errors use a documented response shape.
 
 ## Security And Data
 
-- Never log secrets, tokens, credentials, or raw personal data.
+- Never log secrets, tokens, credentials or raw personal data.
 - Validate input at boundaries.
 - Keep authorization checks explicit and close to use cases.
-- Treat migrations, destructive operations, and data repair scripts as high-risk changes.
+- Treat migrations, destructive operations and data repair scripts as high-risk.
 
 ## Testing
 
-- Test behavior, not implementation details.
-- Prefer the lowest test level that proves the behavior.
-- Domain and application tests should avoid real IO.
-- Infrastructure behavior should be tested with real adapters where correctness depends on them.
+- Test behavior, not implementation details, at the lowest level that proves it.
+- Domain and application tests avoid real IO; test infrastructure with real adapters where
+  correctness depends on them.
 - No monkey-patching production internals to make tests pass.
 
 ## Navigation

@@ -1,15 +1,10 @@
 # Learnings Inbox - e2e-work-item
 
-Append a structured entry here when an E2E run uncovers a reusable improvement to this skill
-(runbook gap, state-flow pitfall, planning rule) and there is no time or approval to author the
-full durable patch mid-task. This file lives in the standards repository; through the
-user-scope junction it is writable from any repository, and every entry lands in the standards
-checkout as an uncommitted change. Commit inbox entries promptly on any branch so they are not
-lost.
-
-Consolidation: a periodic session in the standards repository reviews the entries, turns
-accepted ones into durable updates (SKILL.md or `references/`), and removes the consumed
-entries.
+Supporting history, not workflow authority. Read it only for a relevant recurring E2E gap and
+reverify the lesson against the current skill and target rules. Append or consolidate entries
+only when explicitly authorized in this repository; never modify this inbox from an unrelated
+task or another project's working tree. Project-wide reporting follows the target's
+[self-improve loop](../../../docs/standards/self-improve-loop.md).
 
 ## Entry Format
 
@@ -18,13 +13,12 @@ entries.
 
 - Symptom: <what went wrong or was missing during an E2E run>
 - Root cause: <runbook gap, work item process mismatch, tooling issue, or unknown>
-- Verified fix: <what worked, plus how it was verified; mark "hypothesis" when not verified>
+- Verified fix: <what worked and how it was verified; mark "hypothesis" when not verified>
 - Proposed durable update: <SKILL.md | references/<file> | adopting repo docs>
 ```
 
-Rules: no secrets, personal data, identity objects, or customer content. Work item process
-facts specific to one project belong in that repository's docs, not here. Keep entries short;
-the durable patch carries the detail.
+Rules: no secrets, personal data, identity objects or customer content. Project-specific
+process facts belong in that repository's docs. Keep entries short.
 
 ## Entries
 

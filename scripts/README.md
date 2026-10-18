@@ -8,7 +8,6 @@ This folder contains repository maintenance commands for VibeRails.
 |---|---|
 | [validate.mjs](validate.mjs) | Node validator with explicit focused-file and full-repository modes. |
 | [validation-markdown.mjs](validation-markdown.mjs) | Internal Markdown navigation checks shared by focused and full Node modes. |
-| [validate.ps1](validate.ps1) | Legacy full PowerShell validator with `.ps1` syntax parsing; no focused mode or current Node-parser parity claim. |
 | [install-skills.sh](install-skills.sh) | POSIX installer for optional skills at the Codex user scope (`$CODEX_HOME/skills` or `$HOME/.codex/skills`) as symlinks to this checkout. `--remove` deletes only symlinks owned by this checkout. |
 | [install-skills.ps1](install-skills.ps1) | PowerShell installer for optional skills at the Codex user scope (`$env:CODEX_HOME\skills` or `$HOME\.codex\skills`) as Windows junctions or Unix symlinks. `-Remove` deletes only links owned by this checkout. |
 
@@ -33,6 +32,16 @@ node --test scripts/tests/install-skills.test.mjs
 
 CI runs these [installer checks](tests/install-skills.test.mjs) on Linux and macOS only. Windows
 still runs the Node adoption cases below; its inapplicable POSIX step is not PowerShell evidence.
+
+## Decision-Model Helper Checks
+
+The `typesafe-jev` helper has offline [regressions](tests/typesafe-jev.test.mjs): secret refusal,
+malformed requests, missing credentials and unsafe credential files. Every case stops before any
+network request, so they prove no live TypeSafe behavior. Linux CI runs them:
+
+```bash
+node --test scripts/tests/typesafe-jev.test.mjs
+```
 
 ## Local Verification
 
@@ -93,8 +102,7 @@ approve edits or repair stale pins automatically.
 The existing validator can match explicitly supplied literal patterns; an empty list cannot
 detect particular project names or unknown names. Local-path checks and other validation
 remain active. A green result is not evidence that all confidential information was detected.
-Regression fixtures use only synthetic values. The PowerShell reader supports the same empty/
-comment filtering by static inspection; this is not executed PowerShell or platform-parity proof.
+Regression fixtures use only synthetic values.
 
 ## PR Verification
 
@@ -110,10 +118,9 @@ local full gates require an explicit user request. Full validation adds all supp
 all skill metadata and Markdown reachability/orphan checks. It is not a JavaScript linter or
 proof that every referenced external service or example environment works.
 
-Node is the canonical repository CI path. `validate.ps1` remains a legacy compatibility command;
-its separate Markdown parser and PowerShell syntax checks are not covered by this workflow.
-Never run `lint.ps1`; other PowerShell execution needs an explicit request. CI on Linux does
-not prove Windows runtime behavior. Shared script consolidation remains a later adoption task.
+Node is the only repository validator; the legacy PowerShell validator was removed in 0.6.0.
+`.ps1` files are text-checked but not parsed. Never run `lint.ps1`; other PowerShell execution
+needs an explicit request. CI on Linux does not prove Windows runtime behavior.
 
 ## Controlled Pilot Reproduction
 

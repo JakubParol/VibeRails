@@ -1,64 +1,39 @@
 # Adopt Or Refresh Standards
 
 Prompt ID: `viberails.adoption`. Version identity: this file's immutable Git source commit and
-actual content hash. Shared wording is model-neutral; client/tool support remains explicit.
-Users start with the [copyable README prompt](../../README.md#start-here---adopt-viberails).
-The block below is the agent entrypoint, not a form the user must complete.
+content hash. Users start with the [README prompt](../../README.md#start-here---adopt-viberails);
+the block below is the agent entrypoint.
 
 ```text
-Adopt or refresh VibeRails in the target repository the user has open. Use the source selected
-by the user or launching README; ask only if it is ambiguous. Resolve the source to one immutable
-Git commit and read its docs/standards/adoption.md, especially Guided Setup, along with
-docs/standards/onboarding.md and docs/standards/onboarding-questions.md. Use that same revision
-for the procedure and copies. Never change the source repository or guess unavailable contents.
+Adopt or refresh VibeRails in the target repository the user has open. Resolve the selected
+source to one immutable Git commit and use that revision for both the procedure and the copies.
+Read docs/standards/adoption.md, onboarding.md and onboarding-questions.md there. These
+source-only documents are never copied into the target. Never change the source or guess
+unavailable contents.
 
-Follow applicable target instructions. Inspect its actual documentation, roots, commands, CI and
-existing adoption before editing. Distinguish planned architecture from implemented components.
-Preserve local knowledge, settings, protected work and secrets.
+Follow the target's instructions. Inspect its documentation, roots, commands, CI and any existing
+adoption before asking anything. Preserve local knowledge, settings, protected work and secrets.
+Apply KIS: if a simple solution is enough, keep it simple.
 
-Conduct the guided conversation in the user's language; switch with their own messages unless
-they explicitly request another language. The English bootstrap text does not reset that choice.
-Keep repository instructions in English. Use the canonical catalog, translate it faithfully,
-ask one unresolved applicable question at a time with the real n/X counter, then yield and wait
-for the answer. Announce any count change; silence and accepted question cards are not answers.
-Recommend relevant standards and collect selected provider coordinates without tokens.
-Separate tracker, code host, client MCP setup, optional skill scope and action authority. A user
-must not need manifest field names, source hashes or a custom prompt. Retain existing choices on
-refresh and do not ask again for known answers or already-authorized operations.
-Apply onboarding.md's decision evidence rules: generic simplicity, vertical slices and no
-speculative layers are not a minimal/layered selection. Ask unresolved policy questions even
-when existing instructions suggest a recommendation. Keep a ledger of all 21 catalog topics.
+Talk in the user's language; keep repository files in English. Ask one unresolved catalog
+question at a time with a real "Question n/X" counter, then stop and wait for the answer.
+Announce count changes. Generic simplicity or existing patterns never select minimal or layered.
+Include the KIS decision model question (Jev recommended). Refresh keeps explicit choices.
 
-Keep future-task Git actions separate from this adoption's Git actions and final setup approval.
-Do not choose personal skills because they are installed. Review timing, review staffing,
-coding/testing delegation, model policy and test cadence are separate decisions. Record choices
-without a matching manifest field as explicit target project rules, never as a different value.
+Before any edit, installation or login, show the final summary of every topic with its decision
+and source, the files and client settings to change, gaps and this adoption's Git actions, and
+ask for approval. Guide approved MCP and decision-model setup through official client and
+provider instructions; the user signs in; never request secrets. Azure DevOps and Jira use MCP
+only.
 
-Before final approval, show all 21 topics' coverage under onboarding.md, including sources for
-known choices and reasons for skips/deferrals; resolve pending applicable policy choices first.
-Show the effective choices, files/client settings to change, proposed scoped access checks,
-remaining gaps and delivery endpoint. Obtain approval before edits, installations or login flows.
-An explicit grant already covering this plan remains valid; seek only missing decisions or scope.
-Guide approved MCP setup through the current client's supported mechanisms and official provider
-instructions. Check selected resources through MCP. Record deferred access honestly; Azure DevOps
-and Jira never fall back to provider CLI, raw REST or wrappers. Do not mutate remote data to test
-permissions without separate covered authority.
-
-Execute the approved adoption/refresh procedure. Maintain the existing manifest and human record,
-complete explicit configuration, selected references and reviewed instruction pins. Keep routing
-inherited unless separately authorized at runtime. Never repin unexplained drift, erase conflicts
-or disguise missing required values as a completed setup. An unchanged repeat is a no-op.
-
-Use focused documentation/adoption checks and existing CI for required broad verification.
-Report actual readiness separately for documents, skills, integrations and delivery; include
-next actions for missing access or migration. Continue only to the approved local/PR/merge
-endpoint with current evidence. Adoption is not permission to build or run the product.
+Then copy only the applicable runtime standards, update the manifest and adoption record,
+record reviewed instruction pins, run focused checks and report readiness separately for
+documents, skills, integrations, the KIS model and delivery. Stop at the approved endpoint;
+adoption never authorizes building or running the product.
 ```
 
 ## Navigation
 
 - [Guided adoption procedure](../standards/adoption.md#guided-setup)
-- [Canonical questions](../standards/onboarding-questions.md)
-- [Conversation and decision rules](../standards/onboarding.md)
-- [Configuration contract](../standards/configuration.md)
+- [Onboarding rules](../standards/onboarding.md)
 - [Documentation index](../INDEX.md)

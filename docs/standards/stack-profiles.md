@@ -1,83 +1,32 @@
 # Stack Profiles Standard
 
-Use the closest stack profile when adopting standards or deciding which documents and quality
-gates apply. The command blocks below describe full CI coverage, not a local task checklist.
-Local work follows the focused-check policy in [quality-gate.md](quality-gate.md).
+Use the closest profile when adopting standards or deciding which documents and gates apply.
+Command blocks show full CI coverage, not a local checklist; local work follows
+[quality-gate.md](quality-gate.md).
 
 ## Web UI Baseline
 
-All web profiles apply [web-ui.md](web-ui.md). React implementations also apply
-[frontend.md](frontend.md): shadcn/ui is the component foundation, styles are component-owned,
-and raw primitive usage cannot bypass it. Adopt the chosen compatible versions rather than
-forcing a new release into an existing app. No application is generated merely by choosing a profile.
+All web profiles apply [web-ui.md](web-ui.md); React also applies [frontend.md](frontend.md).
+Adopt compatible versions; do not force a new release into an existing app. Choosing a profile
+generates no application.
 
-Add the project's real focused browser/interaction commands and the required visual evidence
-to its path-to-scope map. Playwright is the default for new browser automation; reuse a suitable
-existing tool. CI owns broad browser/build checks. A green build alone is not visual acceptance.
+Add the project's real focused browser/interaction commands and required visual evidence
+([visual acceptance](web-ui.md#visual-acceptance)) to its path-to-scope map. Playwright is the
+default for new browser automation; reuse a suitable existing tool. A green build alone is not
+visual acceptance.
 
-## Next.js Frontend Only
+## Next.js Profiles
 
-Use when Next.js owns UI only and calls an external or separately managed API.
+All three require `frontend.md`, `web-ui.md`, `architecture.md`, `coding.md` and `quality-gate.md`.
 
-Required standards:
+| Profile | Use when | Also required | Document |
+|---|---|---|---|
+| Next.js Frontend Only | Next.js owns UI only and calls an external or separately managed API. | Nothing; no backend standards unless backend code lives in the repository. | API ownership in the project README. |
+| Next.js Full Stack | Next.js owns UI and API routes, route handlers, server actions or backend logic. | Nothing. | Which code is UI, application logic and infrastructure; keep framework code at the edge. |
+| Next.js + Python FastAPI | Next.js owns the frontend; FastAPI owns backend application and API logic. | `backend.md`, `backend-testing.md` | API contract location, local run commands, environment variables, integration test requirements. |
 
-- `frontend.md`
-- `web-ui.md`
-- `architecture.md`
-- `coding.md`
-- `quality-gate.md`
-
-Full PR verification defaults (CI):
-
-```bash
-npm run lint
-npm run typecheck
-npm test
-npm run build
-```
-
-Document API ownership in the project README. Do not add backend standards unless backend code
-lives in the repository.
-
-## Next.js Full Stack
-
-Use when Next.js owns UI and API routes, route handlers, server actions, or backend logic.
-
-Required standards:
-
-- `frontend.md`
-- `web-ui.md`
-- `architecture.md`
-- `coding.md`
-- `quality-gate.md`
-
-Full PR verification defaults (CI):
-
-```bash
-npm run lint
-npm run typecheck
-npm test
-npm run build
-```
-
-Document which code is UI, application logic, and infrastructure. Keep framework code at the
-edge of the application.
-
-## Next.js + Python FastAPI
-
-Use when Next.js owns the frontend and FastAPI owns backend application and API logic.
-
-Required standards:
-
-- `frontend.md`
-- `web-ui.md`
-- `backend.md`
-- `backend-testing.md`
-- `architecture.md`
-- `coding.md`
-- `quality-gate.md`
-
-Full PR verification defaults (CI):
+Full PR verification defaults (CI). The frontend block applies to every Next.js profile; the
+backend block also applies to FastAPI.
 
 ```bash
 # frontend
@@ -86,34 +35,31 @@ npm run typecheck
 npm test
 npm run build
 
-# backend
+# backend (Next.js + Python FastAPI only)
 ruff check .
 mypy .  # or pyright
 pytest
 ```
 
-Document the API contract location, local run commands, environment variables, and integration
-test requirements.
-
 ## Monorepo Rule
 
-Each standalone app, service, worker, mobile app, or package selects its own profile. The
-repository root documents cross-project commands and shared standards.
+Each standalone app, service, worker, mobile app or package selects its own profile. The root
+documents cross-project commands and shared standards.
 
 ## Stack Exceptions
 
-When no supplied profile matches, record a stack exception instead of forcing a poor fit.
-Exceptions still need standards, quality gates, ownership, and documentation roots.
+When no profile matches, record a stack exception instead of forcing a poor fit. Exceptions still
+need standards, quality gates, ownership and documentation roots.
 
 | Shape | Required adoption notes |
 |---|---|
-| Python CLI | Entry points, command examples, packaging metadata, lint/type/test commands, and sample input/output location. |
-| Python worker | Queue or scheduler contract, retry behavior, idempotency rules, observability, local run command, and integration test scope. |
-| Shared package | Public API surface, compatibility promise, versioning, consumer list, and package-level tests. |
-| Infrastructure or IaC | State ownership, plan/apply command policy, environment separation, secrets handling, and review gates. |
-| Dapr or distributed app | App IDs, components, sidecars, pub/sub or binding contracts, local run topology, and failure-mode tests. |
+| Python CLI | Entry points, command examples, packaging metadata, lint/type/test commands, sample input/output location. |
+| Python worker | Queue or scheduler contract, retry behavior, idempotency rules, observability, local run command, integration test scope. |
+| Shared package | Public API surface, compatibility promise, versioning, consumer list, package-level tests. |
+| Infrastructure or IaC | State ownership, plan/apply command policy, environment separation, secrets handling, review gates. |
+| Dapr or distributed app | App IDs, components, sidecars, pub/sub or binding contracts, local run topology, failure-mode tests. |
 
-Every exception must include:
+Every exception states:
 
 - why no standard profile fits
 - which standards still apply
