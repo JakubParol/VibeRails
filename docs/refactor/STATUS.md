@@ -1,38 +1,21 @@
 # Refactor Status
 
-Checkpoint date: 2026-09-17. This is the sole live documentation register. Reconcile it with
-Git/PR evidence before acting; an actual merge may be newer than the published snapshot.
+Checkpoint date: 2026-10-18. This is the sole live register. Reconcile it with Git/PR evidence
+before acting; an actual merge may be newer than this snapshot.
 
 ## Current Checkpoint
 
-- Audit corrections were merged in [PR #18](https://github.com/JakubParol/VibeRails/pull/18);
-  guided onboarding in [PR #19](https://github.com/JakubParol/VibeRails/pull/19).
-- Web UI standards merged in [PR #20](https://github.com/JakubParol/VibeRails/pull/20),
-  main `988d2279be6963a5f848039d8714921383c768fb`, version 0.5.0.
-  [Agreement, research and verification](web-ui-standards.md) remain historical evidence.
-- Plain-question onboarding 0.5.1 merged in [PR #21](https://github.com/JakubParol/VibeRails/pull/21),
-  main `c91ceb758d3587f904f7037349adb70f06ee9e61`.
-- Current delivery: `onboarding-evidence-1`, branch `codex/onboarding-explicit-decisions`,
-  candidate 0.5.2. The user authorized the diagnosed correction, branch, PR and merge after
-  verification. [Agreement, failure and acceptance](plain-onboarding.md#decision-evidence-correction).
-- Generic simplicity rules must not select the architecture variant. The correction requires
-  sourced decisions and visible coverage of all 21 topics before final approval, preserving
-  valid known choices and conditional skips/deferrals. Implementation, focused document checks,
-  two copy/refresh regressions and independent review are complete with no remaining findings.
-- A controlled two-turn conversation asked architecture, retained the simulated `layered`
-  answer, showed all 21 topics and waited for final approval. The synthetic target stayed
-  unchanged. This is bounded agent evidence, not a real adopter installation or universal proof.
-- Closing records belong in this delivery before final-head CI. Require current-head checks
-  and expected-head merge protection; confirm remote main before calling delivery complete.
-- No adopter, UI package, application, private client setting, schema, provider transport or
-  later stage changed. 00-07 remain Done; 08/09 remain Verification for their original missing
-  model/independent-handoff trials. Scripted refresh and static review are not user conversations.
-- Next action: publish this correction, verify all three final-head CI jobs, complete the
-  authorized merge with expected-head protection and read back main. While the PR is open,
-  merge remains pending. Once merged, report the result and stop; do not adopt another
-  repository or start stage 10.
-- Preserve frozen comparisons. Document CI and semantic review do not certify appearance,
-  accessibility conformance or performance. Do not add a post-merge checkpoint PR.
+- 0.5.2 merged in [PR #22](https://github.com/JakubParol/VibeRails/pull/22), main
+  `45ce4050cae91ba3ae8f732b22353f19440fbb5b`; main CI run 35243586214 passed.
+- Post-09 decision (2026-10-18): correct the core first. Delivery `core-slim-1`: slimming,
+  simpler onboarding and KIS. [Agreement, scope and acceptance](core-slim-kis.md).
+- Branch `claude/core-slim-onboarding-kis`, candidate 0.6.0. Implementation in progress.
+- Waiting on the user: contents of the user-scope `kis-review` and `typesafe-jev` skills, if
+  VibeRails should generalize them. Other work does not depend on them.
+- Next action: finish the agreed changes, measure, review, publish one PR and give the user an
+  acceptance walkthrough. Merge only after acceptance and an explicit merge decision.
+- 08/09 remain Verification for their original missing model and handoff trials. Do not start
+  stage 10 or change another repository.
 
 ## Stage Register
 
@@ -53,13 +36,6 @@ Git/PR evidence before acting; an actual merge may be newer than the published s
 | 12 | Azure Pipelines / GitHub Actions CI/CD | Planned | Create on stage entry. |
 | 13 | Optional kanban | Planned | Build or explicitly skip after discussion. |
 | 14 | Additional languages/frameworks | Planned | Select from real needs on stage entry. |
-
-## Resume Reminder
-
-Read the follow-up and actual corrective PR/CI before acting. Preserve the merged artifacts
-and completed 00-07 history. Do not interpret their green structural checks as multi-model,
-team, provider or full-platform proof. The original 08/09 acceptance gaps remain explicit;
-apply the [post-09 decision gate](../refactor-plan.md#decision-after-step-09) before later stages.
 
 ## Navigation
 

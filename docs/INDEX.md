@@ -36,6 +36,7 @@ This index is the entry point for all standards and templates in this repository
 | [Guided onboarding delivery](refactor/guided-onboarding.md) | Scope, scenario review and verification limits for the README-led setup path. |
 | [Plain-question onboarding delivery](refactor/plain-onboarding.md) | English catalog, user-language conversation, conditional counts, decision mapping and delivery evidence. |
 | [08-09 verification follow-up](refactor/verification-08-09.md) | Reproduced instruction-boundary fixes, platform evidence and original acceptance gaps. |
+| [Core slimming, onboarding and KIS](refactor/core-slim-kis.md) | Post-09 decision, agreed scope, targets and evidence for 0.6.0. |
 
 Stage 07 provides the frozen model-neutral baseline. The stage 08 assessment records all
 15 source attempts and unavailable material; original descriptions remain research leads.
